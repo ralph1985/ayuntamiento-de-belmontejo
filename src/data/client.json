@@ -1,0 +1,15 @@
+{
+  "name": "Ayuntamiento de Belmontejo",
+  "email": "belmontejo@dipucuenca.es",
+  "phoneForTel": "969296279",
+  "phoneFormatted": "(969) 29-62-79",
+  "address": {
+    "lineOne": "C/ Pósito, 5",
+    "lineTwo": "Belmontejo",
+    "city": "Cuenca",
+    "state": "",
+    "zip": "16779",
+    "mapLink": "https://maps.app.goo.gl/6uVfjtU9YSU8ubnAA"
+  },
+  "domain": "https://develop-ayuntamiento-de-belmontejo.vercel.app/"
+}

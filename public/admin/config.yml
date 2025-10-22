@@ -1,0 +1,43 @@
+# GitHub backend configuration for Vercel deployment
+backend:
+  name: github
+  repo: ralph1985/ayuntamiento-de-belmontejo
+  branch: develop
+  site_domain: develop-ayuntamiento-de-belmontejo.vercel.app
+  base_url: https://develop-ayuntamiento-de-belmontejo.vercel.app
+  auth_endpoint: oauth
+
+local_backend: true
+
+# Logo for Decap login page. Change url to a link to the image you want to use, no file paths, must be a URL
+logo_url: https://decapbridge.com/decapcms-with-bridge.svg
+
+# Add site link in DecapCMS (optional)
+site_url: https://develop-ayuntamiento-de-belmontejo.vercel.app
+
+media_folder: src/assets/images/blog # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
+public_folder: src/assets/images/blog # Ensure that this path is the same as the media_folder path above.
+
+# Quickly see who did what (optional)
+commit_messages:
+  create: Create {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
+  update: Update {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
+  delete: Delete {{collection}} "{{slug}}" - {{author-name}} <{{author-login}}>
+  uploadMedia: Upload "{{path}}" - {{author-name}} <{{author-login}}>
+  deleteMedia: Delete "{{path}}" - {{author-name}} <{{author-login}}>
+  openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}>
+
+collections:
+  - name: "blog" # Used in routes, e.g., /admin/collections/blog. Is also the key when fetching data from the CMS.
+    label: "Blog" # Used in the admin dashboard UI
+    folder: "src/content/blog" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    fields: # The fields for each document
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Author", name: "author", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Cover Image", name: "image", widget: "image" }
+      - { label: "Image Caption", name: "imageAlt", widget: "string" }
+      - { label: "Is it a featured post?", name: "isFeatured", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }

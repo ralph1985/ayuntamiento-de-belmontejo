@@ -1,0 +1,384 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import CTA from "@components/CTA.astro";
+import Landing from "@components/Landing.astro";
+
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
+import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import { getImage } from "astro:assets";
+const optimizedImage = await getImage({ src: landingImage, format: "avif" });
+---
+
+<BaseLayout
+  title="Testimonios - Ayuntamiento de Belmontejo"
+  description="Descubre lo que dicen los visitantes y vecinos sobre Belmontejo. Testimonios reales sobre la vida rural, la hospitalidad y la belleza de nuestro pueblo manchego."
+  preloadedImage={optimizedImage}
+>
+  <!-- ============================================ -->
+  <!--                    LANDING                   -->
+  <!-- ============================================ -->
+
+  <Landing
+    title="Testimonios"
+    image={optimizedImage}
+  />
+
+  <!-- ============================================ -->
+  <!--                  Reviews                     -->
+  <!-- ============================================ -->
+
+  <section id="reviews">
+    <div class="container">
+      <!-- Testimonial 1 - From index page -->
+      <div class="review">
+        <picture>
+          <img
+            class="profile"
+            loading="lazy"
+            decoding="async"
+            src="/assets/svgs/profile-woman.svg"
+            alt=""
+            width="99"
+            height="99"
+          />
+        </picture>
+        <p>
+          Belmontejo es un remanso de paz en medio de la Mancha. Sus calles
+          tranquilas y la hospitalidad de su gente hacen que uno se sienta como
+          en casa. Es el lugar perfecto para desconectar y disfrutar de la
+          autenticidad rural.
+        </p>
+        <div class="star-group">
+          <span class="name"
+            >María García<span class="desc">Visitante</span></span
+          >
+          <picture>
+            <img
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              src="/assets/svgs/stars.svg"
+              alt="stars"
+              width="91"
+              height="15"
+            />
+          </picture>
+        </div>
+      </div>
+      <!-- Testimonial 2 - From index page -->
+      <div class="review">
+        <picture>
+          <img
+            class="profile"
+            loading="lazy"
+            decoding="async"
+            src="/assets/svgs/profile.svg"
+            alt=""
+            width="99"
+            height="99"
+          />
+        </picture>
+        <p>
+          Aquí el tiempo se detiene y uno puede apreciar la belleza sencilla de
+          la vida rural. Los paisajes, las tradiciones y el patrimonio de
+          Belmontejo crean una experiencia única que nunca se olvida.
+        </p>
+        <div class="star-group">
+          <span class="name">Antonio Ruiz<span class="desc">Vecino</span></span>
+          <picture>
+            <img
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              src="/assets/svgs/stars.svg"
+              alt="stars"
+              width="91"
+              height="15"
+            />
+          </picture>
+        </div>
+      </div>
+      <!-- Testimonial 3 -->
+      <div class="review">
+        <picture>
+          <img
+            class="profile"
+            loading="lazy"
+            decoding="async"
+            src="/assets/svgs/profile.svg"
+            alt=""
+            width="99"
+            height="99"
+          />
+        </picture>
+        <p>
+          Vine de Madrid buscando tranquilidad y encontré mucho más que eso. La
+          iglesia de Nuestra Señora de la Asunción es impresionante, y las
+          fuentes del pueblo cuentan historias de generaciones pasadas. Un
+          verdadero tesoro manchego.
+        </p>
+        <div class="star-group">
+          <span class="name"
+            >Carlos Jiménez<span class="desc">Turista</span></span
+          >
+          <picture>
+            <img
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              src="/assets/svgs/stars.svg"
+              alt="stars"
+              width="91"
+              height="15"
+            />
+          </picture>
+        </div>
+      </div>
+      <!-- Testimonial 4 -->
+      <div class="review">
+        <picture>
+          <img
+            class="profile"
+            loading="lazy"
+            decoding="async"
+            src="/assets/svgs/profile-woman.svg"
+            alt=""
+            width="99"
+            height="99"
+          />
+        </picture>
+        <p>
+          Como investigadora de patrimonio rural, Belmontejo me fascinó por sus
+          vestigios arqueológicos y su trazado urbano histórico. Es un ejemplo
+          perfecto de cómo un pueblo pequeño puede conservar su esencia a través
+          de los siglos.
+        </p>
+        <div class="star-group">
+          <span class="name"
+            >Dra. Elena Martín<span class="desc">Investigadora</span></span
+          >
+          <picture>
+            <img
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              src="/assets/svgs/stars.svg"
+              alt="stars"
+              width="91"
+              height="15"
+            />
+          </picture>
+        </div>
+      </div>
+      <!-- Testimonial 5 -->
+      <div class="review">
+        <picture>
+          <img
+            class="profile"
+            loading="lazy"
+            decoding="async"
+            src="/assets/svgs/profile.svg"
+            alt=""
+            width="99"
+            height="99"
+          />
+        </picture>
+        <p>
+          Cada primavera regreso a Belmontejo para disfrutar de los campos en
+          flor y de la calidez de su gente. Es un lugar que te abraza y te hace
+          sentir parte de algo especial, de una comunidad auténtica.
+        </p>
+        <div class="star-group">
+          <span class="name"
+            >Miguel Ángel López<span class="desc">Visitante habitual</span
+            ></span
+          >
+          <picture>
+            <img
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              src="/assets/svgs/stars.svg"
+              alt="stars"
+              width="91"
+              height="15"
+            />
+          </picture>
+        </div>
+      </div>
+      <!-- Testimonial 6 -->
+      <div class="review">
+        <picture>
+          <img
+            class="profile"
+            loading="lazy"
+            decoding="async"
+            src="/assets/svgs/profile-woman.svg"
+            alt=""
+            width="99"
+            height="99"
+          />
+        </picture>
+        <p>
+          Mis hijos descubrieron en Belmontejo lo que significa la vida sin
+          prisas. Correr por sus calles empedradas, escuchar el silencio del
+          campo... Es un regalo para toda la familia alejarse del ruido de la
+          ciudad.
+        </p>
+        <div class="star-group">
+          <span class="name"
+            >Ana Belén Torres<span class="desc">Madre de familia</span></span
+          >
+          <picture>
+            <img
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              src="/assets/svgs/stars.svg"
+              alt="stars"
+              width="91"
+              height="15"
+            />
+          </picture>
+        </div>
+      </div>
+    </div>
+  </section>
+  <CTA />
+</BaseLayout>
+
+<style lang="less">
+  /* PAGE-SPECIFIC STYLES FOR THE REVIEWS PAGE */
+
+  /*-- -------------------------- -->
+<---           Reviews          -->
+<--- -------------------------- -*/
+
+  /* Mobile */
+  @media only screen and (min-width: 0em) {
+    #reviews {
+      margin: auto;
+      padding-top: (120/16rem);
+      padding-bottom: (50/16rem);
+
+      .container {
+        width: 96%;
+        max-width: (1320/16rem);
+      }
+
+      .review {
+        width: 100%;
+        max-width: (410/16rem);
+        margin: auto;
+        margin-bottom: (100/16rem);
+        padding: (64/16rem) (30/16rem) (18/16rem) (30/16rem);
+        background: #fff;
+        box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);
+        border-radius: (5/16rem);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        .profile {
+          width: (99/16rem);
+          height: (99/16rem);
+          margin-bottom: (16/16rem);
+          margin-left: 0;
+          border-radius: 50%;
+          display: block;
+          position: absolute;
+          top: (-51/16rem);
+          left: (30/16rem);
+        }
+
+        p {
+          line-height: 1.5em;
+          text-align: left;
+          margin-bottom: (28/16rem);
+        }
+
+        .star-group {
+          margin-top: auto;
+          padding-top: (16/16rem);
+          border-top: 1px solid #e7e7e7;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: nowrap;
+
+          .name {
+            font-weight: bold;
+            line-height: (24/16rem);
+            text-align: left;
+            color: #1a1a1a;
+            display: block;
+          }
+
+          .desc {
+            font-weight: 400;
+            color: #575757;
+            display: block;
+          }
+
+          img {
+            width: (91/16rem);
+            height: (15/16rem);
+            margin: 0;
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  /* Tablet */
+  @media only screen and (min-width: 48em) {
+    #reviews {
+      padding-top: (150/16rem);
+      padding-bottom: (50/16rem);
+
+      .container {
+        font-size: ~"min(1.4vw, 1em)";
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        column-gap: (30/16rem);
+      }
+
+      .review {
+        margin: 0;
+        margin-bottom: (150/16rem);
+
+        &:last-of-type {
+          margin-bottom: (150/16rem);
+        }
+      }
+    }
+  }
+
+  /* Dark Mode */
+  @media only screen and (min-width: 0em) {
+    body.dark-mode {
+      #reviews {
+        .review {
+          background: var(--medium);
+
+          .star-group {
+            .name {
+              color: #fff;
+            }
+
+            .desc {
+              color: #fff;
+              opacity: 0.7;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>
