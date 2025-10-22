@@ -15,8 +15,8 @@ logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 # Add site link in DecapCMS (optional)
 site_url: https://develop-ayuntamiento-de-belmontejo.vercel.app
 
-media_folder: src/assets/images/blog # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
-public_folder: src/assets/images/blog # Ensure that this path is the same as the media_folder path above.
+media_folder: src/assets/images/noticias # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
+public_folder: src/assets/images/noticias # Ensure that this path is the same as the media_folder path above.
 
 # Quickly see who did what (optional)
 commit_messages:
@@ -28,9 +28,9 @@ commit_messages:
   openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}>
 
 collections:
-  - name: "blog" # Used in routes, e.g., /admin/collections/blog. Is also the key when fetching data from the CMS.
-    label: "Blog" # Used in the admin dashboard UI
-    folder: "src/content/blog" # The path to the folder where the documents are stored
+  - name: "noticias" # Used in routes, e.g., /admin/collections/noticias. Is also the key when fetching data from the CMS.
+    label: "Noticias" # Used in the admin dashboard UI
+    folder: "src/content/noticias" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
     fields: # The fields for each document
       - { label: "Title", name: "title", widget: "string" }

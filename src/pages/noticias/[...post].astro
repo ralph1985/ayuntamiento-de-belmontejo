@@ -1,18 +1,18 @@
 ---
 /**
- * * This page generates the individual blog posts
+ * * This page generates the individual noticias posts
  **/
 
 import { getCollection, render } from "astro:content";
-import BlogPostLayout from "@layouts/BlogPostLayout.astro";
+import NewsPostLayout from "@layouts/NewsPostLayout.astro";
 import CTA from "@components/CTA.astro";
 
 // Prerender this page as static HTML during the build process
 export const prerender = true;
 
-// Generates the individual blog pages based on the blog collection
+// Generates the individual noticias pages based on the noticias collection
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = await getCollection("noticias");
   return posts.map((entry) => ({
     params: { post: entry.id },
     props: { post: entry },
@@ -23,9 +23,9 @@ const { post } = Astro.props;
 const { Content, headings } = await render(post);
 ---
 
-<BlogPostLayout
+<NewsPostLayout
   post={post}
   headings={headings}
 >
   <Content />
-</BlogPostLayout>
+</NewsPostLayout>
