@@ -6,15 +6,34 @@
 
 /* CodeStitch Root and Helpers */
 @media only screen and (min-width: 0em) {
-	// Website colors
+	// Website colors - Paleta Belmontejo (Modo Claro)
 	:root {
-		--primary: hsl(80, 90%, 55%);
-		--primaryLight: hsl(80, 60%, 40%);
-		--secondary: #001f3f;
-		--secondaryLight: #001f3f;
-		--headerColor: #1a1a1a;
-		--bodyTextColor: #4e4b66;
-		--bodyTextColorWhite: #fafbfc;
+		/* Fondos */
+		--background-main: #FAF9F7; /* Blanco cálido */
+		--background-sections: #F0E9E1; /* Beige claro (piedra/caliza) */
+
+		/* Textos */
+		--text-primary: #2E2E2E; /* Gris oscuro (alto contraste) */
+		--text-secondary: #6E6E6E; /* Gris medio (subtítulos) */
+		--text-white: #F5F1E9; /* Marfil suave para textos sobre fondos oscuros */
+
+		/* Colores principales */
+		--primary: #285C8D; /* Azul Cuenca (principal) */
+		--primaryLight: #5E8CC0; /* Azul Cuenca claro (versión más luminosa) */
+		--secondary: #6A7E49; /* Verde olivo (secundario) */
+		--secondaryLight: #A6B381; /* Verde olivo suave */
+
+		/* Colores de acento */
+		--accent: #B35030; /* Rojo teja (llamadas a la acción) */
+		--accentLight: #E27A58; /* Teja claro */
+
+		/* Bordes y líneas */
+		--border-color: #DDD6CE; /* Gris claro cálido */
+
+		/* Variables de compatibilidad (mapeo con nombres antiguos) */
+		--headerColor: var(--text-primary);
+		--bodyTextColor: var(--text-secondary);
+		--bodyTextColorWhite: var(--text-white);
 
 		/* 13px - 16px */
 		--topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
@@ -67,7 +86,7 @@
 		padding: 0 (30/16rem);
 
 		// Transition Properties
-		color: #000;
+		color: var(--text-white);
 		background-color: var(--primary);
 		display: inline-block;
 		position: relative;
@@ -76,7 +95,7 @@
 		transition-delay: 0.1s;
 
 		&:hover {
-			color: #fff;
+			color: var(--text-white);
 			&:before {
 				width: 100%;
 			}
@@ -88,7 +107,7 @@
 			//Transition properties
 			width: 0;
 			height: 100%;
-			background-color: #000;
+			background-color: var(--accent);
 			opacity: 1;
 			display: block;
 			position: absolute;
@@ -156,6 +175,7 @@
 	}
 
 	body {
+		background-color: var(--background-main);
 		transition: background-color 0.3s;
 	}
 
@@ -185,7 +205,7 @@
 
 	p,
 	li {
-		color: #353535;
+		color: var(--text-secondary);
 	}
 
 	a,
