@@ -19,6 +19,19 @@ document.addEventListener("astro:page-load", () => {
     ariaExpanded(mobileMenuToggle);
   });
 
+  // Close mobile menu when clicking on the overlay (outside the menu)
+  CSnavbarMenu.addEventListener("click", function (event) {
+    // Only close if clicking on the navigation element itself (the overlay area)
+    // and not on any child elements (the actual menu content)
+    if (
+      event.target === CSnavbarMenu &&
+      CSnavbarMenu.classList.contains("cs-active")
+    ) {
+      toggleMenu();
+      ariaExpanded(mobileMenuToggle);
+    }
+  });
+
   // Checks the value of aria expanded on an element and changes it accordingly whether it is expanded or not
   function ariaExpanded(element) {
     const isExpanded = element.getAttribute("aria-expanded");
