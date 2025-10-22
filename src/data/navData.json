@@ -10,6 +10,11 @@
     "children": []
   },
   {
+    "key": "Noticias",
+    "url": "/noticias/",
+    "children": []
+  },
+  {
     "key": "Proyectos",
     "url": "/proyectos/",
     "children": [
@@ -26,11 +31,6 @@
   {
     "key": "Testimonios",
     "url": "/testimonios/",
-    "children": []
-  },
-  {
-    "key": "Noticias",
-    "url": "/noticias/",
     "children": []
   },
   {
