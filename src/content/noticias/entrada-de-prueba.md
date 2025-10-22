@@ -3,7 +3,7 @@ title: Entrada de prueba
 description: Esta es una entrada de prueba desde Decap configurado en Vercel.
 author: Rafael
 date: 2025-10-21T13:48:00.000+02:00
-image: src/assets/images/blog/4p2a1864-copy.jpg
+image: src/assets/images/noticias/4p2a1864-copy.jpg
 imageAlt: Panorámica Belmontejo
 isFeatured: true
 ---

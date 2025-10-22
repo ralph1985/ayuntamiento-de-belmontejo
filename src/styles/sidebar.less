@@ -4,7 +4,7 @@
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
-	.blog-sidebar {
+	.news-sidebar {
 		width: 100%;
 		max-width: (795/16em);
 		box-sizing: border-box;
@@ -14,7 +14,7 @@
 		align-items: center;
 		row-gap: (50/16em);
 	}
-	.blog-sidebar_widget-wrapper {
+	.news-sidebar_widget-wrapper {
 		width: 100%;
 		padding: (20/16em) (16/16em);
 		margin-bottom: (30/16rem);
@@ -22,7 +22,7 @@
 		border-radius: (8/16em);
 	}
 
-	.blog-sidebar_widget-header {
+	.news-sidebar_widget-header {
 		font-size: (20/16em);
 		font-weight: bold;
 		text-align: center;
@@ -43,7 +43,7 @@
 		}
 	}
 
-	.blog-sidebar_widget-link {
+	.news-sidebar_widget-link {
 		text-decoration: none;
 		width: 100%;
 		padding: (20/16rem) 0;
@@ -63,7 +63,7 @@
 		}
 	}
 
-	.blog-sidebar_widget-image {
+	.news-sidebar_widget-image {
 		width: (60/16em);
 		height: (60/16em);
 		border-radius: 50%;
@@ -82,7 +82,7 @@
 		}
 	}
 
-	.blog-sidebar_widget-h4 {
+	.news-sidebar_widget-h4 {
 		font-size: (14/16rem);
 		font-weight: 700;
 		line-height: 1.5em;
@@ -93,7 +93,7 @@
 		display: block;
 	}
 
-	.blog-sidebar_widget-date {
+	.news-sidebar_widget-date {
 		font-size: (14/16rem);
 		line-height: 1.5em;
 		color: var(--bodyTextColor);
@@ -103,18 +103,18 @@
 
 /* Tablet - 1024px */
 @media only screen and (min-width: 64em) {
-	.blog-sidebar {
+	.news-sidebar {
 		max-width: (360/16em);
 		position: sticky;
 		top: 10rem; /* magic number to align with the header */
 	}
 
-    .blog-sidebar_widget-wrapper {
+    .news-sidebar_widget-wrapper {
 		padding: (35/16em) (30/16em);
 		margin-bottom: 0;
 	}
 
-    .blog-sidebar_widget-header {
+    .news-sidebar_widget-header {
         margin-bottom: (30/16rem);
     }
 }
@@ -122,7 +122,7 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
 	body.dark-mode {
-		.blog-sidebar_widget-header {
+		.news-sidebar_widget-header {
 			color: var(--bodyTextColorWhite);
 	
 			&:after {
@@ -130,7 +130,7 @@
 			}
 		}
 
-		.blog-sidebar_widget-date {
+		.news-sidebar_widget-date {
 			color: var(--bodyTextColorWhite);
 			opacity: 0.8;
 		}

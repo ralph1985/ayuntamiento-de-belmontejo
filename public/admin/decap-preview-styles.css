@@ -39,17 +39,17 @@
 	max-width: 100%;
 }
 
-.frame-content .blog {
+.frame-content .news {
 	padding: 2rem;
 	max-width: 48rem;
 	margin-inline: auto;
 }
 
-.frame-content .blog .title {
+.frame-content .news .title {
 	margin-top: 40px;
 }
 
-.frame-content .blog .cover {
+.frame-content .news .cover {
 	border-radius: 0.5em;
 	min-width: 100%;
 	height: clamp(200px, 30vw, 400px);
@@ -57,7 +57,7 @@
 	object-fit: cover;
 }
 
-.frame-content .blog .metadata {
+.frame-content .news .metadata {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -66,12 +66,12 @@
 	color: var(--bodyTextColor);
 }
 
-.frame-content .blog .metadata .author {
+.frame-content .news .metadata .author {
 	margin: 0;
 	font-size: 0.875rem;
 }
 
-.frame-content .blog .metadata .dot {
+.frame-content .news .metadata .dot {
 	display: block;
 	width: 3px;
 	height: 3px;
@@ -80,44 +80,44 @@
 	margin-bottom: 1px;
 }
 
-.frame-content .blog .metadata .date {
+.frame-content .news .metadata .date {
 	font-size: 0.875rem;
 }
 
-.frame-content .blog .divider {
+.frame-content .news .divider {
 	margin-top: 0;
 	margin-bottom: 1.5625em;
 	background-color: #a2a0a0;
 }
 
-.frame-content .blog .markdown {
+.frame-content .news .markdown {
 	margin-top: 3rem;
 	max-width: 80ch;
 }
 
-.frame-content .blog .markdown h1,
-.frame-content .blog .markdown h2,
-.frame-content .blog .markdown h3,
-.frame-content .blog .markdown h4,
-.frame-content .blog .markdown h5,
-.frame-content .blog .markdown h6 {
+.frame-content .news .markdown h1,
+.frame-content .news .markdown h2,
+.frame-content .news .markdown h3,
+.frame-content .news .markdown h4,
+.frame-content .news .markdown h5,
+.frame-content .news .markdown h6 {
 	color: var(--headerColor);
 }
 
-.frame-content .blog .markdown a {
+.frame-content .news .markdown a {
 	color: var(--bodyTextColor);
 }
 
-.frame-content .blog .markdown a:hover {
+.frame-content .news .markdown a:hover {
 	color: var(--primary);
 	text-decoration-color: var(--primary);
 }
 
-.frame-content .blog .markdown *:not(pre *, .admonition *, details *, blockquote *, span, a, h1, h2, h3, h4, h5, h6) {
+.frame-content .news .markdown *:not(pre *, .admonition *, details *, blockquote *, span, a, h1, h2, h3, h4, h5, h6) {
 	color: var(--bodyTextColor);
 }
 
-.frame-content .blog .markdown pre {
+.frame-content .news .markdown pre {
 	padding: 1rem;
 	margin: 1rem 0;
 	background-color: #24292e;
