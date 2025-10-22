@@ -5,6 +5,9 @@ import vercel from "@astrojs/vercel/serverless";
 
 import decapCmsOauth from "astro-decap-cms-oauth";
 
+// Check if admin should be enabled based on environment variable
+const adminEnabled = process.env.PUBLIC_ADMIN_MENU === "true";
+
 // TODO: meter "site" en una variable de entorno o un fichero de configuración para ponerlo sólo 1 vez
 export default defineConfig({
   site: "https://develop-ayuntamiento-de-belmontejo.vercel.app/",
@@ -17,6 +20,8 @@ export default defineConfig({
       changefreq: "weekly",
       priority: 0.7,
     }),
-    decapCmsOauth(),
+    decapCmsOauth({
+      adminDisabled: !adminEnabled,
+    }),
   ],
 });
