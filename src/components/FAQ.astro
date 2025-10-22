@@ -1,0 +1,365 @@
+<section id="faq-1741">
+  <div class="cs-container">
+    <div class="cs-content">
+      <span class="cs-topper">Preguntas frecuentes</span>
+      <h2 class="cs-title">Todo lo que necesitas saber sobre Belmontejo</h2>
+    </div>
+    <div class="cs-flex-group">
+      <ul class="cs-faq-group">
+        <!-- Active class added as default -->
+        <li class="cs-faq-item active">
+          <button class="cs-button">
+            <span class="cs-button-text">
+              ¿Dónde se encuentra Belmontejo?
+            </span>
+          </button>
+          <p class="cs-item-text">
+            Belmontejo se sitúa en la provincia de Cuenca, en la comunidad
+            autónoma de Castilla‑La Mancha, formando parte de la comarca de la
+            Manchuela conquense.
+          </p>
+        </li>
+        <li class="cs-faq-item">
+          <button class="cs-button">
+            <span class="cs-button-text">
+              ¿Cuál es la altitud y el entorno geográfico del pueblo?
+            </span>
+          </button>
+          <p class="cs-item-text">
+            El municipio está situado a unos 878 m sobre el nivel del mar. El
+            terreno es ondulado, típico de la transición entre la Mancha más
+            plana y la Serranía de Cuenca.
+          </p>
+        </li>
+        <li class="cs-faq-item">
+          <button class="cs-button">
+            <span class="cs-button-text">
+              ¿Cuántos habitantes tiene Belmontejo?
+            </span>
+          </button>
+          <p class="cs-item-text">
+            Según datos recientes de enero de 2024, Belmontejo tiene una
+            población aproximada de 129 habitantes, manteniendo ese encanto de
+            pueblo pequeño con alma grande.
+          </p>
+        </li>
+        <li class="cs-faq-item">
+          <button class="cs-button">
+            <span class="cs-button-text">
+              ¿Cómo se puede llegar al municipio?
+            </span>
+          </button>
+          <p class="cs-item-text">
+            Se puede acceder en coche por la carretera principal que atraviesa
+            la zona, principalmente mediante la vía N-420. Si vienes en
+            transporte público, conviene verificar horarios de autobuses desde
+            Cuenca u otras localidades cercanas.
+          </p>
+        </li>
+        <li class="cs-faq-item">
+          <button class="cs-button">
+            <span class="cs-button-text">
+              ¿Qué puedes ver o hacer en Belmontejo?
+            </span>
+          </button>
+          <p class="cs-item-text">
+            Aunque es un pueblo pequeño, tiene varios atractivos: la iglesia de
+            Nuestra Señora de la Asunción, las fuentes tradicionales ("fuente de
+            arriba" y "fuente de abajo"), rutas para caminar y el entorno
+            natural que lo rodea.
+          </p>
+        </li>
+        <li class="cs-faq-item">
+          <button class="cs-button">
+            <span class="cs-button-text">
+              ¿Cuál es la mejor época para visitar?
+            </span>
+          </button>
+          <p class="cs-item-text">
+            La primavera suele ser una excelente época por el clima templado y
+            la naturaleza en flor. No obstante, cada estación muestra su
+            encanto: los paisajes cambian y la tranquilidad del lugar se aprecia
+            en cualquier momento del año.
+          </p>
+        </li>
+        <li class="cs-faq-item">
+          <button class="cs-button">
+            <span class="cs-button-text">
+              ¿Dónde puedo alojarme o comer en el pueblo?
+            </span>
+          </button>
+          <p class="cs-item-text">
+            Hay ofertas de turismo rural en la zona de Belmontejo, aunque siendo
+            un municipio con población reducida, la oferta no es tan amplia como
+            en grandes núcleos urbanos. Te aconsejamos consultar con antelación
+            disponibilidad de alojamiento y servicios de restauración.
+          </p>
+        </li>
+        <li class="cs-faq-item">
+          <button class="cs-button">
+            <span class="cs-button-text">
+              ¿Qué trámites o servicios municipales están disponibles?
+            </span>
+          </button>
+          <p class="cs-item-text">
+            El Ayuntamiento de Belmontejo facilita información de contacto,
+            dirección, teléfono y procedimientos municipales básicos. Para otros
+            trámites puede ser necesario acudir a la sede electrónica o la
+            Diputación provincial.
+          </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Instead of loading a <script>  tag in BaseLayout, we use a scoped style in this component -->
+<!-- Astro will process this script automatically. -->
+<!-- The processed script will be injected into your page’s <head> with type="module" -->
+<!-- As a consequence, there is no need to use the defer attribute when loading a module script because modules are deferred automatically. -->
+
+<script>
+  // Astro:page-load wrapper for View Transitions purposes
+  document.addEventListener("astro:page-load", () => {
+    // Makes the script available after navigating to a new page.
+    const faqItems = Array.from(document.querySelectorAll(".cs-faq-item"));
+    for (const item of faqItems) {
+      const onClick = () => {
+        item.classList.toggle("active");
+      };
+      item.addEventListener("click", onClick);
+    }
+  });
+</script>
+
+<style lang="less">
+  /* Mobile - 360px */
+  @media only screen and (min-width: 0rem) {
+    #faq-1741 {
+      padding: var(--sectionPadding);
+      position: relative;
+
+      .cs-container {
+        width: 100%;
+        /* changes to 1280px at desktop */
+        max-width: (584/16rem);
+        margin: 2em auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* 48px - 64px */
+        gap: clamp(3rem, 6vw, 4rem);
+      }
+
+      .cs-content {
+        /* set text align to left if content needs to be left aligned */
+        text-align: center;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        /* centers content horizontally, set to flex-start to left align */
+        align-items: center;
+      }
+
+      .cs-title {
+        max-width: 15ch;
+        margin: 0 0 (32/16rem);
+      }
+
+      .cs-faq-group {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: (12/16rem);
+      }
+
+      .cs-faq-item {
+        list-style: none;
+        width: 100%;
+        /* clips all corners of the button that overlap the rounded border */
+        overflow: hidden;
+        transition: border-bottom 0.3s;
+
+        &.active {
+          .cs-button {
+            background-color: var(--secondary);
+            color: var(--bodyTextColorWhite);
+
+            &:before {
+              background-color: var(--bodyTextColorWhite);
+              transform: rotate(315deg);
+            }
+
+            &:after {
+              background-color: var(--bodyTextColorWhite);
+              transform: rotate(-315deg);
+            }
+          }
+
+          .cs-item-text {
+            height: auto;
+            /* 16px - 24px */
+            padding: (16/16rem) clamp(1rem, 2vw, 1.5rem);
+            opacity: 1;
+            border: 1px solid #e8e8e8;
+          }
+        }
+      }
+
+      .cs-button {
+        /* 16px - 20px */
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        font-weight: bold;
+        line-height: 1.2em;
+        text-align: left;
+        width: 100%;
+        padding: (16/16rem);
+        padding-left: (52/16rem);
+        background-color: transparent;
+        color: var(--headerColor);
+        border: 1px solid #e8e8e8;
+        display: block;
+        position: relative;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &:before {
+          /* left line */
+          content: "";
+          width: (8/16rem);
+          height: (2/16rem);
+          background-color: var(--headerColor);
+          opacity: 1;
+          display: block;
+          position: absolute;
+          top: 45%;
+          left: (18/16rem);
+          transform: rotate(45deg);
+          transition: transform 0.5s;
+          /* animate the transform from the left side of the x axis, and the center of the y */
+          transform-origin: left center;
+        }
+
+        &:after {
+          /* right line */
+          content: "";
+          width: (8/16rem);
+          height: (2/16rem);
+          background-color: var(--headerColor);
+          opacity: 1;
+          display: block;
+          position: absolute;
+          top: 45%;
+          left: (21/16rem);
+          transform: rotate(-45deg);
+          transition: transform 0.5s;
+          /* animate the transform from the right side of the x axis, and the center of the y */
+          transform-origin: right center;
+        }
+      }
+
+      .cs-item-text {
+        /* 14px - 16px */
+        font-size: clamp(0.875rem, 1.5vw, 1rem);
+        line-height: 1.5em;
+        height: 0;
+        margin: 0;
+        /* clips the text so it doesn't show up */
+        overflow: hidden;
+        color: var(--bodyTextColor);
+        opacity: 0;
+        transition:
+          opacity 0.3s,
+          padding-bottom 0.3s;
+      }
+    }
+  }
+
+  /* Tablet - 768px */
+  @media only screen and (min-width: 48rem) {
+    #faq-1741 {
+      .cs-gallery {
+        max-width: (1720/16rem);
+      }
+
+      .cs-picture {
+        grid-column: span 1;
+      }
+    }
+  }
+
+  /* Desktop - 1024px */
+  @media only screen and (min-width: 64rem) {
+    #faq-1741 {
+      .cs-container {
+        max-width: (1280/16rem);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: stretch;
+      }
+
+      .cs-content {
+        text-align: left;
+        width: 40%;
+        align-items: flex-start;
+        /* prevents flexbox from squishing it */
+        flex: none;
+      }
+    }
+  }
+
+  /* Dark Mode */
+  @media only screen and (min-width: 0rem) {
+    body.dark-mode {
+      #faq-1741 {
+        .cs-title,
+        .cs-item-text {
+          color: var(--bodyTextColorWhite);
+        }
+
+        .cs-topper {
+          color: var(--primaryLight);
+        }
+
+        .cs-faq-item {
+          &.active {
+            .cs-button {
+              background-color: var(--secondary);
+              color: var(--bodyTextColorWhite);
+
+              &:before,
+              &:after {
+                background-color: var(--bodyTextColorWhite);
+              }
+            }
+
+            .cs-item-text {
+              /* 20px - 24px */
+              padding-top: clamp(1.25rem, 1.3vw, 1.5rem);
+              border-color: var(--accent);
+            }
+          }
+        }
+
+        .cs-button {
+          color: var(--bodyTextColorWhite);
+          border-color: var(--accent);
+
+          &:before,
+          &:after {
+            background-color: var(--bodyTextColorWhite);
+          }
+        }
+      }
+    }
+  }
+</style>

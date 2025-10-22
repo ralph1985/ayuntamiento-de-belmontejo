@@ -1,0 +1,42 @@
+[
+  {
+    "key": "Inicio",
+    "url": "/",
+    "children": []
+  },
+  {
+    "key": "Sobre el pueblo",
+    "url": "/sobre-el-pueblo/",
+    "children": []
+  },
+  {
+    "key": "Proyectos",
+    "url": "/proyectos/",
+    "children": [
+      {
+        "key": "Proyecto 1",
+        "url": "/proyectos/proyecto-1/"
+      },
+      {
+        "key": "Proyecto 2",
+        "url": "/proyectos/proyecto-2/"
+      }
+    ]
+  },
+  {
+    "key": "Testimonios",
+    "url": "/testimonios/",
+    "children": []
+  },
+  {
+    "key": "Blog",
+    "url": "/blog/",
+    "children": []
+  },
+  {
+    "key": "Administración",
+    "url": "/admin",
+    "children": [],
+    "isAdmin": true
+  }
+]
