@@ -9,6 +9,9 @@ backend:
 
 local_backend: true
 
+# Configurar idioma español
+locale: 'es'
+
 # Logo for Decap login page. Change url to a link to the image you want to use, no file paths, must be a URL
 logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 
@@ -33,11 +36,11 @@ collections:
     folder: "src/content/noticias" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
     fields: # The fields for each document
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "string" }
-      - { label: "Author", name: "author", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime" }
-      - { label: "Cover Image", name: "image", widget: "image" }
-      - { label: "Image Caption", name: "imageAlt", widget: "string" }
-      - { label: "Is it a featured post?", name: "isFeatured", widget: "boolean", default: false }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descripción", name: "description", widget: "string" }
+      - { label: "Autor", name: "author", widget: "string" }
+      - { label: "Fecha", name: "date", widget: "datetime" }
+      - { label: "Imagen de portada", name: "image", widget: "image" }
+      - { label: "Descripción de la imagen", name: "imageAlt", widget: "string" }
+      - { label: "¿Es una noticia destacada?", name: "isFeatured", widget: "boolean", default: false }
+      - { label: "Contenido", name: "body", widget: "markdown" }
