@@ -111,7 +111,7 @@ const filteredNavData = navData.filter((entry) => {
     #footer {
       font-size: ~"min(4vw, 1.2em)";
       padding: (84/16rem) 0 (20/16rem);
-      background: #1c1c1c;
+      background: var(--text-primary);
 
       .left-section {
         text-align: center;
@@ -139,7 +139,7 @@ const filteredNavData = navData.filter((entry) => {
           width: 100%;
           width: 307/14rem;
           margin: auto;
-          color: #fff;
+          color: var(--text-white);
           opacity: 0.9;
         }
       }
@@ -178,13 +178,13 @@ const filteredNavData = navData.filter((entry) => {
               font-size: (18/16rem);
               list-style: none;
               margin-bottom: (12/16rem);
-              color: #fff;
+              color: var(--text-white);
               opacity: 0.9;
 
               a {
                 line-height: 21/18em;
                 text-decoration: none;
-                color: #fff;
+                color: var(--text-white);
                 transition: color 0.3s;
                 &:hover {
                   color: var(--primary);
@@ -197,7 +197,7 @@ const filteredNavData = navData.filter((entry) => {
               line-height: 21/18em;
               text-transform: uppercase;
               margin-bottom: (37/16rem);
-              color: #fff;
+              color: var(--text-white);
               position: relative;
 
               &:before {
@@ -235,7 +235,7 @@ const filteredNavData = navData.filter((entry) => {
         width: 96%;
         margin: auto;
         margin-top: (100/16rem);
-        color: #fff;
+        color: var(--text-white);
 
         a {
           font-size: (16/16rem);
@@ -350,7 +350,7 @@ const filteredNavData = navData.filter((entry) => {
   @media only screen and (min-width: 0em) {
     body.dark-mode {
       #footer {
-        background: #061623;
+        background: var(--background-sections);
       }
     }
   }

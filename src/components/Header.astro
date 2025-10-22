@@ -172,7 +172,7 @@ const filteredNavData = navData.filter((entry) => {
       /* prevents padding from affecting height and width */
       box-sizing: border-box;
       padding: (12/16rem) (16/16rem);
-      background-color: #fff;
+      background-color: var(--background-main);
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       position: fixed;
       z-index: 10000;
@@ -297,7 +297,7 @@ const filteredNavData = navData.filter((entry) => {
       .cs-line {
         width: 100%;
         height: 2px;
-        background-color: #1a1a1a;
+        background-color: var(--text-primary);
         border-radius: 2px;
         position: absolute;
         left: 50%;
@@ -339,7 +339,7 @@ const filteredNavData = navData.filter((entry) => {
 
       .cs-ul-wrapper {
         height: 100vh;
-        background-color: #fff;
+        background-color: var(--background-main);
         box-shadow: inset rgba(0, 0, 0, 0.2) 0px 8px 24px;
         opacity: 0;
         visibility: hidden;
@@ -468,7 +468,7 @@ const filteredNavData = navData.filter((entry) => {
 
         .cs-logo {
           /* makes it white */
-          filter: grayscale(1) brightness(1000%);
+          // filter: grayscale(1) brightness(1000%);
 
           .cs-logo-text {
             color: var(--bodyTextColorWhite);
@@ -477,7 +477,7 @@ const filteredNavData = navData.filter((entry) => {
         }
 
         .cs-line {
-          background-color: #fff;
+          background-color: var(--text-white);
         }
 
         .cs-ul-wrapper {
@@ -573,7 +573,7 @@ const filteredNavData = navData.filter((entry) => {
         &.cs-drop-link {
           /* 14px - 16px */
           font-size: clamp(0.875rem, 2vw, 1.25rem);
-          color: #fff;
+          color: var(--text-white);
         }
       }
 
@@ -629,7 +629,7 @@ const filteredNavData = navData.filter((entry) => {
         min-width: (200/16rem);
         margin: 0;
         padding: 0;
-        background-color: #fff;
+        background-color: var(--background-main);
         box-shadow: rgba(149, 157, 165, 0.2) 0px 10px 16px;
         opacity: 0;
         border-bottom: 5px solid var(--primary);
@@ -720,7 +720,7 @@ const filteredNavData = navData.filter((entry) => {
             background-color 0.3s;
 
           &:hover {
-            background-color: #f7f7f7;
+            background-color: var(--background-sections);
           }
 
           &:focus-within {
@@ -760,7 +760,7 @@ const filteredNavData = navData.filter((entry) => {
 
         .cs-drop-icon {
           /* turns it white */
-          filter: grayscale(1) brightness(1000%);
+          // filter: grayscale(1) brightness(1000%);
         }
       }
     }
@@ -779,7 +779,7 @@ const filteredNavData = navData.filter((entry) => {
       /* prevents padding from affecting height and width */
       box-sizing: border-box;
       padding: 0 (16/16rem);
-      background-color: #fff;
+      background-color: var(--background-main);
       box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
       position: fixed;
       z-index: 10000;
@@ -892,7 +892,7 @@ const filteredNavData = navData.filter((entry) => {
 
         .cs-logo {
           /* makes it turn white */
-          filter: grayscale(1) brightness(1000%);
+          // filter: grayscale(1) brightness(1000%);
 
           .cs-logo-text {
             color: var(--bodyTextColorWhite);
