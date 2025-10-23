@@ -2,7 +2,7 @@
 /**
  * * This custom layout displays noticias posts and a sidebar
  **/
-import FeaturedPost from "@components/FeaturedPost.astro";
+import FeaturedContent from "@components/FeaturedContent.astro";
 import { formatDate } from "@js/utils";
 import { Picture } from "astro:assets";
 
@@ -62,7 +62,10 @@ const { posts } = Astro.props;
   </section>
   <aside class="news-sidebar">
     <div class="news-sidebar_widget-wrapper">
-      <FeaturedPost />
+      <FeaturedContent
+        type="both"
+        limit={4}
+      />
     </div>
   </aside>
 </section>

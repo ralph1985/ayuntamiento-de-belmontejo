@@ -6,7 +6,7 @@ date: 2025-09-24T14:06:40.000Z
 category: "Info General"
 guid: "https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1419152"
 link: "https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1419152"
-isFeatured: false
+isFeatured: true
 ---
 
 EL JUEVES DÍA 25 DE SEPTIEMBRE NO HABRA ATENCIÓN AL PÚBLICO.
