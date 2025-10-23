@@ -2,6 +2,7 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
 import FAQ from "@components/FAQ.astro";
+import FeaturedContent from "@components/FeaturedContent.astro";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -590,6 +591,29 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
         class="cs-button-solid"
         >Más testimonios</a
       >
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!--              Contenido Destacado             -->
+  <!-- ============================================ -->
+
+  <section id="featured-content">
+    <div class="cs-container">
+      <div class="cs-content">
+        <span class="cs-topper">Lo más relevante</span>
+        <h2 class="cs-title">Contenido Destacado</h2>
+        <p class="cs-text">
+          Mantente al día con las noticias más importantes y los bandos
+          oficiales de nuestro municipio.
+        </p>
+      </div>
+      <div class="featured-content-wrapper">
+        <FeaturedContent
+          type="both"
+          limit={6}
+        />
+      </div>
     </div>
   </section>
 
@@ -1626,6 +1650,148 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
         .cs-desc {
           color: var(--primaryLight);
         }
+      }
+    }
+  }
+
+  /*-- -------------------------- -->
+  <---      Featured Content      -->
+  <--- -------------------------- -*/
+
+  /* Mobile - 360px */
+  @media only screen and (min-width: 0em) {
+    #featured-content {
+      padding: var(--sectionPadding);
+      background-color: #f7f7f7;
+
+      .cs-container {
+        width: 100%;
+        max-width: (1280/16rem);
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: (48/16rem);
+      }
+
+      .cs-content {
+        text-align: center;
+        width: 100%;
+        max-width: (630/16rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: (24/16rem);
+      }
+
+      .cs-topper {
+        font-size: (16/16rem);
+        font-weight: 700;
+        line-height: 1.2em;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--primary);
+        display: block;
+      }
+
+      .cs-title {
+        font-size: clamp(1.9375rem, 3.9vw, 3.0625rem);
+        font-weight: 900;
+        line-height: 1.2em;
+        text-align: center;
+        max-width: (700/16rem);
+        margin: 0 auto;
+        color: var(--headerColor);
+        position: relative;
+      }
+
+      .cs-text {
+        font-size: var(--bodyFontSize);
+        line-height: 1.5em;
+        text-align: center;
+        max-width: (630/16rem);
+        margin: 0 auto;
+        color: var(--bodyTextColor);
+      }
+
+      .featured-content-wrapper {
+        width: 100%;
+        max-width: (800/16rem);
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: (20/16rem);
+
+        :global(.news-sidebar_widget-header) {
+          font-size: (24/16rem);
+          font-weight: 700;
+          margin-bottom: (24/16rem);
+          color: var(--headerColor);
+          text-align: center;
+        }
+
+        :global(.news-sidebar_widget-link) {
+          display: flex;
+          align-items: center;
+          gap: (16/16rem);
+          padding: (16/16rem);
+          background: white;
+          border-radius: (8/16rem);
+          text-decoration: none;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+          }
+        }
+
+        :global(.news-sidebar_widget-image) {
+          width: (60/16rem);
+          height: (60/16rem);
+          border-radius: (4/16rem);
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+
+        :global(.content-group) {
+          flex: 1;
+        }
+
+        :global(.news-sidebar_widget-h4) {
+          font-size: (16/16rem);
+          font-weight: 600;
+          line-height: 1.3em;
+          margin-bottom: (8/16rem);
+          color: var(--headerColor);
+        }
+
+        :global(.news-sidebar_widget-date) {
+          font-size: (14/16rem);
+          color: var(--bodyTextColor);
+          margin-bottom: (4/16rem);
+          display: block;
+        }
+      }
+    }
+  }
+
+  /* Tablet - 768px */
+  @media only screen and (min-width: 48em) {
+    #featured-content {
+      .featured-content-wrapper {
+        grid-template-columns: 1fr 1fr;
+        gap: (24/16rem);
+      }
+    }
+  }
+
+  /* Desktop - 1024px */
+  @media only screen and (min-width: 64em) {
+    #featured-content {
+      .featured-content-wrapper {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: (32/16rem);
       }
     }
   }
