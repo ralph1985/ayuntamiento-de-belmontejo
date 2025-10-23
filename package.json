@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "fetch-bandos": "node scripts/fetch-bandos.js"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.6.0",
