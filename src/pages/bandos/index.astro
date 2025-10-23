@@ -1,0 +1,38 @@
+---
+/**
+ * * This page is the bandos index and displays all the bandos in a grid
+ **/
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import CTA from "@components/CTA.astro";
+import { getCollection } from "astro:content";
+import { getImage } from "astro:assets";
+import "@styles/sidebar.less";
+
+import Landing from "@components/Landing.astro";
+import BandosRecentArticlesWithSidebar from "@layouts/BandosRecentArticlesWithSidebar.astro";
+
+const posts = await getCollection("bandos");
+posts.sort(
+  (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+);
+
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
+import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+const optimizedImage = await getImage({ src: landingImage, format: "avif" });
+---
+
+<BaseLayout
+  title="Bandos"
+  description="Consulta todos los bandos y comunicados oficiales del Ayuntamiento de Belmontejo"
+  preloadedImage={optimizedImage}
+>
+  <Landing
+    title="Bandos"
+    image={optimizedImage}
+  />
+
+  <!-- Use the BandosRecentArticlesWithSidebar layout to display the recent bandos in a custom sidebar layout-->
+  <BandosRecentArticlesWithSidebar posts={posts} />
+  <CTA />
+</BaseLayout>

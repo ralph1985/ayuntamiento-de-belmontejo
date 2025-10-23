@@ -1,0 +1,31 @@
+---
+/**
+ * * This page generates the individual bandos posts
+ **/
+
+import { getCollection, render } from "astro:content";
+import BandoPostLayout from "@layouts/BandoPostLayout.astro";
+import CTA from "@components/CTA.astro";
+
+// Prerender this page as static HTML during the build process
+export const prerender = true;
+
+// Generates the individual bandos pages based on the bandos collection
+export async function getStaticPaths() {
+  const posts = await getCollection("bandos");
+  return posts.map((entry) => ({
+    params: { post: entry.id },
+    props: { post: entry },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<BandoPostLayout
+  post={post}
+  headings={headings}
+>
+  <Content />
+</BandoPostLayout>

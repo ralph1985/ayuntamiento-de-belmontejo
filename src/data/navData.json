@@ -15,6 +15,11 @@
     "children": []
   },
   {
+    "key": "Bandos",
+    "url": "/bandos/",
+    "children": []
+  },
+  {
     "key": "Proyectos",
     "url": "/proyectos/",
     "children": [
