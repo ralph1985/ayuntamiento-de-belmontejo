@@ -124,6 +124,17 @@ function generateFrontmatter(item) {
     description = description.substring(0, 157) + "...";
   }
 
+  // Mark some bandos as featured based on keywords or recent date
+  // TODO: definir criterios para destacados
+  const featuredKeywords = [];
+  const isRecent = Date.now() - date.getTime() < 30 * 24 * 60 * 60 * 1000; // Last 30 days
+  const hasKeyword = featuredKeywords.some(
+    (keyword) =>
+      item.title.toLowerCase().includes(keyword) ||
+      description.toLowerCase().includes(keyword)
+  );
+  const isFeatured = isRecent || hasKeyword;
+
   return `title: "${escapeYaml(item.title)}"
 description: "${escapeYaml(description)}"
 author: "Ayuntamiento de Belmontejo"
@@ -131,7 +142,7 @@ date: ${isoDate}
 category: "${escapeYaml(item.category)}"
 guid: "${escapeYaml(item.guid)}"
 link: "${escapeYaml(item.link)}"
-isFeatured: false`;
+isFeatured: ${isFeatured}`;
 }
 
 function generateContent(item) {
