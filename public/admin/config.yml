@@ -18,8 +18,8 @@ logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 # Add site link in DecapCMS (optional)
 site_url: https://develop-ayuntamiento-de-belmontejo.vercel.app
 
-media_folder: src/assets/images/noticias # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
-public_folder: src/assets/images/noticias # Ensure that this path is the same as the media_folder path above.
+media_folder: src/assets/images # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
+public_folder: src/assets/images # Ensure that this path is the same as the media_folder path above.
 
 # Quickly see who did what (optional)
 commit_messages:
@@ -35,6 +35,8 @@ collections:
     label: "Noticias" # Used in the admin dashboard UI
     folder: "src/content/noticias" # The path to the folder where the documents are stored
     create: true # Allow users to create new documents in this collection
+    media_folder: "src/assets/images/noticias" # Folder específico para imágenes de noticias
+    public_folder: "src/assets/images/noticias" # Ruta pública para imágenes de noticias
     fields: # The fields for each document
       - { label: "Título", name: "title", widget: "string" }
       - { label: "Descripción", name: "description", widget: "string" }
@@ -43,4 +45,23 @@ collections:
       - { label: "Imagen de portada", name: "image", widget: "image" }
       - { label: "Descripción de la imagen", name: "imageAlt", widget: "string" }
       - { label: "¿Es una noticia destacada?", name: "isFeatured", widget: "boolean", default: false }
+      - { label: "Contenido", name: "body", widget: "markdown" }
+
+  - name: "bandos" # Used in routes, e.g., /admin/collections/bandos
+    label: "Bandos" # Used in the admin dashboard UI
+    folder: "src/content/bandos" # The path to the folder where the bandos are stored
+    create: true # Allow users to create new bandos in this collection
+    media_folder: "src/assets/images/bandos" # Folder específico para imágenes de bandos
+    public_folder: "src/assets/images/bandos" # Ruta pública para imágenes de bandos
+    fields: # The fields for each bando document
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descripción", name: "description", widget: "text" }
+      - { label: "Autor", name: "author", widget: "string", default: "Ayuntamiento de Belmontejo" }
+      - { label: "Fecha", name: "date", widget: "datetime" }
+      - { label: "Imagen (opcional)", name: "image", widget: "image", required: false }
+      - { label: "Descripción de la imagen", name: "imageAlt", widget: "string", required: false }
+      - { label: "Categoría", name: "category", widget: "string", default: "Info General" }
+      - { label: "GUID", name: "guid", widget: "string", hint: "Identificador único del bando (se genera automáticamente al sincronizar)" }
+      - { label: "Enlace original", name: "link", widget: "string", hint: "URL del bando original en Bandomovil" }
+      - { label: "¿Es un bando destacado?", name: "isFeatured", widget: "boolean", default: false }
       - { label: "Contenido", name: "body", widget: "markdown" }
