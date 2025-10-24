@@ -7,6 +7,9 @@ backend:
   base_url: https://develop-ayuntamiento-de-belmontejo.vercel.app
   auth_endpoint: oauth
 
+# Enable editorial workflow for content approval process
+publish_mode: editorial_workflow
+
 local_backend: true
 
 # Configurar idioma español
