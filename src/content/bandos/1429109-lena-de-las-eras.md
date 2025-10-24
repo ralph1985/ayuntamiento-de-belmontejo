@@ -1,5 +1,5 @@
 ---
-title: Leña de las eras (cambio de prueba)
+title: Leña de las eras
 description: Por favor, respeten la leña que hay en las eras privadas.Esa leña
   tiene dueño y no es para el público en general. Mantengamos una convivencia
   adecuada y resp...
