@@ -1,5 +1,5 @@
 ---
-title: Club de Lectura (cambio de prueba)
+title: Club de Lectura
 description: El próximo lunes, 29 de septiembre, a las 11:00 horas empezamos con
   el nuevo Club de Lectura de Belmontejo, si puedes trae un libro que hayas
   leído este vera...
