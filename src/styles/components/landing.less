@@ -5,8 +5,10 @@
 /* Mobile */
 @media only screen and (min-width: 0em) {
   #int-hero {
-    min-height: 30vh;
+    min-height: 25vh;
     padding-top: (50/16rem);
+    padding-left: 1em;
+    padding-right: 1em;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,24 +52,23 @@
       width: 96%;
       max-width: (500/16rem);
       margin: 0 auto;
-      margin-top: (70/16rem);
-      margin-bottom: (30/16rem);
+      margin-top: (10/16rem);
+      margin-bottom: (10/16rem);
       color: var(--text-white);
       position: relative;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
       font-weight: 700;
     }
 
-    p {
+    p,
+    :global(p) {
       text-align: center;
       width: 96%;
       max-width: (400/16rem);
-      margin: auto;
-      margin-bottom: (30/16rem);
       color: var(--text-white);
       display: block;
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-      font-size: (18/16rem);
+      font-size: (12/16rem);
       font-weight: 500;
       line-height: 1.5;
       /* Opcional: fondo semitransparente para mejor legibilidad */
@@ -75,6 +76,12 @@
       padding: (12/16rem) (20/16rem);
       border-radius: (8/16rem);
       backdrop-filter: blur(2px);
+    }
+
+    /* Estilos específicos para cualquier elemento que venga por slot */
+    :global(*) {
+      color: var(--text-white);
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
     }
   }
 }
