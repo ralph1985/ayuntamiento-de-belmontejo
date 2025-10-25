@@ -1,7 +1,7 @@
 {
-  "name": "intermediate-astro-v5-less-decap",
+  "name": "ayuntamiento-de-belmontejo",
   "type": "module",
-  "version": "2.2.5",
+  "version": "0.0.1",
   "scripts": {
     "astro": "astro dev",
     "dev": "astro dev",
