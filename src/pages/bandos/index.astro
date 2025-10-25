@@ -30,7 +30,12 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
   <Landing
     title="Bandos"
     image={optimizedImage}
-  />
+  >
+    <p>
+      Consulta todos los bandos y comunicados oficiales del Ayuntamiento de
+      Belmontejo
+    </p>
+  </Landing>
 
   <!-- Use the BandosRecentArticlesWithSidebar layout to display the recent bandos in a custom sidebar layout-->
   <BandosRecentArticlesWithSidebar posts={posts} />

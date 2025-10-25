@@ -6,6 +6,9 @@ const { title, image } = Astro.props;
 <section id="int-hero">
   <h1 id="home-h">{title}</h1>
 
+  <!-- Additional content slot for descriptions or other content -->
+  <slot />
+
   <!-- standard <picture> attributes are supported. Set loading to lazy for assets below the fold -->
   <!-- Note: because we use the getImage function to generate an optimized image, we need to use special properties. More info on [the getImage() page](https://docs.astro.build/en/guides/images/#generating-images-with-getimage) -->
   <Picture
