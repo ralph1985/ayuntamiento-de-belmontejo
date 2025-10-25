@@ -1,30 +1,29 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SearchBox from "../components/SearchBox.astro";
+import Landing from "../components/Landing.astro";
+import { getImage } from "astro:assets";
+
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
+import landingImage from "@assets/images/landing.jpg";
+const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 ---
 
 <BaseLayout
   title="Buscador"
   description="Busca en todas las noticias y bandos del Ayuntamiento de Belmontejo"
+  preloadedImage={optimizedImage}
 >
   <main id="main-content">
-    <!-- ============================================ -->
-    <!--                 Hero Section               -->
-    <!-- ============================================ -->
-    <section
-      id="hero"
-      class="cs-hero"
+    <Landing
+      title="Buscador"
+      image={optimizedImage}
     >
-      <div class="cs-container">
-        <div class="cs-content">
-          <h1 class="cs-title">Buscador</h1>
-          <p class="cs-text">
-            Encuentra rápidamente información en noticias y bandos del
-            Ayuntamiento de Belmontejo
-          </p>
-        </div>
-      </div>
-    </section>
+      <p>
+        Encuentra rápidamente información en noticias y bandos del Ayuntamiento
+        de Belmontejo
+      </p>
+    </Landing>
 
     <!-- ============================================ -->
     <!--                Search Section              -->

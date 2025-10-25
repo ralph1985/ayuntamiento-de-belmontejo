@@ -79,6 +79,39 @@
   let searchData: SearchItem[] = [];
   let isDataLoaded = false;
 
+  // Funciones para persistir el estado de búsqueda
+  function saveSearchState(query: string, results: SearchItem[]) {
+    const state = {
+      query,
+      results,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem("searchState", JSON.stringify(state));
+  }
+
+  function loadSearchState() {
+    try {
+      const saved = localStorage.getItem("searchState");
+      if (!saved) return null;
+
+      const state = JSON.parse(saved);
+      // Validar que el estado no sea muy antiguo (más de 1 hora)
+      if (Date.now() - state.timestamp > 3600000) {
+        localStorage.removeItem("searchState");
+        return null;
+      }
+
+      return state;
+    } catch (error) {
+      console.error("Error loading search state:", error);
+      return null;
+    }
+  }
+
+  function clearSearchState() {
+    localStorage.removeItem("searchState");
+  }
+
   // Elementos del DOM
   const searchInput = document.getElementById(
     "search-input"
@@ -149,6 +182,9 @@
     searchResults.style.display = "block";
     searchLoading.style.display = "none";
 
+    // Guardar el estado de búsqueda
+    saveSearchState(query, results);
+
     if (results.length === 0) {
       searchNoResults.style.display = "block";
       searchResultsList.innerHTML = "";
@@ -207,9 +243,11 @@
     return highlightedText;
   }
 
-  // Ocultar resultados
+  // Ocultar resultados solo cuando el input está vacío
   function hideSearchResults() {
-    searchResults.style.display = "none";
+    if (!searchInput.value.trim()) {
+      searchResults.style.display = "none";
+    }
   }
 
   // Event listeners
@@ -230,6 +268,7 @@
       }, 300); // Debounce de 300ms
     } else {
       hideSearchResults();
+      clearSearchState(); // Limpiar estado cuando el input está vacío
     }
   });
 
@@ -240,16 +279,16 @@
     }
   });
 
-  // Cerrar resultados cuando se hace clic fuera
-  document.addEventListener("click", (e) => {
-    if (
-      !searchResults.contains(e.target as Node) &&
-      !searchInput.contains(e.target as Node) &&
-      !searchButton.contains(e.target as Node)
-    ) {
-      hideSearchResults();
-    }
-  });
+  // Cerrar resultados cuando se hace clic fuera - Deshabilitado para resultados fijos
+  // document.addEventListener("click", (e) => {
+  //   if (
+  //     !searchResults.contains(e.target as Node) &&
+  //     !searchInput.contains(e.target as Node) &&
+  //     !searchButton.contains(e.target as Node)
+  //   ) {
+  //     hideSearchResults();
+  //   }
+  // });
 
   // Cargar datos cuando se enfoca el input
   searchInput.addEventListener("focus", loadSearchData);
@@ -264,6 +303,35 @@
       }
     }
   });
+
+  // Inicialización: restaurar estado previo si existe
+  function initializeSearch() {
+    const savedState = loadSearchState();
+    if (savedState && savedState.query && savedState.results) {
+      searchInput.value = savedState.query;
+      displaySearchResults(savedState.results, savedState.query);
+    }
+  }
+
+  // Inicializar cuando se carga la página
+  document.addEventListener("DOMContentLoaded", () => {
+    loadSearchData().then(() => {
+      initializeSearch();
+    });
+  });
+
+  // Si ya está cargado el DOM, inicializar inmediatamente
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      loadSearchData().then(() => {
+        initializeSearch();
+      });
+    });
+  } else {
+    loadSearchData().then(() => {
+      initializeSearch();
+    });
+  }
 </script>
 
 <style is:global>
