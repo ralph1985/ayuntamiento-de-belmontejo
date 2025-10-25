@@ -106,15 +106,10 @@ const { Content, headings } = await render(post);
     <!--Side bar-->
     <aside class="news-sidebar">
       <!-- Desktop Table of Contents -->
-      <div
-        class="news-sidebar_widget-wrapper cs-hide-on-mobile"
-        id="desktop-toc"
-      >
-        <TableOfContents
-          headings={headings}
-          levels={3}
-        />
-      </div>
+      <TableOfContents
+        headings={headings}
+        levels={3}
+      />
       <!-- Featured Content -->
       <div class="news-sidebar_widget-wrapper">
         <FeaturedContent
