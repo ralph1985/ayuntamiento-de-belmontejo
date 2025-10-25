@@ -5,6 +5,8 @@ import client from "@data/client.json";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import GoogleAnalytics from "@components/GoogleAnalytics.astro";
+import CookieConsent from "@components/CookieConsent.astro";
+import FloatingCookieManager from "@components/FloatingCookieManager.astro";
 import "@styles/root.less";
 import "@styles/dark.less";
 
@@ -99,6 +101,12 @@ const { description, title, preloadedImage } = Astro.props as Props;
                 <slot/>
             </main>
             <Footer />
+            
+            <!-- Cookie Consent Banner -->
+            <CookieConsent />
+            
+            <!-- Floating Cookie Manager Button -->
+            <FloatingCookieManager />
 
         </body>
 </html>
