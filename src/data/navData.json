@@ -39,6 +39,11 @@
     "children": []
   },
   {
+    "key": "Buscador",
+    "url": "/buscar/",
+    "children": []
+  },
+  {
     "key": "Administración",
     "url": "/admin",
     "children": [],
