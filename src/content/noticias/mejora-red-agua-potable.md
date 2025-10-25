@@ -3,7 +3,7 @@ title: El Gobierno regional finaliza las obras de mejora de la red de abastecimi
 description: Se ha concluido una inversión cercana a los 36.000 € para la mejora de la red de agua potable con instalación de contador de captación, válvulas de sectorización, placas fotovoltaicas y renovación de acometidas domiciliarias.
 author: Redacción
 date: 2024-08-30T10:30:00.000Z
-image: src/assets/images/noticias/blog-cover.jpg
+image: src/assets/images/noticias/imagen-de-prueba-1.jpg
 imageAlt: Obras de mejora de infraestructuras en Belmontejo
 isFeatured: true
 ---

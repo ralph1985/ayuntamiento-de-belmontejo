@@ -3,7 +3,7 @@ title: La Diputación ayudará al Ayuntamiento de Belmontejo a reparar las placa
 description: Encargo de colaboración entre la Diputación de Cuenca y el Ayuntamiento para garantizar la reparación de placas solares que suministran agua caliente y calefacción en una vivienda tutelada del municipio.
 author: Redacción
 date: 2024-07-15T12:00:00.000Z
-image: src/assets/images/noticias/4p2a1864-copy.jpg
+image: src/assets/images/noticias/imagen-de-prueba-3.jpg
 imageAlt: Vivienda tutelada en Belmontejo
 isFeatured: false
 ---
