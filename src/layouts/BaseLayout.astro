@@ -4,6 +4,7 @@ import type { GetImageResult } from 'astro';
 import client from "@data/client.json";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
+import GoogleAnalytics from "@components/GoogleAnalytics.astro";
 import "@styles/root.less";
 import "@styles/dark.less";
 
@@ -85,17 +86,20 @@ const { description, title, preloadedImage } = Astro.props as Props;
 
             <!-- Sitewide Scripts -->
             <script src="@js/nav.js"></script>
+
+            <!-- Google Analytics -->
+            <GoogleAnalytics />
         </head>
         <body>
             <!-- Screen reader skip main nav -->
             <a class="skip" aria-label="skip to main content" href="#main">Click To Skip To Main Content</a>
-    
+
             <Header />
             <main id="main">
                 <slot/>
             </main>
             <Footer />
-    
+
         </body>
 </html>
 
@@ -105,16 +109,16 @@ const { description, title, preloadedImage } = Astro.props as Props;
       document.body.classList.add("dark-mode");
       localStorage.setItem("theme", "dark");
     }
-  
+
     function disableDarkMode() {
       document.body.classList.remove("dark-mode");
       localStorage.setItem("theme", "light");
     }
-  
+
     function setTheme() {
       // default to the light theme
       let theme = "light";
-  
+
       // check localStorage for a saved 'theme' variable. if it's there, the user has visited before, so apply the necessary theme choices
       if (localStorage.getItem("theme")) {
         theme = localStorage.getItem("theme");
@@ -126,12 +130,12 @@ const { description, title, preloadedImage } = Astro.props as Props;
       ) {
         theme = "dark";
       }
-  
+
       // if there is no preference set, the default of light will be used. apply accordingly
       theme === "dark" ? enableDarkMode() : disableDarkMode();
     }
-  
+
     setTheme();
-  
+
     document.addEventListener("astro:after-swap", setTheme); // For View Transitions purposes - astro:after-swap ensures that the theme is kept after navigating to a new page.
   </script>
