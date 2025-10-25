@@ -1,0 +1,22 @@
+---
+// Google Analytics component
+// This component adds Google Analytics tracking without Google Tag Manager
+const GOOGLE_ANALYTICS_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
+---
+
+{GOOGLE_ANALYTICS_ID && (
+  <>
+    <!-- Google Analytics Global Site Tag (gtag.js) -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}></script>
+    <script is:inline define:vars={{ GOOGLE_ANALYTICS_ID }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', GOOGLE_ANALYTICS_ID, {
+        // Basic configuration for privacy and performance
+        anonymize_ip: true,
+        send_page_view: true
+      });
+    </script>
+  </>
+)}
