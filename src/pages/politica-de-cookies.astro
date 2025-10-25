@@ -1,0 +1,541 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import client from "../data/client.json";
+
+const pageTitle = "Política de Cookies";
+const description =
+  "Información detallada sobre el uso de cookies en el sitio web del Ayuntamiento de Belmontejo y cómo gestionar sus preferencias.";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={description}
+>
+  <section class="cookie-policy">
+    <div class="container">
+      <header class="cookie-policy-header">
+        <h1>🍪 Política de Cookies</h1>
+        <p class="subtitle">
+          Información sobre el uso de cookies en el sitio web del {client.name}
+        </p>
+        <p class="last-updated">
+          <strong>Última actualización:</strong> 25 de octubre de 2025
+        </p>
+      </header>
+
+      <div class="cookie-policy-content">
+        <section class="policy-section">
+          <h2>¿Qué son las cookies?</h2>
+          <p>
+            Las cookies son pequeños archivos de texto que se almacenan en su
+            dispositivo cuando visita un sitio web. Estas cookies permiten que
+            el sitio web reconozca su dispositivo y almacene información sobre
+            sus preferencias o acciones anteriores.
+          </p>
+        </section>
+
+        <section class="policy-section">
+          <h2>¿Cómo utilizamos las cookies?</h2>
+          <p>
+            En el sitio web del {client.name} utilizamos cookies para los siguientes
+            propósitos:
+          </p>
+          <ul>
+            <li>Recordar sus preferencias de cookies</li>
+            <li>Analizar el tráfico y uso del sitio web</li>
+            <li>Mejorar la experiencia de navegación</li>
+            <li>Cumplir con obligaciones legales y normativas</li>
+          </ul>
+        </section>
+
+        <section class="policy-section">
+          <h2>Tipos de cookies que utilizamos</h2>
+
+          <div class="cookie-type">
+            <h3>🔧 Cookies Necesarias (Siempre activas)</h3>
+            <div class="cookie-details">
+              <p>
+                <strong>Finalidad:</strong> Esenciales para el funcionamiento básico
+                del sitio web.
+              </p>
+              <p><strong>Duración:</strong> Sesión o hasta 1 año</p>
+              <p>
+                <strong>Datos almacenados:</strong> Preferencias de cookies, configuración
+                del sitio
+              </p>
+              <div class="cookie-list">
+                <h4>Cookies específicas:</h4>
+                <ul>
+                  <li>
+                    <code>cookie-consent</code> - Almacena si ha aceptado o rechazado
+                    cookies
+                  </li>
+                  <li>
+                    <code>analytics-consent</code> - Almacena su preferencia sobre
+                    cookies analíticas
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="cookie-type">
+            <h3>📊 Cookies Analíticas (Opcionales)</h3>
+            <div class="cookie-details">
+              <p>
+                <strong>Finalidad:</strong> Nos ayudan a entender cómo los visitantes
+                utilizan nuestro sitio web.
+              </p>
+              <p><strong>Proveedor:</strong> Google Analytics</p>
+              <p><strong>Duración:</strong> Hasta 2 años</p>
+              <p>
+                <strong>Datos almacenados:</strong> Información anónima sobre visitas,
+                páginas vistas, tiempo de permanencia
+              </p>
+              <div class="cookie-list">
+                <h4>Cookies de Google Analytics:</h4>
+                <ul>
+                  <li><code>_ga</code> - Distingue usuarios únicos (2 años)</li>
+                  <li>
+                    <code>_ga_*</code> - Mantiene el estado de la sesión (2 años)
+                  </li>
+                  <li>
+                    <code>_gid</code> - Distingue usuarios únicos (24 horas)
+                  </li>
+                </ul>
+              </div>
+              <p class="privacy-note">
+                <strong>Nota de privacidad:</strong> Todas las cookies analíticas
+                tienen la anonimización de IP activada para proteger su privacidad.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="policy-section">
+          <h2>Sus derechos y opciones</h2>
+          <p>
+            Usted tiene control total sobre las cookies en nuestro sitio web:
+          </p>
+
+          <div class="rights-grid">
+            <div class="right-item">
+              <h3>✅ Aceptar o Rechazar</h3>
+              <p>
+                Puede aceptar o rechazar cookies no esenciales en cualquier
+                momento.
+              </p>
+            </div>
+
+            <div class="right-item">
+              <h3>⚙️ Configurar Preferencias</h3>
+              <p>
+                Puede elegir qué tipos de cookies permitir de forma granular.
+              </p>
+            </div>
+
+            <div class="right-item">
+              <h3>🔄 Cambiar Preferencias</h3>
+              <p>Puede modificar sus preferencias en cualquier momento.</p>
+            </div>
+
+            <div class="right-item">
+              <h3>🗑️ Eliminar Cookies</h3>
+              <p>Puede eliminar las cookies almacenadas desde su navegador.</p>
+            </div>
+          </div>
+
+          <div class="manage-cookies">
+            <h3>Gestionar sus preferencias de cookies</h3>
+            <p>
+              Haga clic en el botón siguiente para abrir el panel de
+              configuración de cookies:
+            </p>
+            <button
+              id="open-cookie-settings"
+              class="btn-primary"
+            >
+              Configurar Cookies
+            </button>
+          </div>
+        </section>
+
+        <section class="policy-section">
+          <h2>Cómo eliminar cookies desde su navegador</h2>
+          <p>
+            También puede gestionar o eliminar cookies directamente desde la
+            configuración de su navegador. Aquí le explicamos cómo hacerlo en
+            los navegadores más comunes:
+          </p>
+
+          <div class="browser-instructions">
+            <details>
+              <summary><strong>Google Chrome</strong></summary>
+              <ol>
+                <li>
+                  Haga clic en los tres puntos (⋮) en la esquina superior
+                  derecha
+                </li>
+                <li>
+                  Seleccione "Configuración" > "Privacidad y seguridad" >
+                  "Cookies y otros datos del sitio"
+                </li>
+                <li>Haga clic en "Ver todas las cookies y datos del sitio"</li>
+                <li>Busque nuestro sitio web y elimine las cookies</li>
+              </ol>
+            </details>
+
+            <details>
+              <summary><strong>Mozilla Firefox</strong></summary>
+              <ol>
+                <li>
+                  Haga clic en las tres líneas (≡) en la esquina superior
+                  derecha
+                </li>
+                <li>Seleccione "Configuración" > "Privacidad y seguridad"</li>
+                <li>
+                  En "Cookies y datos del sitio", haga clic en "Gestionar datos"
+                </li>
+                <li>Busque nuestro sitio web y elimine las cookies</li>
+              </ol>
+            </details>
+
+            <details>
+              <summary><strong>Safari</strong></summary>
+              <ol>
+                <li>Vaya a "Safari" > "Preferencias" > "Privacidad"</li>
+                <li>Haga clic en "Gestionar datos del sitio web"</li>
+                <li>Busque nuestro sitio web y elimine las cookies</li>
+              </ol>
+            </details>
+          </div>
+        </section>
+
+        <section class="policy-section">
+          <h2>Base legal y cumplimiento</h2>
+          <p>El uso de cookies en nuestro sitio web se basa en:</p>
+          <ul>
+            <li>
+              <strong>Consentimiento:</strong> Para cookies analíticas (Art. 6.1.a
+              RGPD)
+            </li>
+            <li>
+              <strong>Interés legítimo:</strong> Para cookies técnicas necesarias
+              (Art. 6.1.f RGPD)
+            </li>
+            <li>
+              <strong>Cumplimiento legal:</strong> Según la Ley 34/2002 de Servicios
+              de la Sociedad de la Información
+            </li>
+          </ul>
+        </section>
+
+        <section class="policy-section">
+          <h2>Contacto</h2>
+          <p>
+            Si tiene alguna pregunta sobre nuestra política de cookies o desea
+            ejercer sus derechos, puede contactarnos:
+          </p>
+          <div class="contact-info">
+            <p>
+              <strong>📧 Email:</strong>
+              <a href="mailto:{client.email}">{client.email}</a>
+            </p>
+            <p>
+              <strong>📞 Teléfono:</strong>
+              <a href="tel:{client.phoneForTel}">{client.phoneFormatted}</a>
+            </p>
+            <p>
+              <strong>📍 Dirección:</strong>
+              {client.address.lineOne}, {client.address.lineTwo}, {
+                client.address.city
+              }
+              {client.address.zip}
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  // Open cookie settings from the policy page
+  document.addEventListener("DOMContentLoaded", function () {
+    const openSettingsBtn = document.getElementById("open-cookie-settings");
+    if (openSettingsBtn) {
+      openSettingsBtn.addEventListener("click", function () {
+        // Show the cookie settings modal if it exists
+        const modal = document.getElementById("cookie-settings-modal");
+        if (modal) {
+          modal.style.display = "flex";
+          // Set current preferences
+          const analyticsConsent =
+            localStorage.getItem("analytics-consent") === "true";
+          const analyticsCheckbox = document.getElementById(
+            "analytics-cookies"
+          ) as HTMLInputElement;
+          if (analyticsCheckbox) {
+            analyticsCheckbox.checked = analyticsConsent;
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .cookie-policy {
+    padding: 2rem 0 4rem;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .cookie-policy-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .cookie-policy-header h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+  }
+
+  .last-updated {
+    font-size: 0.9rem;
+    color: #95a5a6;
+    margin: 0;
+  }
+
+  .cookie-policy-content {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .policy-section {
+    padding: 2rem;
+    border-bottom: 1px solid #ecf0f1;
+  }
+
+  .policy-section:last-child {
+    border-bottom: none;
+  }
+
+  .policy-section h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #3498db;
+  }
+
+  .policy-section h3 {
+    color: #34495e;
+    font-size: 1.2rem;
+    margin: 1.5rem 0 0.75rem 0;
+  }
+
+  .policy-section p {
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+
+  .policy-section ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .policy-section li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+    color: #555;
+  }
+
+  .cookie-type {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+  }
+
+  .cookie-type h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+
+  .cookie-details {
+    margin-top: 1rem;
+  }
+
+  .cookie-list {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: white;
+    border-radius: 6px;
+  }
+
+  .cookie-list h4 {
+    margin: 0 0 0.75rem 0;
+    color: #34495e;
+    font-size: 1rem;
+  }
+
+  .cookie-list code {
+    background: #f1c40f;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: "Monaco", "Menlo", monospace;
+    font-size: 0.85rem;
+  }
+
+  .privacy-note {
+    background: #e8f5e8;
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 4px solid #27ae60;
+    margin-top: 1rem;
+  }
+
+  .rights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .right-item {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+  }
+
+  .right-item h3 {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 1.1rem;
+  }
+
+  .right-item p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+  }
+
+  .manage-cookies {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .manage-cookies h3 {
+    color: white;
+    margin-top: 0;
+  }
+
+  .btn-primary {
+    background: white;
+    color: #3498db;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+  }
+
+  .btn-primary:hover {
+    background: #f8f9fa;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .browser-instructions {
+    margin: 1.5rem 0;
+  }
+
+  .browser-instructions details {
+    margin-bottom: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .browser-instructions summary {
+    padding: 1rem;
+    background: #f8f9fa;
+    cursor: pointer;
+    border-bottom: 1px solid #e9ecef;
+  }
+
+  .browser-instructions summary:hover {
+    background: #e9ecef;
+  }
+
+  .browser-instructions ol {
+    padding: 1rem 2rem;
+    margin: 0;
+  }
+
+  .contact-info {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+  }
+
+  .contact-info p {
+    margin: 0.5rem 0;
+  }
+
+  .contact-info a {
+    color: #3498db;
+    text-decoration: none;
+  }
+
+  .contact-info a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .cookie-policy-header h1 {
+      font-size: 2rem;
+    }
+
+    .policy-section {
+      padding: 1.5rem;
+    }
+
+    .rights-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .cookie-type {
+      padding: 1rem;
+    }
+  }
+</style>

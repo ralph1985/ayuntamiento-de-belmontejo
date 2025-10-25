@@ -1,22 +1,52 @@
 ---
-// Google Analytics component
-// This component adds Google Analytics tracking without Google Tag Manager
+// Google Analytics component with cookie consent management
+// This component adds Google Analytics tracking only if user has given consent
 const GOOGLE_ANALYTICS_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 ---
 
 {GOOGLE_ANALYTICS_ID && (
   <>
-    <!-- Google Analytics Global Site Tag (gtag.js) -->
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}></script>
+    <!-- Google Analytics Global Site Tag (gtag.js) - loaded conditionally -->
     <script is:inline define:vars={{ GOOGLE_ANALYTICS_ID }}>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', GOOGLE_ANALYTICS_ID, {
-        // Basic configuration for privacy and performance
-        anonymize_ip: true,
-        send_page_view: true
-      });
+      // Check if user has given analytics consent
+      function hasAnalyticsConsent() {
+        return localStorage.getItem('analytics-consent') === 'true';
+      }
+      
+      // Load Google Analytics only if consent is given
+      function loadGoogleAnalytics() {
+        if (!hasAnalyticsConsent()) {
+          return;
+        }
+        
+        // Create and load gtag script
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`;
+        document.head.appendChild(script);
+        
+        // Initialize gtag
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        
+        gtag('js', new Date());
+        gtag('config', GOOGLE_ANALYTICS_ID, {
+          // Enhanced privacy configuration for GDPR compliance
+          anonymize_ip: true,
+          send_page_view: true,
+          cookie_flags: 'max-age=7200;secure;samesite=strict'
+        });
+        
+        console.log('Google Analytics loaded with user consent');
+      }
+      
+      // Load analytics immediately if consent is already given
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadGoogleAnalytics);
+      } else {
+        loadGoogleAnalytics();
+      }
     </script>
   </>
 )}
