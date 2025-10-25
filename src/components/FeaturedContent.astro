@@ -7,9 +7,10 @@ import "@styles/sidebar.less";
 interface Props {
   type?: "noticias" | "bandos" | "both";
   limit?: number;
+  excludeCurrentPost?: string;
 }
 
-const { type = "both", limit = 3 } = Astro.props;
+const { type = "both", limit = 3, excludeCurrentPost } = Astro.props;
 
 let featuredContent: any[] = [];
 
@@ -17,6 +18,9 @@ if (type === "noticias" || type === "both") {
   const noticias = await getCollection("noticias");
   const featuredNoticias = noticias
     .filter((post) => post.data.isFeatured === true)
+    .filter((post) =>
+      excludeCurrentPost ? post.id !== excludeCurrentPost : true
+    )
     .map((post) => ({ ...post, contentType: "noticias" }));
   featuredContent.push(...featuredNoticias);
 }
@@ -25,6 +29,9 @@ if (type === "bandos" || type === "both") {
   const bandos = await getCollection("bandos");
   const featuredBandos = bandos
     .filter((post) => post.data.isFeatured === true)
+    .filter((post) =>
+      excludeCurrentPost ? post.id !== excludeCurrentPost : true
+    )
     .map((post) => ({ ...post, contentType: "bandos" }));
   featuredContent.push(...featuredBandos);
 }

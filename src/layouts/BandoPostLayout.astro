@@ -115,6 +115,7 @@ const { Content, headings } = await render(post);
         <FeaturedContent
           type="bandos"
           limit={3}
+          excludeCurrentPost={post.id}
         />
       </div>
     </aside>

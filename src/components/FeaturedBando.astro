@@ -4,8 +4,18 @@ import { Image } from "astro:assets";
 import { formatDate } from "@js/utils";
 import "@styles/sidebar.less";
 
+interface Props {
+  excludeCurrentPost?: string;
+}
+
+const { excludeCurrentPost } = Astro.props;
+
 const posts = await getCollection("bandos");
-const featuredBandos = posts.filter((post) => post.data.isFeatured === true);
+const featuredBandos = posts
+  .filter((post) => post.data.isFeatured === true)
+  .filter((post) =>
+    excludeCurrentPost ? post.id !== excludeCurrentPost : true
+  );
 ---
 
 <h3 class="news-sidebar_widget-header">Bandos Destacados</h3>
