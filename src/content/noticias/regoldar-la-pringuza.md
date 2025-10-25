@@ -3,7 +3,7 @@ title: Regoldar la pringuza - Los dichos perdidos de la jerga manchega que Belmo
 description: Iniciativa de la Asociación "El Kambio" con financiación europea en la que Belmontejo participa para recuperar y visibilizar expresiones y dichos propios de la habla manchega, fomentando identidad local y generacional.
 author: Redacción
 date: 2024-09-15T11:00:00.000Z
-image: src/assets/images/noticias/4p2a1864-copy.jpg
+image: src/assets/images/noticias/imagen-de-prueba-3.jpg
 imageAlt: Paisaje típico manchego
 isFeatured: false
 ---
@@ -73,4 +73,4 @@ The `<Image />` and `<Picture />` components are unavailable in .md files. If yo
 Images uploaded via the CMS will be stored in `/src`. The kit is configured so that these images are automatically optimized by Astro. More details on [images in content collections](https://docs.astro.build/en/guides/images/#images-in-content-collections)
 
 This jpg image was uploaded on Decap and is turned into a webp by Astro
-![A starry night sky.](@assets/images/noticias/4p2a1864-copy.jpg)
+![A starry night sky.](@assets/images/noticias/imagen-de-prueba-3.jpg)
