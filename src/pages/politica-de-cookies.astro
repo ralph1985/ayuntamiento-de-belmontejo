@@ -1,6 +1,11 @@
 ---
+import Landing from "../components/Landing.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import client from "../data/client.json";
+import { getImage } from "astro:assets";
+import vistaAerea from "../../public/assets/images/vista_aerea.jpg";
+
+const optimizedImage = await getImage({ src: vistaAerea });
 
 const pageTitle = "Política de Cookies";
 const description =
@@ -11,10 +16,13 @@ const description =
   title={pageTitle}
   description={description}
 >
+  <Landing
+    title="🍪 Política de Cookies"
+    image={optimizedImage}
+  />
   <section class="cookie-policy">
     <div class="container">
       <header class="cookie-policy-header">
-        <h1>🍪 Política de Cookies</h1>
         <p class="subtitle">
           Información sobre el uso de cookies en el sitio web del {client.name}
         </p>
