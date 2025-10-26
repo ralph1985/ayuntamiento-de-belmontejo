@@ -8,7 +8,11 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "fetch-bandos": "node scripts/fetch-bandos.js"
+    "fetch-bandos": "node scripts/fetch-bandos.js",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix",
+    "format": "prettier --check .",
+    "format:write": "prettier --write ."
   },
   "dependencies": {
     "@astrojs/sitemap": "3.6.0",
@@ -25,6 +29,11 @@
     "simple-oauth2": "5.1.0"
   },
   "devDependencies": {
-    "@types/cors": "2.8.13"
+    "@types/cors": "2.8.13",
+    "@typescript-eslint/eslint-plugin": "8.46.2",
+    "@typescript-eslint/parser": "8.46.2",
+    "eslint": "9.38.0",
+    "eslint-plugin-astro": "1.3.1",
+    "eslint-plugin-jsx-a11y": "6.10.2"
   }
 }
