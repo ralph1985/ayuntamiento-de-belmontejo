@@ -1,12 +1,12 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import SearchBox from "../components/SearchBox.astro";
-import Landing from "../components/Landing.astro";
-import { getImage } from "astro:assets";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchBox from '../components/SearchBox.astro';
+import Landing from '../components/Landing.astro';
+import { getImage } from 'astro:assets';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from "@assets/images/vista-aerea-2.jpg";
-const optimizedImage = await getImage({ src: landingImage, format: "avif" });
+import landingImage from '@assets/images/vista-aerea-2.jpg';
+const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
@@ -15,10 +15,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
   preloadedImage={optimizedImage}
 >
   <main id="main-content">
-    <Landing
-      title="Buscador"
-      image={optimizedImage}
-    >
+    <Landing title="Buscador" image={optimizedImage}>
       <p>
         Encuentra rápidamente información en noticias y bandos del Ayuntamiento
         de Belmontejo
@@ -28,10 +25,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
     <!-- ============================================ -->
     <!--                Search Section              -->
     <!-- ============================================ -->
-    <section
-      id="search-section"
-      class="cs-search-section"
-    >
+    <section id="search-section" class="cs-search-section">
       <div class="cs-container">
         <div class="cs-search-wrapper">
           <SearchBox />
@@ -60,5 +54,5 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 </BaseLayout>
 
 <style lang="less">
-  @import "../styles/pages/buscar.less";
+  @import '../styles/pages/buscar.less';
 </style>

@@ -1,20 +1,17 @@
 ---
-import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
-import { formatDate } from "@js/utils";
-import "@styles/sidebar.less";
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { formatDate } from '@js/utils';
+import '@styles/sidebar.less';
 
-const posts = await getCollection("noticias");
-const featuredPosts = posts.filter((post) => post.data.isFeatured === true);
+const posts = await getCollection('noticias');
+const featuredPosts = posts.filter(post => post.data.isFeatured === true);
 ---
 
 <h3 class="news-sidebar_widget-header">Noticias Destacadas</h3>
 {
-  featuredPosts.map((post) => (
-    <a
-      class="news-sidebar_widget-link"
-      href={`/noticias/${post.id}`}
-    >
+  featuredPosts.map(post => (
+    <a class="news-sidebar_widget-link" href={`/noticias/${post.id}`}>
       <picture class="news-sidebar_widget-image">
         <Image
           src={post.data.image}

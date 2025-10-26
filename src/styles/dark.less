@@ -6,60 +6,60 @@
 
 /* Mobile */
 @media only screen and (min-width: 0em) {
-    // Paleta Belmontejo - Modo Oscuro
-    :root {
-        /* Fondos modo oscuro */
-        --dark: #1C1C1B; /* Gris pizarra (fondo principal) */
-        --medium: #2A2A28; /* Gris cálido (tarjetas/secciones) */
+  // Paleta Belmontejo - Modo Oscuro
+  :root {
+    /* Fondos modo oscuro */
+    --dark: #1c1c1b; /* Gris pizarra (fondo principal) */
+    --medium: #2a2a28; /* Gris cálido (tarjetas/secciones) */
 
-        /* Bordes modo oscuro */
-        --accent: #3E3E3B; /* Gris tenue (bordes/separadores) */
+    /* Bordes modo oscuro */
+    --accent: #3e3e3b; /* Gris tenue (bordes/separadores) */
+  }
+
+  body.dark-mode {
+    background-color: var(--dark);
+
+    /* Actualizar variables CSS para modo oscuro */
+    --background-main: #1c1c1b; /* Gris pizarra */
+    --background-sections: #2a2a28; /* Gris cálido */
+
+    --text-primary: #f5f1e9; /* Marfil suave */
+    --text-secondary: #b8b3a9; /* Gris claro */
+    --text-white: #f5f1e9; /* Marfil suave */
+
+    --primary: #5e8cc0; /* Azul Cuenca claro */
+    --primaryLight: #5e8cc0; /* Mantener el mismo tono */
+    --secondary: #a6b381; /* Verde olivo suave */
+    --secondaryLight: #a6b381; /* Mantener coherencia */
+
+    --accent: #e27a58; /* Teja claro */
+    --accentLight: #e27a58; /* Mantener consistencia */
+
+    --border-color: #3e3e3b; /* Gris tenue */
+
+    p,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--text-primary);
     }
 
-    body.dark-mode {
-        background-color: var(--dark);
-
-        /* Actualizar variables CSS para modo oscuro */
-        --background-main: #1C1C1B; /* Gris pizarra */
-        --background-sections: #2A2A28; /* Gris cálido */
-
-        --text-primary: #F5F1E9; /* Marfil suave */
-        --text-secondary: #B8B3A9; /* Gris claro */
-        --text-white: #F5F1E9; /* Marfil suave */
-
-        --primary: #5E8CC0; /* Azul Cuenca claro */
-        --primaryLight: #5E8CC0; /* Mantener el mismo tono */
-        --secondary: #A6B381; /* Verde olivo suave */
-        --secondaryLight: #A6B381; /* Mantener coherencia */
-
-        --accent: #E27A58; /* Teja claro */
-        --accentLight: #E27A58; /* Mantener consistencia */
-
-        --border-color: #3E3E3B; /* Gris tenue */
-
-        p,
-        li,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            color: var(--text-primary);
-        }
-
-        // hide all light classes
-        .light {
-            display: none;
-        }
-
-        // show all dark classes
-        .dark {
-            display: block !important;
-        }
+    // hide all light classes
+    .light {
+      display: none;
     }
 
+    // show all dark classes
     .dark {
-        display: none;
+      display: block !important;
     }
+  }
+
+  .dark {
+    display: none;
+  }
 }

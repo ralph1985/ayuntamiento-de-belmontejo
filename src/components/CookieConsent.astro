@@ -3,11 +3,7 @@
 // Manages user consent for cookies according to GDPR requirements
 ---
 
-<div
-  id="cookie-banner"
-  class="cookie-banner"
-  style="display: none;"
->
+<div id="cookie-banner" class="cookie-banner" style="display: none;">
   <div class="cookie-banner-content">
     <div class="cookie-banner-text">
       <h3>🍪 Gestión de Cookies</h3>
@@ -17,18 +13,13 @@
         entender cómo interactúan los visitantes con el sitio web.
       </p>
       <p class="cookie-banner-link">
-        <a
-          href="/politica-de-cookies"
-          target="_blank"
+        <a href="/politica-de-cookies" target="_blank"
           >Más información sobre nuestras cookies</a
         >
       </p>
     </div>
     <div class="cookie-banner-buttons">
-      <button
-        id="accept-all-cookies"
-        class="cookie-btn cookie-btn-accept"
-      >
+      <button id="accept-all-cookies" class="cookie-btn cookie-btn-accept">
         Aceptar todas
       </button>
       <button
@@ -37,10 +28,7 @@
       >
         Solo necesarias
       </button>
-      <button
-        id="cookie-settings"
-        class="cookie-btn cookie-btn-settings"
-      >
+      <button id="cookie-settings" class="cookie-btn cookie-btn-settings">
         Configurar
       </button>
     </div>
@@ -48,29 +36,17 @@
 </div>
 
 <!-- Cookie Settings Modal -->
-<div
-  id="cookie-settings-modal"
-  class="cookie-modal"
-  style="display: none;"
->
+<div id="cookie-settings-modal" class="cookie-modal" style="display: none;">
   <div class="cookie-modal-content">
     <div class="cookie-modal-header">
       <h3>Configuración de Cookies</h3>
-      <button
-        id="close-cookie-modal"
-        class="cookie-modal-close"
-        >&times;</button
+      <button id="close-cookie-modal" class="cookie-modal-close">&times;</button
       >
     </div>
     <div class="cookie-modal-body">
       <div class="cookie-category">
         <div class="cookie-category-header">
-          <input
-            type="checkbox"
-            id="necessary-cookies"
-            checked
-            disabled
-          />
+          <input type="checkbox" id="necessary-cookies" checked disabled />
           <label for="necessary-cookies">
             <strong>Cookies Necesarias</strong>
           </label>
@@ -83,10 +59,7 @@
 
       <div class="cookie-category">
         <div class="cookie-category-header">
-          <input
-            type="checkbox"
-            id="analytics-cookies"
-          />
+          <input type="checkbox" id="analytics-cookies" />
           <label for="analytics-cookies">
             <strong>Cookies Analíticas</strong>
           </label>
@@ -99,10 +72,7 @@
       </div>
     </div>
     <div class="cookie-modal-footer">
-      <button
-        id="save-cookie-preferences"
-        class="cookie-btn cookie-btn-accept"
-      >
+      <button id="save-cookie-preferences" class="cookie-btn cookie-btn-accept">
         Guardar preferencias
       </button>
     </div>
@@ -112,8 +82,8 @@
 <script is:inline>
   // Cookie consent management
   (function () {
-    const COOKIE_CONSENT_KEY = "cookie-consent";
-    const ANALYTICS_CONSENT_KEY = "analytics-consent";
+    const COOKIE_CONSENT_KEY = 'cookie-consent';
+    const ANALYTICS_CONSENT_KEY = 'analytics-consent';
 
     // Initialize cookie banner
     function initCookieBanner() {
@@ -124,7 +94,7 @@
       } else {
         // If user has already made a choice, apply it
         const analyticsConsent =
-          localStorage.getItem(ANALYTICS_CONSENT_KEY) === "true";
+          localStorage.getItem(ANALYTICS_CONSENT_KEY) === 'true';
         if (analyticsConsent && window.gtag) {
           // Analytics already loaded, no need to do anything
         }
@@ -132,27 +102,27 @@
     }
 
     function showCookieBanner() {
-      const banner = document.getElementById("cookie-banner");
+      const banner = document.getElementById('cookie-banner');
       if (banner) {
-        banner.style.display = "block";
+        banner.style.display = 'block';
       }
     }
 
     function hideCookieBanner() {
-      const banner = document.getElementById("cookie-banner");
+      const banner = document.getElementById('cookie-banner');
       if (banner) {
-        banner.style.display = "none";
+        banner.style.display = 'none';
       }
     }
 
     function showCookieModal() {
-      const modal = document.getElementById("cookie-settings-modal");
+      const modal = document.getElementById('cookie-settings-modal');
       if (modal) {
-        modal.style.display = "flex";
+        modal.style.display = 'flex';
         // Set current preferences
         const analyticsConsent =
-          localStorage.getItem(ANALYTICS_CONSENT_KEY) === "true";
-        const analyticsCheckbox = document.getElementById("analytics-cookies");
+          localStorage.getItem(ANALYTICS_CONSENT_KEY) === 'true';
+        const analyticsCheckbox = document.getElementById('analytics-cookies');
         if (analyticsCheckbox) {
           analyticsCheckbox.checked = analyticsConsent;
         }
@@ -160,14 +130,14 @@
     }
 
     function hideCookieModal() {
-      const modal = document.getElementById("cookie-settings-modal");
+      const modal = document.getElementById('cookie-settings-modal');
       if (modal) {
-        modal.style.display = "none";
+        modal.style.display = 'none';
       }
     }
 
     function setConsentAndReload(analyticsConsent) {
-      localStorage.setItem(COOKIE_CONSENT_KEY, "true");
+      localStorage.setItem(COOKIE_CONSENT_KEY, 'true');
       localStorage.setItem(ANALYTICS_CONSENT_KEY, analyticsConsent.toString());
 
       // Show floating cookie manager button after consent is given
@@ -178,58 +148,58 @@
     }
 
     function showFloatingCookieManager() {
-      const floatingBtn = document.getElementById("floating-cookie-manager");
+      const floatingBtn = document.getElementById('floating-cookie-manager');
       if (floatingBtn) {
-        floatingBtn.style.display = "block";
+        floatingBtn.style.display = 'block';
       }
     }
 
     // Event listeners
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener('DOMContentLoaded', function () {
       initCookieBanner();
 
       // Accept all cookies
-      const acceptAllBtn = document.getElementById("accept-all-cookies");
+      const acceptAllBtn = document.getElementById('accept-all-cookies');
       if (acceptAllBtn) {
-        acceptAllBtn.addEventListener("click", function () {
+        acceptAllBtn.addEventListener('click', function () {
           setConsentAndReload(true);
         });
       }
 
       // Accept only necessary cookies
       const acceptNecessaryBtn = document.getElementById(
-        "accept-necessary-only"
+        'accept-necessary-only'
       );
       if (acceptNecessaryBtn) {
-        acceptNecessaryBtn.addEventListener("click", function () {
+        acceptNecessaryBtn.addEventListener('click', function () {
           setConsentAndReload(false);
         });
       }
 
       // Show cookie settings
-      const settingsBtn = document.getElementById("cookie-settings");
+      const settingsBtn = document.getElementById('cookie-settings');
       if (settingsBtn) {
-        settingsBtn.addEventListener("click", function () {
+        settingsBtn.addEventListener('click', function () {
           showCookieModal();
         });
       }
 
       // Close modal
-      const closeModalBtn = document.getElementById("close-cookie-modal");
+      const closeModalBtn = document.getElementById('close-cookie-modal');
       if (closeModalBtn) {
-        closeModalBtn.addEventListener("click", function () {
+        closeModalBtn.addEventListener('click', function () {
           hideCookieModal();
         });
       }
 
       // Save preferences
       const savePreferencesBtn = document.getElementById(
-        "save-cookie-preferences"
+        'save-cookie-preferences'
       );
       if (savePreferencesBtn) {
-        savePreferencesBtn.addEventListener("click", function () {
+        savePreferencesBtn.addEventListener('click', function () {
           const analyticsCheckbox =
-            document.getElementById("analytics-cookies");
+            document.getElementById('analytics-cookies');
           const analyticsConsent = analyticsCheckbox
             ? analyticsCheckbox.checked
             : false;
@@ -240,9 +210,9 @@
       }
 
       // Close modal when clicking outside
-      const modal = document.getElementById("cookie-settings-modal");
+      const modal = document.getElementById('cookie-settings-modal');
       if (modal) {
-        modal.addEventListener("click", function (e) {
+        modal.addEventListener('click', function (e) {
           if (e.target === modal) {
             hideCookieModal();
           }
@@ -252,7 +222,7 @@
 
     // Function to check if analytics consent is given (used by Google Analytics component)
     window.hasAnalyticsConsent = function () {
-      return localStorage.getItem(ANALYTICS_CONSENT_KEY) === "true";
+      return localStorage.getItem(ANALYTICS_CONSENT_KEY) === 'true';
     };
   })();
 </script>
@@ -268,8 +238,8 @@
     padding: 1rem;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
     z-index: 9999;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      sans-serif;
+    font-family:
+      -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
   .cookie-banner-content {
@@ -422,7 +392,7 @@
     margin-bottom: 0.5rem;
   }
 
-  .cookie-category-header input[type="checkbox"] {
+  .cookie-category-header input[type='checkbox'] {
     width: 18px;
     height: 18px;
   }

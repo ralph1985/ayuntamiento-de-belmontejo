@@ -27,26 +27,26 @@
 <script>
   // helper function to toggle aria-pressed
   function ariaPressed(element) {
-    const isPressed = element.getAttribute("aria-pressed");
+    const isPressed = element.getAttribute('aria-pressed');
     element.setAttribute(
-      "aria-pressed",
-      isPressed === "false" ? "true" : "false"
+      'aria-pressed',
+      isPressed === 'false' ? 'true' : 'false'
     );
   }
   // Creates the dark mode toggle event listener
   const setToggleListener = () => {
-    const darkModeToggleButton = document.getElementById("dark-mode-toggle");
+    const darkModeToggleButton = document.getElementById('dark-mode-toggle');
     const handleToggleClick = () => {
-      document.body.classList.toggle("dark-mode");
+      document.body.classList.toggle('dark-mode');
       ariaPressed(darkModeToggleButton);
-      const isDark = document.body.classList.contains("dark-mode");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
     };
 
-    darkModeToggleButton?.addEventListener("click", handleToggleClick);
+    darkModeToggleButton?.addEventListener('click', handleToggleClick);
   };
 
   setToggleListener();
 
-  document.addEventListener("astro:after-swap", setToggleListener); // For View Transitions purposes - astro:after-swap ensures that the listener is re-attached after navigating to a new page.
+  document.addEventListener('astro:after-swap', setToggleListener); // For View Transitions purposes - astro:after-swap ensures that the listener is re-attached after navigating to a new page.
 </script>

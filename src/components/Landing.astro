@@ -1,5 +1,5 @@
 ---
-import { Picture } from "astro:assets";
+import { Picture } from 'astro:assets';
 const { title, image } = Astro.props;
 ---
 
@@ -15,7 +15,7 @@ const { title, image } = Astro.props;
     src={image.src}
     width={image.attributes.width}
     height={image.attributes.height}
-    formats={["avif", "webp"]}
+    formats={['avif', 'webp']}
     alt="A description of my image."
     aria-hidden="true"
     decoding="async"
@@ -25,5 +25,5 @@ const { title, image } = Astro.props;
 </section>
 
 <style lang="less">
-  @import "../styles/components/landing.less";
+  @import '../styles/components/landing.less';
 </style>

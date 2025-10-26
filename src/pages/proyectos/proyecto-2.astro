@@ -1,12 +1,12 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import CTA from "@components/CTA.astro";
-import Landing from "@components/Landing.astro";
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTA from '@components/CTA.astro';
+import Landing from '@components/Landing.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from "@assets/images/vista-aerea-2.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-import { getImage } from "astro:assets";
-const optimizedImage = await getImage({ src: landingImage, format: "avif" });
+import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import { getImage } from 'astro:assets';
+const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
@@ -18,10 +18,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing
-    title="Proyecto 2"
-    image={optimizedImage}
-  />
+  <Landing title="Proyecto 2" image={optimizedImage} />
 
   <!-- ============================================ -->
   <!--                   Gallery                    -->
@@ -215,16 +212,12 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
         </div>
       </div>
-      <a
-        href="/contacto"
-        class="cs-button-solid"
-        >Get Free Quote</a
-      >
+      <a href="/contacto" class="cs-button-solid">Get Free Quote</a>
     </div>
   </section>
   <CTA />
 </BaseLayout>
 
 <style lang="less">
-  @import "../../styles/pages/proyectos.less";
+  @import '../../styles/pages/proyectos.less';
 </style>

@@ -3,25 +3,25 @@
  * * This page is the noticias index and displays all the articles in a grid
  **/
 
-import BaseLayout from "@layouts/BaseLayout.astro";
-import CTA from "@components/CTA.astro";
-import { getCollection } from "astro:content";
-import { getImage } from "astro:assets";
-import "@styles/sidebar.less";
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTA from '@components/CTA.astro';
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import '@styles/sidebar.less';
 
-import Landing from "@components/Landing.astro";
+import Landing from '@components/Landing.astro';
 
-import NewsRecentArticles from "@layouts/NewsRecentArticles.astro";
-import NewsRecentArticlesWithSidebar from "@layouts/NewsRecentArticlesWithSidebar.astro";
+import NewsRecentArticles from '@layouts/NewsRecentArticles.astro';
+import NewsRecentArticlesWithSidebar from '@layouts/NewsRecentArticlesWithSidebar.astro';
 
-const posts = await getCollection("noticias");
+const posts = await getCollection('noticias');
 posts.sort(
   (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
 );
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from "@assets/images/vista-aerea-2.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-const optimizedImage = await getImage({ src: landingImage, format: "avif" });
+import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
@@ -29,10 +29,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
   description="Meta description for the page"
   preloadedImage={optimizedImage}
 >
-  <Landing
-    title="Noticias"
-    image={optimizedImage}
-  >
+  <Landing title="Noticias" image={optimizedImage}>
     <p>
       Mantente informado con las últimas noticias y novedades del Ayuntamiento
       de Belmontejo

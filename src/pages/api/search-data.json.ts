@@ -1,35 +1,35 @@
-import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
+import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 
 export const GET: APIRoute = async () => {
   // Obtener todas las noticias
-  const noticias = await getCollection("noticias");
-  const bandos = await getCollection("bandos");
+  const noticias = await getCollection('noticias');
+  const bandos = await getCollection('bandos');
 
   // Formatear los datos para la búsqueda
   const searchData = [
-    ...noticias.map((noticia) => ({
+    ...noticias.map(noticia => ({
       id: noticia.id,
-      type: "noticia",
+      type: 'noticia',
       title: noticia.data.title,
       description: noticia.data.description,
       author: noticia.data.author,
       date: noticia.data.date.toISOString(),
       url: `/noticias/${noticia.id}`,
-      content: noticia.body || "",
-      tags: ["noticia"],
+      content: noticia.body || '',
+      tags: ['noticia'],
     })),
-    ...bandos.map((bando) => ({
+    ...bandos.map(bando => ({
       id: bando.id,
-      type: "bando",
+      type: 'bando',
       title: bando.data.title,
       description: bando.data.description,
-      author: bando.data.author || "Ayuntamiento de Belmontejo",
+      author: bando.data.author || 'Ayuntamiento de Belmontejo',
       date: bando.data.date.toISOString(),
       url: `/bandos/${bando.id}`,
-      content: bando.body || "",
-      category: bando.data.category || "Info General",
-      tags: ["bando", bando.data.category || "Info General"],
+      content: bando.body || '',
+      category: bando.data.category || 'Info General',
+      tags: ['bando', bando.data.category || 'Info General'],
     })),
   ];
 
@@ -41,8 +41,8 @@ export const GET: APIRoute = async () => {
   return new Response(JSON.stringify(searchData), {
     status: 200,
     headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": "public, max-age=3600", // Cache por 1 hora
+      'Content-Type': 'application/json',
+      'Cache-Control': 'public, max-age=3600', // Cache por 1 hora
     },
   });
 };

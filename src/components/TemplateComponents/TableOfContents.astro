@@ -1,5 +1,5 @@
 ---
-import "@styles/sidebar.less";
+import '@styles/sidebar.less';
 
 interface Heading {
   depth: number; // The heading level (h1 = 1, h2 = 2, etc)
@@ -15,23 +15,17 @@ interface Props {
 const { headings, levels = 2 } = Astro.props as Props;
 
 // Filter headings to only show up to the specified level
-const filteredHeadings = headings.filter((heading) => heading.depth <= levels);
+const filteredHeadings = headings.filter(heading => heading.depth <= levels);
 ---
 
 {
   filteredHeadings.length > 0 && (
-    <div
-      class="news-sidebar_widget-wrapper cs-hide-on-mobile"
-      id="desktop-toc"
-    >
+    <div class="news-sidebar_widget-wrapper cs-hide-on-mobile" id="desktop-toc">
       <h3 class="news-sidebar_widget-header">En esta página</h3>
       <ul class="cs-toc-list">
-        {filteredHeadings.map((heading) => (
+        {filteredHeadings.map(heading => (
           <li class={`cs-toc-item depth-${heading.depth}`}>
-            <a
-              href={`#${heading.slug}`}
-              class="cs-toc-link"
-            >
+            <a href={`#${heading.slug}`} class="cs-toc-link">
               {heading.text}
             </a>
           </li>
@@ -42,7 +36,7 @@ const filteredHeadings = headings.filter((heading) => heading.depth <= levels);
 }
 
 <style lang="less">
-  @import "../../styles/components/table-of-contents.less";
+  @import '../../styles/components/table-of-contents.less';
 </style>
 
 <script>
@@ -50,66 +44,66 @@ const filteredHeadings = headings.filter((heading) => heading.depth <= levels);
   let wrappingElement: Element | null;
   let observeHeaderTags: IntersectionObserver;
   let allHeaderTags: NodeListOf<Element>;
-  let isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
 
   // Function that runs when the Intersection Observer fires
   function setCurrent(entries: any[]) {
-    const tocWrapper = document.querySelector("#desktop-toc");
+    const tocWrapper = document.querySelector('#desktop-toc');
     if (!tocWrapper) return;
 
-    const allSectionLinks = tocWrapper.querySelectorAll(".cs-toc-link");
+    const allSectionLinks = tocWrapper.querySelectorAll('.cs-toc-link');
 
     entries.forEach((entry: { isIntersecting: any; target: { id: any } }) => {
       if (entry.isIntersecting) {
-        allSectionLinks.forEach((link) =>
-          link.classList.remove("cs-toc-current")
+        allSectionLinks.forEach(link =>
+          link.classList.remove('cs-toc-current')
         );
         const targetLink = tocWrapper.querySelector(
           `a[href="#${entry.target.id}"].cs-toc-link`
         );
-        if (targetLink) targetLink.classList.add("cs-toc-current");
+        if (targetLink) targetLink.classList.add('cs-toc-current');
       }
     });
   }
 
   function initTOC() {
     // Check if it's desktop
-    if (!window.matchMedia("(min-width: 64rem)").matches) return;
+    if (!window.matchMedia('(min-width: 64rem)').matches) return;
 
     // update this with whatever class wraps your blog post content
-    wrappingElement = document.querySelector("#news-content");
+    wrappingElement = document.querySelector('#news-content');
     if (!wrappingElement) return;
 
     // Get all H1/H2/H3 tags from the post
     allHeaderTags = wrappingElement.querySelectorAll(
-      ":scope > h1, :scope > h2, :scope > h3"
+      ':scope > h1, :scope > h2, :scope > h3'
     );
     if (!allHeaderTags.length) return;
 
     // Intersection Observer Options
-    let options = {
+    const options = {
       root: null,
-      rootMargin: "0px 0px -50% 0px",
+      rootMargin: '0px 0px -50% 0px',
       threshold: [1],
     };
 
     // Create Observer
     observeHeaderTags = new IntersectionObserver(setCurrent, options);
-    allHeaderTags.forEach((tag) => observeHeaderTags.observe(tag));
+    allHeaderTags.forEach(tag => observeHeaderTags.observe(tag));
   }
 
   // Run on initial page load if on desktop
   if (isDesktop) initTOC();
 
   // Re-run on view transitions navigation if on desktop
-  document.addEventListener("astro:after-swap", () => {
-    if (window.matchMedia("(min-width: 64rem)").matches) {
+  document.addEventListener('astro:after-swap', () => {
+    if (window.matchMedia('(min-width: 64rem)').matches) {
       initTOC();
     }
   });
 
   // Listen for screen size changes
-  window.matchMedia("(min-width: 64rem)").addEventListener("change", (e) => {
+  window.matchMedia('(min-width: 64rem)').addEventListener('change', e => {
     if (e.matches) {
       initTOC();
     } else {

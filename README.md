@@ -38,16 +38,19 @@ El proyecto sigue la estructura estándar de Astro:
 ### Pasos
 
 1. **Clonar el repositorio:**
+
    ```bash
    git clone https://github.com/tu-usuario/ayuntamiento-de-belmontejo.git
    ```
 
 2. **Instalar dependencias:**
+
    ```bash
    npm install
    ```
 
 3. **Ejecutar el servidor de desarrollo:**
+
    ```bash
    npm run dev
    ```

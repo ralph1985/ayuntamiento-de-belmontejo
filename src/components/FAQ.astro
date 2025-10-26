@@ -120,18 +120,18 @@
 
 <script>
   // Astro:page-load wrapper for View Transitions purposes
-  document.addEventListener("astro:page-load", () => {
+  document.addEventListener('astro:page-load', () => {
     // Makes the script available after navigating to a new page.
-    const faqItems = Array.from(document.querySelectorAll(".cs-faq-item"));
+    const faqItems = Array.from(document.querySelectorAll('.cs-faq-item'));
     for (const item of faqItems) {
       const onClick = () => {
-        item.classList.toggle("active");
+        item.classList.toggle('active');
       };
-      item.addEventListener("click", onClick);
+      item.addEventListener('click', onClick);
     }
   });
 </script>
 
 <style lang="less">
-  @import "../styles/components/faq.less";
+  @import '../styles/components/faq.less';
 </style>
