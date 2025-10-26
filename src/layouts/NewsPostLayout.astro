@@ -1,23 +1,19 @@
 ---
-import { render } from "astro:content";
-import { Image } from "astro:assets";
-import { formatDate } from "@js/utils";
-import BaseLayout from "@layouts/BaseLayout.astro";
-import FeaturedContent from "@components/FeaturedContent.astro";
-import TableOfContents from "@components/TemplateComponents/TableOfContents.astro";
-import CTA from "@components/CTA.astro";
-import "@styles/markdown.less";
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import { formatDate } from '@js/utils';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import FeaturedContent from '@components/FeaturedContent.astro';
+import TableOfContents from '@components/TemplateComponents/TableOfContents.astro';
+import CTA from '@components/CTA.astro';
+import '@styles/markdown.less';
 
 const { post } = Astro.props;
 const { title, date, description, image, imageAlt, author } = post.data;
 const { Content, headings } = await render(post);
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  preloadedImage={image}
->
+<BaseLayout title={title} description={description} preloadedImage={image}>
   <!-- ============================================ -->
   <!--         News Article + Sidebar layout        -->
   <!-- ============================================ -->
@@ -41,10 +37,7 @@ const { Content, headings } = await render(post);
               />
             </picture>
             <span class="news-author">{author}</span>
-            <span
-              aria-hidden="true"
-              class="news-dot"
-            ></span>
+            <span aria-hidden="true" class="news-dot"></span>
             <!--News Date-->
             <span class="news-date">{formatDate(date)}</span>
           </div>
@@ -63,10 +56,7 @@ const { Content, headings } = await render(post);
 
         <!-- Mobile Table of Contents -->
         <div class="news-sidebar_widget-wrapper cs-hide-on-desktop">
-          <TableOfContents
-            headings={headings}
-            levels={3}
-          />
+          <TableOfContents headings={headings} levels={3} />
         </div>
         <!--Markdown content-->
         <div id="news-content">
@@ -77,10 +67,7 @@ const { Content, headings } = await render(post);
     <!--Side bar-->
     <aside class="news-sidebar">
       <!-- Desktop Table of Contents -->
-      <TableOfContents
-        headings={headings}
-        levels={3}
-      />
+      <TableOfContents headings={headings} levels={3} />
       <!-- Featured Content -->
       <div class="news-sidebar_widget-wrapper">
         <FeaturedContent
@@ -96,5 +83,5 @@ const { Content, headings } = await render(post);
 </BaseLayout>
 
 <style lang="less">
-  @import "../styles/layouts/news-post-layout.less";
+  @import '../styles/layouts/news-post-layout.less';
 </style>

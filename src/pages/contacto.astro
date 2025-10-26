@@ -1,12 +1,12 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import client from "@data/client.json";
-import Landing from "@components/Landing.astro";
+import BaseLayout from '@layouts/BaseLayout.astro';
+import client from '@data/client.json';
+import Landing from '@components/Landing.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from "@assets/images/vista-aerea-2.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-import { getImage } from "astro:assets";
-const optimizedImage = await getImage({ src: landingImage, format: "avif" });
+import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import { getImage } from 'astro:assets';
+const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
@@ -18,10 +18,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing
-    title="Contacto"
-    image={optimizedImage}
-  >
+  <Landing title="Contacto" image={optimizedImage}>
     <p>
       Ponte en contacto con el Ayuntamiento de Belmontejo para consultas,
       sugerencias y trámites municipales
@@ -34,11 +31,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 
   <section id="cs-contact">
     <div class="cs-container">
-      <form
-        id="cs-form"
-        name="Contact Form"
-        method="post"
-      >
+      <form id="cs-form" name="Contact Form" method="post">
         <div class="cs-content">
           <span class="cs-topper">Contacto</span>
           <h2 class="cs-title">Ponte en contacto con nosotros</h2>
@@ -94,36 +87,22 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
             required
             name="Message"
             id="message"
-            placeholder="Escribe tu mensaje aquí..."
-          ></textarea>
+            placeholder="Escribe tu mensaje aquí..."></textarea>
         </label>
-        <button
-          class="cs-button-solid"
-          type="submit"
-          >Enviar mensaje</button
-        >
+        <button class="cs-button-solid" type="submit">Enviar mensaje</button>
       </form>
       <div class="cs-right-section">
         <!--Email-->
         <span class="cs-header">Correo electrónico</span>
-        <a
-          class="cs-link"
-          href={`mailto:${client.email}`}
-          >{client.email}</a
-        >
+        <a class="cs-link" href={`mailto:${client.email}`}>{client.email}</a>
         <!--Phone-->
         <span class="cs-header">Teléfono</span>
-        <a
-          class="cs-link"
-          href={`tel:${client.phoneForTel}`}
+        <a class="cs-link" href={`tel:${client.phoneForTel}`}
           >{client.phoneFormatted}</a
         >
         <!--Address-->
         <span class="cs-header">Dirección</span>
-        <a
-          class="cs-link"
-          href={client.address.mapLink}
-        >
+        <a class="cs-link" href={client.address.mapLink}>
           {client.address.lineOne},
           <br />
           {client.address.lineTwo},
@@ -157,5 +136,5 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 </BaseLayout>
 
 <style lang="less">
-  @import "../styles/pages/contacto.less";
+  @import '../styles/pages/contacto.less';
 </style>

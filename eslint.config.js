@@ -7,7 +7,7 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 export default [
   // Configuración base para JavaScript
   js.configs.recommended,
-  
+
   // Configuración para archivos TypeScript
   {
     files: ['**/*.{js,mjs,cjs,ts,tsx}'],
@@ -41,15 +41,18 @@ export default [
     },
     rules: {
       // Reglas de TypeScript
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/no-explicit-any': 'warn',
-      
+
       // Reglas generales
       'no-console': 'warn',
       'no-debugger': 'error',
       'prefer-const': 'error',
       'no-var': 'error',
-      
+
       // Reglas de accesibilidad
       'jsx-a11y/alt-text': 'error',
       'jsx-a11y/anchor-has-content': 'error',
@@ -58,7 +61,7 @@ export default [
       'jsx-a11y/no-autofocus': 'warn',
     },
   },
-  
+
   // Configuración específica para archivos Astro
   ...astro.configs.recommended,
   {
@@ -69,7 +72,7 @@ export default [
       'astro/no-unused-define-vars-in-style': 'error',
     },
   },
-  
+
   // Configuración para archivos JavaScript puros
   {
     files: ['**/*.{js,mjs}'],
@@ -77,14 +80,9 @@ export default [
       '@typescript-eslint/no-var-requires': 'off',
     },
   },
-  
+
   // Archivos a ignorar
   {
-    ignores: [
-      'dist/**',
-      'node_modules/**',
-      '.astro/**',
-      'public/**',
-    ],
+    ignores: ['dist/**', 'node_modules/**', '.astro/**', 'public/**'],
   },
 ];

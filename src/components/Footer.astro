@@ -1,15 +1,15 @@
 ---
-import client from "@data/client.json";
-import navData from "@data/navData.json";
-import { getCurrentYear } from "@js/utils";
-import packageJson from "../../package.json";
+import client from '@data/client.json';
+import navData from '@data/navData.json';
+import { getCurrentYear } from '@js/utils';
+import packageJson from '../../package.json';
 
 const currentYear = getCurrentYear();
 const version = packageJson.version;
 
 // Filter navigation data to show admin menu only when enabled
-const showAdminMenu = import.meta.env.PUBLIC_ADMIN_MENU === "true";
-const filteredNavData = navData.filter((entry) => {
+const showAdminMenu = import.meta.env.PUBLIC_ADMIN_MENU === 'true';
+const filteredNavData = navData.filter(entry => {
   if (entry.isAdmin) {
     return showAdminMenu;
   }
@@ -21,9 +21,7 @@ const filteredNavData = navData.filter((entry) => {
 <footer id="footer">
   <div class="container">
     <div class="left-section">
-      <a
-        class="logo"
-        href="/"
+      <a class="logo" href="/"
         ><img
           loading="lazy"
           decoding="async"
@@ -46,12 +44,12 @@ const filteredNavData = navData.filter((entry) => {
             <h2>Información</h2>
           </li>
           {
-            filteredNavData.map((entry) => (
+            filteredNavData.map(entry => (
               <li class="cs-li">
                 <a
                   href={entry.url}
-                  target={entry.isAdmin ? "_blank" : undefined}
-                  rel={entry.isAdmin ? "noopener noreferrer" : undefined}
+                  target={entry.isAdmin ? '_blank' : undefined}
+                  rel={entry.isAdmin ? 'noopener noreferrer' : undefined}
                 >
                   {entry.key}
                 </a>
@@ -108,16 +106,11 @@ const filteredNavData = navData.filter((entry) => {
 
   <div class="credit">
     <span>Sitio web oficial del</span>
-    <a
-      href="/"
-      target="_blank"
-      rel="noopener"
-      >Ayuntamiento de Belmontejo</a
-    >.
+    <a href="/" target="_blank" rel="noopener">Ayuntamiento de Belmontejo</a>.
     <span class="copyright-version"> Copyright {currentYear} | v{version}</span>
   </div>
 </footer>
 
 <style lang="less">
-  @import "../styles/components/footer.less";
+  @import '../styles/components/footer.less';
 </style>

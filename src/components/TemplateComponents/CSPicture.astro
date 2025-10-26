@@ -1,5 +1,5 @@
 ---
-import { getImage } from "astro:assets";
+import { getImage } from 'astro:assets';
 
 // TS types
 interface Props {
@@ -22,7 +22,7 @@ const {
 
 const mobileImg = await getImage({
   src: mobileImgUrl,
-  format: "webp",
+  format: 'webp',
   // Adjust the width and height to play with the image's intrinsic size and ultimately, its file size
   width: 200,
   height: 200,
@@ -30,7 +30,7 @@ const mobileImg = await getImage({
 
 const desktopImg = await getImage({
   src: desktopImgUrl,
-  format: "webp",
+  format: 'webp',
   // Adjust the width and height to play with the image's intrinsic size and ultimately, its file size
   width: 800,
   height: 200,
@@ -38,7 +38,7 @@ const desktopImg = await getImage({
 
 const fallbackImg = await getImage({
   src: fallbackImgUrl,
-  format: "jpg",
+  format: 'jpg',
   // Adjust the width and height to play with the image's intrinsic size and ultimately, its file size
   width: 800,
   height: 200,
@@ -47,14 +47,8 @@ const fallbackImg = await getImage({
 
 <!-- Adjust the width and height attributes sizes based on the stitch you're using -->
 <picture>
-  <source
-    media=`(max-width: ${mobileMediaWidth})`
-    srcset={mobileImg.src}
-  />
-  <source
-    media=`(min-width: ${desktopMediaWidth})`
-    srcset={desktopImg.src}
-  />
+  <source media=`(max-width: ${mobileMediaWidth})` srcset={mobileImg.src} />
+  <source media=`(min-width: ${desktopMediaWidth})` srcset={desktopImg.src} />
   <img
     aria-hidden="true"
     decoding="async"
@@ -68,5 +62,5 @@ const fallbackImg = await getImage({
 
 <!-- Adjust the styles based on the stitch you're using -->
 <style lang="less">
-  @import "../../styles/components/cs-picture.less";
+  @import '../../styles/components/cs-picture.less';
 </style>

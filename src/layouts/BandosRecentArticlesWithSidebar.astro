@@ -2,9 +2,9 @@
 /**
  * * This custom layout displays bandos posts and a sidebar
  **/
-import FeaturedContent from "@components/FeaturedContent.astro";
-import { formatDate } from "@js/utils";
-import { Picture } from "astro:assets";
+import FeaturedContent from '@components/FeaturedContent.astro';
+import { formatDate } from '@js/utils';
+import { Picture } from 'astro:assets';
 
 const { posts } = Astro.props;
 ---
@@ -14,16 +14,16 @@ const { posts } = Astro.props;
     {posts.length === 0 && <h1>No hay bandos recientes</h1>}
     {
       posts.length >= 1 &&
-        posts.map((post) => (
+        posts.map(post => (
           <article class="recent-articles">
             {post.data.image && (
               <Picture
                 pictureAttributes={{
-                  class: "news-mainImage",
+                  class: 'news-mainImage',
                 }}
                 src={post.data.image}
-                quality={"mid"}
-                formats={["avif", "webp", "jpg"]}
+                quality={'mid'}
+                formats={['avif', 'webp', 'jpg']}
                 alt={post.data.imageAlt || post.data.title}
                 loading="lazy"
                 decoding="async"
@@ -43,17 +43,11 @@ const { posts } = Astro.props;
                   />
                 </picture>
                 <span class="news-author">{post.data.author}</span>
-                <span
-                  aria-hidden="true"
-                  class="news-dot"
-                />
+                <span aria-hidden="true" class="news-dot" />
                 <span class="news-date">{formatDate(post.data.date)}</span>
                 {post.data.category && (
                   <>
-                    <span
-                      aria-hidden="true"
-                      class="news-dot"
-                    />
+                    <span aria-hidden="true" class="news-dot" />
                     <span class="news-category">{post.data.category}</span>
                   </>
                 )}
@@ -61,10 +55,7 @@ const { posts } = Astro.props;
               <h2 class="news-h1">{post.data.title}</h2>
               <p class="news-desc">{post.data.description}</p>
               <div class="bando-links">
-                <a
-                  href={`/bandos/${post.id}`}
-                  class="news-link"
-                >
+                <a href={`/bandos/${post.id}`} class="news-link">
                   Leer bando
                 </a>
                 {post.data.link && (
@@ -85,14 +76,11 @@ const { posts } = Astro.props;
   </section>
   <aside class="news-sidebar">
     <div class="news-sidebar_widget-wrapper">
-      <FeaturedContent
-        type="bandos"
-        limit={3}
-      />
+      <FeaturedContent type="bandos" limit={3} />
     </div>
   </aside>
 </section>
 
 <style lang="less">
-  @import "../styles/layouts/bandos-recent-articles-with-sidebar.less";
+  @import '../styles/layouts/bandos-recent-articles-with-sidebar.less';
 </style>

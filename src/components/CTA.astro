@@ -4,10 +4,10 @@
  * * If you're fine with using the same image on all devices, you can use an >Image /> or <Picture /> component.
  **/
 // Import the component and all the images you want to use with it
-import CSPicture from "@components/TemplateComponents/CSPicture.astro";
-import mobileImage from "@assets/images/CTA/DJI_0167.jpg";
-import desktopImage from "@assets/images/CTA/DJI_0167.jpg";
-import fallbackImage from "@assets/images/CTA/DJI_0167.jpg";
+import CSPicture from '@components/TemplateComponents/CSPicture.astro';
+import mobileImage from '@assets/images/CTA/DJI_0167.jpg';
+import desktopImage from '@assets/images/CTA/DJI_0167.jpg';
+import fallbackImage from '@assets/images/CTA/DJI_0167.jpg';
 ---
 
 <section id="cta">
@@ -24,11 +24,7 @@ import fallbackImage from "@assets/images/CTA/DJI_0167.jpg";
       manchega. Ven y descubre por qué los pequeños pueblos guardan los tesoros
       más grandes.
     </p>
-    <a
-      href="/contacto"
-      class="cs-button-solid"
-      >Planifica tu visita</a
-    >
+    <a href="/contacto" class="cs-button-solid">Planifica tu visita</a>
   </div>
   <CSPicture
     mobileImgUrl={mobileImage}
@@ -41,5 +37,5 @@ import fallbackImage from "@assets/images/CTA/DJI_0167.jpg";
 </section>
 
 <style lang="less">
-  @import "../styles/components/cta.less";
+  @import '../styles/components/cta.less';
 </style>

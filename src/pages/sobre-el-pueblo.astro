@@ -1,14 +1,14 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import CTA from "@components/CTA.astro";
-import Landing from "@components/Landing.astro";
-import FAQ from "@components/FAQ.astro";
-import GoogleMap from "@components/GoogleMap.astro";
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTA from '@components/CTA.astro';
+import Landing from '@components/Landing.astro';
+import FAQ from '@components/FAQ.astro';
+import GoogleMap from '@components/GoogleMap.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from "@assets/images/vista-aerea-2.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-import { getImage } from "astro:assets";
-const optimizedImage = await getImage({ src: landingImage, format: "avif" });
+import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import { getImage } from 'astro:assets';
+const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
@@ -20,10 +20,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing
-    title="Sobre Belmontejo"
-    image={optimizedImage}
-  >
+  <Landing title="Sobre Belmontejo" image={optimizedImage}>
     <p>
       Descubre la historia, tradiciones y patrimonio de nuestro querido
       municipio de Belmontejo
@@ -121,11 +118,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
             height="77"
           />
         </div>
-        <a
-          href="/contacto"
-          class="cs-button-solid"
-          >Contactar</a
-        >
+        <a href="/contacto" class="cs-button-solid">Contactar</a>
       </div>
     </div>
   </section>
@@ -134,15 +127,12 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
   <!--                 Google Map                   -->
   <!-- ============================================ -->
 
-  <GoogleMap
-    title="Ubicación de Belmontejo"
-    subtitle="Dónde estamos"
-  />
+  <GoogleMap title="Ubicación de Belmontejo" subtitle="Dónde estamos" />
 
   <FAQ />
   <CTA />
 </BaseLayout>
 
 <style lang="less">
-  @import "../styles/pages/sobre-el-pueblo.less";
+  @import '../styles/pages/sobre-el-pueblo.less';
 </style>

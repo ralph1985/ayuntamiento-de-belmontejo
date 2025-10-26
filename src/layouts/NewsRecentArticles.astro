@@ -4,8 +4,8 @@
  * * This layout uses a loop so be careful when swapping out the HTML and CSS with the stitch of your choice
  **/
 
-import { formatDate } from "@js/utils";
-import { Picture } from "astro:assets";
+import { formatDate } from '@js/utils';
+import { Picture } from 'astro:assets';
 
 const { posts } = Astro.props;
 ---
@@ -22,15 +22,15 @@ const { posts } = Astro.props;
       {posts.length === 0 && <h1>No Recent Posts</h1>}
       {
         posts.length >= 1 &&
-          posts.map((post) => (
+          posts.map(post => (
             <li class="cs-item">
               <Picture
                 pictureAttributes={{
-                  class: "cs-picture",
+                  class: 'cs-picture',
                 }}
                 src={post.data.image}
-                quality={"mid"}
-                formats={["avif", "webp", "jpg"]}
+                quality={'mid'}
+                formats={['avif', 'webp', 'jpg']}
                 alt={post.data.imageAlt}
                 loading="lazy"
                 decoding="async"
@@ -40,10 +40,7 @@ const { posts } = Astro.props;
                 <span class="cs-date">{formatDate(post.data.date)}</span>
                 <h3 class="cs-h3">{post.data.title}</h3>
                 <p class="cs-item-text">{post.data.description}</p>
-                <a
-                  href={post.id}
-                  class="cs-link"
-                >
+                <a href={post.id} class="cs-link">
                   Read More
                   <img
                     class="cs-arrow"
@@ -65,5 +62,5 @@ const { posts } = Astro.props;
 </section>
 
 <style lang="less">
-  @import "../styles/layouts/news-recent-articles.less";
+  @import '../styles/layouts/news-recent-articles.less';
 </style>

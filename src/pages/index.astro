@@ -1,13 +1,13 @@
 ---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import CTA from "@components/CTA.astro";
-import FAQ from "@components/FAQ.astro";
-import FeaturedContent from "@components/FeaturedContent.astro";
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTA from '@components/CTA.astro';
+import FAQ from '@components/FAQ.astro';
+import FeaturedContent from '@components/FeaturedContent.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from "@assets/images/vista-aerea-2.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-import { getImage } from "astro:assets";
-const optimizedImage = await getImage({ src: landingImage, format: "avif" });
+import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import { getImage } from 'astro:assets';
+const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
@@ -37,17 +37,8 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
           detenerse, donde las raíces siguen vivas y donde cada rincón cuenta
           una historia.
         </p>
-        <a
-          href="/sobre-el-pueblo"
-          class="cs-button-solid"
-          >Descubre más</a
-        >
-        <a
-          href="/contacto"
-          class="cs-button-transparent"
-        >
-          Contactar
-        </a>
+        <a href="/sobre-el-pueblo" class="cs-button-solid">Descubre más</a>
+        <a href="/contacto" class="cs-button-transparent"> Contactar </a>
       </div>
     </div>
 
@@ -78,10 +69,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
   <!--                  Services                    -->
   <!-- ============================================ -->
 
-  <section
-    id="services"
-    class="services"
-  >
+  <section id="services" class="services">
     <div class="card">
       <picture>
         <img
@@ -212,9 +200,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
             height="77"
           />
         </div>
-        <a
-          href="/sobre-el-pueblo"
-          class="cs-button-solid"
+        <a href="/sobre-el-pueblo" class="cs-button-solid"
           >Conoce más sobre nosotros</a
         >
       </div>
@@ -482,11 +468,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
           </picture>
         </div>
       </div>
-      <a
-        href="/projects"
-        class="cs-button-solid"
-        >View all projects</a
-      >
+      <a href="/projects" class="cs-button-solid">View all projects</a>
     </div>
   </section>
 
@@ -579,8 +561,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
       <a
         aria-label="read more reviews"
         href="/testimonios"
-        class="cs-button-solid"
-        >Más testimonios</a
+        class="cs-button-solid">Más testimonios</a
       >
     </div>
   </section>
@@ -600,10 +581,7 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
         </p>
       </div>
       <div class="featured-content-wrapper">
-        <FeaturedContent
-          type="both"
-          limit={6}
-        />
+        <FeaturedContent type="both" limit={6} />
       </div>
     </div>
   </section>
@@ -612,5 +590,5 @@ const optimizedImage = await getImage({ src: landingImage, format: "avif" });
 </BaseLayout>
 
 <style lang="less">
-  @import "../styles/pages/index.less";
+  @import '../styles/pages/index.less';
 </style>
