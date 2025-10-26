@@ -9,40 +9,38 @@ const GOOGLE_ANALYTICS_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
     <script is:inline define:vars={{ GOOGLE_ANALYTICS_ID }}>
       // Check if user has given analytics consent
       function hasAnalyticsConsent() {
-        return localStorage.getItem('analytics-consent') === 'true';
+        return localStorage.getItem("analytics-consent") === "true";
       }
-      
+
       // Load Google Analytics only if consent is given
       function loadGoogleAnalytics() {
         if (!hasAnalyticsConsent()) {
           return;
         }
-        
+
         // Create and load gtag script
-        const script = document.createElement('script');
+        const script = document.createElement("script");
         script.async = true;
-        script.src = `https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`;
+        script.src = "https://www.googletagmanager.com/gtag/js?id=" + GOOGLE_ANALYTICS_ID;
         document.head.appendChild(script);
-        
+
         // Initialize gtag
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+        function gtag(){window.dataLayer.push(arguments);}
         window.gtag = gtag;
-        
-        gtag('js', new Date());
-        gtag('config', GOOGLE_ANALYTICS_ID, {
+
+        gtag("js", new Date());
+        gtag("config", GOOGLE_ANALYTICS_ID, {
           // Enhanced privacy configuration for GDPR compliance
           anonymize_ip: true,
           send_page_view: true,
-          cookie_flags: 'max-age=7200;secure;samesite=strict'
+          cookie_flags: "max-age=7200;secure;samesite=strict"
         });
-        
-        console.log('Google Analytics loaded with user consent');
       }
-      
+
       // Load analytics immediately if consent is already given
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadGoogleAnalytics);
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", loadGoogleAnalytics);
       } else {
         loadGoogleAnalytics();
       }
