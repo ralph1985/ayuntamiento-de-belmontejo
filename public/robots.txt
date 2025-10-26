@@ -1,5 +1,41 @@
+# Robots.txt para Ayuntamiento de Belmontejo
+# Permite la indexación de todo el contenido público y bloquea las áreas administrativas
+
 User-agent: *
-Disallow: /admin/
+# Permitir acceso a todas las páginas públicas
 Allow: /
 
-Sitemap: https://<YOUR SITE>/sitemap-index.xml
+# Bloquear acceso a áreas administrativas
+Disallow: /admin/
+
+# Bloquear archivos temporales y de configuración
+Disallow: /.well-known/
+Disallow: /api/
+Disallow: /*.json$
+
+# Bloquear directorios de assets internos (ya optimizados por Astro)
+Disallow: /src/
+
+# Permitir específicamente el acceso a recursos públicos importantes
+Allow: /favicon.svg
+Allow: /robots.txt
+Allow: /sitemap-index.xml
+Allow: /sitemap*.xml
+
+# Configuración específica para motores de búsqueda principales
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Configuración del sitemap
+Sitemap: https://ayuntamiento-de-belmontejo.vercel.app/sitemap-index.xml
+
+# Información adicional del sitio
+# Sitio web oficial del Ayuntamiento de Belmontejo (Cuenca)
+# Contacto: belmontejo@dipucuenca.es
