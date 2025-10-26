@@ -38,7 +38,8 @@ async function fetchBandos() {
       const frontmatter = generateFrontmatter(item);
       const content = generateContent(item);
 
-      const markdownContent = `---\n${frontmatter}\n---\n\n${content}`;
+      // Format with proper line endings (LF) and consistent spacing
+      const markdownContent = `---\n${frontmatter}\n---\n\n${content}\n`;
 
       fs.writeFileSync(filePath, markdownContent, 'utf8');
       console.log(`Created: ${filename}.md`);
@@ -136,13 +137,13 @@ function generateFrontmatter(item) {
   );
   const isFeatured = isRecent || hasKeyword;
 
-  return `title: "${escapeYaml(item.title)}"
-description: "${escapeYaml(description)}"
-author: "Ayuntamiento de Belmontejo"
+  return `title: '${escapeYaml(item.title)}'
+description: '${escapeYaml(description)}'
+author: 'Ayuntamiento de Belmontejo'
 date: ${isoDate}
-category: "${escapeYaml(item.category)}"
-guid: "${escapeYaml(item.guid)}"
-link: "${escapeYaml(item.link)}"
+category: '${escapeYaml(item.category)}'
+guid: '${escapeYaml(item.guid)}'
+link: '${escapeYaml(item.link)}'
 isFeatured: ${isFeatured}`;
 }
 
@@ -159,7 +160,7 @@ function generateContent(item) {
     .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
     .replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
     .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
-    .replace(/<u[^>]*>(.*?)<\/u>/gi, '$1')
+    .replace(/<u[^>]*>(.*?)<\/u>/gi, '*$1*') // Use * for underlined text
     .replace(/<span[^>]*>(.*?)<\/span>/gi, '$1')
     .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n')
     .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n')
@@ -169,9 +170,9 @@ function generateContent(item) {
     .replace(/<h6[^>]*>(.*?)<\/h6>/gi, '###### $1\n');
 
   // Handle images
-  const imgRegex = /<img[^>]+src=["\']([^"\']+)["\'][^>]*>/gi;
+  const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
   content = content.replace(imgRegex, (match, src) => {
-    const altMatch = match.match(/alt=["\']([^"\']*)["\']'/gi);
+    const altMatch = match.match(/alt=["']([^"']*)["']/gi);
     const alt = altMatch ? altMatch[1] : 'Imagen';
     return `![${alt}](${src})`;
   });
@@ -179,13 +180,22 @@ function generateContent(item) {
   // Remove remaining HTML tags
   content = content.replace(/<[^>]+>/g, '');
 
-  // Clean up extra whitespace
+  // Clean up whitespace more carefully
   content = content
-    .replace(/\n\s*\n\s*\n/g, '\n\n')
-    .replace(/^\s+|\s+$/g, '')
+    .replace(/\n\s*\n\s*\n/g, '\n\n') // Remove multiple blank lines
+    .replace(/\n[ \t]+/g, '\n') // Remove lines with only spaces/tabs
+    .replace(/[ \t]+\n/g, '\n') // Remove trailing spaces on lines
+    .replace(/[ \t]+/g, ' ') // Replace multiple spaces with single space
     .trim();
 
-  return content;
+  // Split into paragraphs and clean each one
+  const paragraphs = content.split('\n\n');
+  const cleanParagraphs = paragraphs
+    .map(paragraph => paragraph.trim())
+    .filter(paragraph => paragraph.length > 0) // Remove empty paragraphs
+    .filter(paragraph => !/^[ \t]*$/.test(paragraph)); // Remove whitespace-only paragraphs
+
+  return cleanParagraphs.join('\n\n');
 }
 
 function cleanHTML(html) {
@@ -204,11 +214,11 @@ function cleanHTML(html) {
 function escapeYaml(str) {
   if (!str) return '';
   return str
-    .replace(/\\/g, '\\\\')
-    .replace(/"/g, '\\"')
-    .replace(/\n/g, '\\n')
-    .replace(/\r/g, '\\r')
-    .replace(/\t/g, '\\t');
+    .replaceAll('\\', '\\\\')
+    .replaceAll("'", "''") // Escape single quotes for YAML
+    .replaceAll('\n', '\\n')
+    .replaceAll('\r', '\\r')
+    .replaceAll('\t', '\\t');
 }
 
 // Run the script

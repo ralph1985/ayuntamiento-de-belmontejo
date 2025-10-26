@@ -11,7 +11,7 @@ isFeatured: false
 
 ### 🚰 **Usar las fuentes del parque&nbsp;con cuidado**
 
-💧 _El agua es un recurso valioso_
+💧 *El agua es un recurso valioso*
 
 ✔️ Usa la fuente solo para **beber**
 ✔️ **Cierra bien el grifo** después de usarla
