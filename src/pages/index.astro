@@ -3,6 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/CTA.astro';
 import FAQ from '@components/FAQ.astro';
 import FeaturedContent from '@components/FeaturedContent.astro';
+import SocialMediaLinks from '@components/SocialMediaLinks.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -582,6 +583,27 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
       </div>
       <div class="featured-content-wrapper">
         <FeaturedContent type="both" limit={6} />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!--               Redes Sociales                 -->
+  <!-- ============================================ -->
+
+  <section id="social-media" class="social-media-section">
+    <div class="cs-container">
+      <div class="cs-content">
+        <span class="cs-topper">Conecta con nosotros</span>
+        <h2 class="cs-title">Síguenos en Redes Sociales</h2>
+        <p class="cs-text">
+          Mantente informado de todas las novedades, eventos y noticias de
+          nuestro municipio. Síguenos en nuestras redes sociales para estar al
+          día.
+        </p>
+      </div>
+      <div class="social-links-wrapper">
+        <SocialMediaLinks className="homepage-social" />
       </div>
     </div>
   </section>
