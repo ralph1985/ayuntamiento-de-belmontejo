@@ -96,7 +96,7 @@ document.addEventListener('astro:page-load', () => {
 
     const maxWidthMediaQuery = window.matchMedia('(max-width: 63.9375rem)');
     if (maxWidthMediaQuery.matches) {
-      element.addEventListener('click', e => {
+      element.addEventListener('click', () => {
         element.classList.toggle('cs-active');
         const dropdownButton = element.querySelector('.cs-dropdown-button');
         if (dropdownButton) {
