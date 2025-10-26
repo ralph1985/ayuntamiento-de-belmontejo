@@ -83,6 +83,12 @@ export default [
 
   // Archivos a ignorar
   {
-    ignores: ['dist/**', 'node_modules/**', '.astro/**', 'public/**'],
+    ignores: [
+      '.astro/**',
+      '.vercel/**',
+      'dist/**',
+      'node_modules/**',
+      'public/**',
+    ],
   },
 ];
