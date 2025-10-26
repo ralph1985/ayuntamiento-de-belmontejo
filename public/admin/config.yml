@@ -112,3 +112,39 @@ collections:
           default: false,
         }
       - { label: 'Contenido', name: 'body', widget: 'markdown' }
+
+  - name: 'footer-services' # Collection for managing footer services links
+    label: 'Enlaces de Servicios (Footer)' # Used in the admin dashboard UI
+    files:
+      - label: 'Configuración de Enlaces de Servicios'
+        name: 'services'
+        file: 'src/data/footerServices.json'
+        fields:
+          - label: 'Enlaces de Servicios'
+            name: 'services'
+            widget: 'list'
+            summary: '{{fields.title}} - {{fields.isActive}}'
+            fields:
+              - { label: 'ID', name: 'id', widget: 'number', min: 1 }
+              - { label: 'Título del enlace', name: 'title', widget: 'string' }
+              - {
+                  label: 'URL',
+                  name: 'url',
+                  widget: 'string',
+                  required: false,
+                  hint: 'Deja vacío si el enlace aún no tiene destino',
+                }
+              - {
+                  label: '¿Es enlace externo?',
+                  name: 'isExternal',
+                  widget: 'boolean',
+                  default: false,
+                  hint: 'Marca esta opción si el enlace lleva a un sitio web externo',
+                }
+              - {
+                  label: '¿Está activo?',
+                  name: 'isActive',
+                  widget: 'boolean',
+                  default: false,
+                  hint: 'Solo los enlaces activos aparecerán como enlaces clicables en el footer',
+                }

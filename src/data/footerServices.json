@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "title": "Información municipal",
+    "url": "",
+    "isExternal": false,
+    "isActive": false
+  },
+  {
+    "id": 2,
+    "title": "Sede Electrónica",
+    "url": "https://belmontejo.sedelectronica.es/",
+    "isExternal": true,
+    "isActive": true
+  },
+  {
+    "id": 3,
+    "title": "Eventos y actividades",
+    "url": "",
+    "isExternal": false,
+    "isActive": false
+  },
+  {
+    "id": 4,
+    "title": "Turismo rural",
+    "url": "https://www.escapadarural.com/casas-rurales/belmontejo",
+    "isExternal": true,
+    "isActive": true
+  }
+]
