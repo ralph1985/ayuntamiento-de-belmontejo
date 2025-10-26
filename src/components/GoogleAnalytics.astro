@@ -6,7 +6,6 @@ const GOOGLE_ANALYTICS_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 
 {GOOGLE_ANALYTICS_ID && (
   <>
-    <!-- Google Analytics Global Site Tag (gtag.js) - loaded conditionally -->
     <script is:inline define:vars={{ GOOGLE_ANALYTICS_ID }}>
       // Check if user has given analytics consent
       function hasAnalyticsConsent() {
