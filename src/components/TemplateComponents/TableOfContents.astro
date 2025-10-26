@@ -20,18 +20,12 @@ const filteredHeadings = headings.filter(heading => heading.depth <= levels);
 
 {
   filteredHeadings.length > 0 && (
-    <div
-      class="news-sidebar_widget-wrapper cs-hide-on-mobile"
-      id="desktop-toc"
-    >
+    <div class="news-sidebar_widget-wrapper cs-hide-on-mobile" id="desktop-toc">
       <h3 class="news-sidebar_widget-header">En esta página</h3>
       <ul class="cs-toc-list">
         {filteredHeadings.map(heading => (
           <li class={`cs-toc-item depth-${heading.depth}`}>
-            <a
-              href={`#${heading.slug}`}
-              class="cs-toc-link"
-            >
+            <a href={`#${heading.slug}`} class="cs-toc-link">
               {heading.text}
             </a>
           </li>
