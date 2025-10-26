@@ -9,5 +9,15 @@
     "autoDeployment": false
   },
   "buildCommand": "npm run build",
-  "ignoreCommand": "bash -c 'if [[ \"$VERCEL_GIT_COMMIT_REF\" != \"main\" && \"$VERCEL_GIT_COMMIT_REF\" != \"develop\" ]]; then echo \"Build skipped for branch $VERCEL_GIT_COMMIT_REF\"; exit 0; else exit 1; fi'"
+  "ignoreCommand": "bash -c 'if [[ \"$VERCEL_GIT_COMMIT_REF\" != \"main\" && \"$VERCEL_GIT_COMMIT_REF\" != \"develop\" ]]; then echo \"Build skipped for branch $VERCEL_GIT_COMMIT_REF\"; exit 0; else exit 1; fi'",
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "status": 404,
+      "dest": "/404"
+    }
+  ]
 }
