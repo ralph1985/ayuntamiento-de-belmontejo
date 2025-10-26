@@ -114,7 +114,7 @@ collections:
       - { label: 'Contenido', name: 'body', widget: 'markdown' }
 
   - name: 'footer-services' # Collection for managing footer services links
-    label: 'Enlaces de Servicios (Footer)' # Used in the admin dashboard UI
+    label: 'Enlaces de Servicios' # Used in the admin dashboard UI
     files:
       - label: 'Configuración de Enlaces de Servicios'
         name: 'services'
