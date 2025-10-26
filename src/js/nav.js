@@ -4,7 +4,7 @@ document.addEventListener('astro:page-load', () => {
 
   const CSbody = document.querySelector('body');
   const CSnavbarMenu = document.getElementById('cs-navigation');
-  const CSUlWrapper = document.getElementById('cs-ul-wrapper');
+  // const CSUlWrapper = document.getElementById('cs-ul-wrapper');
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
 
   function toggleMenu() {
