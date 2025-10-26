@@ -2,8 +2,10 @@
 import client from "@data/client.json";
 import navData from "@data/navData.json";
 import { getCurrentYear } from "@js/utils";
+import packageJson from "../../package.json";
 
 const currentYear = getCurrentYear();
+const version = packageJson.version;
 
 // Filter navigation data to show admin menu only when enabled
 const showAdminMenu = import.meta.env.PUBLIC_ADMIN_MENU === "true";
@@ -111,8 +113,8 @@ const filteredNavData = navData.filter((entry) => {
       target="_blank"
       rel="noopener"
       >Ayuntamiento de Belmontejo</a
-    >
-    <span class="copyright"> Copyright {currentYear} - Presente</span>
+    >.
+    <span class="copyright-version"> Copyright {currentYear} | v{version}</span>
   </div>
 </footer>
 
