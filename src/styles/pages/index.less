@@ -1172,3 +1172,96 @@
     }
   }
 }
+
+/*-- -------------------------- -->
+<---       Social Media         -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0em) {
+  #social-media {
+    padding: var(--sectionPadding);
+    background-color: #f7f7f7;
+
+    .cs-container {
+      width: 100%;
+      max-width: (1280/16rem);
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* 48px - 64px */
+      gap: clamp(3rem, 6vw, 4rem);
+    }
+
+    .cs-content {
+      /* set text align to left if content needs to be left aligned */
+      text-align: center;
+      width: 100%;
+      max-width: (548/16rem);
+      display: flex;
+      flex-direction: column;
+      /* centers content horizontally, set to flex-start to left align */
+      align-items: center;
+    }
+
+    .social-links-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    // Estilos específicos para la versión de homepage
+    .homepage-social {
+      .social-media-section {
+        .social-links {
+          justify-content: center;
+          flex-direction: row;
+          gap: 1.5rem;
+          flex-wrap: wrap;
+
+          @media (min-width: 768px) {
+            gap: 2rem;
+          }
+        }
+
+        .social-link {
+          min-width: 200px;
+          padding: 1rem 1.5rem;
+          border-radius: 0.75rem;
+          font-size: 1.125rem;
+          font-weight: 600;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+          &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+          }
+
+          .social-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+
+          .social-name {
+            font-size: 1.125rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48em) {
+  #social-media {
+    .social-links-wrapper {
+      max-width: 600px;
+    }
+  }
+}
+
+// Modo oscuro
+[data-theme='dark'] #social-media {
+  background-color: var(--dark);
+}
