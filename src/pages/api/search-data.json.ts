@@ -38,6 +38,7 @@ export const GET: APIRoute = async () => {
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
+  // eslint-disable-next-line no-undef
   return new Response(JSON.stringify(searchData), {
     status: 200,
     headers: {

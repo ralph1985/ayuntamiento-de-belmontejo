@@ -20,12 +20,18 @@ const filteredHeadings = headings.filter(heading => heading.depth <= levels);
 
 {
   filteredHeadings.length > 0 && (
-    <div class="news-sidebar_widget-wrapper cs-hide-on-mobile" id="desktop-toc">
+    <div
+      class="news-sidebar_widget-wrapper cs-hide-on-mobile"
+      id="desktop-toc"
+    >
       <h3 class="news-sidebar_widget-header">En esta página</h3>
       <ul class="cs-toc-list">
         {filteredHeadings.map(heading => (
           <li class={`cs-toc-item depth-${heading.depth}`}>
-            <a href={`#${heading.slug}`} class="cs-toc-link">
+            <a
+              href={`#${heading.slug}`}
+              class="cs-toc-link"
+            >
               {heading.text}
             </a>
           </li>
@@ -43,17 +49,17 @@ const filteredHeadings = headings.filter(heading => heading.depth <= levels);
   // Wrapper for News post content
   let wrappingElement: Element | null;
   let observeHeaderTags: IntersectionObserver;
-  let allHeaderTags: NodeListOf<Element>;
+  let allHeaderTags: Element[];
   const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
 
   // Function that runs when the Intersection Observer fires
-  function setCurrent(entries: any[]) {
+  function setCurrent(entries: IntersectionObserverEntry[]) {
     const tocWrapper = document.querySelector('#desktop-toc');
     if (!tocWrapper) return;
 
     const allSectionLinks = tocWrapper.querySelectorAll('.cs-toc-link');
 
-    entries.forEach((entry: { isIntersecting: any; target: { id: any } }) => {
+    entries.forEach((entry: IntersectionObserverEntry) => {
       if (entry.isIntersecting) {
         allSectionLinks.forEach(link =>
           link.classList.remove('cs-toc-current')
@@ -75,8 +81,8 @@ const filteredHeadings = headings.filter(heading => heading.depth <= levels);
     if (!wrappingElement) return;
 
     // Get all H1/H2/H3 tags from the post
-    allHeaderTags = wrappingElement.querySelectorAll(
-      ':scope > h1, :scope > h2, :scope > h3'
+    allHeaderTags = Array.from(
+      wrappingElement.querySelectorAll(':scope > h1, :scope > h2, :scope > h3')
     );
     if (!allHeaderTags.length) return;
 
