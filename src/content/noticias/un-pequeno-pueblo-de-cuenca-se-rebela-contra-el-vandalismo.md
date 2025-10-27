@@ -2,7 +2,7 @@
 title: Un pequeño pueblo de Cuenca se rebela contra el vandalismo y amenaza con cancelar las fiestas
 description: Belmontejo, de apenas 130 habitantes, está sufriendo una oleada de actos incívicos que afectan gravemente la convivencia. Las autoridades lanzan un ultimátum a visitantes y vecinos.
 author: Redacción
-date: 2025-11-10T09:30:00.000Z
+date: 2025-10-10T09:30:00.000Z
 image: src/assets/images/noticias/imagen-de-prueba-1.jpg
 imageAlt: Casco urbano de Belmontejo
 isFeatured: false
