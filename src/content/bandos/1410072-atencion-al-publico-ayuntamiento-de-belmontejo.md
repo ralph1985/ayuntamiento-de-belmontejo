@@ -9,6 +9,6 @@ link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp
 isFeatured: false
 ---
 
-El horario de atención al público será el miércoles por la tarde de&nbsp;**miércoles de 16:30 a 19:00&nbsp;horas.**
+El horario de atención al público será el miércoles por la tarde de **miércoles de 16:30 a 19:00 horas.**
 
 Perdonen las molestias.
