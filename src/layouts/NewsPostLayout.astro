@@ -56,7 +56,12 @@ const { Content, headings } = await render(post);
 
         <!-- Mobile Table of Contents -->
         <div class="news-sidebar_widget-wrapper cs-hide-on-desktop">
-          <TableOfContents headings={headings} levels={3} />
+          <TableOfContents
+            headings={headings}
+            levels={3}
+            hideOnMobile={false}
+            noWrapper={true}
+          />
         </div>
         <!--Markdown content-->
         <div id="news-content">

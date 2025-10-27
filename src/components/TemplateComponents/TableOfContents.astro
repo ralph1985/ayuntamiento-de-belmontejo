@@ -10,29 +10,53 @@ interface Heading {
 interface Props {
   headings: Heading[]; // Array of headings from your markdown content
   levels?: 1 | 2 | 3; // How many levels of headers to show in TOC (default: 2)
+  hideOnMobile?: boolean; // Whether to hide on mobile (default: true for desktop version)
+  noWrapper?: boolean; // Whether to skip the outer wrapper (default: false)
 }
 
-const { headings, levels = 2 } = Astro.props as Props;
+const {
+  headings,
+  levels = 2,
+  hideOnMobile = true,
+  noWrapper = false,
+} = Astro.props as Props;
 
 // Filter headings to only show up to the specified level
 const filteredHeadings = headings.filter(heading => heading.depth <= levels);
 ---
 
 {
-  filteredHeadings.length > 0 && (
-    <div class="news-sidebar_widget-wrapper cs-hide-on-mobile" id="desktop-toc">
-      <h3 class="news-sidebar_widget-header">En esta página</h3>
-      <ul class="cs-toc-list">
-        {filteredHeadings.map(heading => (
-          <li class={`cs-toc-item depth-${heading.depth}`}>
-            <a href={`#${heading.slug}`} class="cs-toc-link">
-              {heading.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
+  filteredHeadings.length > 0 &&
+    (noWrapper ? (
+      <Fragment>
+        <h3 class="news-sidebar_widget-header">En esta página</h3>
+        <ul class="cs-toc-list" data-toc-wrapper>
+          {filteredHeadings.map(heading => (
+            <li class={`cs-toc-item depth-${heading.depth}`}>
+              <a href={`#${heading.slug}`} class="cs-toc-link">
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Fragment>
+    ) : (
+      <div
+        class={`news-sidebar_widget-wrapper ${hideOnMobile ? 'cs-hide-on-mobile' : ''}`}
+        data-toc-wrapper
+      >
+        <h3 class="news-sidebar_widget-header">En esta página</h3>
+        <ul class="cs-toc-list">
+          {filteredHeadings.map(heading => (
+            <li class={`cs-toc-item depth-${heading.depth}`}>
+              <a href={`#${heading.slug}`} class="cs-toc-link">
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
 }
 
 <style lang="less">
@@ -44,11 +68,13 @@ const filteredHeadings = headings.filter(heading => heading.depth <= levels);
   let wrappingElement: Element | null;
   let observeHeaderTags: IntersectionObserver;
   let allHeaderTags: Element[];
-  const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
 
   // Function that runs when the Intersection Observer fires
   function setCurrent(entries: IntersectionObserverEntry[]) {
-    const tocWrapper = document.querySelector('#desktop-toc');
+    // Get the currently visible TOC wrapper (could be mobile or desktop)
+    const tocWrapper = document.querySelector(
+      '[data-toc-wrapper]:not([style*="display: none"])'
+    );
     if (!tocWrapper) return;
 
     const allSectionLinks = tocWrapper.querySelectorAll('.cs-toc-link');
@@ -67,9 +93,6 @@ const filteredHeadings = headings.filter(heading => heading.depth <= levels);
   }
 
   function initTOC() {
-    // Check if it's desktop
-    if (!window.matchMedia('(min-width: 64rem)').matches) return;
-
     // update this with whatever class wraps your blog post content
     wrappingElement = document.querySelector('#news-content');
     if (!wrappingElement) return;
@@ -92,23 +115,11 @@ const filteredHeadings = headings.filter(heading => heading.depth <= levels);
     allHeaderTags.forEach(tag => observeHeaderTags.observe(tag));
   }
 
-  // Run on initial page load if on desktop
-  if (isDesktop) initTOC();
+  // Run on initial page load
+  initTOC();
 
-  // Re-run on view transitions navigation if on desktop
+  // Re-run on view transitions navigation
   document.addEventListener('astro:after-swap', () => {
-    if (window.matchMedia('(min-width: 64rem)').matches) {
-      initTOC();
-    }
-  });
-
-  // Listen for screen size changes
-  window.matchMedia('(min-width: 64rem)').addEventListener('change', e => {
-    if (e.matches) {
-      initTOC();
-    } else {
-      // Clean up observer when switching to mobile
-      if (observeHeaderTags) observeHeaderTags.disconnect();
-    }
+    initTOC();
   });
 </script>
