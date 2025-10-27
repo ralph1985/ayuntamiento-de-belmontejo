@@ -37,6 +37,40 @@
 
     --border-color: #3e3e3b; /* Gris tenue */
 
+    /* Sombras optimizadas para modo oscuro */
+    .cs-card-shadow {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    .cs-shadow-light {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .cs-shadow-medium {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .cs-shadow-strong {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Elementos específicos con sombras en modo oscuro */
+    .news-article,
+    .news-header,
+    .news-sidebar_widget-wrapper,
+    .cs-item {
+      background-color: var(--medium);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+      }
+    }
+
     p,
     li,
     h1,

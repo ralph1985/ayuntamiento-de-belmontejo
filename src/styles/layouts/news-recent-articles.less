@@ -46,8 +46,9 @@
       list-style: none;
       border-radius: (16/16rem);
       overflow: hidden;
-      background-color: #f7f7f7;
+      background-color: #fff;
       border: 1px solid #e8e8e8;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       grid-column: span 12;
       display: flex;
       flex-direction: column;
@@ -59,7 +60,8 @@
         transform 0.3s;
 
       &:hover {
-        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
 
         .cs-picture {
           img {

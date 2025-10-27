@@ -337,6 +337,29 @@
   .cs-hide-on-desktop {
     display: block;
   }
+
+  /* Card shadow utility - inspired by cookies policy page */
+  .cs-card-shadow {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  /* Alternative shadow variations */
+  .cs-shadow-light {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .cs-shadow-medium {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .cs-shadow-strong {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
 }
 /* Desktop - 1024px */
 @media only screen and (min-width: 64rem) {

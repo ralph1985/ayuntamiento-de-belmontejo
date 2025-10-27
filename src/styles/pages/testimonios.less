@@ -23,11 +23,19 @@
       margin-bottom: (100/16rem);
       padding: (64/16rem) (30/16rem) (18/16rem) (30/16rem);
       background: #fff;
-      box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);
-      border-radius: (5/16rem);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border-radius: (12/16rem);
+      transition:
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
       display: flex;
       flex-direction: column;
       position: relative;
+
+      &:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-4px);
+      }
 
       &:last-of-type {
         margin-bottom: 0;

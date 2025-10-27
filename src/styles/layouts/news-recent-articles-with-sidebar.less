@@ -102,9 +102,15 @@
       width: 100%;
       height: clamp(200px, 30vw, 400px);
       border-radius: (8/16em) (8/16em) 0 0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
       display: block;
       position: relative;
       overflow: hidden;
+
+      &:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+      }
 
       img {
         width: 100%;
@@ -120,6 +126,13 @@
       padding: clamp(30px, 5vw, 50px);
       border: 1px solid #ebebeb;
       border-radius: 0 0 (8/16em) (8/16em);
+      background: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+      }
     }
 
     .news-author-img {
