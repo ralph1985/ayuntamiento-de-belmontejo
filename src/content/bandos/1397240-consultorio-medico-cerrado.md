@@ -11,4 +11,4 @@ isFeatured: false
 
 Mañana día 20 de agosto permanecerá cerrado el consultorio médico.
 
-Perdonen las molestias&nbsp;
+Perdonen las molestias

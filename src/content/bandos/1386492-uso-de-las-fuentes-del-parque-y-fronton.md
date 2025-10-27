@@ -9,7 +9,7 @@ link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp
 isFeatured: false
 ---
 
-### 🚰 **Usar las fuentes del parque&nbsp;con cuidado**
+### 🚰 **Usar las fuentes del parque con cuidado**
 
 💧 _El agua es un recurso valioso_
 
@@ -18,6 +18,6 @@ isFeatured: false
 ❌ No juegues con el agua
 
 🙏 **Respeta el espacio común**
-Cuidar el agua y el mobiliario es tarea de todos. Se hace un llamamiento al uso responsable, ya que anoche dejaron el grifo abierto y la zona está hecha un barrizal, con los problemas y gastos que conlleva.&nbsp;
+Cuidar el agua y el mobiliario es tarea de todos. Se hace un llamamiento al uso responsable, ya que anoche dejaron el grifo abierto y la zona está hecha un barrizal, con los problemas y gastos que conlleva.
 
 Muchas gracias
