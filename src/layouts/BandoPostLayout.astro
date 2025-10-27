@@ -50,15 +50,6 @@ const { Content, headings } = await render(post);
               )
             }
           </div>
-          {
-            link && (
-              <div class="bando-external-link">
-                <a href={link} target="_blank" rel="noopener noreferrer">
-                  Ver bando original en Bandomovil
-                </a>
-              </div>
-            )
-          }
         </header>
 
         <!--Main Article Image (optional for bandos)-->
@@ -89,6 +80,16 @@ const { Content, headings } = await render(post);
         <div id="news-content">
           <Content />
         </div>
+
+        {
+          link && (
+            <div class="bando-external-link">
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                Ver bando original en Bandomovil
+              </a>
+            </div>
+          )
+        }
       </article>
     </section>
     <!--Side bar-->
