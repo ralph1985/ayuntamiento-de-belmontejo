@@ -21,7 +21,7 @@
 }
 
 .frame-content {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   line-height: 1.6em;
 }
 
@@ -31,7 +31,7 @@
 .frame-content h4,
 .frame-content h5,
 .frame-content h6 {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: var(--headerColor);
 }
 
