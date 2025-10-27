@@ -31,10 +31,16 @@
 
     .cs-picture {
       border-radius: (24/16em);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
       display: block;
       position: absolute;
       /* clips img tag corners */
       overflow: hidden;
+
+      &:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+      }
 
       img {
         width: 100%;

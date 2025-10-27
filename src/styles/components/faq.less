@@ -45,9 +45,18 @@
     .cs-faq-item {
       list-style: none;
       width: 100%;
+      background: white;
+      border-radius: (8/16rem);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      transition:
+        box-shadow 0.3s ease,
+        border-bottom 0.3s;
       /* clips all corners of the button that overlap the rounded border */
       overflow: hidden;
-      transition: border-bottom 0.3s;
+
+      &:hover {
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+      }
 
       &.active {
         .cs-button {
