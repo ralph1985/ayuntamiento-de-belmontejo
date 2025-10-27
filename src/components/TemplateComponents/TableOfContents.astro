@@ -42,7 +42,7 @@ const filteredHeadings = headings.filter(heading => heading.depth <= levels);
       </Fragment>
     ) : (
       <div
-        class={`news-sidebar_widget-wrapper ${hideOnMobile ? 'cs-hide-on-mobile' : ''}`}
+        class={`news-sidebar_widget-wrapper ${hideOnMobile ? 'cs-hide-on-mobile' : 'cs-hide-on-desktop'}`}
         data-toc-wrapper
       >
         <h3 class="news-sidebar_widget-header">En esta página</h3>
