@@ -1,12 +1,18 @@
 ---
-import navData from '@data/navData.json';
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import { Icon } from 'astro-icon/components';
 import DarkModeToggle from '@components/DarkModeToggle.astro';
+import { useTranslations } from 'src/i18n';
 
-// TODO: eliminar comentario de prueba
+import navDataEs from '@data/navData.es.json';
+import navDataEn from '@data/navData.en.json';
+
+const locale = Astro.currentLocale;
+const t = useTranslations(locale);
+
+const navData = locale === 'en' ? navDataEn : navDataEs;
 
 // Filter navigation data to show admin menu only when enabled
-// TODO: esto me pide unificarlo en un sólo sitio ya que está repetido tanto en el Header como en el Footer
 const showAdminMenu = import.meta.env.PUBLIC_ADMIN_MENU === 'true';
 const filteredNavData = navData.filter(entry => {
   if (entry.isAdmin) {
@@ -28,7 +34,7 @@ const filteredNavData = navData.filter(entry => {
         height="29"
         decoding="async"
       />
-      <span class="cs-logo-text">Ayuntamiento de Belmontejo</span>
+      <span class="cs-logo-text">{t.header.title}</span>
     </a>
     <!--Navigation List-->
     <nav class="cs-nav" role="navigation">
@@ -114,8 +120,15 @@ const filteredNavData = navData.filter(entry => {
         </ul>
       </div>
     </nav>
-    <!--Dark Mode toggle: remove component if you don't want to enable a dark mode toggle-->
-    <DarkModeToggle />
+    <div class="cs-header-actions">
+      <!-- Lang Switcher -->
+      <div class="cs-lang-switcher">
+        <a href={getRelativeLocaleUrl('es')} class:list={["cs-lang-link", { "cs-active": locale === 'es' }]}>ES</a>
+        <a href={getRelativeLocaleUrl('en')} class:list={["cs-lang-link", { "cs-active": locale === 'en' }]}>EN</a>
+      </div>
+      <!--Dark Mode toggle: remove component if you don't want to enable a dark mode toggle-->
+      <DarkModeToggle />
+    </div>
   </div>
 </header>
 

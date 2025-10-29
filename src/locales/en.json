@@ -1,0 +1,38 @@
+{
+  "header": {
+    "title": "Belmontejo Town Hall",
+    "subtitle": "A town with a future"
+  },
+  "cookies": {
+    "title": "Cookie Policy",
+    "text": "This website uses cookies to improve your experience. We'll assume you're ok with this, but you can opt-out if you wish.",
+    "link": "Read more about our cookie policy",
+    "acceptAll": "Accept All",
+    "acceptNecessary": "Necessary Only",
+    "settings": "Settings",
+    "settingsTitle": "Cookie Settings",
+    "necessaryTitle": "Essential Cookies",
+    "necessaryText": "These cookies are crucial for the website to function and cannot be disabled.",
+    "analyticsTitle": "Analytics Cookies",
+    "analyticsText": "These cookies help us understand how visitors interact with the website by collecting information anonymously.",
+    "save": "Save Preferences"
+  },
+  "footer": {
+    "legal": "Legal Notice",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy",
+    "accessibility": "Accessibility",
+    "contact": "Contact",
+    "copyright": "© {year} Belmontejo Town Hall. All rights reserved."
+  },
+  "cookieManager": {
+    "tooltip": "Manage cookie consent"
+  },
+  "skipLinks": {
+    "toContent": "Skip to main content"
+  },
+  "lastBando": {
+    "title": "Latest Municipal Announcement",
+    "readMore": "View all announcements"
+  }
+}

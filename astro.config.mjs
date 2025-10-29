@@ -13,6 +13,13 @@ export default defineConfig({
   site: 'https://ayuntamiento-de-belmontejo.vercel.app/',
   output: 'server',
   adapter: vercel(),
+  i18n: {
+    locales: ['es', 'en'],
+    defaultLocale: 'es',
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   integrations: [
     icon(),
     sitemap({

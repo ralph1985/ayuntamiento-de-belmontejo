@@ -1,0 +1,28 @@
+---
+/**
+ * * This page generates the individual noticias posts
+ **/
+
+import { getCollection, render } from 'astro:content';
+import NewsPostLayout from '@layouts/NewsPostLayout.astro';
+// import CTA from '@components/CTA.astro';
+
+// Prerender this page as static HTML during the build process
+export const prerender = true;
+
+// Generates the individual noticias pages based on the noticias collection
+export async function getStaticPaths() {
+  const posts = await getCollection('noticias');
+  return posts.map(entry => ({
+    params: { post: entry.id },
+    props: { post: entry },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<NewsPostLayout post={post} headings={headings}>
+  <Content />
+</NewsPostLayout>

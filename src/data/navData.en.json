@@ -1,0 +1,52 @@
+[
+  {
+    "key": "Home",
+    "url": "/en/",
+    "children": []
+  },
+  {
+    "key": "About the town",
+    "url": "/en/about-the-town/",
+    "children": []
+  },
+  {
+    "key": "News",
+    "url": "/en/news/",
+    "children": []
+  },
+  {
+    "key": "Edicts",
+    "url": "/en/edicts/",
+    "children": []
+  },
+  {
+    "key": "Projects",
+    "url": "/en/projects/",
+    "children": [
+      {
+        "key": "Project 1",
+        "url": "/en/projects-folder/proyecto-1/"
+      },
+      {
+        "key": "Project 2",
+        "url": "/en/projects-folder/proyecto-2/"
+      }
+    ]
+  },
+  {
+    "key": "Testimonials",
+    "url": "/en/testimonials/",
+    "children": []
+  },
+  {
+    "key": "Search",
+    "url": "/en/search/",
+    "children": []
+  },
+  {
+    "key": "Admin",
+    "url": "/admin",
+    "children": [],
+    "isAdmin": true
+  }
+]

@@ -1,35 +1,31 @@
 ---
-// Cookie Consent Banner Component
-// Manages user consent for cookies according to GDPR requirements
+import { useTranslations } from 'src/i18n';
+
+const locale = Astro.currentLocale;
+const t = useTranslations(locale);
 ---
 
 <div id="cookie-banner" class="cookie-banner" style="display: none;">
   <div class="cookie-banner-content">
     <div class="cookie-banner-text">
-      <h3>🍪 Gestión de Cookies</h3>
-      <p>
-        Este sitio web utiliza cookies para mejorar su experiencia de navegación
-        y analizar el tráfico del sitio. Las cookies analíticas nos ayudan a
-        entender cómo interactúan los visitantes con el sitio web.
-      </p>
+      <h3>{t.cookies.title}</h3>
+      <p>{t.cookies.text}</p>
       <p class="cookie-banner-link">
-        <a href="/politica-de-cookies" target="_blank"
-          >Más información sobre nuestras cookies</a
-        >
+        <a href="/politica-de-cookies" target="_blank">{t.cookies.link}</a>
       </p>
     </div>
     <div class="cookie-banner-buttons">
       <button id="accept-all-cookies" class="cookie-btn cookie-btn-accept">
-        Aceptar todas
+        {t.cookies.acceptAll}
       </button>
       <button
         id="accept-necessary-only"
         class="cookie-btn cookie-btn-necessary"
       >
-        Solo necesarias
+        {t.cookies.acceptNecessary}
       </button>
       <button id="cookie-settings" class="cookie-btn cookie-btn-settings">
-        Configurar
+        {t.cookies.settings}
       </button>
     </div>
   </div>
@@ -39,7 +35,7 @@
 <div id="cookie-settings-modal" class="cookie-modal" style="display: none;">
   <div class="cookie-modal-content">
     <div class="cookie-modal-header">
-      <h3>Configuración de Cookies</h3>
+      <h3>{t.cookies.settingsTitle}</h3>
       <button id="close-cookie-modal" class="cookie-modal-close">&times;</button
       >
     </div>
@@ -48,32 +44,25 @@
         <div class="cookie-category-header">
           <input type="checkbox" id="necessary-cookies" checked disabled />
           <label for="necessary-cookies">
-            <strong>Cookies Necesarias</strong>
+            <strong>{t.cookies.necessaryTitle}</strong>
           </label>
         </div>
-        <p class="cookie-category-description">
-          Estas cookies son esenciales para el funcionamiento del sitio web y no
-          se pueden desactivar.
-        </p>
+        <p class="cookie-category-description">{t.cookies.necessaryText}</p>
       </div>
 
       <div class="cookie-category">
         <div class="cookie-category-header">
           <input type="checkbox" id="analytics-cookies" />
           <label for="analytics-cookies">
-            <strong>Cookies Analíticas</strong>
+            <strong>{t.cookies.analyticsTitle}</strong>
           </label>
         </div>
-        <p class="cookie-category-description">
-          Estas cookies nos permiten analizar el uso del sitio web para mejorar
-          su rendimiento y experiencia de usuario. Utilizamos Google Analytics
-          para estos propósitos.
-        </p>
+        <p class="cookie-category-description">{t.cookies.analyticsText}</p>
       </div>
     </div>
     <div class="cookie-modal-footer">
       <button id="save-cookie-preferences" class="cookie-btn cookie-btn-accept">
-        Guardar preferencias
+        {t.cookies.save}
       </button>
     </div>
   </div>

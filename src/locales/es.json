@@ -1,0 +1,38 @@
+{
+  "header": {
+    "title": "Ayuntamiento de Belmontejo",
+    "subtitle": "Un pueblo con futuro"
+  },
+  "cookies": {
+    "title": "Política de Cookies",
+    "text": "Este sitio web utiliza cookies para mejorar su experiencia. Asumiremos que está de acuerdo con esto, pero puede optar por no participar si lo desea.",
+    "link": "Leer más sobre nuestra política de cookies",
+    "acceptAll": "Aceptar Todas",
+    "acceptNecessary": "Solo Necesarias",
+    "settings": "Configuración",
+    "settingsTitle": "Configuración de Cookies",
+    "necessaryTitle": "Cookies Esenciales",
+    "necessaryText": "Estas cookies son cruciales para el funcionamiento del sitio web y no se pueden desactivar.",
+    "analyticsTitle": "Cookies de Analítica",
+    "analyticsText": "Estas cookies nos ayudan a entender cómo los visitantes interactúan con el sitio web recopilando información de forma anónima.",
+    "save": "Guardar Preferencias"
+  },
+  "footer": {
+    "legal": "Aviso Legal",
+    "privacy": "Política de Privacidad",
+    "cookies": "Política de Cookies",
+    "accessibility": "Accesibilidad",
+    "contact": "Contacto",
+    "copyright": "© {year} Ayuntamiento de Belmontejo. Todos los derechos reservados."
+  },
+  "cookieManager": {
+    "tooltip": "Gestionar consentimiento de cookies"
+  },
+  "skipLinks": {
+    "toContent": "Saltar al contenido principal"
+  },
+  "lastBando": {
+    "title": "Último Bando Municipal",
+    "readMore": "Ver todos los bandos"
+  }
+}

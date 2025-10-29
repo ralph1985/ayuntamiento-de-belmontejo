@@ -1,4 +1,8 @@
 ---
+import { useTranslations } from 'src/i18n';
+
+const locale = Astro.currentLocale;
+const t = useTranslations(locale);
 // Floating Cookie Manager Button
 // Provides easy access to cookie settings after the banner is dismissed
 ---
@@ -6,7 +10,7 @@
 <button
   id="floating-cookie-manager"
   class="floating-cookie-btn"
-  title="Gestionar cookies"
+  title={t.cookieManager.tooltip}
 >
   🍪
 </button>

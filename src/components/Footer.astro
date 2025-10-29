@@ -1,9 +1,16 @@
 ---
 import client from '@data/client.json';
-import navData from '@data/navData.json';
+import navDataEs from '@data/navData.es.json';
+import navDataEn from '@data/navData.en.json';
 import footerServices from '@data/footerServices.json';
 import { getCurrentYear } from '@js/utils';
 import packageJson from '../../package.json';
+import { useTranslations } from 'src/i18n';
+
+const locale = Astro.currentLocale;
+const t = useTranslations(locale);
+
+const navData = locale === 'en' ? navDataEn : navDataEs;
 
 const currentYear = getCurrentYear();
 const version = packageJson.version;
@@ -32,11 +39,7 @@ const filteredNavData = navData.filter(entry => {
           height="78"
         /></a
       >
-      <p>
-        Ayuntamiento de Belmontejo - Un pueblo pequeño con alma grande en el
-        corazón de la Manchuela conquense. Preservando nuestra historia y
-        tradiciones para las futuras generaciones.
-      </p>
+      <p>{t.header.title}</p>
     </div>
     <div class="right-section">
       <div class="lists">
