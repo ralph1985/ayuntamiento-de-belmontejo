@@ -1,0 +1,16 @@
+# Build outputs
+dist/
+build/
+.astro/
+
+# Public assets
+public/
+
+# Node modules
+node_modules/
+
+# Minified files
+*.min.css
+
+# Examples (si decides no lintearlos)
+src/styles/examples/

@@ -1,0 +1,44 @@
+{
+  "customSyntax": "postcss-less",
+  "defaultSeverity": "warning",
+  "extends": ["stylelint-config-standard", "stylelint-config-recommended-less"],
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "max-nesting-depth": [3, { "ignore": ["blockless-at-rules"] }],
+    "selector-max-id": 0,
+    "color-named": "never",
+    "media-feature-range-notation": "context",
+    "selector-class-pattern": [
+      "^([a-z0-9]+(?:-[a-z0-9]+)*)?(?:__(?:[a-z0-9]+(?:-[a-z0-9]+)*))?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?$",
+      {
+        "message": "Usa BEM ligero: bloque, __elemento, --modificador.",
+        "severity": "warning"
+      }
+    ],
+    "order/properties-alphabetical-order": null,
+    "order/order": [
+      "custom-properties",
+      "dollar-variables",
+      { "type": "at-rule", "name": "include" },
+      "declarations",
+      { "type": "at-rule", "name": "media" },
+      "rules"
+    ],
+    "comment-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        "except": ["first-nested"],
+        "ignore": ["after-comment"]
+      }
+    ]
+  },
+  "ignoreFiles": [
+    "**/dist/**",
+    "**/build/**",
+    "**/.astro/**",
+    "**/*.min.css",
+    "**/public/**"
+  ]
+}

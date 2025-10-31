@@ -86,6 +86,39 @@ El proyecto implementa una arquitectura **ITCSS** (Inverted Triangle CSS) con **
 - **`npm run build`:** Compila el sitio para producción.
 - **`npm run preview`:** Vista previa del sitio compilado.
 - **`npm run fetch-bandos`:** Script para obtener y actualizar los bandos municipales.
+- **`npm run lint`:** Ejecuta ESLint en archivos JavaScript/TypeScript/Astro.
+- **`npm run lint:fix`:** Ejecuta ESLint y corrige automáticamente los problemas encontrados.
+- **`npm run lint:css`:** Ejecuta Stylelint en archivos CSS/LESS (modo warning).
+- **`npm run lint:css:fix`:** Ejecuta Stylelint y corrige automáticamente los problemas de formato.
+- **`npm run format`:** Verifica el formato del código con Prettier.
+- **`npm run format:write`:** Formatea todo el código con Prettier.
+
+### 🎨 Linting CSS/LESS
+
+El proyecto utiliza **Stylelint** para mantener la calidad y consistencia del código CSS/LESS:
+
+**Política de Warnings (Actual):**
+
+- ⚠️ **Modo Warning:** Por ahora, Stylelint está configurado en modo `"warning"` para no bloquear PRs.
+- 📝 **Recomendación:** Ejecuta `npm run lint:css` antes de cada commit para detectar problemas.
+- 🔧 **Auto-fix:** Usa `npm run lint:css:fix` para corregir automáticamente problemas de formato.
+
+**Reglas principales:**
+
+- Máximo 3 niveles de anidación LESS
+- Nomenclatura BEM ligera para clases (bloque, `__elemento`, `--modificador`)
+- Sin nombres de colores (`red`, `blue`), usar hex/rgb/hsl
+- Sin selectores por ID
+- Orden de propiedades consistente
+
+**Política futura:**
+
+- 🎯 Una vez estabilizado el código, cambiaremos a `"defaultSeverity": "error"` para bloquear PRs con problemas.
+- 🚀 El workflow de CI ya está configurado pero en modo permisivo.
+
+**Archivos ignorados:**
+
+- `/dist/**`, `/build/**`, `/.astro/**`, `/public/**`
 
 ## Despliegue
 
