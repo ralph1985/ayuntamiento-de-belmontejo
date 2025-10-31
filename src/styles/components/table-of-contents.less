@@ -1,6 +1,6 @@
 .cs-toc-container {
   border-radius: 0.5em;
-  border: 1px solid #ebebeb;
+  border: 1px solid var(--color-border);
   padding: 2.1875em 1.875em;
   margin-bottom: 2rem;
 }
@@ -46,11 +46,23 @@
   }
 }
 
-/* Dark Mode */
+/* Dark Mode - MIGRADO a sistema de tokens */
 @media only screen and (min-width: 0em) {
+  :root[data-theme="dark"] {
+    .cs-toc-link {
+      color: var(--color-text-primary);
+      &.cs-toc-current {
+        color: var(--primaryLight);
+      }
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
   body.dark-mode {
     .cs-toc-link {
-      color: #f7f7f7;
+      color: var(--color-text-primary);
       &.cs-toc-current {
         color: var(--primaryLight);
       }

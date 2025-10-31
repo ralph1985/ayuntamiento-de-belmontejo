@@ -199,13 +199,14 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0rem) {
-  body.dark-mode {
+  body.dark-mode,
+  :root[data-theme="dark"] {
     #news-1144 {
       &:before {
         content: "";
         width: 100%;
         height: 100%;
-        background: var(--dark);
+        background: var(--color-bg-dark);
         opacity: 0.9;
         position: absolute;
         display: block;
@@ -215,7 +216,7 @@
       }
 
       .cs-topper {
-        color: var(--primaryLight);
+        color: var(--color-primary-light);
       }
 
       .cs-title,
@@ -223,7 +224,7 @@
       .cs-h3,
       .cs-link,
       .cs-item-text {
-        color: var(--bodyTextColorWhite);
+        color: var(--color-text-white);
       }
 
       .cs-text,
@@ -246,7 +247,7 @@
 
       .cs-date {
         background-color: #fff;
-        color: var(--secondary);
+        color: var(--color-secondary);
       }
 
       .cs-arrow,

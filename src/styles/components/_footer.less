@@ -12,7 +12,7 @@
   .footer {
     /* 60px - 100px top and bottom */
     padding: clamp(3.75rem, 7.82vw, 6.25rem) (16/16rem);
-    background: #1a1a1a;
+    background: var(--footer-bg);
 
     .left-section {
       margin: auto;
@@ -38,7 +38,7 @@
         font-size: (14/16rem);
         line-height: (27/14em);
         margin: auto;
-        color: var(--bodyTextColorWhite);
+        color: var(--footer-text);
         opacity: 0.9;
       }
     }
@@ -83,13 +83,13 @@
             list-style: none;
             line-height: (21/18em);
             margin-bottom: (12/16rem);
-            color: var(--bodyTextColorWhite);
+            color: var(--footer-text);
             opacity: 0.9;
 
             a {
               text-decoration: none;
               line-height: (21/18em);
-              color: var(--bodyTextColorWhite);
+              color: var(--footer-text);
               transition: color 0.3s;
 
               &:hover {
@@ -103,7 +103,7 @@
             font-weight: bold;
             line-height: (21/18em);
             margin-bottom: (37/16rem);
-            color: var(--bodyTextColorWhite);
+            color: var(--footer-text);
             position: relative;
 
             &:before {
@@ -140,7 +140,7 @@
       width: 96%;
       margin: auto;
       margin-top: (100/16rem);
-      color: var(--bodyTextColorWhite);
+      color: var(--footer-text);
       text-align: center;
 
       a {
@@ -251,11 +251,5 @@
   }
 }
 
-/* Dark Mode */
-@media only screen and (min-width: 0em) {
-  body.dark-mode {
-    .footer {
-      background: #061623;
-    }
-  }
-}
+/* Dark Mode - DEPRECATED: Migrado a :root[data-theme="dark"] en _tokens.less */
+/* El footer ahora usa var(--footer-bg) y var(--footer-text) que cambian automáticamente */

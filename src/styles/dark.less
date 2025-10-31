@@ -1,73 +1,159 @@
-/* DARK MODE AND TOGGLE STYLES */
+/* DARK MODE - DEPRECATED FILE */
+
+/**
+ * ⚠️ ESTE ARCHIVO ESTÁ EN PROCESO DE MIGRACIÓN
+ * 
+ * Nuevo sistema:
+ * - Los colores del tema oscuro se definen en settings/_tokens.less
+ * - Usa :root[data-theme="dark"] en lugar of body.dark-mode
+ * - Los componentes consumen var(--color-*) y cambian automáticamente
+ * 
+ * Estado actual:
+ * - Definiciones de color: MIGRADAS a _tokens.less ✅
+ * - Clases utilitarias (.light, .dark): IMPLEMENTADAS para ambos sistemas
+ * - Sombras específicas: MIGRADAS a _tokens.less ✅
+ * - News/cards: Overrides específicos mantenidos temporalmente
+ * 
+ * Plan de eliminación:
+ * 1. Verificar que todos los componentes usen las variables de _tokens.less ✅
+ * 2. Eliminar body.dark-mode después de confirmar que data-theme funciona
+ * 3. Migrar overrides específicos (news, cards) a sus componentes
+ * 4. Eliminar este archivo completamente
+ * 
+ * Ver: DARK_MODE_MIGRATION.md para checklist completo
+ */
 
 /*-- -------------------------- -->
-<---      Core Dark Styles      -->
+<---   Compatibility Layer      -->
 <--- -------------------------- -*/
 
 /* Mobile */
 @media only screen and (min-width: 0em) {
-  // Paleta Belmontejo - Modo Oscuro
-  :root {
-    /* Fondos modo oscuro */
-    --dark: #1c1c1b; /* Gris pizarra (fondo principal) */
-    --medium: #2a2a28; /* Gris cálido (tarjetas/secciones) */
+  /**
+   * NUEVO SISTEMA - :root[data-theme="dark"]
+   * 
+   * Sistema principal de tematización - usa data-theme en <html>
+   * 
+   * IMPORTANTE: Este bloque redefine las variables CSS del tema oscuro
+   * Está en dark.less (capa legacy) para tener máxima prioridad y sobrescribir
+   * cualquier otra definición que venga de capas anteriores.
+   */
+  :root[data-theme="dark"] {
+    /* --- FONDOS --- */
+    --color-bg-main: #1c1c1b;
+    --color-bg-sections: #2a2a28;
 
-    /* Bordes modo oscuro */
-    --accent: #3e3e3b; /* Gris tenue (bordes/separadores) */
-  }
+    /* --- TEXTOS --- */
+    --color-text-primary: #f5f1e9;
+    --color-text-secondary: #b8b3a9;
+    --color-text-white: #f5f1e9;
 
-  body.dark-mode {
-    background-color: var(--dark);
+    /* --- COLORES DE MARCA (versiones más claras para mejor contraste) --- */
+    --color-primary: #5e8cc0;
+    --color-secondary: #a6b381;
+    --color-accent: #e27a58;
 
-    /* Actualizar variables CSS para modo oscuro */
-    --background-main: #1c1c1b; /* Gris pizarra */
-    --background-sections: #2a2a28; /* Gris cálido */
+    /* --- UI --- */
+    --color-border: #3e3e3b;
 
-    --text-primary: #f5f1e9; /* Marfil suave */
-    --text-secondary: #b8b3a9; /* Gris claro */
-    --text-white: #f5f1e9; /* Marfil suave */
+    /* --- SOMBRAS (más intensas para fondos oscuros) --- */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 6px 25px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 8px 30px rgba(0, 0, 0, 0.4);
 
-    --primary: #5e8cc0; /* Azul Cuenca claro */
-    --primaryLight: #5e8cc0; /* Mantener el mismo tono */
-    --secondary: #a6b381; /* Verde olivo suave */
-    --secondaryLight: #a6b381; /* Mantener coherencia */
+    /* --- VARIABLES SEMÁNTICAS DE COMPONENTES --- */
+    --footer-bg: #1c1c1b;
+    --footer-text: #f5f1e9;
+    --header-bg: #1c1c1b;
+    --header-text: #f5f1e9;
+    --nav-menu-bg: #2a2a28;
 
-    --accent: #e27a58; /* Teja claro */
-    --accentLight: #e27a58; /* Mantener consistencia */
+    /* --- VARIABLES DE COMPATIBILIDAD LEGACY --- */
+    --background-main: #1c1c1b;
+    --background-sections: #2a2a28;
+    --text-primary: #f5f1e9;
+    --text-secondary: #b8b3a9;
+    --text-white: #f5f1e9;
+    --primary: #5e8cc0;
+    --primaryLight: #5e8cc0;
+    --secondary: #a6b381;
+    --secondaryLight: #a6b381;
+    --accent: #e27a58;
+    --accentLight: #e27a58;
+    --border-color: #3e3e3b;
+    --headerColor: #f5f1e9;
+    --bodyTextColor: #b8b3a9;
+    --bodyTextColorWhite: #f5f1e9;
 
-    --border-color: #3e3e3b; /* Gris tenue */
-
-    /* Sombras optimizadas para modo oscuro */
-    .cs-card-shadow {
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-
-      &:hover {
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
-      }
-    }
-
-    .cs-shadow-light {
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .cs-shadow-medium {
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    }
-
-    .cs-shadow-strong {
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-    }
-
-    /* Elementos específicos con sombras en modo oscuro */
+    /* Elementos específicos que necesitan overrides adicionales */
     .news-article,
     .news-header,
     .news-sidebar_widget-wrapper,
     .cs-item {
-      background-color: var(--medium);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      background-color: var(--color-bg-sections);
+      box-shadow: var(--shadow-md);
 
       &:hover {
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.4);
+        box-shadow: var(--shadow-lg);
+      }
+    }
+
+    /* Asegurar que todo el texto use los colores del tema */
+    p,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: var(--color-text-primary);
+    }
+
+    /* Clases utilitarias de visibilidad para tema oscuro */
+    .light {
+      display: none;
+    }
+
+    .dark {
+      display: block !important;
+    }
+  }
+
+  /**
+   * TEMA CLARO - :root[data-theme="light"]
+   * 
+   * Clases utilitarias de visibilidad para tema claro
+   */
+  :root[data-theme="light"] {
+    .dark {
+      display: none;
+    }
+
+    .light {
+      display: block;
+    }
+  }
+
+  /**
+   * RETROCOMPATIBILIDAD - body.dark-mode
+   * 
+   * Mantenido temporalmente para código legacy que aún use body.classList.
+   * TODO: Eliminar cuando toda la migración a data-theme esté completa
+   */
+  body.dark-mode {
+    background-color: var(--color-bg-main);
+
+    .news-article,
+    .news-header,
+    .news-sidebar_widget-wrapper,
+    .cs-item {
+      background-color: var(--color-bg-sections);
+      box-shadow: var(--shadow-md);
+
+      &:hover {
+        box-shadow: var(--shadow-lg);
       }
     }
 
@@ -79,20 +165,19 @@
     h4,
     h5,
     h6 {
-      color: var(--text-primary);
+      color: var(--color-text-primary);
     }
 
-    // hide all light classes
     .light {
       display: none;
     }
 
-    // show all dark classes
     .dark {
       display: block !important;
     }
   }
 
+  /* Clase .dark oculta por defecto (cuando no hay tema específico activo) */
   .dark {
     display: none;
   }

@@ -18,14 +18,14 @@
     width: 100%;
     padding: (20/16em) (16/16em);
     margin-bottom: (30/16rem);
-    border: 1px solid #a2a0a0;
+    border: 1px solid var(--color-border);
     border-radius: (8/16em);
-    background: white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: var(--color-bg-main);
+    box-shadow: var(--shadow-md);
     transition: box-shadow 0.3s ease;
 
     &:hover {
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-lg);
     }
   }
 
@@ -54,7 +54,7 @@
     text-decoration: none;
     width: 100%;
     padding: (20/16rem) 0;
-    border-bottom: 1px solid #a2a0a0;
+    border-bottom: 1px solid var(--color-border);
     display: flex;
     justify-content: flex-start;
     align-items: center;

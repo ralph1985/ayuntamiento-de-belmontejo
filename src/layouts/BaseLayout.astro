@@ -143,12 +143,12 @@ const { description, title, preloadedImage } = Astro.props as Props;
 <script is:inline>
   // helper functions to toggle dark mode
   function enableDarkMode() {
-    document.body.classList.add('dark-mode');
+    document.documentElement.dataset.theme = 'dark';
     localStorage.setItem('theme', 'dark');
   }
 
   function disableDarkMode() {
-    document.body.classList.remove('dark-mode');
+    document.documentElement.dataset.theme = 'light';
     localStorage.setItem('theme', 'light');
   }
 

@@ -35,14 +35,33 @@
       isPressed === 'false' ? 'true' : 'false'
     );
   }
+
+  // helper function to sync aria-pressed with current theme
+  function syncAriaPressed(element) {
+    const root = document.documentElement;
+    const currentTheme = root.dataset.theme || 'light';
+    element.setAttribute(
+      'aria-pressed',
+      currentTheme === 'dark' ? 'true' : 'false'
+    );
+  }
+
   // Creates the dark mode toggle event listener
   const setToggleListener = () => {
     const darkModeToggleButton = document.getElementById('dark-mode-toggle');
+
+    if (!darkModeToggleButton) return;
+
+    // Sync initial state
+    syncAriaPressed(darkModeToggleButton);
+
     const handleToggleClick = () => {
-      document.body.classList.toggle('dark-mode');
+      const root = document.documentElement;
+      const currentTheme = root.dataset.theme || 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = newTheme;
       ariaPressed(darkModeToggleButton);
-      const isDark = document.body.classList.contains('dark-mode');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('theme', newTheme);
     };
 
     darkModeToggleButton?.addEventListener('click', handleToggleClick);

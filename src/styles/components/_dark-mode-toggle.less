@@ -38,25 +38,22 @@
     }
 
     .cs-moon {
-      z-index: 2;
       // Transition from light to dark
       transition:
         transform 0.3s,
         opacity 0.3s;
       fill: var(--primary);
-
-      // dark mode moon is a sun
+      opacity: 1;
       transform: rotate(-14deg);
     }
 
     .cs-sun {
-      z-index: 1;
       // Transition from dark to light
       transition:
         transform 0.3s,
         opacity 0.3s;
       opacity: 0;
-      transform: translate(-50%, 100%);
+      transform: scale(0.5);
     }
   }
 }
@@ -77,16 +74,17 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  body.dark-mode,
+  :root[data-theme="dark"] {
     .dark-mode-toggle {
       .cs-moon {
         opacity: 0;
-        transform: rotate(0deg) translate(-50%, -50%);
+        transform: rotate(180deg) scale(0.5);
       }
 
       .cs-sun {
         opacity: 1;
-        transform: translate(0, 0);
+        transform: scale(1);
       }
     }
   }

@@ -3,7 +3,23 @@
 <--- -------------------------- -*/
 
 /**
- * Migrated from #cs-navigation to .cs-navigation
+ * Migrated from #cs-    .cs-ul-wrapper {
+      width: 100%;
+      height: auto;
+      padding-bottom: (48/16em);
+      opacity: 0;
+      background-color: var(--nav-menu-bg);
+      box-shadow: inset rgba(0, 0, 0, 0.2) 0px 8px 24px;
+      overflow: hidden;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: -1;
+      transform: scaleY(0);
+      transform-origin: top;
+      transition:
+        transform 0.4s,
+        opacity 0.3s;-navigation
  * Uses lower specificity class selector
  * Temporary alias maintained in legacy layer
  */
@@ -14,7 +30,7 @@
     /* prevents padding and border from affecting height and width */
     box-sizing: border-box;
     padding: (13/16rem) (16/16rem);
-    background-color: var(--background-main);
+    background-color: var(--header-bg);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     position: fixed;
     z-index: 10000;
@@ -93,7 +109,7 @@
       width: 100%;
       height: 2px;
       border-radius: 2px;
-      background-color: #fafbfc;
+      background-color: var(--color-text-white, #fafbfc);
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
@@ -137,7 +153,7 @@
       height: 100vh;
       padding-bottom: (48/16em);
       opacity: 0;
-      background-color: #fff;
+      background-color: var(--color-bg-main, #fff);
       box-shadow: inset rgba(0, 0, 0, 0.2) 0px 8px 24px;
       overflow: hidden;
       position: absolute;
@@ -224,7 +240,7 @@
       line-height: 1.2em;
       text-decoration: none;
       margin: 0;
-      color: var(--headerColor);
+      color: var(--header-text);
       display: inline-block;
       position: relative;
 
@@ -276,7 +292,7 @@
         margin-left: (10/16rem);
         font-size: (16/16rem);
         font-weight: 700;
-        color: var(--headerColor);
+        color: var(--header-text);
       }
     }
 
@@ -365,24 +381,12 @@
   }
 }
 
-/* Dark Mode */
-@media only screen and (min-width: 0em) {
-  body.dark-mode {
-    .cs-navigation {
-      background-color: var(--dark);
-
-      .cs-logo {
-        /* makes it white */
-        filter: grayscale(1) brightness(1000%);
-      }
-
-      .cs-ul-wrapper {
-        background-color: var(--medium);
-      }
-
-      .cs-li-link {
-        color: var(--bodyTextColorWhite);
-      }
-    }
+/* Dark Mode - DEPRECATED: Migrado a :root[data-theme="dark"] en _tokens.less */
+/* El header ahora usa var(--header-bg), var(--header-text) y var(--nav-menu-bg) que cambian automáticamente */
+/* El filtro del logo se mantiene por ahora para asegurar visibilidad */
+:root[data-theme="dark"] {
+  .cs-navigation .cs-logo {
+    /* Hace el logo blanco en modo oscuro */
+    filter: grayscale(1) brightness(1000%);
   }
 }

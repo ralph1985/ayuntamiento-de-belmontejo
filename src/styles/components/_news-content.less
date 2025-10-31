@@ -93,8 +93,30 @@
   }
 }
 
-/* Dark Mode */
+/* Dark Mode - MIGRADO a sistema de tokens */
 @media only screen and (min-width: 0em) {
+  :root[data-theme="dark"] {
+    .news-content {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: var(--color-text-primary);
+      }
+
+      p,
+      li {
+        color: var(--color-text-primary);
+        opacity: 0.8;
+      }
+      a {
+        color: var(--color-primary-light);
+      }
+    }
+  }
+
   body.dark-mode {
     .news-content {
       h1,
@@ -103,16 +125,16 @@
       h4,
       h5,
       h6 {
-        color: #f7f7f7;
+        color: var(--color-text-primary);
       }
 
       p,
       li {
-        color: #f7f7f7;
+        color: var(--color-text-primary);
         opacity: 0.8;
       }
       a {
-        color: #9dafe5;
+        color: var(--color-primary-light);
       }
     }
   }

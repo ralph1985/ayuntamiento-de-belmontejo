@@ -158,20 +158,21 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  body.dark-mode,
+  :root[data-theme="dark"] {
     .news-article {
       .news-h1,
       .news-author,
       .news-date {
-        color: #f7f7f7;
+        color: var(--color-text-primary);
       }
 
       .news-category {
-        color: #b8b3a9;
+        color: var(--color-text-secondary);
       }
 
       #news-content {
-        border-top-color: #3e3e3b;
+        border-top-color: var(--color-border);
       }
     }
 

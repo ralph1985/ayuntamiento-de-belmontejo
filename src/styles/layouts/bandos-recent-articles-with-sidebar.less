@@ -272,51 +272,52 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  body.dark-mode,
+  :root[data-theme="dark"] {
     .recent-articles {
       .news-h1,
       .news-desc,
       .news-author,
       .news-date {
-        color: #f7f7f7;
+        color: var(--color-text-primary);
       }
 
       .news-header {
-        border-color: #3e3e3b;
+        border-color: var(--color-border);
       }
 
       .news-category {
-        color: var(--text-secondary);
+        color: var(--color-text-secondary);
       }
     }
 
     .news-sidebar_widget-wrapper {
-      background-color: var(--medium);
+      background-color: var(--color-bg-medium);
     }
 
     .news-sidebar_widget-h3,
     .news-sidebar_widget-date,
     .news-sidebar_widget-header {
-      color: #f7f7f7;
+      color: var(--color-text-primary);
     }
 
     .news-sidebar_widget-header {
       &:after {
-        background: var(--primary);
+        background: var(--color-primary);
       }
     }
 
     .news-link {
-      color: var(--text-primary);
-      background-color: var(--primary);
+      color: var(--color-text-primary);
+      background-color: var(--color-primary);
 
       &:before {
-        background: var(--medium);
-        border-color: var(--text-primary);
+        background: var(--color-bg-medium);
+        border-color: var(--color-text-primary);
       }
 
       &:hover {
-        color: var(--text-primary);
+        color: var(--color-text-primary);
       }
 
       &.news-link--external {
