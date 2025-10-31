@@ -150,7 +150,7 @@ const description =
               Haga clic en el botón siguiente para abrir el panel de
               configuración de cookies:
             </p>
-            <button id="open-cookie-settings" class="btn-primary">
+            <button data-js="open-cookie-settings" class="btn-primary">
               Configurar Cookies
             </button>
           </div>
@@ -260,18 +260,22 @@ const description =
 <script>
   // Open cookie settings from the policy page
   document.addEventListener('DOMContentLoaded', function () {
-    const openSettingsBtn = document.getElementById('open-cookie-settings');
+    const openSettingsBtn = document.querySelector(
+      '[data-js="open-cookie-settings"]'
+    );
     if (openSettingsBtn) {
       openSettingsBtn.addEventListener('click', function () {
         // Show the cookie settings modal if it exists
-        const modal = document.getElementById('cookie-settings-modal');
+        const modal = document.querySelector(
+          '[data-js="cookie-settings-modal"]'
+        );
         if (modal) {
           modal.style.display = 'flex';
           // Set current preferences
           const analyticsConsent =
             localStorage.getItem('analytics-consent') === 'true';
-          const analyticsCheckbox = document.getElementById(
-            'analytics-cookies'
+          const analyticsCheckbox = document.querySelector(
+            '[data-js="analytics-cookies"]'
           ) as HTMLInputElement;
           if (analyticsCheckbox) {
             analyticsCheckbox.checked = analyticsConsent;

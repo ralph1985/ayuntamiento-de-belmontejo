@@ -2,11 +2,11 @@
   <div class="search-input-wrapper">
     <input
       type="text"
-      id="search-input"
+      data-js="search-input"
       placeholder="Buscar en noticias y bandos..."
       class="search-input"
     />
-    <button id="search-button" class="search-button" aria-label="Buscar">
+    <button data-js="search-button" class="search-button" aria-label="Buscar">
       <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20">
         <path
           fill="currentColor"
@@ -16,18 +16,18 @@
     </button>
   </div>
 
-  <div id="search-results" class="search-results" style="display: none;">
-    <div id="search-loading" class="search-loading" style="display: none;">
+  <div data-js="search-results" class="search-results" style="display: none;">
+    <div data-js="search-loading" class="search-loading" style="display: none;">
       Buscando...
     </div>
     <div
-      id="search-no-results"
+      data-js="search-no-results"
       class="search-no-results"
       style="display: none;"
     >
       No se encontraron resultados
     </div>
-    <div id="search-results-list" class="search-results-list"></div>
+    <div data-js="search-results-list" class="search-results-list"></div>
   </div>
 </div>
 
@@ -89,23 +89,23 @@
   }
 
   // Elementos del DOM
-  const searchInput = document.getElementById(
-    'search-input'
+  const searchInput = document.querySelector(
+    '[data-js="search-input"]'
   ) as HTMLInputElement;
-  const searchButton = document.getElementById(
-    'search-button'
+  const searchButton = document.querySelector(
+    '[data-js="search-button"]'
   ) as HTMLButtonElement;
-  const searchResults = document.getElementById(
-    'search-results'
+  const searchResults = document.querySelector(
+    '[data-js="search-results"]'
   ) as HTMLElement;
-  const searchLoading = document.getElementById(
-    'search-loading'
+  const searchLoading = document.querySelector(
+    '[data-js="search-loading"]'
   ) as HTMLElement;
-  const searchNoResults = document.getElementById(
-    'search-no-results'
+  const searchNoResults = document.querySelector(
+    '[data-js="search-no-results"]'
   ) as HTMLElement;
-  const searchResultsList = document.getElementById(
-    'search-results-list'
+  const searchResultsList = document.querySelector(
+    '[data-js="search-results-list"]'
   ) as HTMLElement;
 
   // Cargar datos de búsqueda

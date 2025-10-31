@@ -4,7 +4,7 @@
 ---
 
 <button
-  id="floating-cookie-manager"
+  data-js="floating-cookie-manager"
   class="floating-cookie-btn"
   title="Gestionar cookies"
 >
@@ -13,7 +13,9 @@
 
 <script is:inline>
   document.addEventListener('DOMContentLoaded', function () {
-    const floatingBtn = document.getElementById('floating-cookie-manager');
+    const floatingBtn = document.querySelector(
+      '[data-js="floating-cookie-manager"]'
+    );
 
     if (floatingBtn) {
       // Show floating button only if user has already made a cookie choice
@@ -24,14 +26,17 @@
 
       // Handle click to open cookie settings
       floatingBtn.addEventListener('click', function () {
-        const modal = document.getElementById('cookie-settings-modal');
+        const modal = document.querySelector(
+          '[data-js="cookie-settings-modal"]'
+        );
         if (modal) {
           modal.style.display = 'flex';
           // Set current preferences
           const analyticsConsent =
             localStorage.getItem('analytics-consent') === 'true';
-          const analyticsCheckbox =
-            document.getElementById('analytics-cookies');
+          const analyticsCheckbox = document.querySelector(
+            '[data-js="analytics-cookies"]'
+          );
           if (analyticsCheckbox) {
             analyticsCheckbox.checked = analyticsConsent;
           }
@@ -43,7 +48,9 @@
   // Listen for cookie consent changes to show/hide the floating button
   window.addEventListener('storage', function (e) {
     if (e.key === 'cookie-consent') {
-      const floatingBtn = document.getElementById('floating-cookie-manager');
+      const floatingBtn = document.querySelector(
+        '[data-js="floating-cookie-manager"]'
+      );
       if (floatingBtn && e.newValue) {
         floatingBtn.style.display = 'block';
       }
