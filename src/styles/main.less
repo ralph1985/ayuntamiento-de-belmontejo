@@ -1,0 +1,80 @@
+/**
+ * ITCSS Architecture - Main Entry Point
+ * =====================================
+ * 
+ * Inverted Triangle CSS (ITCSS) organiza los estilos de menor a mayor especificidad.
+ * Utilizamos CSS Cascade Layers para garantizar el orden correcto de aplicación.
+ * 
+ * Capas CSS en orden de prioridad (menor a mayor):
+ * 1. base      - Configuración, variables, reset, elementos base
+ * 2. components - Componentes reutilizables específicos del proyecto
+ * 3. utilities  - Clases de utilidad con alta especificidad
+ * 4. legacy     - Estilos existentes (importados al final para máxima prioridad)
+ * 
+ * Capas ITCSS tradicionales (para futura organización):
+ * - Settings:   Variables globales, configuración
+ * - Tools:      Mixins y funciones
+ * - Generic:    Resets, normalize, box-sizing
+ * - Elements:   Estilos base de elementos HTML
+ * - Objects:    Patrones de diseño sin estilo (layouts, wrappers)
+ * - Components: Componentes específicos de la UI
+ * - Utilities:  Helpers y clases de utilidad
+ */
+
+/* ============================================================================
+   Definición de capas CSS
+   ========================================================================= */
+
+@layer base, components, utilities, legacy;
+
+/* ============================================================================
+   CAPA: BASE
+   Configuración, variables, reset y elementos base
+   ========================================================================= */
+
+@layer base {
+  /* Settings - Variables globales y configuración */
+  @import "./settings/index.less";
+
+  /* Tools - Mixins y funciones LESS */
+  @import "./tools/index.less";
+
+  /* Generic - Resets y normalización */
+  @import "./generic/index.less";
+
+  /* Elements - Estilos base de elementos HTML */
+  @import "./elements/index.less";
+}
+
+/* ============================================================================
+   CAPA: COMPONENTS
+   Componentes reutilizables y objetos de diseño
+   ========================================================================= */
+
+@layer components {
+  /* Objects - Patrones de layout sin estilo */
+  @import "./objects/index.less";
+
+  /* Components - Componentes específicos de la UI */
+  /* Nota: Los componentes actuales están en /components/ y /layouts/ */
+  /* y se importan individualmente en cada archivo .astro */
+}
+
+/* ============================================================================
+   CAPA: UTILITIES
+   Clases de utilidad con alta especificidad
+   ========================================================================= */
+
+@layer utilities {
+  @import "./utilities/index.less";
+}
+
+/* ============================================================================
+   CAPA: LEGACY
+   Estilos existentes importados con máxima prioridad
+   Esta capa preserva el comportamiento actual del CSS
+   ========================================================================= */
+
+@layer legacy {
+  @import "./legacy/legacy.less";
+}

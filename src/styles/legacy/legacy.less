@@ -1,0 +1,54 @@
+/**
+ * LEGACY Layer
+ * ============
+ * Estilos existentes del proyecto preservados en una capa con máxima prioridad.
+ * 
+ * Esta capa importa todos los estilos actuales sin modificación para garantizar
+ * que la web se vea exactamente igual mientras migramos progresivamente los
+ * estilos a la arquitectura ITCSS.
+ * 
+ * IMPORTANTE: Esta capa tiene la prioridad más alta gracias a @layer,
+ * lo que asegura que los estilos actuales no se rompan.
+ * 
+ * Plan de migración:
+ * 1. Los estilos permanecen aquí inicialmente
+ * 2. Gradualmente moveremos estilos a las capas ITCSS apropiadas
+ * 3. Esta capa se irá vaciando con el tiempo
+ * 4. Finalmente se eliminará cuando toda la migración esté completa
+ */
+
+/* ============================================================================
+   Estilos base y configuración
+   ========================================================================= */
+
+/* Root styles - Variables CSS, configuración global, reset, helpers */
+@import "../root.less";
+
+/* Dark mode - Variables y estilos para modo oscuro */
+@import "../dark.less";
+
+/* Markdown - Estilos para contenido generado desde CMS */
+@import "../markdown.less";
+
+/* Sidebar - Estilos compartidos para sidebars */
+@import "../sidebar.less";
+
+/* ============================================================================
+   Nota sobre imports de componentes, layouts y páginas
+   ========================================================================= */
+
+/**
+ * Los estilos específicos de componentes, layouts y páginas se importan
+ * directamente en sus respectivos archivos .astro mediante:
+ * 
+ * - <style> tags con @import para archivos .astro
+ * - import statements en TypeScript para algunos componentes
+ * 
+ * Ubicaciones:
+ * - src/styles/components/*.less
+ * - src/styles/layouts/*.less
+ * - src/styles/pages/*.less
+ * 
+ * Estos NO se importan aquí para evitar duplicación y mantener el
+ * code-splitting de Astro funcionando correctamente.
+ */
