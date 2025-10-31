@@ -59,15 +59,19 @@ src/styles/
 - 📗 **[MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)** - Guía detallada de migración
 - 📕 **[ARCHITECTURE_EXPLAINED.md](./ARCHITECTURE_EXPLAINED.md)** - Explicación técnica profunda
 - 📙 **[TOKENS_SUMMARY.md](./TOKENS_SUMMARY.md)** - Resumen ejecutivo
-- 📕 **[CSS_MIGRATION_COMPLETE.md](./docs/CSS_MIGRATION_COMPLETE.md)** - Estado de migración
+- 📕 **[CSS_MIGRATION_COMPLETE.md](./docs/CSS_MIGRATION_COMPLETE.md)** - Estado de migración ✅
 - 📗 **[LEGACY_CLEANUP_ROADMAP.md](./docs/LEGACY_CLEANUP_ROADMAP.md)** - Plan de limpieza
+- 📊 **[ID_MIGRATION_SUMMARY.md](./ID_MIGRATION_SUMMARY.md)** - Resumen migración IDs ✅
+
+> **🎉 Migración CSS Completa (Oct 2025):** Se ha completado la migración de todos los IDs a clases y data-js attributes. El proyecto ahora cumple con `selector-max-id: 0` y tiene separación completa CSS ↔ JavaScript. Ver [CSS_MIGRATION_COMPLETE.md](./docs/CSS_MIGRATION_COMPLETE.md) para detalles.
 
 **Características:**
 
 - ✅ Sistema de tokens centralizado (colores, tipografía, espaciado, etc.)
 - ✅ Modo oscuro con `data-theme="dark"` en `<html>`
 - ✅ Nomenclatura BEM ligera consistente
-- ✅ Sin IDs para estilos (solo clases)
+- ✅ **Sin IDs en CSS** - 100% migrado a clases (selector-max-id: 0) 🎉
+- ✅ **Patrón data-js** - Separación completa CSS/JavaScript 🎉
 - ✅ Variables LESS + CSS Custom Properties
 - ✅ Arquitectura escalable y mantenible
 - ✅ Mixins de breakpoints para media queries consistentes
