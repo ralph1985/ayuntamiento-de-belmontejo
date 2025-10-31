@@ -33,21 +33,45 @@ El proyecto sigue la estructura estándar de Astro:
 
 El proyecto implementa una arquitectura **ITCSS** (Inverted Triangle CSS) con **CSS Cascade Layers** y un sistema completo de **tokens de diseño**.
 
+**Estructura de capas (orden de especificidad creciente):**
+
+```
+src/styles/
+├── settings/          # Variables LESS y tokens CSS
+├── tools/             # Mixins (breakpoints, utilidades)
+├── generic/           # Resets, normalize
+├── elements/          # Estilos base de elementos HTML
+├── objects/           # Patrones de layout sin estilo
+├── components/        # Componentes reutilizables (BEM)
+├── utilities/         # Clases de utilidad atómicas
+└── legacy/            # ⚠️ Código en migración (eliminación progresiva)
+```
+
+**Capas CSS (@layer):**
+
+```less
+@layer base, components, utilities, legacy;
+```
+
 **Documentación de estilos:**
 
 - 📘 **[TOKENS_README.md](./TOKENS_README.md)** - Guía rápida y referencia de tokens
 - 📗 **[MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)** - Guía detallada de migración
 - 📕 **[ARCHITECTURE_EXPLAINED.md](./ARCHITECTURE_EXPLAINED.md)** - Explicación técnica profunda
 - 📙 **[TOKENS_SUMMARY.md](./TOKENS_SUMMARY.md)** - Resumen ejecutivo
+- 📕 **[CSS_MIGRATION_COMPLETE.md](./docs/CSS_MIGRATION_COMPLETE.md)** - Estado de migración
+- 📗 **[LEGACY_CLEANUP_ROADMAP.md](./docs/LEGACY_CLEANUP_ROADMAP.md)** - Plan de limpieza
 
 **Características:**
 
 - ✅ Sistema de tokens centralizado (colores, tipografía, espaciado, etc.)
-- ✅ Modo oscuro automático
-- ✅ Compatibilidad 100% con CSS existente
+- ✅ Modo oscuro con `data-theme="dark"` en `<html>`
+- ✅ Nomenclatura BEM ligera consistente
+- ✅ Sin IDs para estilos (solo clases)
 - ✅ Variables LESS + CSS Custom Properties
 - ✅ Arquitectura escalable y mantenible
 - ✅ Mixins de breakpoints para media queries consistentes
+- ✅ Stylelint en modo error (bloquea PRs con problemas)
 
 ### 📱 Breakpoints y Media Queries
 
@@ -158,6 +182,248 @@ El proyecto incluye un **sistema mínimo y controlado de utilidades** para casos
 ```
 
 **📖 Ver código fuente:** `src/styles/utilities/_utilities.less`
+
+---
+
+### 📐 Convenciones CSS
+
+#### **Regla 1: Sin IDs para Estilos**
+
+**❌ PROHIBIDO:**
+
+```html
+<header id="header" class="header"></header>
+```
+
+```less
+#header {
+  // ❌ NUNCA
+  background: var(--color-primary);
+}
+```
+
+**✅ CORRECTO:**
+
+```html
+<header class="c-header"></header>
+```
+
+```less
+.c-header {
+  // ✅ SIEMPRE usar clases
+  background: var(--color-primary);
+}
+```
+
+**Excepciones permitidas para IDs:**
+
+1. **Accesibilidad:** `<label for="email">` + `<input id="email">`
+2. **JavaScript hooks:** Usar `data-js="*"` en lugar de `id`
+
+---
+
+#### **Regla 2: Nomenclatura BEM Ligera**
+
+**Patrón:**
+
+```
+.bloque
+.bloque__elemento
+.bloque--modificador
+.bloque__elemento--modificador
+```
+
+**Ejemplos:**
+
+```less
+.c-card {
+} // Componente
+.c-card__title {
+} // Elemento
+.c-card--featured {
+} // Modificador
+.c-card__title--large {
+} // Elemento con modificador
+
+.u-mt-md {
+} // Utilidad (prefijo u-)
+```
+
+---
+
+#### **Regla 3: JavaScript Hooks con `data-js`**
+
+**❌ MAL:**
+
+```html
+<button id="toggle" class="c-toggle"></button>
+```
+
+```javascript
+document.getElementById('toggle');
+```
+
+**✅ BIEN:**
+
+```html
+<button class="c-toggle" data-js="mobile-toggle"></button>
+```
+
+```javascript
+document.querySelector('[data-js="mobile-toggle"]');
+```
+
+**Beneficio:** Refactors de CSS no rompen JavaScript.
+
+---
+
+#### **Regla 4: Modo Oscuro con `data-theme`**
+
+**HTML:**
+
+```html
+<html data-theme="dark"></html>
+```
+
+**CSS:**
+
+```less
+// ✅ Selector correcto
+:root[data-theme='dark'] {
+  --color-background: var(--color-dark-900);
+}
+
+// ❌ Legacy (no usar en nuevo código)
+body.dark-mode {
+  background: var(--color-dark-900);
+}
+```
+
+---
+
+#### **Regla 5: Breakpoints con Mixins**
+
+**❌ MAL:**
+
+```less
+.component {
+  @media (min-width: 768px) {
+    // Magic number
+    padding: 2rem;
+  }
+}
+```
+
+**✅ BIEN:**
+
+```less
+.component {
+  .mq-up(@bp-md) {
+    // Token centralizado
+    padding: 2rem;
+  }
+}
+```
+
+**Disponibles:** `.mq-up()`, `.mq-down()`, `.mq-between()`
+
+---
+
+#### **Regla 6: Máxima Anidación: 3 Niveles**
+
+**❌ MAL:**
+
+```less
+.c-card {
+  .c-card__header {
+    .c-card__title {
+      .c-card__icon {
+        // 4 niveles ❌
+        color: red;
+      }
+    }
+  }
+}
+```
+
+**✅ BIEN:**
+
+```less
+.c-card {
+}
+
+.c-card__header {
+}
+
+.c-card__title {
+}
+
+.c-card__icon {
+  // Flat BEM
+  color: red;
+}
+```
+
+---
+
+#### **Regla 7: Utilidades vs Componentes**
+
+**Crear Componente cuando:**
+
+- 3+ utilidades usadas juntas permanentemente
+- Lógica de layout compleja
+- Reutilizable en 2+ lugares
+
+**Usar Utilidades cuando:**
+
+- Spacing puntual (1-2 clases)
+- Override simple y temporal
+- Alineaciones básicas
+
+---
+
+#### **Regla 8: Especificidad Baja**
+
+**Evitar:**
+
+- Selectores anidados profundos
+- IDs en CSS
+- `!important` (excepto utilidades)
+- Selectores de tipo genéricos (`div`, `span`)
+
+**Preferir:**
+
+- Clases únicas y específicas
+- BEM plano
+- Especificidad 0,1,0 o 0,2,0 máximo
+
+---
+
+#### **Regla 9: Tokens Primero**
+
+**❌ MAL:**
+
+```less
+.component {
+  color: #333333;
+  margin: 16px;
+  font-size: 18px;
+}
+```
+
+**✅ BIEN:**
+
+```less
+.component {
+  color: var(--color-text-base);
+  margin: var(--space-md);
+  font-size: var(--font-size-lg);
+}
+```
+
+**Ver tokens:** `src/styles/settings/_tokens.less`
+
+---
 
 ## Configuración y Ejecución
 

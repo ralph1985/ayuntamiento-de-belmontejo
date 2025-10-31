@@ -1,5 +1,4 @@
 <button
-  id="dark-mode-toggle"
   class="dark-mode-toggle"
   data-js="dark-mode-toggle"
   aria-label="dark mode toggle"
@@ -48,7 +47,9 @@
 
   // Creates the dark mode toggle event listener
   const setToggleListener = () => {
-    const darkModeToggleButton = document.getElementById('dark-mode-toggle');
+    const darkModeToggleButton = document.querySelector(
+      '[data-js="dark-mode-toggle"]'
+    );
 
     if (!darkModeToggleButton) return;
 

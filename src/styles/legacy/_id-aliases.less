@@ -3,83 +3,14 @@
  * =================
  * 
  * Este archivo contiene aliases temporales para selectores #id migrados a clases.
- * Estos selectores vacíos o mínimos mantienen compatibilidad durante la transición.
  * 
- * PLAN DE RETIRADA:
- * 1. Fase actual: Ambos selectores (clase + ID) existen
- * 2. Fase de verificación: Testear todas las páginas con las clases nuevas
- * 3. Fase de limpieza: Una vez verificado, eliminar estos aliases y los atributos id="" del HTML
+ * ESTADO: LIMPIEZA EN PROGRESO
+ * - Header, Footer, DarkModeToggle: ✅ ELIMINADOS (migrados a data-js)
+ * - Secciones de página: Pendiente migración
+ * - Componentes .cs-*: Mantener hasta migración completa de HTML
  * 
  * TRACKING: Ver ID_MIGRATION_GUIDE.md para checklist completo
  */
-
-/* =============================================================================
-   LOTE 1: Header y Dark Mode Toggle
-   ============================================================================= */
-
-/**
- * #cs-navigation → .cs-navigation
- * Status: Migrado
- * Files: src/components/Header.astro
- * JS Dependencies: src/js/nav.js (usa getElementById)
- * Note: Los estilos están en @layer components (.cs-navigation)
- *       Este ID solo mantiene compatibilidad con JS durante la transición
- */
-#cs-navigation {
-  /* Placeholder para compatibilidad - estilos en .cs-navigation */
-}
-
-/**
- * #dark-mode-toggle → .dark-mode-toggle
- * Status: Migrado
- * Files: src/components/DarkModeToggle.astro
- * JS Dependencies: DarkModeToggle.astro (script interno usa getElementById)
- * TODO: Migrar JS hook a data-js="dark-mode-toggle"
- * Note: Los estilos están en @layer components (.dark-mode-toggle)
- */
-#dark-mode-toggle {
-  /* Placeholder para compatibilidad - estilos en .dark-mode-toggle */
-}
-
-/**
- * #mobile-menu-toggle
- * Status: Pendiente migración
- * Files: src/components/Header.astro
- * JS Dependencies: src/js/nav.js
- * TODO: Añadir clase .mobile-menu-toggle y migrar JS a data-js
- */
-
-/* =============================================================================
-   LOTE 2: Footer
-   ============================================================================= */
-
-/**
- * #footer → .footer
- * Status: Migrado
- * Files: src/components/Footer.astro
- * JS Dependencies: Ninguna
- * Note: Los estilos están en @layer components (.footer)
- */
-#footer {
-  /* Placeholder para compatibilidad - estilos en .footer */
-}
-
-/* =============================================================================
-   LOTE 3: News Content
-   ============================================================================= */
-
-/**
- * #news-content → .news-content
- * Status: Migrado
- * Files: 
- *   - src/layouts/NewsPostLayout.astro
- *   - src/layouts/BandoPostLayout.astro
- * JS Dependencies: Ninguna
- * Note: Los estilos están en @layer components (.news-content)
- */
-#news-content {
-  /* Placeholder para compatibilidad - estilos en .news-content */
-}
 
 /* =============================================================================
    LOTE 4: Page Sections (Pendientes)

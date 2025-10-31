@@ -1,17 +1,26 @@
 {
   "customSyntax": "postcss-less",
-  "defaultSeverity": "warning",
+  "defaultSeverity": "error",
   "extends": ["stylelint-config-standard", "stylelint-config-recommended-less"],
   "plugins": ["stylelint-order"],
   "rules": {
-    "max-nesting-depth": [3, { "ignore": ["blockless-at-rules"] }],
+    "max-nesting-depth": [
+      3,
+      { "ignore": ["blockless-at-rules", "pseudo-classes"] }
+    ],
     "selector-max-id": 0,
     "color-named": "never",
     "media-feature-range-notation": "context",
     "selector-class-pattern": [
-      "^([a-z0-9]+(?:-[a-z0-9]+)*)?(?:__(?:[a-z0-9]+(?:-[a-z0-9]+)*))?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?$",
+      "^([a-z0-9]+(?:-[a-z0-9]+)*)?(?:__(?:[a-z0-9]+(?:-[a-z0-9]+)*))?(?:--[a-z0-9]+(?:-[a-z0-9]+)*)?$|^u-[a-z0-9-]+$",
       {
-        "message": "Usa BEM ligero: bloque, __elemento, --modificador.",
+        "message": "Usa BEM ligero: bloque, __elemento, --modificador, o utilidades u-*",
+        "severity": "error"
+      }
+    ],
+    "block-no-empty": [
+      true,
+      {
         "severity": "warning"
       }
     ],
@@ -39,6 +48,7 @@
     "**/build/**",
     "**/.astro/**",
     "**/*.min.css",
-    "**/public/**"
+    "**/public/**",
+    "**/legacy/_id-aliases.less"
   ]
 }

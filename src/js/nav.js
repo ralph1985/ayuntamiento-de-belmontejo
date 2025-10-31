@@ -3,9 +3,11 @@ document.addEventListener('astro:page-load', () => {
   // Make the script controlling the <Hamburger /> mobile menu component available after navigating to a new page.
 
   const CSbody = document.querySelector('body');
-  const CSnavbarMenu = document.getElementById('cs-navigation');
+  const CSnavbarMenu = document.querySelector('[data-js="navigation"]');
   // const CSUlWrapper = document.getElementById('cs-ul-wrapper');
-  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenuToggle = document.querySelector(
+    '[data-js="mobile-menu-toggle"]'
+  );
 
   function toggleMenu() {
     mobileMenuToggle.classList.toggle('cs-active');
