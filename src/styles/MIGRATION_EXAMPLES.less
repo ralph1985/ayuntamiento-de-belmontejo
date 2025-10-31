@@ -1,0 +1,353 @@
+/**
+ * EJEMPLO DE MIGRACIÓN - Componente Button
+ * =========================================
+ * 
+ * Este archivo demuestra cómo migrar estilos del sistema legacy
+ * al nuevo sistema de tokens ITCSS de forma progresiva.
+ * 
+ * ESTRATEGIA:
+ * 1. Identificar valores hard-coded
+ * 2. Mapear a tokens apropiados
+ * 3. Usar CSS vars con fallback a LESS vars
+ * 4. Mantener estructura de código
+ */
+
+/* ============================================================================
+   COMPARACIÓN: ANTES vs DESPUÉS
+   ========================================================================= */
+
+/* 
+ * ANTES (Legacy - root.less)
+ * --------------------------
+ * 
+ * .cs-button-solid {
+ *   font-size: (16/16rem);
+ *   font-weight: bold;
+ *   line-height: (50/16em);
+ *   color: #f5f1e9;
+ *   background-color: #285c8d;
+ *   padding: 0 (30/16rem);
+ *   height: (50/16rem);
+ *   transition: color 0.3s;
+ * 
+ *   &:hover {
+ *     color: #f5f1e9;
+ *     &:before {
+ *       width: 100%;
+ *     }
+ *   }
+ * 
+ *   &:before {
+ *     background-color: #b35030;
+ *     transition: width 0.3s;
+ *   }
+ * }
+ */
+
+/* ============================================================================
+   DESPUÉS (Con Tokens)
+   ========================================================================= */
+
+/**
+ * Botón Sólido - Versión migrada con tokens
+ * 
+ * Cambios realizados:
+ * - Color de texto: #f5f1e9 → var(--color-text-white)
+ * - Color de fondo: #285c8d → var(--color-primary)
+ * - Color hover: #b35030 → var(--color-accent)
+ * - Padding: 30px → var(--space-xl)
+ * - Transición: 0.3s → var(--transition-base)
+ * 
+ * Ventajas:
+ * ✅ Valores centralizados
+ * ✅ Modo oscuro funciona automáticamente
+ * ✅ Fácil mantener consistencia
+ * ✅ Fallback garantiza compatibilidad
+ */
+
+.cs-button-solid-migrated {
+  /* Typography - Usando tokens con fallback */
+  font-size: var(--font-size-md, @font-size-md);
+  font-weight: var(--font-weight-bold, @font-weight-bold);
+  line-height: (50/16em); // Mantener si es específico del componente
+
+  /* Colors - Tokens semánticos */
+  color: var(--color-text-white, @color-text-white);
+  background-color: var(--color-primary, @color-primary);
+
+  /* Spacing - Escala consistente */
+  padding: 0 var(--space-xl, @space-xl);
+  height: (50/16rem); // Mantener si es específico del componente
+
+  /* Layout */
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+  width: auto;
+  display: inline-block;
+  position: relative;
+  z-index: var(--z-base, @z-base);
+
+  /* Transitions - Valores estandarizados */
+  transition: color var(--transition-base, @transition-base);
+  transition-delay: 0.1s;
+
+  &:hover {
+    color: var(--color-text-white, @color-text-white);
+
+    &:before {
+      width: 100%;
+    }
+  }
+
+  &:before {
+    content: "";
+
+    /* Efecto de fondo en hover */
+    width: 0;
+    height: 100%;
+    background-color: var(--color-accent, @color-accent);
+    opacity: 1;
+
+    /* Layout */
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    /* Transition */
+    transition: width var(--transition-base, @transition-base);
+  }
+}
+
+/* ============================================================================
+   EJEMPLO 2: Card Component
+   ========================================================================= */
+
+/**
+ * Componente Card - Ejemplo de nuevo componente usando tokens
+ * 
+ * Este componente se crea desde cero usando el sistema de tokens,
+ * sin necesidad de migración.
+ */
+
+.new-card {
+  /* Layout */
+  display: flex;
+  flex-direction: column;
+
+  /* Colores y fondo */
+  background-color: var(--color-bg-sections, @color-bg-sections);
+  border: 1px solid var(--color-border, @color-border);
+
+  /* Espaciado */
+  padding: var(--space-lg, @space-lg);
+  margin-bottom: var(--space-md, @space-md);
+
+  /* Bordes */
+  border-radius: var(--radius-lg, @radius-lg);
+
+  /* Sombras */
+  box-shadow: var(--shadow-md, @shadow-md);
+
+  /* Transiciones */
+  transition:
+    box-shadow var(--transition-base, @transition-base),
+    transform var(--transition-base, @transition-base);
+
+  /* Hover effect */
+  &:hover {
+    box-shadow: var(--shadow-lg, @shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  /* Dark mode automático gracias a tokens */
+  /* No necesita código adicional */
+}
+
+.new-card__header {
+  margin-bottom: var(--space-md, @space-md);
+  padding-bottom: var(--space-sm, @space-sm);
+  border-bottom: 1px solid var(--color-border, @color-border);
+}
+
+.new-card__title {
+  font-size: var(--font-size-xl, @font-size-xl);
+  font-weight: var(--font-weight-bold, @font-weight-bold);
+  color: var(--color-text-primary, @color-text-primary);
+  margin: 0;
+  line-height: var(--line-height-tight, @line-height-tight);
+}
+
+.new-card__body {
+  flex: 1;
+}
+
+.new-card__text {
+  font-size: var(--font-size-md, @font-size-md);
+  color: var(--color-text-secondary, @color-text-secondary);
+  line-height: var(--line-height-normal, @line-height-normal);
+  margin-bottom: var(--space-md, @space-md);
+}
+
+.new-card__footer {
+  margin-top: var(--space-md, @space-md);
+  padding-top: var(--space-sm, @space-sm);
+  border-top: 1px solid var(--color-border, @color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ============================================================================
+   EJEMPLO 3: Responsive con Breakpoints
+   ========================================================================= */
+
+/**
+ * Grid responsivo usando tokens de breakpoints
+ */
+
+.grid-container {
+  display: grid;
+  gap: var(--space-md, @space-md);
+  padding: var(--space-lg, @space-lg);
+
+  /* Mobile first */
+  grid-template-columns: 1fr;
+
+  /* Tablet */
+  @media only screen and (min-width: @bp-md) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg, @space-lg);
+  }
+
+  /* Desktop */
+  @media only screen and (min-width: @bp-lg) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl, @space-xl);
+    padding: var(--space-2xl, @space-2xl);
+  }
+}
+
+/* ============================================================================
+   EJEMPLO 4: Utilidades con Tokens
+   ========================================================================= */
+
+/**
+ * Clases de utilidad usando tokens
+ * Estas se moverán eventualmente a la capa utilities/
+ */
+
+/* Spacing utilities */
+.u-mt-sm {
+  margin-top: var(--space-sm, @space-sm) !important;
+}
+.u-mt-md {
+  margin-top: var(--space-md, @space-md) !important;
+}
+.u-mt-lg {
+  margin-top: var(--space-lg, @space-lg) !important;
+}
+
+.u-mb-sm {
+  margin-bottom: var(--space-sm, @space-sm) !important;
+}
+.u-mb-md {
+  margin-bottom: var(--space-md, @space-md) !important;
+}
+.u-mb-lg {
+  margin-bottom: var(--space-lg, @space-lg) !important;
+}
+
+.u-p-sm {
+  padding: var(--space-sm, @space-sm) !important;
+}
+.u-p-md {
+  padding: var(--space-md, @space-md) !important;
+}
+.u-p-lg {
+  padding: var(--space-lg, @space-lg) !important;
+}
+
+/* Text utilities */
+.u-text-primary {
+  color: var(--color-text-primary, @color-text-primary) !important;
+}
+.u-text-secondary {
+  color: var(--color-text-secondary, @color-text-secondary) !important;
+}
+.u-text-white {
+  color: var(--color-text-white, @color-text-white) !important;
+}
+
+.u-font-bold {
+  font-weight: var(--font-weight-bold, @font-weight-bold) !important;
+}
+.u-font-black {
+  font-weight: var(--font-weight-black, @font-weight-black) !important;
+}
+
+/* Background utilities */
+.u-bg-sections {
+  background-color: var(--color-bg-sections, @color-bg-sections) !important;
+}
+.u-bg-primary {
+  background-color: var(--color-primary, @color-primary) !important;
+}
+
+/* Border utilities */
+.u-border {
+  border: 1px solid var(--color-border, @color-border) !important;
+}
+.u-border-radius-md {
+  border-radius: var(--radius-md, @radius-md) !important;
+}
+.u-border-radius-lg {
+  border-radius: var(--radius-lg, @radius-lg) !important;
+}
+
+/* ============================================================================
+   NOTAS DE MIGRACIÓN
+   ========================================================================= */
+
+/**
+ * PASOS PARA MIGRAR UN COMPONENTE:
+ * 
+ * 1. IDENTIFICAR: Encuentra valores hard-coded
+ *    - Colores (#285c8d, rgb(), hsl())
+ *    - Tamaños (16px, 1rem, 24px)
+ *    - Espaciado (padding, margin)
+ *    - Duración de transiciones (0.3s, 200ms)
+ * 
+ * 2. MAPEAR: Encuentra el token apropiado
+ *    - Consulta src/styles/settings/_tokens.less
+ *    - Usa tokens semánticos (--color-primary vs --color-blue)
+ *    - Si no existe, considera añadirlo al sistema
+ * 
+ * 3. REEMPLAZAR: Usa la sintaxis con fallback
+ *    Antes:  color: #285c8d;
+ *    Después: color: var(--color-primary, @color-primary);
+ * 
+ * 4. TESTEAR: Verifica en diferentes estados
+ *    - Modo claro
+ *    - Modo oscuro
+ *    - Diferentes breakpoints
+ *    - Estados hover/focus/active
+ * 
+ * 5. REFINAR: Optimiza y limpia
+ *    - Elimina código duplicado
+ *    - Consolida estilos similares
+ *    - Documenta decisiones de diseño
+ * 
+ * VALORES A NO MIGRAR:
+ * - Valores específicos del componente (z-index único, width específico)
+ * - Cálculos matemáticos complejos
+ * - Valores "mágicos" con razón de ser (line-height preciso)
+ * 
+ * RECORDATORIO:
+ * - Usa SIEMPRE fallback: var(--token, @token)
+ * - Testea visualmente después de migrar
+ * - Documenta cambios significativos
+ * - Pregunta si tienes dudas
+ */

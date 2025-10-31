@@ -25,8 +25,28 @@ El proyecto sigue la estructura estándar de Astro:
 - **/src/components/**: Componentes reutilizables de Astro.
 - **/src/layouts/**: Plantillas de diseño para las páginas.
 - **/src/content/**: Almacena el contenido del sitio gestionado por Decap CMS.
+- **/src/styles/**: Sistema de estilos con arquitectura ITCSS y tokens de diseño.
 - **/public/**: Archivos estáticos como imágenes y el panel de administración.
 - **/scripts/**: Scripts para tareas automatizadas, como la obtención de bandos.
+
+### 🎨 Arquitectura CSS
+
+El proyecto implementa una arquitectura **ITCSS** (Inverted Triangle CSS) con **CSS Cascade Layers** y un sistema completo de **tokens de diseño**.
+
+**Documentación de estilos:**
+
+- 📘 **[TOKENS_README.md](./TOKENS_README.md)** - Guía rápida y referencia de tokens
+- 📗 **[MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)** - Guía detallada de migración
+- 📕 **[ARCHITECTURE_EXPLAINED.md](./ARCHITECTURE_EXPLAINED.md)** - Explicación técnica profunda
+- 📙 **[TOKENS_SUMMARY.md](./TOKENS_SUMMARY.md)** - Resumen ejecutivo
+
+**Características:**
+
+- ✅ Sistema de tokens centralizado (colores, tipografía, espaciado, etc.)
+- ✅ Modo oscuro automático
+- ✅ Compatibilidad 100% con CSS existente
+- ✅ Variables LESS + CSS Custom Properties
+- ✅ Arquitectura escalable y mantenible
 
 ## Configuración y Ejecución
 

@@ -1,0 +1,376 @@
+/**
+ * DESIGN TOKENS
+ * =============
+ * Sistema de tokens de diseño con doble exportación: LESS variables + CSS custom properties
+ * 
+ * ESTRATEGIA DE COMPATIBILIDAD:
+ * - Variables LESS (@var) para compilación estática
+ * - CSS Custom Properties (--var) para runtime y tematización
+ * - Los valores se exportan a :root para máxima disponibilidad
+ * 
+ * CONVENCIÓN DE NOMBRES:
+ * - Variables LESS: @category-name (kebab-case)
+ * - CSS Variables: --category-name (kebab-case)
+ * - Categorías: color-, font-, space-, bp- (breakpoint), z-, shadow-, transition-
+ */
+
+/* ============================================================================
+   COLORS - Sistema de colores Belmontejo
+   ========================================================================= */
+
+/* --- Colores de Fondo --- */
+@color-bg-main: #faf9f7; // Blanco cálido
+@color-bg-sections: #f0e9e1; // Beige claro (piedra/caliza)
+@color-bg-dark: #1c1c1b; // Gris pizarra (modo oscuro)
+@color-bg-medium: #2a2a28; // Gris cálido (tarjetas modo oscuro)
+
+/* --- Colores de Texto --- */
+@color-text-primary: #2e2e2e; // Gris oscuro (alto contraste)
+@color-text-secondary: #6e6e6e; // Gris medio (subtítulos)
+@color-text-white: #f5f1e9; // Marfil suave para textos sobre fondos oscuros
+@color-text-dark-primary: #f5f1e9; // Marfil suave (modo oscuro)
+@color-text-dark-secondary: #b8b3a9; // Gris claro (modo oscuro)
+
+/* --- Colores Principales (Brand) --- */
+@color-primary: #285c8d; // Azul Cuenca
+@color-primary-light: #5e8cc0; // Azul Cuenca claro
+@color-primary-dark: #1e4569; // Azul Cuenca oscuro (generado)
+
+@color-secondary: #6a7e49; // Verde olivo
+@color-secondary-light: #a6b381; // Verde olivo suave
+@color-secondary-dark: #4f5e37; // Verde olivo oscuro (generado)
+
+/* --- Colores de Acento --- */
+@color-accent: #b35030; // Rojo teja (llamadas a la acción)
+@color-accent-light: #e27a58; // Teja claro
+@color-accent-dark: #8a3d24; // Teja oscuro (generado)
+
+/* --- Colores de UI --- */
+@color-border: #ddd6ce; // Gris claro cálido (bordes modo claro)
+@color-border-dark: #3e3e3b; // Gris tenue (bordes modo oscuro)
+
+/* --- Colores de Estado (para futuro) --- */
+@color-success: #4caf50; // Verde éxito
+@color-warning: #ff9800; // Naranja advertencia
+@color-error: #f44336; // Rojo error
+@color-info: #2196f3; // Azul información
+
+/* ============================================================================
+   TYPOGRAPHY - Sistema tipográfico
+   ========================================================================= */
+
+/* --- Familias Tipográficas --- */
+@font-family-primary: "Roboto", Arial, sans-serif;
+@font-family-heading: "Roboto", Arial, sans-serif;
+@font-family-mono: "Courier New", monospace;
+
+/* --- Pesos de Fuente --- */
+@font-weight-regular: 400;
+@font-weight-bold: 700;
+@font-weight-black: 900;
+
+/* --- Tamaños de Fuente Base --- */
+@font-size-base: 1rem; // 16px
+@font-size-xs: 0.75rem; // 12px
+@font-size-sm: 0.875rem; // 14px
+@font-size-md: 1rem; // 16px
+@font-size-lg: 1.125rem; // 18px
+@font-size-xl: 1.25rem; // 20px
+@font-size-2xl: 1.5rem; // 24px
+@font-size-3xl: 1.875rem; // 30px
+@font-size-4xl: 2.25rem; // 36px
+@font-size-5xl: 3rem; // 48px
+
+/* --- Tamaños Fluidos (con clamp) --- */
+@font-size-topper: clamp(0.8125rem, 1.6vw, 1rem); // 13px - 16px
+@font-size-header: clamp(1.9375rem, 3.9vw, 3.0625rem); // 31px - 49px
+@font-size-body: 1rem;
+
+/* --- Line Heights --- */
+@line-height-tight: 1.2;
+@line-height-normal: 1.5;
+@line-height-relaxed: 1.75;
+@line-height-loose: 2;
+
+/* --- Letter Spacing --- */
+@letter-spacing-tight: -0.05em;
+@letter-spacing-normal: 0;
+@letter-spacing-wide: 0.05em;
+@letter-spacing-wider: 0.1em;
+
+/* ============================================================================
+   SPACING - Sistema de espaciado (escala t-shirt)
+   ========================================================================= */
+
+@space-xs: 0.25rem; // 4px
+@space-sm: 0.5rem; // 8px
+@space-md: 1rem; // 16px
+@space-lg: 1.5rem; // 24px
+@space-xl: 2rem; // 32px
+@space-2xl: 3rem; // 48px
+@space-3xl: 4rem; // 64px
+@space-4xl: 6rem; // 96px
+@space-5xl: 8rem; // 128px
+
+/* --- Espaciados Fluidos --- */
+@space-section-padding: clamp(3.75rem, 7.82vw, 6.25rem) 1rem; // 60px - 100px top/bottom
+
+/* ============================================================================
+   BREAKPOINTS - Media queries
+   ========================================================================= */
+
+@bp-xs: 0em; // 0px (mobile first)
+@bp-sm: 30em; // 480px (móvil grande)
+@bp-md: 48em; // 768px (tablet)
+@bp-lg: 64em; // 1024px (desktop)
+@bp-xl: 80em; // 1280px (desktop grande)
+@bp-2xl: 96em; // 1536px (desktop extra grande)
+
+/* ============================================================================
+   Z-INDEX - Capas de apilamiento
+   ========================================================================= */
+
+@z-base: 1;
+@z-dropdown: 10;
+@z-sticky: 100;
+@z-fixed: 200;
+@z-modal-backdrop: 1000;
+@z-modal: 1001;
+@z-popover: 1002;
+@z-tooltip: 1003;
+
+/* ============================================================================
+   SHADOWS - Sistema de sombras
+   ========================================================================= */
+
+@shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+@shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+@shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+@shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+@shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+/* Sombras modo oscuro */
+@shadow-dark-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+@shadow-dark-md: 0 4px 20px rgba(0, 0, 0, 0.3);
+@shadow-dark-lg: 0 6px 25px rgba(0, 0, 0, 0.4);
+@shadow-dark-xl: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+/* ============================================================================
+   TRANSITIONS - Duraciones y easings
+   ========================================================================= */
+
+@transition-fast: 0.15s;
+@transition-base: 0.3s;
+@transition-slow: 0.5s;
+
+@transition-ease: ease;
+@transition-ease-in: ease-in;
+@transition-ease-out: ease-out;
+@transition-ease-in-out: ease-in-out;
+
+/* ============================================================================
+   BORDER RADIUS - Sistema de redondeo
+   ========================================================================= */
+
+@radius-none: 0;
+@radius-sm: 0.125rem; // 2px
+@radius-md: 0.25rem; // 4px
+@radius-lg: 0.5rem; // 8px
+@radius-xl: 1rem; // 16px
+@radius-2xl: 1.5rem; // 24px
+@radius-full: 9999px; // Círculo/píldora
+
+/* ============================================================================
+   EXPORTACIÓN A :root - CSS Custom Properties
+   ========================================================================= */
+
+:root {
+  /* --- COLORS: Fondos --- */
+  --color-bg-main: @color-bg-main;
+  --color-bg-sections: @color-bg-sections;
+  --color-bg-dark: @color-bg-dark;
+  --color-bg-medium: @color-bg-medium;
+
+  /* --- COLORS: Textos --- */
+  --color-text-primary: @color-text-primary;
+  --color-text-secondary: @color-text-secondary;
+  --color-text-white: @color-text-white;
+  --color-text-dark-primary: @color-text-dark-primary;
+  --color-text-dark-secondary: @color-text-dark-secondary;
+
+  /* --- COLORS: Brand --- */
+  --color-primary: @color-primary;
+  --color-primary-light: @color-primary-light;
+  --color-primary-dark: @color-primary-dark;
+  --color-secondary: @color-secondary;
+  --color-secondary-light: @color-secondary-light;
+  --color-secondary-dark: @color-secondary-dark;
+
+  /* --- COLORS: Acento --- */
+  --color-accent: @color-accent;
+  --color-accent-light: @color-accent-light;
+  --color-accent-dark: @color-accent-dark;
+
+  /* --- COLORS: UI --- */
+  --color-border: @color-border;
+  --color-border-dark: @color-border-dark;
+
+  /* --- COLORS: Estado --- */
+  --color-success: @color-success;
+  --color-warning: @color-warning;
+  --color-error: @color-error;
+  --color-info: @color-info;
+
+  /* --- TYPOGRAPHY: Familias --- */
+  --font-family-primary: @font-family-primary;
+  --font-family-heading: @font-family-heading;
+  --font-family-mono: @font-family-mono;
+
+  /* --- TYPOGRAPHY: Pesos --- */
+  --font-weight-regular: @font-weight-regular;
+  --font-weight-bold: @font-weight-bold;
+  --font-weight-black: @font-weight-black;
+
+  /* --- TYPOGRAPHY: Tamaños --- */
+  --font-size-base: @font-size-base;
+  --font-size-xs: @font-size-xs;
+  --font-size-sm: @font-size-sm;
+  --font-size-md: @font-size-md;
+  --font-size-lg: @font-size-lg;
+  --font-size-xl: @font-size-xl;
+  --font-size-2xl: @font-size-2xl;
+  --font-size-3xl: @font-size-3xl;
+  --font-size-4xl: @font-size-4xl;
+  --font-size-5xl: @font-size-5xl;
+  --font-size-topper: @font-size-topper;
+  --font-size-header: @font-size-header;
+  --font-size-body: @font-size-body;
+
+  /* --- TYPOGRAPHY: Line Heights --- */
+  --line-height-tight: @line-height-tight;
+  --line-height-normal: @line-height-normal;
+  --line-height-relaxed: @line-height-relaxed;
+  --line-height-loose: @line-height-loose;
+
+  /* --- TYPOGRAPHY: Letter Spacing --- */
+  --letter-spacing-tight: @letter-spacing-tight;
+  --letter-spacing-normal: @letter-spacing-normal;
+  --letter-spacing-wide: @letter-spacing-wide;
+  --letter-spacing-wider: @letter-spacing-wider;
+
+  /* --- SPACING --- */
+  --space-xs: @space-xs;
+  --space-sm: @space-sm;
+  --space-md: @space-md;
+  --space-lg: @space-lg;
+  --space-xl: @space-xl;
+  --space-2xl: @space-2xl;
+  --space-3xl: @space-3xl;
+  --space-4xl: @space-4xl;
+  --space-5xl: @space-5xl;
+  --space-section-padding: @space-section-padding;
+
+  /* --- BREAKPOINTS (solo como referencia, no se usan en runtime) --- */
+  --bp-xs: @bp-xs;
+  --bp-sm: @bp-sm;
+  --bp-md: @bp-md;
+  --bp-lg: @bp-lg;
+  --bp-xl: @bp-xl;
+  --bp-2xl: @bp-2xl;
+
+  /* --- Z-INDEX --- */
+  --z-base: @z-base;
+  --z-dropdown: @z-dropdown;
+  --z-sticky: @z-sticky;
+  --z-fixed: @z-fixed;
+  --z-modal-backdrop: @z-modal-backdrop;
+  --z-modal: @z-modal;
+  --z-popover: @z-popover;
+  --z-tooltip: @z-tooltip;
+
+  /* --- SHADOWS --- */
+  --shadow-sm: @shadow-sm;
+  --shadow-md: @shadow-md;
+  --shadow-lg: @shadow-lg;
+  --shadow-xl: @shadow-xl;
+  --shadow-2xl: @shadow-2xl;
+  --shadow-dark-sm: @shadow-dark-sm;
+  --shadow-dark-md: @shadow-dark-md;
+  --shadow-dark-lg: @shadow-dark-lg;
+  --shadow-dark-xl: @shadow-dark-xl;
+
+  /* --- TRANSITIONS --- */
+  --transition-fast: @transition-fast;
+  --transition-base: @transition-base;
+  --transition-slow: @transition-slow;
+  --transition-ease: @transition-ease;
+  --transition-ease-in: @transition-ease-in;
+  --transition-ease-out: @transition-ease-out;
+  --transition-ease-in-out: @transition-ease-in-out;
+
+  /* --- BORDER RADIUS --- */
+  --radius-none: @radius-none;
+  --radius-sm: @radius-sm;
+  --radius-md: @radius-md;
+  --radius-lg: @radius-lg;
+  --radius-xl: @radius-xl;
+  --radius-2xl: @radius-2xl;
+  --radius-full: @radius-full;
+
+  /* ========================================================================
+     VARIABLES DE COMPATIBILIDAD CON LEGACY
+     Mapeo de variables antiguas a nuevos tokens
+     ======================================================================== */
+
+  /* Estas variables permiten que el código legacy siga funcionando
+     mientras migramos progresivamente al nuevo sistema de tokens */
+  --background-main: var(--color-bg-main);
+  --background-sections: var(--color-bg-sections);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-white: var(--color-text-white);
+  --primary: var(--color-primary);
+  --primaryLight: var(--color-primary-light);
+  --secondary: var(--color-secondary);
+  --secondaryLight: var(--color-secondary-light);
+  --accent: var(--color-accent);
+  --accentLight: var(--color-accent-light);
+  --border-color: var(--color-border);
+  --headerColor: var(--color-text-primary);
+  --bodyTextColor: var(--color-text-secondary);
+  --bodyTextColorWhite: var(--color-text-white);
+  --topperFontSize: var(--font-size-topper);
+  --headerFontSize: var(--font-size-header);
+  --bodyFontSize: var(--font-size-body);
+  --sectionPadding: var(--space-section-padding);
+  --dark: var(--color-bg-dark);
+  --medium: var(--color-bg-medium);
+}
+
+/**
+ * MODO OSCURO - Redefinición de tokens para dark mode
+ * 
+ * Cuando se activa el modo oscuro, redefinimos solo los tokens que cambian,
+ * manteniendo la coherencia del sistema de diseño.
+ */
+body.dark-mode {
+  /* Solo redefinimos los tokens que cambian en modo oscuro */
+  --color-bg-main: @color-bg-dark;
+  --color-bg-sections: @color-bg-medium;
+  --color-text-primary: @color-text-dark-primary;
+  --color-text-secondary: @color-text-dark-secondary;
+  --color-primary: @color-primary-light;
+  --color-secondary: @color-secondary-light;
+  --color-accent: @color-accent-light;
+  --color-border: @color-border-dark;
+
+  /* Actualizar variables legacy para compatibilidad */
+  --background-main: var(--color-bg-dark);
+  --background-sections: var(--color-bg-medium);
+  --text-primary: var(--color-text-dark-primary);
+  --text-secondary: var(--color-text-dark-secondary);
+  --primary: var(--color-primary-light);
+  --secondary: var(--color-secondary-light);
+  --accent: var(--color-accent-light);
+  --border-color: var(--color-border-dark);
+}
