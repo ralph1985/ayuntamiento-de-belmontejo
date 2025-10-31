@@ -254,23 +254,20 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode,
   :root[data-theme="dark"] {
-    .recent-articles {
-      .news-h1,
-      .news-desc,
-      .news-author,
-      .news-date {
-        color: var(--color-text-primary);
-      }
-    }
-
-    .news-sidebar_widget-h3,
-    .news-sidebar_widget-date,
-    .news-sidebar_widget-header {
+    .recent-articles :where(.news-h1),
+    .recent-articles :where(.news-desc),
+    .recent-articles :where(.news-author),
+    .recent-articles :where(.news-date) {
       color: var(--color-text-primary);
     }
-    .news-sidebar_widget-header {
+
+    :where(.news-sidebar_widget-h3),
+    :where(.news-sidebar_widget-date),
+    :where(.news-sidebar_widget-header) {
+      color: var(--color-text-primary);
+    }
+    :where(.news-sidebar_widget-header) {
       &:after {
         background: var(--color-primary);
       }

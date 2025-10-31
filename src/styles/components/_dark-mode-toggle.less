@@ -74,9 +74,8 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode,
   :root[data-theme="dark"] {
-    .dark-mode-toggle {
+    :where(.dark-mode-toggle) {
       .cs-moon {
         opacity: 0;
         transform: rotate(180deg) scale(0.5);

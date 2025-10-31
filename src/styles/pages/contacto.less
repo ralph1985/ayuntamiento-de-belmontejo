@@ -315,37 +315,35 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #cs-contact {
-      .cs-text,
-      .cs-title {
+    #cs-contact :where(.cs-text),
+    #cs-contact :where(.cs-title) {
+      color: var(--bodyTextColorWhite);
+    }
+
+    #cs-contact :where(.cs-topper) {
+      color: var(--primaryLight);
+    }
+
+    #cs-contact :where(#cs-form) {
+      label,
+      input,
+      textarea {
         color: var(--bodyTextColorWhite);
-      }
+        background-color: transparent;
 
-      .cs-topper {
-        color: var(--primaryLight);
-      }
-
-      #cs-form {
-        label,
-        input,
-        textarea {
-          color: var(--bodyTextColorWhite);
-          background-color: transparent;
-
-          &::placeholder {
-            /* lighten up the color of the text by 40%*/
-            filter: brightness(1.4);
-          }
+        &::placeholder {
+          /* lighten up the color of the text by 40%*/
+          filter: brightness(1.4);
         }
       }
+    }
 
-      .cs-bg-picture {
-        background-color: #000;
+    #cs-contact :where(.cs-bg-picture) {
+      background-color: #000;
 
-        img {
-          /* lets parent background-color bleed through and darken it */
-          opacity: 0.5;
-        }
+      img {
+        /* lets parent background-color bleed through and darken it */
+        opacity: 0.5;
       }
     }
   }

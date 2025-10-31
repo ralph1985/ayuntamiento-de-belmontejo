@@ -93,6 +93,72 @@ El proyecto usa **mixins de breakpoints** centralizados para mantener consistenc
 
 **📖 Ver documentación completa:** [BREAKPOINTS_MIGRATION.md](./BREAKPOINTS_MIGRATION.md)
 
+### 🧩 Utilidades Atómicas
+
+El proyecto incluye un **sistema mínimo y controlado de utilidades** para casos puntuales de spacing, alineación y layout simple.
+
+**Filosofía:**
+
+- ✅ Usar SÓLO para spacing puntual, alineaciones básicas y grid simple
+- ❌ NO reimplementar componentes completos con utilidades
+- 📏 **Regla de oro**: Si usas 3+ utilidades en el mismo nodo permanentemente, **crea un componente** con BEM
+
+**Utilidades disponibles:**
+
+```html
+<!-- Display & Layout -->
+<div class="u-flex u-items-center u-justify-between">
+  <div class="u-grid u-grid-cols-3">...</div>
+</div>
+
+<!-- Spacing (usa tokens CSS) -->
+<div class="u-mt-md u-p-lg">
+  <!-- margin-top: var(--space-md), padding: var(--space-lg) -->
+</div>
+
+<!-- Tipografía & Color -->
+<p class="u-text-center u-text-primary">Texto centrado primario</p>
+
+<!-- Visibilidad -->
+<div class="u-hidden">Oculto</div>
+<span class="u-sr-only">Solo para lectores de pantalla</span>
+```
+
+**Clases disponibles:**
+
+| Categoría       | Clases                                                                                |
+| --------------- | ------------------------------------------------------------------------------------- |
+| **Display**     | `.u-flex`, `.u-inline-flex`, `.u-grid`, `.u-grid-cols-2`, `.u-grid-cols-3`            |
+| **Flexbox**     | `.u-wrap`, `.u-justify-between`, `.u-justify-center`, `.u-items-center`               |
+| **Margin**      | `.u-m-0`, `.u-mt-sm`, `.u-mt-md`, `.u-mt-lg`, `.u-mb-sm`, `.u-mb-md`, `.u-mb-lg`      |
+| **Padding**     | `.u-p-sm`, `.u-p-md`, `.u-p-lg`, `.u-px-sm`, `.u-px-md`, `.u-py-sm`, `.u-py-md`       |
+| **Texto**       | `.u-text-center`, `.u-text-left`, `.u-text-right`, `.u-text-muted`, `.u-text-primary` |
+| **Visibilidad** | `.u-hidden`, `.u-sr-only`                                                             |
+
+**Ejemplos de uso:**
+
+```html
+<!-- ✅ BIEN: Spacing puntual -->
+<article class="c-card u-mt-lg">
+  <h2 class="c-card__title u-mb-md">Título</h2>
+  <p>Contenido...</p>
+</article>
+
+<!-- ✅ BIEN: Grid simple -->
+<div class="u-grid u-grid-cols-3">
+  <div class="c-card">...</div>
+  <div class="c-card">...</div>
+  <div class="c-card">...</div>
+</div>
+
+<!-- ❌ MAL: 3+ utilidades permanentes → crear componente -->
+<div class="u-flex u-items-center u-justify-between u-p-md u-mt-lg">
+  <!-- CREAR .c-header-bar en su lugar -->
+</div>
+```
+
+**📖 Ver código fuente:** `src/styles/utilities/_utilities.less`
+
 ## Configuración y Ejecución
 
 ### Requisitos

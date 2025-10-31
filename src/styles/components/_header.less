@@ -369,7 +369,7 @@
 /* El header ahora usa var(--header-bg), var(--header-text) y var(--nav-menu-bg) que cambian automáticamente */
 /* El filtro del logo se mantiene por ahora para asegurar visibilidad */
 :root[data-theme="dark"] {
-  .cs-navigation .cs-logo {
+  .cs-navigation :where(.cs-logo) {
     /* Hace el logo blanco en modo oscuro */
     filter: grayscale(1) brightness(1000%);
   }

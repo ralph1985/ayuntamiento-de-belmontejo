@@ -222,24 +222,24 @@
         z-index: -1;
       }
 
-      .cs-topper {
+      :where(.cs-topper) {
         color: var(--color-primary-light);
       }
 
-      .cs-title,
-      .cs-text,
-      .cs-h3,
-      .cs-link,
-      .cs-item-text {
+      :where(.cs-title),
+      :where(.cs-text),
+      :where(.cs-h3),
+      :where(.cs-link),
+      :where(.cs-item-text) {
         color: var(--color-text-white);
       }
 
-      .cs-text,
-      .cs-item-text {
+      :where(.cs-text),
+      :where(.cs-item-text) {
         opacity: 0.8;
       }
 
-      .cs-item {
+      :where(.cs-item) {
         background-color: rgba(0, 0, 0, 0.2);
         border-color: rgba(255, 255, 255, 0.2);
 
@@ -248,17 +248,17 @@
         }
       }
 
-      .cs-picture {
+      :where(.cs-picture) {
         border-color: #fff;
       }
 
-      .cs-date {
+      :where(.cs-date) {
         background-color: #fff;
         color: var(--color-secondary);
       }
 
-      .cs-arrow,
-      .cs-floater {
+      :where(.cs-arrow),
+      :where(.cs-floater) {
         filter: grayscale(1) brightness(1000%);
       }
     }

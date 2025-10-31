@@ -1,0 +1,161 @@
+/* ==========================================================================
+   UTILITIES - Clases atómicas para uso puntual
+   ========================================================================== */
+
+/**
+ * Filosofía de utilidades:
+ * - Usar SÓLO para spacing puntual, alineaciones básicas y layout simple
+ * - NO reimplementar componentes con utilidades
+ * - Regla de oro: si usas 3+ utilidades en el mismo nodo permanentemente,
+ *   crea/extrae un componente con BEM
+ * - Las utilidades van en @layer utilities (baja especificidad)
+ * - Prefijo: .u-* para distinguirlas de componentes (.c-*)
+ */
+
+/* --- DISPLAY & LAYOUT --- */
+
+.u-flex {
+  display: flex;
+}
+
+.u-inline-flex {
+  display: inline-flex;
+}
+
+.u-grid {
+  display: grid;
+  gap: var(--space-md, 1rem);
+}
+
+.u-grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.u-grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.u-wrap {
+  flex-wrap: wrap;
+}
+
+.u-justify-between {
+  justify-content: space-between;
+}
+
+.u-justify-center {
+  justify-content: center;
+}
+
+.u-items-center {
+  align-items: center;
+}
+
+/* --- SPACING --- */
+
+.u-m-0 {
+  margin: 0;
+}
+
+.u-mt-sm {
+  margin-top: var(--space-sm, 0.5rem);
+}
+
+.u-mt-md {
+  margin-top: var(--space-md, 1rem);
+}
+
+.u-mt-lg {
+  margin-top: var(--space-lg, 1.5rem);
+}
+
+.u-mb-sm {
+  margin-bottom: var(--space-sm, 0.5rem);
+}
+
+.u-mb-md {
+  margin-bottom: var(--space-md, 1rem);
+}
+
+.u-mb-lg {
+  margin-bottom: var(--space-lg, 1.5rem);
+}
+
+.u-p-sm {
+  padding: var(--space-sm, 0.5rem);
+}
+
+.u-p-md {
+  padding: var(--space-md, 1rem);
+}
+
+.u-p-lg {
+  padding: var(--space-lg, 1.5rem);
+}
+
+.u-px-sm {
+  padding-left: var(--space-sm, 0.5rem);
+  padding-right: var(--space-sm, 0.5rem);
+}
+
+.u-px-md {
+  padding-left: var(--space-md, 1rem);
+  padding-right: var(--space-md, 1rem);
+}
+
+.u-py-sm {
+  padding-top: var(--space-sm, 0.5rem);
+  padding-bottom: var(--space-sm, 0.5rem);
+}
+
+.u-py-md {
+  padding-top: var(--space-md, 1rem);
+  padding-bottom: var(--space-md, 1rem);
+}
+
+/* --- TYPOGRAPHY & COLOR --- */
+
+.u-text-center {
+  text-align: center;
+}
+
+.u-text-left {
+  text-align: left;
+}
+
+.u-text-right {
+  text-align: right;
+}
+
+.u-text-muted {
+  color: var(--color-muted, #6b7280);
+}
+
+.u-text-primary {
+  color: var(--color-primary, #005baa);
+}
+
+/* --- VISIBILITY & ACCESSIBILITY --- */
+
+.u-hidden {
+  display: none !important;
+}
+
+.u-sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/**
+ * Nota sobre especificidad:
+ * - Las utilidades están en @layer utilities (baja prioridad)
+ * - Si necesitas override, usa otra utilidad o crea un componente
+ * - NO agregues !important excepto en .u-hidden y .u-sr-only
+ */

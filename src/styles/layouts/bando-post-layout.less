@@ -165,25 +165,22 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode,
   :root[data-theme="dark"] {
-    .news-article {
-      .news-h1,
-      .news-author,
-      .news-date {
-        color: var(--color-text-primary);
-      }
-
-      .news-category {
-        color: var(--color-text-secondary);
-      }
-
-      #news-content {
-        border-top-color: var(--color-border);
-      }
+    .news-article :where(.news-h1),
+    .news-article :where(.news-author),
+    .news-article :where(.news-date) {
+      color: var(--color-text-primary);
     }
 
-    .bando-external-link {
+    .news-article :where(.news-category) {
+      color: var(--color-text-secondary);
+    }
+
+    .news-article :where(#news-content) {
+      border-top-color: var(--color-border);
+    }
+
+    :where(.bando-external-link) {
       background-color: #1e293b;
       border-color: #0ea5e9;
 

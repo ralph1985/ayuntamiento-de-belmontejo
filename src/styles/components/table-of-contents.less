@@ -49,19 +49,7 @@
 /* Dark Mode - MIGRADO a sistema de tokens */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    .cs-toc-link {
-      color: var(--color-text-primary);
-      &.cs-toc-current {
-        color: var(--primaryLight);
-      }
-      &:hover {
-        opacity: 0.8;
-      }
-    }
-  }
-
-  body.dark-mode {
-    .cs-toc-link {
+    :where(.cs-toc-link) {
       color: var(--color-text-primary);
       &.cs-toc-current {
         color: var(--primaryLight);
