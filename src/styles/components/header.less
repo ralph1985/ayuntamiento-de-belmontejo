@@ -5,12 +5,12 @@
 /* Mobile - 1023px */
 @media only screen and (max-width: 63.9375rem) {
   body {
-    &.cs-open {
+    &.c-open {
       overflow: hidden;
     }
   }
 
-  .cs-navigation {
+  .c-navigation {
     /* remove the font family so the Stitch inherits the fonts from your global stylesheet */
     font-family: "Roboto", "Arial", sans-serif;
     width: 100%;
@@ -41,33 +41,34 @@
       backdrop-filter: blur(10px);
     }
 
-    &.cs-active {
+    &.c-active {
       &:before {
         width: 100%;
         opacity: 1;
       }
 
-      .cs-ul-wrapper {
+      .c-list-wrapper {
         opacity: 1;
         visibility: visible;
         transform: scaleX(1);
         transition-delay: 0.2s;
       }
 
-      .cs-li {
+      .c-list__item {
         opacity: 1;
         transform: translateX(0);
       }
     }
 
-    .cs-container {
+    .c-container {
       width: 100%;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      gap: (24/16rem);
     }
 
-    .cs-logo {
+    .c-logo {
       width: 40%;
       max-width: (200/16rem);
       height: 100%;
@@ -90,7 +91,7 @@
         object-position: left;
       }
 
-      .cs-logo-text {
+      .c-logo-text {
         font-size: (14/16rem);
         font-weight: 700;
         color: var(--headerColor);
@@ -100,7 +101,7 @@
       }
     }
 
-    .cs-toggle {
+    .c-toggle {
       /* 44px - 48px */
       width: clamp(2.75rem, 6vw, 3rem);
       height: clamp(2.75rem, 6vw, 3rem);
@@ -113,25 +114,25 @@
       align-items: center;
     }
 
-    .cs-active {
-      .cs-line1 {
+    .c-active {
+      .c-line1 {
         top: 50%;
         transform: translate(-50%, -50%) rotate(225deg);
       }
 
-      .cs-line2 {
+      .c-line2 {
         top: 50%;
         transform: translate(-50%, -50%) translateY(0) rotate(-225deg);
         transform-origin: center;
       }
 
-      .cs-line3 {
+      .c-line3 {
         opacity: 0;
         bottom: 100%;
       }
     }
 
-    .cs-box {
+    .c-box {
       /* 24px - 28px */
       width: clamp(1.5rem, 2vw, 1.75rem);
       /* 14px - 16px */
@@ -139,7 +140,7 @@
       position: relative;
     }
 
-    .cs-line {
+    .c-line {
       width: 100%;
       height: 2px;
       background-color: var(--text-primary);
@@ -149,7 +150,7 @@
       transform: translateX(-50%);
     }
 
-    .cs-line1 {
+    .c-line1 {
       top: 0;
       transition:
         transform 0.5s,
@@ -162,7 +163,7 @@
       transform-origin: center;
     }
 
-    .cs-line2 {
+    .c-line2 {
       top: 50%;
       transform: translateX(-50%) translateY(-50%);
       transition:
@@ -175,14 +176,14 @@
       animation-fill-mode: forwards;
     }
 
-    .cs-line3 {
+    .c-line3 {
       bottom: 0;
       transition:
         bottom 0.3s,
         opacity 0.3s;
     }
 
-    .cs-ul-wrapper {
+    .c-list-wrapper {
       height: 100vh;
       background-color: var(--background-main);
       box-shadow: inset rgba(0, 0, 0, 0.2) 0px 8px 24px;
@@ -201,7 +202,7 @@
       transform-origin: top right;
     }
 
-    .cs-ul {
+    .c-list {
       width: auto;
       min-width: 40%;
       height: 65vh;
@@ -216,7 +217,7 @@
       overflow: scroll;
     }
 
-    .cs-li {
+    .c-list__item {
       text-align: right;
       list-style: none;
       width: 100%;
@@ -257,7 +258,7 @@
       }
     }
 
-    .cs-li-link {
+    .c-list__item-link {
       /* 16px - 24px */
       font-size: clamp(1rem, 2.5vw, 1.5rem);
       color: inherit;
@@ -280,14 +281,14 @@
         left: 0;
       }
 
-      &.cs-active {
+      &.c-active {
         &:before {
           display: block;
         }
       }
     }
 
-    .cs-button-solid {
+    .c-button-solid {
       display: none;
     }
   }
@@ -295,9 +296,9 @@
 
 /* Tablet and up - Show logo text */
 @media only screen and (min-width: 48rem) and (max-width: 63.9375rem) {
-  .cs-navigation {
-    .cs-logo {
-      .cs-logo-text {
+  .c-navigation {
+    .c-logo {
+      .c-logo-text {
         display: block;
         font-size: (16/16rem);
       }
@@ -308,25 +309,25 @@
 /* Dark Mode */
 @media only screen and (max-width: 63.9375rem) {
   body.dark-mode {
-    .cs-navigation {
+    .c-navigation {
       background-color: var(--dark);
 
-      .cs-logo {
-        .cs-logo-text {
+      .c-logo {
+        .c-logo-text {
           color: var(--bodyTextColorWhite);
           filter: none; /* Reset filter for text */
         }
       }
 
-      .cs-line {
+      .c-line {
         background-color: var(--text-white);
       }
 
-      .cs-ul-wrapper {
+      .c-list-wrapper {
         background-color: var(--medium);
       }
 
-      .cs-li-link {
+      .c-list__item-link {
         color: var(--bodyTextColorWhite);
       }
     }
@@ -339,15 +340,15 @@
 
 /* Mobile - 1023px */
 @media only screen and (max-width: 63.9375rem) {
-  .cs-navigation {
-    .cs-dropdown {
+  .c-navigation {
+    .c-dropdown {
       color: var(--bodyTextColorWhite);
       color: var(--headerColor);
 
       position: relative;
 
-      &.cs-active {
-        .cs-drop-ul {
+      &.c-active {
+        .c-drop-ul {
           height: auto;
           margin: (12/16rem) 0 0 0;
           padding: (24/16rem);
@@ -356,22 +357,22 @@
           transform: scale(1);
         }
 
-        .cs-drop-link {
+        .c-drop-link {
           opacity: 1;
         }
 
-        .cs-drop-icon {
+        .c-drop-icon {
           transform: rotate(0);
         }
       }
 
-      .cs-li-link {
+      .c-list__item-link {
         position: relative;
         transition: opacity 0.3s;
       }
     }
 
-    .cs-drop-icon {
+    .c-drop-icon {
       width: (15/16rem);
       height: auto;
       display: inline-block;
@@ -380,7 +381,7 @@
       transition: 0.3s;
     }
 
-    .cs-drop-ul {
+    .c-drop-ul {
       width: 100%;
       height: 0;
       margin: 0;
@@ -406,20 +407,20 @@
       transform-origin: top right;
     }
 
-    .cs-drop-li {
+    .c-drop-li {
       text-align: inherit;
       list-style: none;
     }
 
-    .cs-li-link {
-      &.cs-drop-link {
+    .c-list__item-link {
+      &.c-drop-link {
         /* 14px - 16px */
         font-size: clamp(0.875rem, 2vw, 1.25rem);
         color: var(--text-white);
       }
     }
 
-    .cs-dropdown-button {
+    .c-dropdown-button {
       background-color: transparent;
       border: none;
       appearance: none;
@@ -429,36 +430,36 @@
 
 /* Desktop - 1024px */
 @media only screen and (min-width: 64rem) {
-  .cs-navigation {
-    .cs-dropdown {
+  .c-navigation {
+    .c-dropdown {
       position: relative;
       &:hover,
-      &.cs-active {
+      &.c-active {
         cursor: pointer;
-        .cs-drop-ul {
+        .c-drop-ul {
           opacity: 1;
           visibility: visible;
           transform: scaleY(1);
         }
 
-        .cs-drop-li {
+        .c-drop-li {
           opacity: 1;
           transform: translateY(0);
         }
       }
     }
 
-    .cs-dropdown:has(.cs-drop-icon) {
+    .c-dropdown:has(.c-drop-icon) {
       display: flex;
       align-items: center;
       &:hover {
-        .cs-drop-icon {
+        .c-drop-icon {
           transform: rotate(0);
         }
       }
     }
 
-    .cs-drop-icon {
+    .c-drop-icon {
       width: (15/16rem);
       height: auto;
       display: inline-block;
@@ -467,7 +468,7 @@
       transition: 0.3s;
     }
 
-    .cs-drop-ul {
+    .c-drop-ul {
       min-width: (200/16rem);
       margin: 0;
       padding: 0;
@@ -488,7 +489,7 @@
       transform-origin: top;
     }
 
-    .cs-drop-li {
+    .c-drop-li {
       font-size: (16/16rem);
       text-decoration: none;
       list-style: none;
@@ -543,8 +544,8 @@
       }
     }
 
-    .cs-li-link {
-      &.cs-drop-link {
+    .c-list__item-link {
+      &.c-drop-link {
         font-size: (16/16rem);
         line-height: 1.5em;
         text-decoration: none;
@@ -574,7 +575,7 @@
       }
     }
 
-    .cs-dropdown-button {
+    .c-dropdown-button {
       background-color: transparent;
       border: none;
       appearance: none;
@@ -585,13 +586,13 @@
 /* Dark Mode */
 @media only screen and (min-width: 0rem) {
   body.dark-mode {
-    .cs-navigation {
-      .cs-drop-ul {
+    .c-navigation {
+      .c-drop-ul {
         background-color: var(--dark);
       }
 
-      .cs-li-link {
-        &.cs-drop-link {
+      .c-list__item-link {
+        &.c-drop-link {
           &:hover {
             background-color: var(--medium);
           }
@@ -607,7 +608,7 @@
 
 /* Small Desktop - 1024px */
 @media only screen and (min-width: 64rem) {
-  .cs-navigation {
+  .c-navigation {
     /* remove the font family so the Stitch inherits the fonts from your global stylesheet */
     font-family: "Roboto", "Arial", sans-serif;
     width: 100%;
@@ -619,7 +620,7 @@
     position: fixed;
     z-index: 10000;
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1280/16rem);
       margin: auto;
@@ -629,11 +630,11 @@
       gap: (24/16rem);
     }
 
-    .cs-toggle {
+    .c-toggle {
       display: none;
     }
 
-    .cs-logo {
+    .c-logo {
       max-width: (350/16rem);
       height: (65/16rem);
       /* margin-right auto pushes everything away from it to the right */
@@ -652,7 +653,7 @@
         object-fit: contain;
       }
 
-      .cs-logo-text {
+      .c-logo-text {
         font-size: (18/16rem);
         font-weight: 700;
         color: var(--headerColor);
@@ -662,7 +663,7 @@
       }
     }
 
-    .cs-ul {
+    .c-list {
       width: 100%;
       margin: 0;
       padding: 0;
@@ -673,14 +674,14 @@
       gap: clamp(1.25rem, 2.6vw, 2.25rem);
     }
 
-    .cs-li {
+    .c-list__item {
       list-style: none;
       padding: (32/16rem) 0;
       /* prevent flexbox from squishing it */
       flex: none;
     }
 
-    .cs-li-link {
+    .c-list__item-link {
       /* 14px - 16px */
       font-size: clamp(0.875rem, 1vw, 1rem);
       line-height: 1.5em;
@@ -695,7 +696,7 @@
         }
       }
 
-      &.cs-active {
+      &.c-active {
         &:before {
           width: 100%;
         }
@@ -721,17 +722,17 @@
 /* Dark Mode */
 @media only screen and (min-width: 64rem) {
   body.dark-mode {
-    .cs-navigation {
+    .c-navigation {
       background-color: var(--dark);
 
-      .cs-logo {
-        .cs-logo-text {
+      .c-logo {
+        .c-logo-text {
           color: var(--bodyTextColorWhite);
           filter: none; /* Reset filter for text */
         }
       }
 
-      .cs-li-link {
+      .c-list__item-link {
         color: var(--bodyTextColorWhite);
 
         &:before {

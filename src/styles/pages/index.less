@@ -25,7 +25,7 @@
     /* prevents overflow from the lines extending past the screen width */
     overflow: hidden;
 
-    .cs-picture {
+    .c-picture {
       /* Background Image */
       width: 100%;
       height: 100%;
@@ -62,7 +62,7 @@
       }
     }
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1280/16em);
       margin: auto;
@@ -95,7 +95,7 @@
       }
     }
 
-    .cs-flex-group {
+    .c-flex-group {
       width: 80vw;
       /* 464px - 562px */
       max-width: clamp(29em, 60vw, 35.125em);
@@ -109,19 +109,19 @@
       flex-wrap: wrap;
     }
 
-    .cs-topper {
+    .c-topper {
       text-align: center;
       margin-bottom: (16/16rem);
       color: var(--primary);
     }
 
-    .cs-title {
+    .c-title {
       text-align: center;
       width: 100%;
       color: var(--bodyTextColorWhite);
     }
 
-    .cs-text {
+    .c-text {
       text-align: center;
       /* 32px - 40px */
       margin: 0 auto clamp(2rem, 4vw, 2.5rem) 0;
@@ -130,13 +130,13 @@
       color: var(--bodyTextColorWhite);
     }
 
-    .cs-button-solid {
+    .c-button-solid {
       line-height: clamp(2.875em, 5.5vw, 3.5em);
       height: initial;
       margin-bottom: calc(16 / 16 * 1rem);
     }
 
-    .cs-button-transparent {
+    .c-button-transparent {
       font-size: (16/16rem);
       font-weight: 700;
       /* 46px - 56px */
@@ -195,7 +195,7 @@
     /* 32px - 40px */
     padding: 0 clamp(2em, 5vw, 2.5em);
 
-    .cs-container {
+    .c-container {
       padding: clamp(7em, 27.95vw, 17.5em) 0 clamp(9em, 30.95vw, 23.5em) 0;
       &:after {
         /* Right Line */
@@ -220,7 +220,7 @@
       }
     }
 
-    .cs-button-solid {
+    .c-button-solid {
       margin-right: (20/16rem);
       margin-bottom: 0;
     }
@@ -369,7 +369,7 @@
   .sbs {
     padding: var(--sectionPadding);
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1280/16rem);
       margin: auto;
@@ -380,7 +380,7 @@
       row-gap: (40/16rem);
     }
 
-    .cs-left {
+    .c-left {
       /* scaling the font size with the view width */
       font-size: ~"min(2.31vw, .7em)";
       /* using ems so we can use font size to scale the whole section */
@@ -389,7 +389,7 @@
       position: relative;
     }
 
-    .cs-picture {
+    .c-picture {
       border-radius: (24/16em);
       display: block;
       position: absolute;
@@ -406,14 +406,14 @@
       }
     }
 
-    .cs-picture1 {
+    .c-picture1 {
       width: (522/16em);
       height: (581/16em);
       top: 0;
       left: 0;
     }
 
-    .cs-picture2 {
+    .c-picture2 {
       width: (414/16em);
       height: (400/16em);
       background-color: #fff;
@@ -424,22 +424,22 @@
       bottom: 0;
     }
 
-    .cs-right {
+    .c-right {
       max-width: (542/16rem);
       margin: auto;
     }
 
-    .cs-topper {
+    .c-topper {
       text-align: left;
       margin-bottom: (4/16rem);
     }
 
-    .cs-title {
+    .c-title {
       text-align: left;
       max-width: (800/16rem);
     }
 
-    .cs-text {
+    .c-text {
       text-align: left;
       max-width: (750/16rem);
       margin-bottom: (16/16rem);
@@ -449,7 +449,7 @@
       }
     }
 
-    .cs-flex-group {
+    .c-flex-group {
       /* 16px - 32px */
       padding: clamp(1rem, 3vw, 2rem);
       background-color: #f7f7f7;
@@ -457,7 +457,7 @@
       position: relative;
     }
 
-    .cs-flex-p {
+    .c-flex-p {
       /* 14px - 16px */
       font-size: clamp(0.875rem, 1.5vw, 1rem);
       line-height: 1.5em;
@@ -465,7 +465,7 @@
       color: #353535;
     }
 
-    .cs-name {
+    .c-name {
       font-size: (16/16rem);
       font-weight: bold;
       line-height: 1.2em;
@@ -475,14 +475,14 @@
       display: block;
     }
 
-    .cs-job {
+    .c-job {
       font-size: (14/16rem);
       line-height: 1.5em;
       color: #353535;
       display: block;
     }
 
-    .cs-quote-icon {
+    .c-quote-icon {
       /* 60px - 136px */
       width: clamp(3.75rem, 10vw, 8.5rem);
       height: auto;
@@ -492,7 +492,7 @@
       bottom: (0/16rem);
     }
 
-    .cs-button-solid {
+    .c-button-solid {
       margin-top: (32/16rem);
     }
   }
@@ -501,18 +501,18 @@
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
   .sbs {
-    .cs-container {
+    .c-container {
       flex-flow: row;
       justify-content: space-between;
       gap: (52/16rem);
     }
 
-    .cs-left {
+    .c-left {
       font-size: ~"min(1.2vw, 1em)";
       flex: none;
     }
 
-    .cs-right {
+    .c-right {
       margin: 0;
     }
   }
@@ -521,41 +521,41 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    .sbs :where(.cs-left) {
+    .sbs :where(.c-left) {
       &:before,
       &:after {
         background: var(--accent);
       }
     }
 
-    .sbs :where(.cs-picture2) {
+    .sbs :where(.c-picture2) {
       background-color: var(--dark);
       /* 6px - 12px */
       border: clamp(0.375em, 1.5vw, 0.75em) solid var(--dark);
     }
 
-    .sbs :where(.cs-topper) {
+    .sbs :where(.c-topper) {
       color: var(--primaryLight);
     }
 
-    .sbs :where(.cs-title),
-    .sbs :where(.cs-text),
-    .sbs :where(.cs-h3),
-    .sbs :where(.cs-flex-p),
-    .sbs :where(.cs-name) {
+    .sbs :where(.c-title),
+    .sbs :where(.c-text),
+    .sbs :where(.c-h3),
+    .sbs :where(.c-flex-p),
+    .sbs :where(.c-name) {
       color: var(--bodyTextColorWhite);
     }
 
-    .sbs :where(.cs-flex-group) {
+    .sbs :where(.c-flex-group) {
       background-color: var(--accent);
     }
 
-    .sbs :where(.cs-job) {
+    .sbs :where(.c-job) {
       color: var(--bodyTextColorWhite);
       opacity: 0.8;
     }
 
-    .sbs :where(.cs-quote-icon) {
+    .sbs :where(.c-quote-icon) {
       opacity: 0.2;
     }
   }
@@ -570,7 +570,7 @@
   .sbs-r {
     padding: var(--sectionPadding);
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1280/16rem);
       margin: auto;
@@ -581,7 +581,7 @@
       row-gap: (40/16rem);
     }
 
-    .cs-left {
+    .c-left {
       /* scaling the font size with the view width */
       font-size: ~"min(2.31vw, .7em)";
       /* using ems so we can use font size to scale the whole section */
@@ -590,7 +590,7 @@
       position: relative;
     }
 
-    .cs-picture {
+    .c-picture {
       border-radius: (24/16em);
       display: block;
       position: absolute;
@@ -607,14 +607,14 @@
       }
     }
 
-    .cs-picture1 {
+    .c-picture1 {
       width: (522/16em);
       height: (581/16em);
       top: 0;
       right: 0;
     }
 
-    .cs-picture2 {
+    .c-picture2 {
       width: (414/16em);
       height: (400/16em);
       background-color: #fff;
@@ -625,22 +625,22 @@
       left: 0;
     }
 
-    .cs-right {
+    .c-right {
       max-width: (542/16rem);
       margin: auto;
     }
 
-    .cs-topper {
+    .c-topper {
       text-align: left;
       margin-bottom: (4/16rem);
     }
 
-    .cs-title {
+    .c-title {
       text-align: left;
       max-width: (800/16rem);
     }
 
-    .cs-text {
+    .c-text {
       text-align: left;
       max-width: (750/16rem);
       margin-bottom: (16/16rem);
@@ -649,7 +649,7 @@
       }
     }
 
-    .cs-flex-group {
+    .c-flex-group {
       /* 16px - 32px */
       padding: clamp(1rem, 3vw, 2rem);
       background-color: #f7f7f7;
@@ -657,7 +657,7 @@
       position: relative;
     }
 
-    .cs-flex-p {
+    .c-flex-p {
       /* 14px - 16px */
       font-size: clamp(0.875rem, 1.5vw, 1rem);
       line-height: 1.5em;
@@ -665,7 +665,7 @@
       color: #353535;
     }
 
-    .cs-name {
+    .c-name {
       font-size: (16/16rem);
       font-weight: bold;
       line-height: 1.2em;
@@ -675,14 +675,14 @@
       display: block;
     }
 
-    .cs-job {
+    .c-job {
       font-size: (14/16rem);
       line-height: 1.5em;
       color: #353535;
       display: block;
     }
 
-    .cs-quote-icon {
+    .c-quote-icon {
       /* 60px - 136px */
       width: clamp(3.75rem, 10vw, 8.5rem);
       height: auto;
@@ -697,20 +697,20 @@
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
   .sbs-r {
-    .cs-container {
+    .c-container {
       flex-flow: row;
       justify-content: space-between;
       gap: (52/16rem);
     }
 
-    .cs-left {
+    .c-left {
       font-size: ~"min(1.2vw, 1em)";
       /* sends it to the right */
       order: 2;
       flex: none;
     }
 
-    .cs-right {
+    .c-right {
       margin: 0;
     }
   }
@@ -719,41 +719,41 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    .sbs-r :where(.cs-left) {
+    .sbs-r :where(.c-left) {
       &:before,
       &:after {
         background: var(--accent);
       }
     }
 
-    .sbs-r :where(.cs-picture2) {
+    .sbs-r :where(.c-picture2) {
       background-color: var(--dark);
       /* 6px - 12px */
       border: clamp(0.375em, 1.5vw, 0.75em) solid var(--dark);
     }
 
-    .sbs-r :where(.cs-topper) {
+    .sbs-r :where(.c-topper) {
       color: var(--primaryLight);
     }
 
-    .sbs-r :where(.cs-title),
-    .sbs-r :where(.cs-text),
-    .sbs-r :where(.cs-h3),
-    .sbs-r :where(.cs-flex-p),
-    .sbs-r :where(.cs-name) {
+    .sbs-r :where(.c-title),
+    .sbs-r :where(.c-text),
+    .sbs-r :where(.c-h3),
+    .sbs-r :where(.c-flex-p),
+    .sbs-r :where(.c-name) {
       color: var(--bodyTextColorWhite);
     }
 
-    .sbs-r :where(.cs-flex-group) {
+    .sbs-r :where(.c-flex-group) {
       background-color: var(--accent);
     }
 
-    .sbs-r :where(.cs-job) {
+    .sbs-r :where(.c-job) {
       color: var(--bodyTextColorWhite);
       opacity: 0.8;
     }
 
-    .sbs-r :where(.cs-quote-icon) {
+    .sbs-r :where(.c-quote-icon) {
       opacity: 0.2;
     }
   }
@@ -772,24 +772,24 @@
     position: relative;
     /* Prevents overflow from the image going off screen */
     overflow: hidden;
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1322/16em);
       margin: auto;
     }
 
-    .cs-topper {
+    .c-topper {
       text-align: center;
       margin-bottom: (16/16rem);
     }
 
-    .cs-title {
+    .c-title {
       text-align: center;
       max-width: (621/16rem);
       margin-bottom: (40/16rem);
     }
 
-    .cs-image-group {
+    .c-image-group {
       /* used rem so it doesn't scale with the font size of on parent */
       font-size: ~"min(1.1vw, 1em)";
       width: 100%;
@@ -802,7 +802,7 @@
       gap: (30/16em);
     }
 
-    .cs-row {
+    .c-row {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -810,7 +810,7 @@
       gap: (30/16em);
     }
 
-    .cs-picture {
+    .c-picture {
       display: block;
       position: relative;
       img {
@@ -823,52 +823,52 @@
       }
     }
 
-    .cs-row-1 {
-      .cs-picture1 {
+    .c-row-1 {
+      .c-picture1 {
         width: (420/16em);
         height: (567/16em);
       }
 
-      .cs-picture2 {
+      .c-picture2 {
         width: (420/16em);
         height: (629/16em);
       }
 
-      .cs-picture3 {
+      .c-picture3 {
         width: (420/16em);
         height: (512/16em);
       }
     }
 
-    .cs-row-2 {
-      .cs-picture1 {
+    .c-row-2 {
+      .c-picture1 {
         width: (420/16em);
         height: (492/16em);
       }
 
-      .cs-picture2 {
+      .c-picture2 {
         width: (420/16em);
         height: (517/16em);
       }
 
-      .cs-picture3 {
+      .c-picture3 {
         width: (420/16em);
         height: (629/16em);
       }
     }
 
-    .cs-row-3 {
-      .cs-picture1 {
+    .c-row-3 {
+      .c-picture1 {
         width: (420/16em);
         height: (625/16em);
       }
 
-      .cs-picture2 {
+      .c-picture2 {
         width: (420/16em);
         height: (452/16em);
       }
 
-      .cs-picture3 {
+      .c-picture3 {
         width: (420/16em);
         height: (629/16em);
       }
@@ -879,7 +879,7 @@
 /* Dark mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    .gallery :where(.cs-title) {
+    .gallery :where(.c-title) {
       color: var(--bodyTextColorWhite);
     }
   }
@@ -896,36 +896,36 @@
     text-align: center;
     padding: var(--sectionPadding);
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1104/16rem);
       margin: auto;
     }
 
-    .cs-topper {
+    .c-topper {
       text-align: center;
       margin-bottom: (16/16rem);
     }
 
-    .cs-title {
+    .c-title {
       text-align: center;
       max-width: (700/16rem);
     }
 
-    .cs-text {
+    .c-text {
       text-align: center;
       max-width: (650/16rem);
       /* 88px - 104px */
       margin-bottom: clamp(5.5em, 10.2vw, 6.5em);
     }
 
-    .cs-card-group {
+    .c-card-group {
       /* 48px - 64px */
       margin: 0 auto clamp(3rem, 5vw, 4rem);
       padding: 0;
     }
 
-    .cs-item {
+    .c-card {
       text-align: left;
       list-style: none;
       width: 100%;
@@ -959,14 +959,14 @@
       }
     }
 
-    .cs-item-img {
+    .c-card-img {
       width: (80/16rem);
       height: (80/16rem);
       position: absolute;
       top: (-40/16rem);
     }
 
-    .cs-item-p {
+    .c-card-p {
       font-size: (16/16rem);
       line-height: 1.5em;
       margin: 0 0 (20/16rem);
@@ -975,7 +975,7 @@
       border-bottom: 1px solid #e8e9ec;
     }
 
-    .cs-reviewer {
+    .c-reviewer {
       font-size: (16/16rem);
       font-weight: 700;
       line-height: 1.5em;
@@ -985,14 +985,14 @@
       display: block;
     }
 
-    .cs-desc {
+    .c-desc {
       font-size: (14/16rem);
       font-weight: 400;
       color: var(#353535);
       display: block;
     }
 
-    .cs-item-stars {
+    .c-card-stars {
       width: (96/16rem);
       height: (16/16rem);
     }
@@ -1002,14 +1002,14 @@
 /* Tablet - 768px */
 .mq-up(@bp-md, {
   .reviews {
-    .cs-card-group {
+    .c-card-group {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: (16/16rem);
     }
 
-    .cs-item {
+    .c-card {
       /* reset margin so it won't interfere with flexbox */
       margin: 0;
     }
@@ -1019,18 +1019,18 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    .reviews :where(.cs-title),
-    .reviews :where(.cs-text),
-    .reviews :where(.cs-item-p),
-    .reviews :where(.cs-reviewer) {
+    .reviews :where(.c-title),
+    .reviews :where(.c-text),
+    .reviews :where(.c-card-p),
+    .reviews :where(.c-reviewer) {
       color: var(--bodyTextColorWhite);
     }
 
-    .reviews :where(.cs-item) {
+    .reviews :where(.c-card) {
       background: var(--medium);
     }
 
-    .reviews :where(.cs-desc) {
+    .reviews :where(.c-desc) {
       color: var(--primaryLight);
     }
   }
@@ -1046,7 +1046,7 @@
     padding: var(--sectionPadding);
     background-color: #f7f7f7;
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1280/16rem);
       margin: auto;
@@ -1056,7 +1056,7 @@
       gap: (48/16rem);
     }
 
-    .cs-content {
+    .c-content {
       text-align: center;
       width: 100%;
       max-width: (630/16rem);
@@ -1066,7 +1066,7 @@
       gap: (24/16rem);
     }
 
-    .cs-topper {
+    .c-topper {
       font-size: (16/16rem);
       font-weight: 700;
       line-height: 1.2em;
@@ -1076,7 +1076,7 @@
       display: block;
     }
 
-    .cs-title {
+    .c-title {
       font-size: clamp(1.9375rem, 3.9vw, 3.0625rem);
       font-weight: 900;
       line-height: 1.2em;
@@ -1087,7 +1087,7 @@
       position: relative;
     }
 
-    .cs-text {
+    .c-text {
       font-size: var(--bodyFontSize);
       line-height: 1.5em;
       text-align: center;
@@ -1188,7 +1188,7 @@
     padding: var(--sectionPadding);
     background-color: #f7f7f7;
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1280/16rem);
       margin: auto;
@@ -1199,7 +1199,7 @@
       gap: clamp(3rem, 6vw, 4rem);
     }
 
-    .cs-content {
+    .c-content {
       /* set text align to left if content needs to be left aligned */
       text-align: center;
       width: 100%;

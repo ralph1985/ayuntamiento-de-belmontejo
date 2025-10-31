@@ -10,9 +10,9 @@ document.addEventListener('astro:page-load', () => {
   );
 
   function toggleMenu() {
-    mobileMenuToggle.classList.toggle('cs-active');
-    CSnavbarMenu.classList.toggle('cs-active');
-    CSbody.classList.toggle('cs-open');
+    mobileMenuToggle.classList.toggle('c-active');
+    CSnavbarMenu.classList.toggle('c-active');
+    CSbody.classList.toggle('c-open');
   }
 
   // Toggles the hamburger mobile menu
@@ -27,7 +27,7 @@ document.addEventListener('astro:page-load', () => {
     // and not on any child elements (the actual menu content)
     if (
       event.target === CSnavbarMenu &&
-      CSnavbarMenu.classList.contains('cs-active')
+      CSnavbarMenu.classList.contains('c-active')
     ) {
       toggleMenu();
       ariaExpanded(mobileMenuToggle);
@@ -44,9 +44,9 @@ document.addEventListener('astro:page-load', () => {
   }
 
   // Add event listeners to each dropdown element for accessibility
-  const dropdownElements = document.querySelectorAll('.cs-dropdown');
+  const dropdownElements = document.querySelectorAll('.c-dropdown');
   dropdownElements.forEach(element => {
-    // This variable tracks if the Escape key was pressed. This flag will be checked in the focusout event handler to ensure that pressing the Escape key does not trigger the focusout event and subsequently remove the cs-active class from the dropdown
+    // This variable tracks if the Escape key was pressed. This flag will be checked in the focusout event handler to ensure that pressing the Escape key does not trigger the focusout event and subsequently remove the c-active class from the dropdown
     let escapePressed = false;
 
     element.addEventListener('focusout', function (event) {
@@ -56,9 +56,9 @@ document.addEventListener('astro:page-load', () => {
       }
       // If the focus has moved outside the dropdown, remove the active class from the dropdown
       if (!element.contains(event.relatedTarget)) {
-        element.classList.remove('cs-active');
+        element.classList.remove('c-active');
         // adjust aria-expanded attribute on the dropdown button only
-        const dropdownButton = element.querySelector('.cs-dropdown-button');
+        const dropdownButton = element.querySelector('.c-dropdown-button');
         if (dropdownButton) {
           ariaExpanded(dropdownButton);
         }
@@ -66,9 +66,9 @@ document.addEventListener('astro:page-load', () => {
     });
 
     element.addEventListener('keydown', function (event) {
-      const dropdownButton = element.querySelector('.cs-dropdown-button');
+      const dropdownButton = element.querySelector('.c-dropdown-button');
       // If the dropdown is active, stop the event from propagating. This is so we can use Escape to close the dropdown, then press it again to close the hamburger menu (if needed)
-      if (element.classList.contains('cs-active')) {
+      if (element.classList.contains('c-active')) {
         event.stopPropagation();
       }
 
@@ -76,7 +76,7 @@ document.addEventListener('astro:page-load', () => {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
 
-        element.classList.toggle('cs-active');
+        element.classList.toggle('c-active');
         // adjust aria-expanded attribute on the dropdown button only
         if (dropdownButton) {
           ariaExpanded(dropdownButton);
@@ -86,7 +86,7 @@ document.addEventListener('astro:page-load', () => {
       // Pressing Escape will remove the active class from the dropdown. The stopPropagation above will stop the hamburger menu from closing
       if (event.key === 'Escape') {
         escapePressed = true;
-        element.classList.remove('cs-active');
+        element.classList.remove('c-active');
         // adjust aria-expanded attribute on the dropdown button only
         if (dropdownButton) {
           ariaExpanded(dropdownButton);
@@ -99,8 +99,8 @@ document.addEventListener('astro:page-load', () => {
     const maxWidthMediaQuery = window.matchMedia('(max-width: 63.9375rem)');
     if (maxWidthMediaQuery.matches) {
       element.addEventListener('click', () => {
-        element.classList.toggle('cs-active');
-        const dropdownButton = element.querySelector('.cs-dropdown-button');
+        element.classList.toggle('c-active');
+        const dropdownButton = element.querySelector('.c-dropdown-button');
         if (dropdownButton) {
           ariaExpanded(dropdownButton);
         }
@@ -110,7 +110,7 @@ document.addEventListener('astro:page-load', () => {
       document.addEventListener('keydown', event => {
         if (
           event.key === 'Escape' &&
-          mobileMenuToggle.classList.contains('cs-active')
+          mobileMenuToggle.classList.contains('c-active')
         ) {
           toggleMenu();
         }
@@ -119,7 +119,9 @@ document.addEventListener('astro:page-load', () => {
   });
 
   // Pressing Enter will redirect to the href
-  const dropdownLinks = document.querySelectorAll('.cs-drop-li > .cs-li-link');
+  const dropdownLinks = document.querySelectorAll(
+    '.c-drop-li > .c-list__item-link'
+  );
   dropdownLinks.forEach(link => {
     link.addEventListener('keydown', function (event) {
       if (event.key === 'Enter') {

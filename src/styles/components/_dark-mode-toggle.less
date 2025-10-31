@@ -37,7 +37,7 @@
       pointer-events: none;
     }
 
-    .cs-moon {
+    .c-moon {
       // Transition from light to dark
       transition:
         transform 0.3s,
@@ -47,7 +47,7 @@
       transform: rotate(-14deg);
     }
 
-    .cs-sun {
+    .c-sun {
       // Transition from dark to light
       transition:
         transform 0.3s,
@@ -65,7 +65,7 @@
     position: relative;
 
     &:hover {
-      .cs-moon {
+      .c-moon {
         transform: rotate(-14deg) scale(1.1);
       }
     }
@@ -76,12 +76,12 @@
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
     :where(.dark-mode-toggle) {
-      .cs-moon {
+      .c-moon {
         opacity: 0;
         transform: rotate(180deg) scale(0.5);
       }
 
-      .cs-sun {
+      .c-sun {
         opacity: 1;
         transform: scale(1);
       }

@@ -46,7 +46,7 @@ const filteredNavData = navData.filter(entry => {
           </li>
           {
             filteredNavData.map(entry => (
-              <li class="cs-li">
+              <li class="c-list__item">
                 <a
                   href={entry.url}
                   target={entry.isAdmin ? '_blank' : undefined}
@@ -57,7 +57,7 @@ const filteredNavData = navData.filter(entry => {
               </li>
             ))
           }
-          <li class="cs-li">
+          <li class="c-list__item">
             <a href="/politica-de-cookies"> Política de Cookies </a>
           </li>
         </ul>
@@ -112,7 +112,7 @@ const filteredNavData = navData.filter(entry => {
           </li>
           {
             client.socialMedia?.facebook && (
-              <li class="cs-li">
+              <li class="c-list__item">
                 <a
                   href={client.socialMedia.facebook}
                   target="_blank"
@@ -133,7 +133,7 @@ const filteredNavData = navData.filter(entry => {
           }
           {
             client.socialMedia?.instagram && (
-              <li class="cs-li">
+              <li class="c-list__item">
                 <a
                   href={client.socialMedia.instagram}
                   target="_blank"

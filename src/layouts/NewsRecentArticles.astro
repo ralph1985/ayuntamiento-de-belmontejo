@@ -11,19 +11,19 @@ const { posts } = Astro.props;
 ---
 
 <section class="noticias-1144">
-  <div class="cs-container">
-    <div class="cs-content">
-      <div class="cs-content-flex">
-        <span class="cs-topper">Noticias y Artículos</span>
-        <h2 class="cs-title">Directamente desde las Últimas Noticias</h2>
+  <div class="c-container">
+    <div class="c-content">
+      <div class="c-content-flex">
+        <span class="c-topper">Noticias y Artículos</span>
+        <h2 class="c-title">Directamente desde las Últimas Noticias</h2>
       </div>
     </div>
-    <ul class="cs-card-group">
+    <ul class="c-card-group">
       {posts.length === 0 && <h1>No Recent Posts</h1>}
       {
         posts.length >= 1 &&
           posts.map(post => (
-            <li class="cs-item">
+            <li class="c-card">
               <Picture
                 pictureAttributes={{
                   class: 'cs-picture',
@@ -36,14 +36,14 @@ const { posts } = Astro.props;
                 decoding="async"
                 aria-hidden="true"
               />
-              <div class="cs-flex">
-                <span class="cs-date">{formatDate(post.data.date)}</span>
-                <h3 class="cs-h3">{post.data.title}</h3>
-                <p class="cs-item-text">{post.data.description}</p>
-                <a href={post.id} class="cs-link">
+              <div class="c-flex">
+                <span class="c-date">{formatDate(post.data.date)}</span>
+                <h3 class="c-h3">{post.data.title}</h3>
+                <p class="c-card-text">{post.data.description}</p>
+                <a href={post.id} class="c-link">
                   Read More
                   <img
-                    class="cs-arrow"
+                    class="c-arrow"
                     loading="lazy"
                     decoding="async"
                     src="/assets/icons/event-chevron.svg"

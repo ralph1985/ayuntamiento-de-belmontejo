@@ -46,7 +46,7 @@
   }
 
   // Text styles - can be replaced using CodeStitch's "Content Flair" Stitches
-  .cs-topper {
+  .c-topper {
     font-size: var(--topperFontSize);
     font-weight: 700;
     line-height: 1.2em;
@@ -56,7 +56,7 @@
     display: block;
   }
 
-  .cs-title {
+  .c-title {
     font-size: var(--headerFontSize);
     font-weight: 900;
     line-height: 1.2em;
@@ -65,7 +65,7 @@
     position: relative;
   }
 
-  .cs-text {
+  .c-text {
     font-size: var(--bodyFontSize);
     line-height: 1.5em;
     width: 100%;
@@ -74,7 +74,7 @@
   }
 
   // Button - can be replaced using CodeStitch's "Button" Stitches
-  .cs-button-solid {
+  .c-button-solid {
     font-size: (16/16rem);
     font-weight: bold;
     line-height: (50/16em);
@@ -253,12 +253,12 @@
 @media only screen and (min-width: 0rem) {
   body.dark-mode {
     #dark-mode-toggle {
-      .cs-sun {
+      .c-sun {
         opacity: 1;
         transform: translate(-50%, -50%);
       }
 
-      .cs-moon {
+      .c-moon {
         opacity: 0;
         transform: translate(-50%, -150%);
         fill: var(--color-text-white);
@@ -291,7 +291,7 @@
       pointer-events: none;
     }
 
-    .cs-moon {
+    .c-moon {
       z-index: 2;
       // Transition properties
       transition:
@@ -301,7 +301,7 @@
       // fill: yellow; --> uncomment to change the color of the moon if needed
     }
 
-    .cs-sun {
+    .c-sun {
       opacity: 0;
       z-index: 1;
       // Transition property
@@ -334,7 +334,7 @@
     display: none;
   }
 
-  .cs-hide-on-desktop {
+  .c-hide-on-desktop {
     display: block;
   }
 
@@ -367,7 +367,7 @@
     display: block;
   }
 
-  .cs-hide-on-desktop {
+  .c-hide-on-desktop {
     display: none;
   }
 }

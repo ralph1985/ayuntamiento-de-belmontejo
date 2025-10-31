@@ -59,11 +59,7 @@
         "files": 4
       }
     ],
-    "orphanClasses": [
-      "cs-content-flex",
-      "cs-nav",
-      "cs-button-text"
-    ],
+    "orphanClasses": ["cs-content-flex", "cs-nav", "cs-button-text"],
     "filesWithMostClasses": {}
   },
   "classes": [
@@ -163,10 +159,7 @@
       "className": "cs-left",
       "proposed": "c-left",
       "count": 2,
-      "files": [
-        "src/pages/sobre-el-pueblo.astro",
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/sobre-el-pueblo.astro", "src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -370,10 +363,7 @@
       "className": "cs-right",
       "proposed": "c-right",
       "count": 2,
-      "files": [
-        "src/pages/sobre-el-pueblo.astro",
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/sobre-el-pueblo.astro", "src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -768,10 +758,7 @@
       "className": "cs-flex-p",
       "proposed": "c-flex-p",
       "count": 2,
-      "files": [
-        "src/pages/sobre-el-pueblo.astro",
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/sobre-el-pueblo.astro", "src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -810,10 +797,7 @@
       "className": "cs-name",
       "proposed": "c-name",
       "count": 2,
-      "files": [
-        "src/pages/sobre-el-pueblo.astro",
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/sobre-el-pueblo.astro", "src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -857,10 +841,7 @@
       "className": "cs-job",
       "proposed": "c-job",
       "count": 2,
-      "files": [
-        "src/pages/sobre-el-pueblo.astro",
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/sobre-el-pueblo.astro", "src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -904,10 +885,7 @@
       "className": "cs-quote-icon",
       "proposed": "c-quote-icon",
       "count": 2,
-      "files": [
-        "src/pages/sobre-el-pueblo.astro",
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/sobre-el-pueblo.astro", "src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1247,9 +1225,7 @@
       "className": "cs-button-transparent",
       "proposed": "c-button--outline",
       "count": 1,
-      "files": [
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1372,9 +1348,7 @@
       "className": "cs-item-img",
       "proposed": "c-item-img",
       "count": 1,
-      "files": [
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1398,9 +1372,7 @@
       "className": "cs-item-p",
       "proposed": "c-item-p",
       "count": 1,
-      "files": [
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1429,9 +1401,7 @@
       "className": "cs-reviewer",
       "proposed": "c-reviewer",
       "count": 1,
-      "files": [
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1460,9 +1430,7 @@
       "className": "cs-desc",
       "proposed": "c-desc",
       "count": 1,
-      "files": [
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1491,9 +1459,7 @@
       "className": "cs-item-stars",
       "proposed": "c-item-stars",
       "count": 1,
-      "files": [
-        "src/pages/index.astro"
-      ],
+      "files": ["src/pages/index.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1557,9 +1523,7 @@
       "className": "cs-contact",
       "proposed": "c-contact",
       "count": 1,
-      "files": [
-        "src/pages/contacto.astro"
-      ],
+      "files": ["src/pages/contacto.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1578,9 +1542,7 @@
       "className": "cs-form",
       "proposed": "c-form",
       "count": 1,
-      "files": [
-        "src/pages/contacto.astro"
-      ],
+      "files": ["src/pages/contacto.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1599,9 +1561,7 @@
       "className": "cs-label-message",
       "proposed": "c-label-message",
       "count": 1,
-      "files": [
-        "src/pages/contacto.astro"
-      ],
+      "files": ["src/pages/contacto.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1630,9 +1590,7 @@
       "className": "cs-right-section",
       "proposed": "c-right-section",
       "count": 1,
-      "files": [
-        "src/pages/contacto.astro"
-      ],
+      "files": ["src/pages/contacto.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1661,9 +1619,7 @@
       "className": "cs-header",
       "proposed": "c-heading",
       "count": 1,
-      "files": [
-        "src/pages/contacto.astro"
-      ],
+      "files": ["src/pages/contacto.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1739,9 +1695,7 @@
       "className": "cs-block",
       "proposed": "c-block",
       "count": 1,
-      "files": [
-        "src/pages/contacto.astro"
-      ],
+      "files": ["src/pages/contacto.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1770,9 +1724,7 @@
       "className": "cs-bg-picture",
       "proposed": "c-bg-picture",
       "count": 1,
-      "files": [
-        "src/pages/contacto.astro"
-      ],
+      "files": ["src/pages/contacto.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1806,9 +1758,7 @@
       "className": "cs-search-section",
       "proposed": "c-search-section",
       "count": 1,
-      "files": [
-        "src/pages/buscar.astro"
-      ],
+      "files": ["src/pages/buscar.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1822,9 +1772,7 @@
       "className": "cs-search-wrapper",
       "proposed": "c-search-wrapper",
       "count": 1,
-      "files": [
-        "src/pages/buscar.astro"
-      ],
+      "files": ["src/pages/buscar.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1853,9 +1801,7 @@
       "className": "cs-search-tips",
       "proposed": "c-search-tips",
       "count": 1,
-      "files": [
-        "src/pages/buscar.astro"
-      ],
+      "files": ["src/pages/buscar.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1884,9 +1830,7 @@
       "className": "cs-content-flex",
       "proposed": "c-content-flex",
       "count": 1,
-      "files": [
-        "src/layouts/NewsRecentArticles.astro"
-      ],
+      "files": ["src/layouts/NewsRecentArticles.astro"],
       "hasCss": false,
       "cssOccurrences": []
     },
@@ -1894,9 +1838,7 @@
       "className": "cs-flex",
       "proposed": "c-flex",
       "count": 1,
-      "files": [
-        "src/layouts/NewsRecentArticles.astro"
-      ],
+      "files": ["src/layouts/NewsRecentArticles.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1930,9 +1872,7 @@
       "className": "cs-date",
       "proposed": "c-date",
       "count": 1,
-      "files": [
-        "src/layouts/NewsRecentArticles.astro"
-      ],
+      "files": ["src/layouts/NewsRecentArticles.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1978,9 +1918,7 @@
       "className": "cs-arrow",
       "proposed": "c-arrow",
       "count": 1,
-      "files": [
-        "src/layouts/NewsRecentArticles.astro"
-      ],
+      "files": ["src/layouts/NewsRecentArticles.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -1999,9 +1937,7 @@
       "className": "cs-hide-on-desktop",
       "proposed": "c-hide-on-desktop",
       "count": 1,
-      "files": [
-        "src/layouts/NewsPostLayout.astro"
-      ],
+      "files": ["src/layouts/NewsPostLayout.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2015,9 +1951,7 @@
       "className": "cs-navigation",
       "proposed": "c-navigation",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2036,9 +1970,7 @@
       "className": "cs-logo",
       "proposed": "c-logo",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2067,9 +1999,7 @@
       "className": "cs-logo-text",
       "proposed": "c-logo-text",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2093,9 +2023,7 @@
       "className": "cs-nav",
       "proposed": "c-nav",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": false,
       "cssOccurrences": []
     },
@@ -2103,9 +2031,7 @@
       "className": "cs-toggle",
       "proposed": "c-toggle",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2124,9 +2050,7 @@
       "className": "cs-box",
       "proposed": "c-box",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2145,9 +2069,7 @@
       "className": "cs-line",
       "proposed": "c-line",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2166,9 +2088,7 @@
       "className": "cs-line1",
       "proposed": "c-line1",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2187,9 +2107,7 @@
       "className": "cs-line2",
       "proposed": "c-line2",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2208,9 +2126,7 @@
       "className": "cs-line3",
       "proposed": "c-line3",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2229,9 +2145,7 @@
       "className": "cs-ul-wrapper",
       "proposed": "c-ul-wrapper",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2250,9 +2164,7 @@
       "className": "cs-ul",
       "proposed": "c-list",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2276,9 +2188,7 @@
       "className": "cs-drop-icon",
       "proposed": "c-drop-icon",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2292,9 +2202,7 @@
       "className": "cs-drop-ul",
       "proposed": "c-drop-ul",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2313,9 +2221,7 @@
       "className": "cs-drop-li",
       "proposed": "c-drop-li",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2334,9 +2240,7 @@
       "className": "cs-li-link",
       "proposed": "c-li-link",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2355,9 +2259,7 @@
       "className": "cs-drop-link",
       "proposed": "c-drop-link",
       "count": 1,
-      "files": [
-        "src/components/Header.astro"
-      ],
+      "files": ["src/components/Header.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2371,9 +2273,7 @@
       "className": "cs-map-wrapper",
       "proposed": "c-map-wrapper",
       "count": 1,
-      "files": [
-        "src/components/GoogleMap.astro"
-      ],
+      "files": ["src/components/GoogleMap.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2387,9 +2287,7 @@
       "className": "cs-map",
       "proposed": "c-map",
       "count": 1,
-      "files": [
-        "src/components/GoogleMap.astro"
-      ],
+      "files": ["src/components/GoogleMap.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2403,9 +2301,7 @@
       "className": "cs-li",
       "proposed": "c-list__item",
       "count": 1,
-      "files": [
-        "src/components/Footer.astro"
-      ],
+      "files": ["src/components/Footer.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2429,9 +2325,7 @@
       "className": "cs-faq-group",
       "proposed": "c-faq-group",
       "count": 1,
-      "files": [
-        "src/components/FAQ.astro"
-      ],
+      "files": ["src/components/FAQ.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2445,9 +2339,7 @@
       "className": "cs-faq-item",
       "proposed": "c-faq-item",
       "count": 1,
-      "files": [
-        "src/components/FAQ.astro"
-      ],
+      "files": ["src/components/FAQ.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2461,9 +2353,7 @@
       "className": "cs-button",
       "proposed": "c-button",
       "count": 1,
-      "files": [
-        "src/components/FAQ.astro"
-      ],
+      "files": ["src/components/FAQ.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2532,9 +2422,7 @@
       "className": "cs-button-text",
       "proposed": "c-button-text",
       "count": 1,
-      "files": [
-        "src/components/FAQ.astro"
-      ],
+      "files": ["src/components/FAQ.astro"],
       "hasCss": false,
       "cssOccurrences": []
     },
@@ -2542,9 +2430,7 @@
       "className": "cs-moon",
       "proposed": "c-moon",
       "count": 1,
-      "files": [
-        "src/components/DarkModeToggle.astro"
-      ],
+      "files": ["src/components/DarkModeToggle.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2563,9 +2449,7 @@
       "className": "cs-sun",
       "proposed": "c-sun",
       "count": 1,
-      "files": [
-        "src/components/DarkModeToggle.astro"
-      ],
+      "files": ["src/components/DarkModeToggle.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2584,9 +2468,7 @@
       "className": "cs-toc-list",
       "proposed": "c-toc-list",
       "count": 1,
-      "files": [
-        "src/components/TemplateComponents/TableOfContents.astro"
-      ],
+      "files": ["src/components/TemplateComponents/TableOfContents.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {
@@ -2600,9 +2482,7 @@
       "className": "cs-toc-link",
       "proposed": "c-toc-link",
       "count": 1,
-      "files": [
-        "src/components/TemplateComponents/TableOfContents.astro"
-      ],
+      "files": ["src/components/TemplateComponents/TableOfContents.astro"],
       "hasCss": true,
       "cssOccurrences": [
         {

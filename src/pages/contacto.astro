@@ -29,13 +29,13 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!--                Contact Form                  -->
   <!-- ============================================ -->
 
-  <section class="cs-contact">
-    <div class="cs-container">
-      <form class="cs-form" name="Contact Form" method="post">
-        <div class="cs-content">
-          <span class="cs-topper">Contacto</span>
-          <h2 class="cs-title">Ponte en contacto con nosotros</h2>
-          <p class="cs-text">
+  <section class="c-contact">
+    <div class="c-container">
+      <form class="c-form" name="Contact Form" method="post">
+        <div class="c-content">
+          <span class="c-topper">Contacto</span>
+          <h2 class="c-title">Ponte en contacto con nosotros</h2>
+          <p class="c-text">
             El Ayuntamiento de Belmontejo está aquí para atender tus consultas,
             sugerencias y trámites administrativos. No dudes en contactarnos
             para cualquier asunto relacionado con nuestro municipio. Estaremos
@@ -81,7 +81,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
             placeholder="Motivo de la consulta"
           />
         </label>
-        <label class="cs-label-message">
+        <label class="c-label-message">
           Mensaje
           <textarea
             required
@@ -89,25 +89,25 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
             id="message"
             placeholder="Escribe tu mensaje aquí..."></textarea>
         </label>
-        <button class="cs-button-solid" type="submit">Enviar mensaje</button>
+        <button class="c-button-solid" type="submit">Enviar mensaje</button>
       </form>
-      <div class="cs-right-section">
+      <div class="c-right-section">
         <!--Email-->
-        <span class="cs-header">Correo electrónico</span>
-        <a class="cs-link" href={`mailto:${client.email}`}>{client.email}</a>
+        <span class="c-heading">Correo electrónico</span>
+        <a class="c-link" href={`mailto:${client.email}`}>{client.email}</a>
         <!--Phone-->
-        <span class="cs-header">Teléfono</span>
-        <a class="cs-link" href={`tel:${client.phoneForTel}`}
+        <span class="c-heading">Teléfono</span>
+        <a class="c-link" href={`tel:${client.phoneForTel}`}
           >{client.phoneFormatted}</a
         >
         <!--Address-->
-        <span class="cs-header">Dirección</span>
-        <a class="cs-link" href={client.address.mapLink}>
+        <span class="c-heading">Dirección</span>
+        <a class="c-link" href={client.address.mapLink}>
           {client.address.lineOne},
           <br />
           {client.address.lineTwo},
           <br />
-          <span class="cs-block">
+          <span class="c-block">
             {client.address.city}
             {client.address.state}
             {client.address.zip}
@@ -115,7 +115,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
         </a>
 
         <!-- Background Image-->
-        <picture class="cs-bg-picture">
+        <picture class="c-bg-picture">
           <source
             media="(min-width: 601px)"
             srcset="/assets/images/skyscraper.jpg"

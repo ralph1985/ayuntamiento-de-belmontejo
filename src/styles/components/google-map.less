@@ -15,7 +15,7 @@
     padding: var(--sectionPadding);
     background-color: var(--background-sections);
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1280/16rem);
       margin: auto;
@@ -26,7 +26,7 @@
       gap: (48/16rem);
     }
 
-    .cs-content {
+    .c-content {
       text-align: center;
       width: 100%;
       max-width: (630/16rem);
@@ -35,21 +35,21 @@
       align-items: center;
     }
 
-    .cs-topper {
+    .c-topper {
       color: var(--primary);
       margin-bottom: (16/16rem);
     }
 
-    .cs-title {
+    .c-title {
       margin-bottom: (24/16rem);
     }
 
-    .cs-text {
+    .c-text {
       margin-bottom: 0;
       color: var(--bodyTextColor);
     }
 
-    .cs-map-wrapper {
+    .c-map-wrapper {
       width: 100%;
       height: (400/16rem);
       border-radius: (16/16rem);
@@ -58,7 +58,7 @@
       position: relative;
     }
 
-    .cs-map {
+    .c-map {
       width: 100%;
       height: 100%;
       border: none;
@@ -75,11 +75,11 @@
 /* Tablet - 768px */
 .mq-up(@bp-md, {
   .google-map {
-    .cs-container {
+    .c-container {
       gap: (64/16rem);
     }
 
-    .cs-map-wrapper {
+    .c-map-wrapper {
       height: (500/16rem);
     }
   }
@@ -88,20 +88,20 @@
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
   .google-map {
-    .cs-container {
+    .c-container {
       flex-direction: row;
       align-items: flex-start;
       gap: (80/16rem);
     }
 
-    .cs-content {
+    .c-content {
       text-align: left;
       align-items: flex-start;
       max-width: (500/16rem);
       flex: 0 0 auto;
     }
 
-    .cs-map-wrapper {
+    .c-map-wrapper {
       flex: 1;
       height: (400/16rem);
     }
@@ -114,19 +114,19 @@
     .google-map {
       background-color: var(--dark);
 
-      .cs-topper {
+      .c-topper {
         color: var(--primaryLight);
       }
 
-      .cs-title {
+      .c-title {
         color: var(--bodyTextColorWhite);
       }
 
-      .cs-text {
+      .c-text {
         color: var(--bodyTextColorWhite);
       }
 
-      .cs-map {
+      .c-map {
         filter: grayscale(0.5) invert(0.1);
 
         &:hover {

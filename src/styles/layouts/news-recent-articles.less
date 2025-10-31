@@ -12,7 +12,7 @@
     position: relative;
     z-index: 1;
 
-    .cs-container {
+    .c-container {
       width: 100%;
       /* changes to 1280px at tablet */
       max-width: (784/16rem);
@@ -24,7 +24,7 @@
       gap: clamp(3rem, 6vw, 4rem);
     }
 
-    .cs-content {
+    .c-content {
       /* set text align to left if content needs to be left aligned */
       text-align: left;
       width: 100%;
@@ -34,12 +34,12 @@
       align-items: flex-start;
     }
 
-    .cs-title {
+    .c-title {
       /* max width of 18 characters, incldues spaces between words */
       max-width: 20ch;
     }
 
-    .cs-card-group {
+    .c-card-group {
       width: 100%;
       padding: 0;
       margin: 0;
@@ -48,7 +48,7 @@
       gap: (20/16rem);
     }
 
-    .cs-item {
+    .c-card {
       text-align: left;
       list-style: none;
       border-radius: (16/16rem);
@@ -70,7 +70,7 @@
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
         transform: translateY(-4px);
 
-        .cs-picture {
+        .c-picture {
           img {
             opacity: 0.3;
             transform: scale(1.1);
@@ -79,7 +79,7 @@
       }
     }
 
-    .cs-picture {
+    .c-picture {
       width: 100%;
       height: (240/16rem);
       background-color: #1a1a1a;
@@ -104,7 +104,7 @@
       }
     }
 
-    .cs-flex {
+    .c-flex {
       height: 100%;
       padding: (24/16rem);
       /* prevents padding and border from affecting height and width */
@@ -116,7 +116,7 @@
       z-index: 2;
     }
 
-    .cs-date {
+    .c-date {
       font-size: (16/16rem);
       line-height: 1.2em;
       font-weight: 700;
@@ -135,7 +135,7 @@
       z-index: 2;
     }
 
-    .cs-h3 {
+    .c-h3 {
       font-size: (20/16rem);
       text-align: inherit;
       line-height: 1.2em;
@@ -145,7 +145,7 @@
       transition: color 0.3s;
     }
 
-    .cs-item-text {
+    .c-card-text {
       /* 14px - 16px */
       font-size: clamp(0.875rem, 1.5vw, 1rem);
       line-height: 1.5em;
@@ -154,7 +154,7 @@
       color: var(--bodyTextColor);
     }
 
-    .cs-link {
+    .c-link {
       font-size: (16/16rem);
       line-height: 1.2em;
       font-weight: 700;
@@ -166,13 +166,13 @@
       justify-content: center;
 
       &:hover {
-        .cs-arrow {
+        .c-arrow {
           transform: translateX(0.25rem);
         }
       }
     }
 
-    .cs-arrow {
+    .c-arrow {
       width: (20/16rem);
       height: auto;
       transition: transform 0.3s;
@@ -183,22 +183,22 @@
 /* Tablet - 768px */
 .mq-up(@bp-md, {
   #news-1144 {
-    .cs-container {
+    .c-container {
       max-width: (1280/16rem);
     }
 
-    .cs-content {
+    .c-content {
       text-align: left;
       flex-direction: row;
       justify-content: space-between;
       align-items: flex-end;
     }
 
-    .cs-title {
+    .c-title {
       margin: 0;
     }
 
-    .cs-item {
+    .c-card {
       grid-column: span 4;
     }
   }
@@ -222,24 +222,24 @@
         z-index: -1;
       }
 
-      :where(.cs-topper) {
+      :where(.c-topper) {
         color: var(--color-primary-light);
       }
 
-      :where(.cs-title),
-      :where(.cs-text),
-      :where(.cs-h3),
-      :where(.cs-link),
-      :where(.cs-item-text) {
+      :where(.c-title),
+      :where(.c-text),
+      :where(.c-h3),
+      :where(.c-link),
+      :where(.c-card-text) {
         color: var(--color-text-white);
       }
 
-      :where(.cs-text),
-      :where(.cs-item-text) {
+      :where(.c-text),
+      :where(.c-card-text) {
         opacity: 0.8;
       }
 
-      :where(.cs-item) {
+      :where(.c-card) {
         background-color: rgba(0, 0, 0, 0.2);
         border-color: rgba(255, 255, 255, 0.2);
 
@@ -248,16 +248,16 @@
         }
       }
 
-      :where(.cs-picture) {
+      :where(.c-picture) {
         border-color: #fff;
       }
 
-      :where(.cs-date) {
+      :where(.c-date) {
         background-color: #fff;
         color: var(--color-secondary);
       }
 
-      :where(.cs-arrow),
+      :where(.c-arrow),
       :where(.cs-floater) {
         filter: grayscale(1) brightness(1000%);
       }

@@ -1,4 +1,4 @@
-# Análisis de Clases CodeStitch (.cs-*)
+# Análisis de Clases CodeStitch (.cs-\*)
 
 **Fecha de análisis:** 31/10/2025, 17:51:08
 
@@ -6,114 +6,114 @@
 
 ## 📊 Resumen Ejecutivo
 
-| Métrica | Valor |
-|---------|-------|
-| **Total de clases .cs-* únicas** | 76 |
-| **Total de ocurrencias** | 153 |
-| **Archivos Astro analizados** | 37 |
-| **Clases con estilos CSS** | 73 (96.1%) |
-| **Clases sin estilos CSS** | 3 |
-| **Clases con aliases (:where)** | 43 |
+| Métrica                           | Valor      |
+| --------------------------------- | ---------- |
+| **Total de clases .cs-\* únicas** | 76         |
+| **Total de ocurrencias**          | 153        |
+| **Archivos Astro analizados**     | 37         |
+| **Clases con estilos CSS**        | 73 (96.1%) |
+| **Clases sin estilos CSS**        | 3          |
+| **Clases con aliases (:where)**   | 43         |
 
 ---
 
 ## 🔝 Top 10 Clases Más Usadas
 
-| Clase | Ocurrencias | Archivos | Propuesta Migración | CSS |
-|-------|-------------|----------|---------------------|-----|
-| `.cs-container` | 12 | 12 | `.c-container` | ✅ |
-| `.cs-button-solid` | 7 | 7 | `.c-button` | ✅ |
-| `.cs-topper` | 6 | 6 | `.c-topper` | ✅ |
-| `.cs-title` | 6 | 6 | `.c-title` | ✅ |
-| `.cs-picture` | 5 | 5 | `.c-picture` | ✅ |
-| `.cs-picture1` | 5 | 5 | `.c-picture1` | ✅ |
-| `.cs-picture2` | 5 | 5 | `.c-picture2` | ✅ |
-| `.cs-content` | 5 | 5 | `.c-content` | ✅ |
-| `.cs-text` | 4 | 4 | `.c-text` | ✅ |
-| `.cs-image-group` | 4 | 4 | `.c-image-group` | ✅ |
+| Clase              | Ocurrencias | Archivos | Propuesta Migración | CSS |
+| ------------------ | ----------- | -------- | ------------------- | --- |
+| `.cs-container`    | 12          | 12       | `.c-container`      | ✅  |
+| `.cs-button-solid` | 7           | 7        | `.c-button`         | ✅  |
+| `.cs-topper`       | 6           | 6        | `.c-topper`         | ✅  |
+| `.cs-title`        | 6           | 6        | `.c-title`          | ✅  |
+| `.cs-picture`      | 5           | 5        | `.c-picture`        | ✅  |
+| `.cs-picture1`     | 5           | 5        | `.c-picture1`       | ✅  |
+| `.cs-picture2`     | 5           | 5        | `.c-picture2`       | ✅  |
+| `.cs-content`      | 5           | 5        | `.c-content`        | ✅  |
+| `.cs-text`         | 4           | 4        | `.c-text`           | ✅  |
+| `.cs-image-group`  | 4           | 4        | `.c-image-group`    | ✅  |
 
 ---
 
 ## 📋 Todas las Clases (Alfabético)
 
-| Clase | Ocurrencias | Archivos | Propuesta | CSS Directo | CSS Alias |
-|-------|-------------|----------|-----------|-------------|-----------|
-| `.cs-arrow` | 1 | 1 | `.c-arrow` | ✅ | ✅ |
-| `.cs-bg-picture` | 1 | 1 | `.c-bg-picture` | ✅ | ✅ |
-| `.cs-block` | 1 | 1 | `.c-block` | ✅ | ✅ |
-| `.cs-box` | 1 | 1 | `.c-box` | ✅ | ❌ |
-| `.cs-button` | 1 | 1 | `.c-button` | ✅ | ❌ |
-| `.cs-button-solid` | 7 | 7 | `.c-button` | ✅ | ✅ |
-| `.cs-button-text` | 1 | 1 | `.c-button-text` | ❌ | ❌ |
-| `.cs-button-transparent` | 1 | 1 | `.c-button--outline` | ✅ | ✅ |
-| `.cs-card-group` | 2 | 2 | `.c-card-group` | ✅ | ✅ |
-| `.cs-contact` | 1 | 1 | `.c-contact` | ✅ | ❌ |
-| `.cs-container` | 12 | 12 | `.c-container` | ✅ | ✅ |
-| `.cs-content` | 5 | 5 | `.c-content` | ✅ | ❌ |
-| `.cs-content-flex` | 1 | 1 | `.c-content-flex` | ❌ | ❌ |
-| `.cs-date` | 1 | 1 | `.c-date` | ✅ | ✅ |
-| `.cs-desc` | 1 | 1 | `.c-desc` | ✅ | ✅ |
-| `.cs-drop-icon` | 1 | 1 | `.c-drop-icon` | ✅ | ❌ |
-| `.cs-drop-li` | 1 | 1 | `.c-drop-li` | ✅ | ❌ |
-| `.cs-drop-link` | 1 | 1 | `.c-drop-link` | ✅ | ❌ |
-| `.cs-drop-ul` | 1 | 1 | `.c-drop-ul` | ✅ | ❌ |
-| `.cs-faq-group` | 1 | 1 | `.c-faq-group` | ✅ | ❌ |
-| `.cs-faq-item` | 1 | 1 | `.c-faq-item` | ✅ | ❌ |
-| `.cs-flex` | 1 | 1 | `.c-flex` | ✅ | ❌ |
-| `.cs-flex-group` | 3 | 3 | `.c-flex-group` | ✅ | ✅ |
-| `.cs-flex-p` | 2 | 2 | `.c-flex-p` | ✅ | ✅ |
-| `.cs-form` | 1 | 1 | `.c-form` | ✅ | ❌ |
-| `.cs-h3` | 2 | 2 | `.c-h3` | ✅ | ✅ |
-| `.cs-header` | 1 | 1 | `.c-heading` | ✅ | ✅ |
-| `.cs-hide-on-desktop` | 1 | 1 | `.c-hide-on-desktop` | ✅ | ❌ |
-| `.cs-image-group` | 4 | 4 | `.c-image-group` | ✅ | ✅ |
-| `.cs-item` | 2 | 2 | `.c-card` | ✅ | ✅ |
-| `.cs-item-img` | 1 | 1 | `.c-item-img` | ✅ | ✅ |
-| `.cs-item-p` | 1 | 1 | `.c-item-p` | ✅ | ✅ |
-| `.cs-item-stars` | 1 | 1 | `.c-item-stars` | ✅ | ✅ |
-| `.cs-item-text` | 2 | 2 | `.c-item-text` | ✅ | ✅ |
-| `.cs-job` | 2 | 2 | `.c-job` | ✅ | ✅ |
-| `.cs-label-message` | 1 | 1 | `.c-label-message` | ✅ | ✅ |
-| `.cs-left` | 2 | 2 | `.c-left` | ✅ | ✅ |
-| `.cs-li` | 1 | 1 | `.c-list__item` | ✅ | ❌ |
-| `.cs-li-link` | 1 | 1 | `.c-li-link` | ✅ | ❌ |
-| `.cs-line` | 1 | 1 | `.c-line` | ✅ | ❌ |
-| `.cs-line1` | 1 | 1 | `.c-line1` | ✅ | ❌ |
-| `.cs-line2` | 1 | 1 | `.c-line2` | ✅ | ❌ |
-| `.cs-line3` | 1 | 1 | `.c-line3` | ✅ | ❌ |
-| `.cs-link` | 2 | 2 | `.c-link` | ✅ | ✅ |
-| `.cs-logo` | 1 | 1 | `.c-logo` | ✅ | ✅ |
-| `.cs-logo-text` | 1 | 1 | `.c-logo-text` | ✅ | ❌ |
-| `.cs-map` | 1 | 1 | `.c-map` | ✅ | ❌ |
-| `.cs-map-wrapper` | 1 | 1 | `.c-map-wrapper` | ✅ | ❌ |
-| `.cs-moon` | 1 | 1 | `.c-moon` | ✅ | ❌ |
-| `.cs-name` | 2 | 2 | `.c-name` | ✅ | ✅ |
-| `.cs-nav` | 1 | 1 | `.c-nav` | ❌ | ❌ |
-| `.cs-navigation` | 1 | 1 | `.c-navigation` | ✅ | ❌ |
-| `.cs-picture` | 5 | 5 | `.c-picture` | ✅ | ✅ |
-| `.cs-picture1` | 5 | 5 | `.c-picture1` | ✅ | ✅ |
-| `.cs-picture2` | 5 | 5 | `.c-picture2` | ✅ | ✅ |
-| `.cs-picture3` | 4 | 4 | `.c-picture3` | ✅ | ✅ |
-| `.cs-quote-icon` | 2 | 2 | `.c-quote-icon` | ✅ | ✅ |
-| `.cs-reviewer` | 1 | 1 | `.c-reviewer` | ✅ | ✅ |
-| `.cs-right` | 2 | 2 | `.c-right` | ✅ | ✅ |
-| `.cs-right-section` | 1 | 1 | `.c-right-section` | ✅ | ✅ |
-| `.cs-row` | 4 | 4 | `.c-row` | ✅ | ✅ |
-| `.cs-row-1` | 4 | 4 | `.c-row-1` | ✅ | ✅ |
-| `.cs-row-2` | 4 | 4 | `.c-row-2` | ✅ | ✅ |
-| `.cs-row-3` | 4 | 4 | `.c-row-3` | ✅ | ✅ |
-| `.cs-search-section` | 1 | 1 | `.c-search-section` | ✅ | ❌ |
-| `.cs-search-tips` | 1 | 1 | `.c-search-tips` | ✅ | ✅ |
-| `.cs-search-wrapper` | 1 | 1 | `.c-search-wrapper` | ✅ | ✅ |
-| `.cs-sun` | 1 | 1 | `.c-sun` | ✅ | ❌ |
-| `.cs-text` | 4 | 4 | `.c-text` | ✅ | ✅ |
-| `.cs-title` | 6 | 6 | `.c-title` | ✅ | ✅ |
-| `.cs-toc-link` | 1 | 1 | `.c-toc-link` | ✅ | ✅ |
-| `.cs-toc-list` | 1 | 1 | `.c-toc-list` | ✅ | ❌ |
-| `.cs-toggle` | 1 | 1 | `.c-toggle` | ✅ | ❌ |
-| `.cs-topper` | 6 | 6 | `.c-topper` | ✅ | ✅ |
-| `.cs-ul` | 1 | 1 | `.c-list` | ✅ | ❌ |
-| `.cs-ul-wrapper` | 1 | 1 | `.c-ul-wrapper` | ✅ | ❌ |
+| Clase                    | Ocurrencias | Archivos | Propuesta            | CSS Directo | CSS Alias |
+| ------------------------ | ----------- | -------- | -------------------- | ----------- | --------- |
+| `.cs-arrow`              | 1           | 1        | `.c-arrow`           | ✅          | ✅        |
+| `.cs-bg-picture`         | 1           | 1        | `.c-bg-picture`      | ✅          | ✅        |
+| `.cs-block`              | 1           | 1        | `.c-block`           | ✅          | ✅        |
+| `.cs-box`                | 1           | 1        | `.c-box`             | ✅          | ❌        |
+| `.cs-button`             | 1           | 1        | `.c-button`          | ✅          | ❌        |
+| `.cs-button-solid`       | 7           | 7        | `.c-button`          | ✅          | ✅        |
+| `.cs-button-text`        | 1           | 1        | `.c-button-text`     | ❌          | ❌        |
+| `.cs-button-transparent` | 1           | 1        | `.c-button--outline` | ✅          | ✅        |
+| `.cs-card-group`         | 2           | 2        | `.c-card-group`      | ✅          | ✅        |
+| `.cs-contact`            | 1           | 1        | `.c-contact`         | ✅          | ❌        |
+| `.cs-container`          | 12          | 12       | `.c-container`       | ✅          | ✅        |
+| `.cs-content`            | 5           | 5        | `.c-content`         | ✅          | ❌        |
+| `.cs-content-flex`       | 1           | 1        | `.c-content-flex`    | ❌          | ❌        |
+| `.cs-date`               | 1           | 1        | `.c-date`            | ✅          | ✅        |
+| `.cs-desc`               | 1           | 1        | `.c-desc`            | ✅          | ✅        |
+| `.cs-drop-icon`          | 1           | 1        | `.c-drop-icon`       | ✅          | ❌        |
+| `.cs-drop-li`            | 1           | 1        | `.c-drop-li`         | ✅          | ❌        |
+| `.cs-drop-link`          | 1           | 1        | `.c-drop-link`       | ✅          | ❌        |
+| `.cs-drop-ul`            | 1           | 1        | `.c-drop-ul`         | ✅          | ❌        |
+| `.cs-faq-group`          | 1           | 1        | `.c-faq-group`       | ✅          | ❌        |
+| `.cs-faq-item`           | 1           | 1        | `.c-faq-item`        | ✅          | ❌        |
+| `.cs-flex`               | 1           | 1        | `.c-flex`            | ✅          | ❌        |
+| `.cs-flex-group`         | 3           | 3        | `.c-flex-group`      | ✅          | ✅        |
+| `.cs-flex-p`             | 2           | 2        | `.c-flex-p`          | ✅          | ✅        |
+| `.cs-form`               | 1           | 1        | `.c-form`            | ✅          | ❌        |
+| `.cs-h3`                 | 2           | 2        | `.c-h3`              | ✅          | ✅        |
+| `.cs-header`             | 1           | 1        | `.c-heading`         | ✅          | ✅        |
+| `.cs-hide-on-desktop`    | 1           | 1        | `.c-hide-on-desktop` | ✅          | ❌        |
+| `.cs-image-group`        | 4           | 4        | `.c-image-group`     | ✅          | ✅        |
+| `.cs-item`               | 2           | 2        | `.c-card`            | ✅          | ✅        |
+| `.cs-item-img`           | 1           | 1        | `.c-item-img`        | ✅          | ✅        |
+| `.cs-item-p`             | 1           | 1        | `.c-item-p`          | ✅          | ✅        |
+| `.cs-item-stars`         | 1           | 1        | `.c-item-stars`      | ✅          | ✅        |
+| `.cs-item-text`          | 2           | 2        | `.c-item-text`       | ✅          | ✅        |
+| `.cs-job`                | 2           | 2        | `.c-job`             | ✅          | ✅        |
+| `.cs-label-message`      | 1           | 1        | `.c-label-message`   | ✅          | ✅        |
+| `.cs-left`               | 2           | 2        | `.c-left`            | ✅          | ✅        |
+| `.cs-li`                 | 1           | 1        | `.c-list__item`      | ✅          | ❌        |
+| `.cs-li-link`            | 1           | 1        | `.c-li-link`         | ✅          | ❌        |
+| `.cs-line`               | 1           | 1        | `.c-line`            | ✅          | ❌        |
+| `.cs-line1`              | 1           | 1        | `.c-line1`           | ✅          | ❌        |
+| `.cs-line2`              | 1           | 1        | `.c-line2`           | ✅          | ❌        |
+| `.cs-line3`              | 1           | 1        | `.c-line3`           | ✅          | ❌        |
+| `.cs-link`               | 2           | 2        | `.c-link`            | ✅          | ✅        |
+| `.cs-logo`               | 1           | 1        | `.c-logo`            | ✅          | ✅        |
+| `.cs-logo-text`          | 1           | 1        | `.c-logo-text`       | ✅          | ❌        |
+| `.cs-map`                | 1           | 1        | `.c-map`             | ✅          | ❌        |
+| `.cs-map-wrapper`        | 1           | 1        | `.c-map-wrapper`     | ✅          | ❌        |
+| `.cs-moon`               | 1           | 1        | `.c-moon`            | ✅          | ❌        |
+| `.cs-name`               | 2           | 2        | `.c-name`            | ✅          | ✅        |
+| `.cs-nav`                | 1           | 1        | `.c-nav`             | ❌          | ❌        |
+| `.cs-navigation`         | 1           | 1        | `.c-navigation`      | ✅          | ❌        |
+| `.cs-picture`            | 5           | 5        | `.c-picture`         | ✅          | ✅        |
+| `.cs-picture1`           | 5           | 5        | `.c-picture1`        | ✅          | ✅        |
+| `.cs-picture2`           | 5           | 5        | `.c-picture2`        | ✅          | ✅        |
+| `.cs-picture3`           | 4           | 4        | `.c-picture3`        | ✅          | ✅        |
+| `.cs-quote-icon`         | 2           | 2        | `.c-quote-icon`      | ✅          | ✅        |
+| `.cs-reviewer`           | 1           | 1        | `.c-reviewer`        | ✅          | ✅        |
+| `.cs-right`              | 2           | 2        | `.c-right`           | ✅          | ✅        |
+| `.cs-right-section`      | 1           | 1        | `.c-right-section`   | ✅          | ✅        |
+| `.cs-row`                | 4           | 4        | `.c-row`             | ✅          | ✅        |
+| `.cs-row-1`              | 4           | 4        | `.c-row-1`           | ✅          | ✅        |
+| `.cs-row-2`              | 4           | 4        | `.c-row-2`           | ✅          | ✅        |
+| `.cs-row-3`              | 4           | 4        | `.c-row-3`           | ✅          | ✅        |
+| `.cs-search-section`     | 1           | 1        | `.c-search-section`  | ✅          | ❌        |
+| `.cs-search-tips`        | 1           | 1        | `.c-search-tips`     | ✅          | ✅        |
+| `.cs-search-wrapper`     | 1           | 1        | `.c-search-wrapper`  | ✅          | ✅        |
+| `.cs-sun`                | 1           | 1        | `.c-sun`             | ✅          | ❌        |
+| `.cs-text`               | 4           | 4        | `.c-text`            | ✅          | ✅        |
+| `.cs-title`              | 6           | 6        | `.c-title`           | ✅          | ✅        |
+| `.cs-toc-link`           | 1           | 1        | `.c-toc-link`        | ✅          | ✅        |
+| `.cs-toc-list`           | 1           | 1        | `.c-toc-list`        | ✅          | ❌        |
+| `.cs-toggle`             | 1           | 1        | `.c-toggle`          | ✅          | ❌        |
+| `.cs-topper`             | 6           | 6        | `.c-topper`          | ✅          | ✅        |
+| `.cs-ul`                 | 1           | 1        | `.c-list`            | ✅          | ❌        |
+| `.cs-ul-wrapper`         | 1           | 1        | `.c-ul-wrapper`      | ✅          | ❌        |
 
 ---
 
@@ -215,7 +215,6 @@ const CS_TO_C_MAP = {
 ---
 
 ## 📁 Archivos a Modificar
-
 
 ### `src/pages/index.astro` (30 clases)
 

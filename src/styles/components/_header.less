@@ -9,7 +9,7 @@
  */
 
 @media only screen and (min-width: 0em) {
-  .cs-navigation {
+  .c-navigation {
     width: 100%;
     /* prevents padding and border from affecting height and width */
     box-sizing: border-box;
@@ -19,7 +19,7 @@
     position: fixed;
     z-index: 10000;
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1280/16rem);
       margin: auto;
@@ -29,7 +29,7 @@
       gap: (24/16rem);
     }
 
-    .cs-logo {
+    .c-logo {
       width: auto;
       max-width: (350/16rem);
       height: (32/16rem);
@@ -48,12 +48,12 @@
         object-fit: contain;
       }
 
-      .cs-logo-text {
+      .c-logo-text {
         display: none;
       }
     }
 
-    .cs-toggle {
+    .c-toggle {
       width: (56/16rem);
       height: (56/16rem);
       margin: 0 0 0 auto;
@@ -64,32 +64,32 @@
       align-items: center;
     }
 
-    .cs-active {
-      .cs-line1 {
+    .c-active {
+      .c-line1 {
         top: 50%;
         transform: translate(-50%, -50%) rotate(225deg);
       }
 
-      .cs-line2 {
+      .c-line2 {
         top: 50%;
         transform-origin: center;
         transform: translate(-50%, -50%) translateY(0) rotate(-225deg);
       }
 
-      .cs-line3 {
+      .c-line3 {
         bottom: 100%;
         opacity: 0;
       }
     }
 
-    .cs-box {
+    .c-box {
       /* 24px - 28px */
       width: clamp(1.5rem, 2vw, 1.75rem);
       height: (16/16rem);
       position: relative;
     }
 
-    .cs-line {
+    .c-line {
       width: 100%;
       height: 2px;
       border-radius: 2px;
@@ -99,7 +99,7 @@
       transform: translateX(-50%);
     }
 
-    .cs-line1 {
+    .c-line1 {
       top: 0;
       transform-origin: center;
       transition:
@@ -112,7 +112,7 @@
       animation-direction: normal;
     }
 
-    .cs-line2 {
+    .c-line2 {
       top: 50%;
       transform: translateX(-50%) translateY(-50%);
       transition:
@@ -125,14 +125,14 @@
       animation-direction: normal;
     }
 
-    .cs-line3 {
+    .c-line3 {
       bottom: 0;
       transition:
         bottom 0.3s,
         opacity 0.3s;
     }
 
-    .cs-ul-wrapper {
+    .c-list-wrapper {
       width: 100%;
       height: 100vh;
       padding-bottom: (48/16em);
@@ -151,7 +151,7 @@
         opacity 0.3s;
     }
 
-    .cs-ul {
+    .c-list {
       margin: 0;
       padding: (48/16rem) 0 0 0;
       width: 100%;
@@ -165,7 +165,7 @@
       gap: (20/16rem);
     }
 
-    .cs-li {
+    .c-list__item {
       width: 100%;
       text-align: center;
       list-style: none;
@@ -218,7 +218,7 @@
       }
     }
 
-    .cs-li-link {
+    .c-list__item-link {
       /* 16px - 24px */
       font-size: clamp(1rem, 2.5vw, 1.5rem);
       line-height: 1.2em;
@@ -234,7 +234,7 @@
         }
       }
 
-      &.cs-active {
+      &.c-active {
         &:before {
           width: 100%;
         }
@@ -255,7 +255,7 @@
       }
     }
 
-    .cs-button-solid {
+    .c-button-solid {
       display: none;
     }
   }
@@ -263,15 +263,15 @@
 
 /* Tablet - 768px */
 .mq-up(@bp-md, {
-  .cs-navigation {
-    .cs-toggle {
+  .c-navigation {
+    .c-toggle {
       display: none;
     }
 
-    .cs-logo {
+    .c-logo {
       height: (60/16rem);
       max-width: 30%;
-      .cs-logo-text {
+      .c-logo-text {
         display: inline;
         margin-left: (10/16rem);
         font-size: (16/16rem);
@@ -280,7 +280,7 @@
       }
     }
 
-    .cs-ul-wrapper {
+    .c-list-wrapper {
       width: auto;
       max-width: 100%;
       height: auto;
@@ -296,7 +296,7 @@
       transition: none;
     }
 
-    .cs-ul {
+    .c-list {
       width: 100%;
       max-width: none;
       margin: 0;
@@ -308,21 +308,21 @@
       align-items: center;
     }
 
-    .cs-li {
+    .c-list__item {
       width: auto;
       transform: none;
       opacity: 1;
       transition: none;
     }
 
-    .cs-li-link {
+    .c-list__item-link {
       /* 14px - 16px */
       font-size: clamp(0.875rem, 1vw, 1rem);
       &:before {
         display: none;
       }
       &:hover,
-      &.cs-active {
+      &.c-active {
         opacity: 1;
         &:before {
           width: 100%;
@@ -330,7 +330,7 @@
       }
     }
 
-    .cs-button-solid {
+    .c-button-solid {
       display: block;
     }
   }
@@ -338,8 +338,8 @@
 
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
-  .cs-navigation {
-    .cs-ul {
+  .c-navigation {
+    .c-list {
       /* 20px - 52px */
       gap: clamp(1.25rem, 4vw, 3.25rem);
     }
@@ -348,17 +348,17 @@
 
 /* Large Desktop - 1300px */
 @media (min-width: 81.25em) {
-  .cs-navigation {
-    .cs-container {
+  .c-navigation {
+    .c-container {
       max-width: (1920/16rem);
       gap: (52/16rem);
     }
 
-    .cs-ul {
+    .c-list {
       padding: 0 (48/16rem);
     }
 
-    .cs-li:last-of-type {
+    .c-list__item:last-of-type {
       /* margin-left auto will push that specific list item to the right of the flexbox as far as it can go. Only works in flexbox */
       margin-left: auto;
     }
@@ -369,7 +369,7 @@
 /* El header ahora usa var(--header-bg), var(--header-text) y var(--nav-menu-bg) que cambian automáticamente */
 /* El filtro del logo se mantiene por ahora para asegurar visibilidad */
 :root[data-theme="dark"] {
-  .cs-navigation :where(.cs-logo) {
+  .c-navigation :where(.c-logo) {
     /* Hace el logo blanco en modo oscuro */
     filter: grayscale(1) brightness(1000%);
   }

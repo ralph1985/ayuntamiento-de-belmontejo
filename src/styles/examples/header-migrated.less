@@ -110,8 +110,8 @@ body {
  * ANTES:
  * @media only screen and (min-width: 48rem) and (max-width: 63.9375rem) {
  *   #cs-navigation {
- *     .cs-logo {
- *       .cs-logo-text {
+ *     .c-logo {
+ *       .c-logo-text {
  *         display: block;
  *       }
  *     }
@@ -122,8 +122,8 @@ body {
  */
 
 #cs-navigation {
-  .cs-logo {
-    .cs-logo-text {
+  .c-logo {
+    .c-logo-text {
       display: none; // Base (mobile)
 
       // Tablet only - usando mixin between
@@ -181,13 +181,13 @@ body {
       &.cs-active {
         cursor: pointer;
 
-        .cs-drop-ul {
+        .c-drop-ul {
           opacity: 1;
           visibility: visible;
           transform: scaleY(1);
         }
 
-        .cs-drop-li {
+        .c-drop-li {
           opacity: 1;
           transform: rotateX(0);
         }

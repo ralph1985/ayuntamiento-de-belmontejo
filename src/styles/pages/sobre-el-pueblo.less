@@ -16,7 +16,7 @@
   .sbs {
     padding: var(--sectionPadding);
 
-    .cs-container {
+    .c-container {
       width: 100%;
       max-width: (1280/16rem);
       margin: auto;
@@ -27,7 +27,7 @@
       row-gap: (40/16rem);
     }
 
-    .cs-left {
+    .c-left {
       /* scaling the font size with the view width */
       font-size: ~"min(2.31vw, .7em)";
       /* using ems so we can use font size to scale the whole section */
@@ -36,7 +36,7 @@
       position: relative;
     }
 
-    .cs-picture {
+    .c-picture {
       border-radius: (24/16em);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       transition: box-shadow 0.3s ease;
@@ -60,14 +60,14 @@
       }
     }
 
-    .cs-picture1 {
+    .c-picture1 {
       width: (522/16em);
       height: (581/16em);
       top: 0;
       left: 0;
     }
 
-    .cs-picture2 {
+    .c-picture2 {
       width: (414/16em);
       height: (400/16em);
       background-color: var(--background-main);
@@ -78,22 +78,22 @@
       bottom: 0;
     }
 
-    .cs-right {
+    .c-right {
       max-width: (542/16rem);
       margin: auto;
     }
 
-    .cs-topper {
+    .c-topper {
       text-align: left;
       margin-bottom: (4/16rem);
     }
 
-    .cs-title {
+    .c-title {
       text-align: left;
       max-width: (800/16rem);
     }
 
-    .cs-h3 {
+    .c-h3 {
       /* 20px - 25px */
       font-size: clamp(1.25rem, 2.5vw, 1.5625rem);
       font-weight: 700;
@@ -103,7 +103,7 @@
       color: var(--headerColor);
     }
 
-    .cs-text {
+    .c-text {
       text-align: left;
       max-width: (750/16rem);
       margin-bottom: (16/16rem);
@@ -114,7 +114,7 @@
       }
     }
 
-    .cs-flex-group {
+    .c-flex-group {
       /* 16px - 32px */
       padding: clamp(1rem, 3vw, 2rem);
       background-color: var(--background-sections);
@@ -122,7 +122,7 @@
       position: relative;
     }
 
-    .cs-flex-p {
+    .c-flex-p {
       /* 14px - 16px */
       font-size: clamp(0.875rem, 1.5vw, 1rem);
       line-height: 1.5em;
@@ -130,7 +130,7 @@
       color: var(--text-secondary);
     }
 
-    .cs-name {
+    .c-name {
       font-size: (16/16rem);
       font-weight: bold;
       line-height: 1.2em;
@@ -140,14 +140,14 @@
       display: block;
     }
 
-    .cs-job {
+    .c-job {
       font-size: (14/16rem);
       line-height: 1.5em;
       color: var(--text-secondary);
       display: block;
     }
 
-    .cs-quote-icon {
+    .c-quote-icon {
       /* 60px - 136px */
       width: clamp(3.75rem, 10vw, 8.5rem);
       height: auto;
@@ -157,7 +157,7 @@
       bottom: (0/16rem);
     }
 
-    .cs-button-solid {
+    .c-button-solid {
       margin-top: (32/16rem);
     }
   }
@@ -166,18 +166,18 @@
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
   .sbs {
-    .cs-container {
+    .c-container {
       flex-flow: row;
       justify-content: space-between;
       gap: (52/16rem);
     }
 
-    .cs-left {
+    .c-left {
       font-size: ~"min(1.2vw, 1em)";
       flex: none;
     }
 
-    .cs-right {
+    .c-right {
       margin: 0;
     }
   }
@@ -186,41 +186,41 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    .sbs :where(.cs-left) {
+    .sbs :where(.c-left) {
       &:before,
       &:after {
         background: var(--accent);
       }
     }
 
-    .sbs :where(.cs-picture2) {
+    .sbs :where(.c-picture2) {
       background-color: var(--dark);
       /* 6px - 12px */
       border: clamp(0.375em, 1.5vw, 0.75em) solid var(--dark);
     }
 
-    .sbs :where(.cs-topper) {
+    .sbs :where(.c-topper) {
       color: var(--primaryLight);
     }
 
-    .sbs :where(.cs-title),
-    .sbs :where(.cs-text),
-    .sbs :where(.cs-h3),
-    .sbs :where(.cs-flex-p),
-    .sbs :where(.cs-name) {
+    .sbs :where(.c-title),
+    .sbs :where(.c-text),
+    .sbs :where(.c-h3),
+    .sbs :where(.c-flex-p),
+    .sbs :where(.c-name) {
       color: var(--bodyTextColorWhite);
     }
 
-    .sbs :where(.cs-flex-group) {
+    .sbs :where(.c-flex-group) {
       background-color: var(--accent);
     }
 
-    .sbs :where(.cs-job) {
+    .sbs :where(.c-job) {
       color: var(--bodyTextColorWhite);
       opacity: 0.8;
     }
 
-    .sbs :where(.cs-quote-icon) {
+    .sbs :where(.c-quote-icon) {
       opacity: 0.2;
     }
   }

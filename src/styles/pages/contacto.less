@@ -24,33 +24,33 @@
     --sectionPadding: clamp(3.75em, 7.82vw, 6.25em) 1rem;
   }
 
-  .cs-contact {
+  .c-contact {
     font-family: "Roboto", "Arial", sans-serif;
     padding: var(--sectionPadding);
 
-    .cs-container {
+    .c-container {
       width: 100%;
       /* changes to 1280px at desktop */
       max-width: (800/16rem);
       margin: auto;
     }
 
-    .cs-content {
+    .c-content {
       width: 100%;
     }
 
-    .cs-topper {
+    .c-topper {
       text-align: left;
       /* 8px - 12px */
       margin-bottom: clamp(0.5rem, 1.4vw, 0.75rem);
     }
 
-    .cs-title {
+    .c-title {
       text-align: left;
       max-width: (800/16rem);
     }
 
-    .cs-text {
+    .c-text {
       text-align: left;
       /* 404px - 522px */
       max-width: clamp(25.25rem, 30vw, 32.625rem);
@@ -59,7 +59,7 @@
       margin-bottom: clamp(2.5rem, 6.3vw, 3rem);
     }
 
-    .cs-form {
+    .c-form {
       margin-bottom: (40/16rem);
       background: white;
       border-radius: (12/16rem);
@@ -84,7 +84,7 @@
         align-items: flex-start;
       }
 
-      .cs-label-message {
+      .c-label-message {
         /* 32px - 48px */
         margin-bottom: clamp(2rem, 6.3vw, 3rem);
       }
@@ -113,13 +113,13 @@
         padding-top: (20/16rem);
       }
 
-      .cs-button-solid {
+      .c-button-solid {
         width: 100%;
         border: none;
       }
     }
 
-    .cs-right-section {
+    .c-right-section {
       height: (320/16rem);
       /* 24px - 40px top & bottom */
       /* 20px - 40px left & right */
@@ -140,7 +140,7 @@
       }
     }
 
-    .cs-header {
+    .c-heading {
       /* 16px - 20px */
       font-size: clamp(1rem, 3vw, 1.25rem);
       font-weight: 700;
@@ -150,7 +150,7 @@
       display: block;
     }
 
-    .cs-link {
+    .c-link {
       /* 16px - 20px */
       font-size: clamp(1rem, 3vw, 1.25rem);
       line-height: 1.2em;
@@ -186,12 +186,12 @@
       }
     }
 
-    .cs-block {
+    .c-block {
       /* sends second address line to the bottom on its own line */
       display: block;
     }
 
-    .cs-bg-picture {
+    .c-bg-picture {
       width: 100%;
       height: 100%;
       display: block;
@@ -233,8 +233,8 @@
 
 /* Tablet - 700px */
 .mq-up(@bp-tablet-sm, {
-  .cs-contact {
-    .cs-form {
+  .c-contact {
+    .c-form {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -244,7 +244,7 @@
         width: 48%;
       }
 
-      .cs-label-message {
+      .c-label-message {
         width: 100%;
       }
     }
@@ -253,8 +253,8 @@
 
 /* Small Desktop - 1024px */
 .mq-up(@bp-lg, {
-  .cs-contact {
-    .cs-container {
+  .c-contact {
+    .c-container {
       max-width: (1280/16rem);
       display: flex;
       justify-content: flex-end;
@@ -262,14 +262,14 @@
       gap: (80/16rem);
     }
 
-    .cs-form {
+    .c-form {
       max-width: (630/16rem);
       label {
         width: 100%;
       }
     }
 
-    .cs-right-section {
+    .c-right-section {
       width: 40%;
       max-width: (542/16rem);
       /* changes to 578px at 1300px wide */
@@ -278,13 +278,13 @@
       flex: none;
 
       &:hover {
-        .cs-bg-picture {
+        .c-bg-picture {
           transform: scale(1.1);
         }
       }
     }
 
-    .cs-block {
+    .c-block {
       /* goes back to inline so it stays "in line" with the rest of the text */
       display: inline-block;
     }
@@ -293,20 +293,20 @@
 
 /* Desktop XL - 1300px */
 .mq-up(@bp-desktop-xl, {
-  .cs-contact {
-    .cs-form {
+  .c-contact {
+    .c-form {
       column-gap: (0/16rem);
       label {
         width: 48%;
         max-width: (305/16rem);
       }
 
-      .cs-label-message {
+      .c-label-message {
         max-width: 100%;
       }
     }
 
-    .cs-right-section {
+    .c-right-section {
       height: (578/16rem);
     }
   }
@@ -315,16 +315,16 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    .cs-contact :where(.cs-text),
-    .cs-contact :where(.cs-title) {
+    .c-contact :where(.c-text),
+    .c-contact :where(.c-title) {
       color: var(--bodyTextColorWhite);
     }
 
-    .cs-contact :where(.cs-topper) {
+    .c-contact :where(.c-topper) {
       color: var(--primaryLight);
     }
 
-    .cs-contact :where(#cs-form) {
+    .c-contact :where(#cs-form) {
       label,
       input,
       textarea {
@@ -338,7 +338,7 @@
       }
     }
 
-    .cs-contact :where(.cs-bg-picture) {
+    .c-contact :where(.c-bg-picture) {
       background-color: #000;
 
       img {

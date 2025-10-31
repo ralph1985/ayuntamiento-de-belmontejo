@@ -21,31 +21,31 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!-- ============================================ -->
 
   <section class="hero">
-    <div class="cs-container">
-      <div class="cs-flex-group">
-        <span class="cs-topper">Bienvenidos a Belmontejo</span>
-        <h1 class="cs-title">Belmontejo, esencia de la Mancha conquense</h1>
-        <p class="cs-text">
+    <div class="c-container">
+      <div class="c-flex-group">
+        <span class="c-topper">Bienvenidos a Belmontejo</span>
+        <h1 class="c-title">Belmontejo, esencia de la Mancha conquense</h1>
+        <p class="c-text">
           Entre los campos dorados de Cuenca se alza Belmontejo, un pequeño
           municipio lleno de historia, tradición y vida rural. Con sus calles
           tranquilas, sus fuentes y la iglesia de Nuestra Señora de la Asunción
           dominando el horizonte, el pueblo conserva intacta la autenticidad
           manchega que ha perdurado durante siglos.
         </p>
-        <p class="cs-text">
+        <p class="c-text">
           Belmontejo invita a disfrutar del silencio, del paisaje y de la
           hospitalidad de su gente. Es un lugar donde el tiempo parece
           detenerse, donde las raíces siguen vivas y donde cada rincón cuenta
           una historia.
         </p>
-        <a href="/sobre-el-pueblo" class="cs-button-solid">Descubre más</a>
-        <a href="/contacto" class="cs-button-transparent"> Contactar </a>
+        <a href="/sobre-el-pueblo" class="c-button-solid">Descubre más</a>
+        <a href="/contacto" class="c-button-transparent"> Contactar </a>
       </div>
     </div>
 
     <!-- Background Image -->
     <!-- We can't use Astro <Picture /> as it does not support multiple sources -->
-    <picture class="cs-picture">
+    <picture class="c-picture">
       <source
         media="(max-width: 600px)"
         srcset="/assets/images/vista_aerea.webp"
@@ -129,10 +129,10 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!-- ============================================ -->
 
   <section class="sbs">
-    <div class="cs-container">
+    <div class="c-container">
       <!-- Left Image Section -->
-      <div class="cs-left">
-        <picture class="cs-picture cs-picture1">
+      <div class="c-left">
+        <picture class="c-picture c-picture1">
           <source
             media="(max-width: 600px)"
             srcset="/assets/images/imagen-de-prueba-2-m.jpg"
@@ -151,7 +151,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
             height="563"
           />
         </picture>
-        <picture class="cs-picture cs-picture2">
+        <picture class="c-picture c-picture2">
           <source
             media="(max-width: 600px)"
             srcset="/assets/images/imagen-de-prueba-4-m.jpg"
@@ -172,27 +172,27 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
         </picture>
       </div>
       <!-- Right Content Section-->
-      <div class="cs-right">
-        <span class="cs-topper">Nuestro Pueblo</span>
-        <h2 class="cs-title">Un refugio de calma y belleza</h2>
-        <p class="cs-text">
+      <div class="c-right">
+        <span class="c-topper">Nuestro Pueblo</span>
+        <h2 class="c-title">Un refugio de calma y belleza</h2>
+        <p class="c-text">
           Aquí, en el corazón de la Manchuela conquense, el visitante encuentra
           un refugio de calma y de belleza sencilla: caminos para pasear, campos
           que cambian de color con las estaciones y un patrimonio que refleja el
           carácter de la tierra.
         </p>
-        <p class="cs-text">
+        <p class="c-text">
           Belmontejo te da la bienvenida. Un pueblo pequeño, con alma grande.
         </p>
-        <div class="cs-flex-group">
-          <p class="cs-flex-p">
+        <div class="c-flex-group">
+          <p class="c-flex-p">
             "En Belmontejo, el tiempo parece detenerse, donde las raíces siguen
             vivas y donde cada rincón cuenta una historia."
           </p>
-          <span class="cs-name">Municipio de Belmontejo</span>
-          <span class="cs-job">Cuenca, Castilla-La Mancha</span>
+          <span class="c-name">Municipio de Belmontejo</span>
+          <span class="c-job">Cuenca, Castilla-La Mancha</span>
           <img
-            class="cs-quote-icon"
+            class="c-quote-icon"
             loading="lazy"
             decoding="async"
             src="/assets/images/graphics/quote-white.svg"
@@ -201,7 +201,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
             height="77"
           />
         </div>
-        <a href="/sobre-el-pueblo" class="cs-button-solid"
+        <a href="/sobre-el-pueblo" class="c-button-solid"
           >Conoce más sobre nosotros</a
         >
       </div>
@@ -213,10 +213,10 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!-- ============================================ -->
 
   <section class="sbs-r">
-    <div class="cs-container">
+    <div class="c-container">
       <!-- Left Image Section -->
-      <div class="cs-left">
-        <picture class="cs-picture cs-picture1">
+      <div class="c-left">
+        <picture class="c-picture c-picture1">
           <source
             media="(max-width: 600px)"
             srcset="/assets/images/imagen-de-prueba-4-m.jpg"
@@ -235,7 +235,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
             height="560"
           />
         </picture>
-        <picture class="cs-picture cs-picture2">
+        <picture class="c-picture c-picture2">
           <source
             media="(max-width: 600px)"
             srcset="/assets/images/imagen-de-prueba-2-m.jpg"
@@ -256,16 +256,16 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
         </picture>
       </div>
       <!-- Right Content Section-->
-      <div class="cs-right">
-        <span class="cs-topper">Nuestros Rincones</span>
-        <h2 class="cs-title">Iglesia de Nuestra Señora de la Asunción</h2>
-        <p class="cs-text">
+      <div class="c-right">
+        <span class="c-topper">Nuestros Rincones</span>
+        <h2 class="c-title">Iglesia de Nuestra Señora de la Asunción</h2>
+        <p class="c-text">
           Ubicada en el punto más alto del núcleo urbano, la iglesia parroquial
           es un elemento arquitectónico relevante que domina el paisaje de
           Belmontejo. Sus torres se alzan como guardianes silenciosos de la
           historia y las tradiciones del pueblo.
         </p>
-        <p class="cs-text">
+        <p class="c-text">
           Las fuentes del pueblo, conocidas como "fuente de arriba" y "fuente de
           abajo", forman parte del patrimonio hidráulico tradicional y del
           paisaje urbano local. Desde el centro del pueblo, las calles salen en
@@ -281,14 +281,14 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!-- ============================================ -->
 
   <section class="gallery">
-    <div class="cs-container">
-      <span class="cs-topper">Nuestros Paisajes</span>
-      <h2 class="cs-title">Los campos y rincones de Belmontejo</h2>
-      <div class="cs-image-group">
+    <div class="c-container">
+      <span class="c-topper">Nuestros Paisajes</span>
+      <h2 class="c-title">Los campos y rincones de Belmontejo</h2>
+      <div class="c-image-group">
         <!-- Row 1-->
-        <div class="cs-row cs-row-1">
+        <div class="cs-row c-row-1">
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
-          <picture class="cs-picture cs-picture1">
+          <picture class="c-picture c-picture1">
             <source
               media="(max-width: 600px)"
               srcset="/assets/images/portfolio/port1-m.jpg"
@@ -307,7 +307,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
               height="560"
             />
           </picture>
-          <picture class="cs-picture cs-picture2">
+          <picture class="c-picture c-picture2">
             <source
               media="(max-width: 600px)"
               srcset="/assets/images/portfolio/port4-m.jpg"
@@ -326,7 +326,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
               height="560"
             />
           </picture>
-          <picture class="cs-picture cs-picture3">
+          <picture class="c-picture c-picture3">
             <source
               media="(max-width: 600px)"
               srcset="/assets/images/portfolio/port7-m.jpg"
@@ -347,9 +347,9 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
           </picture>
         </div>
         <!-- Row 2 -->
-        <div class="cs-row cs-row-2">
+        <div class="cs-row c-row-2">
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
-          <picture class="cs-picture cs-picture1">
+          <picture class="c-picture c-picture1">
             <source
               media="(max-width: 600px)"
               srcset="/assets/images/portfolio/port2-m.jpg"
@@ -368,7 +368,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
               height="560"
             />
           </picture>
-          <picture class="cs-picture cs-picture2">
+          <picture class="c-picture c-picture2">
             <source
               media="(max-width: 600px)"
               srcset="/assets/images/portfolio/port5-m.jpg"
@@ -387,7 +387,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
               height="560"
             />
           </picture>
-          <picture class="cs-picture cs-picture3">
+          <picture class="c-picture c-picture3">
             <source
               media="(max-width: 600px)"
               srcset="/assets/images/portfolio/port8-m.jpg"
@@ -408,9 +408,9 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
           </picture>
         </div>
         <!-- Row 3 -->
-        <div class="cs-row cs-row-3">
+        <div class="cs-row c-row-3">
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
-          <picture class="cs-picture cs-picture1">
+          <picture class="c-picture c-picture1">
             <source
               media="(max-width: 600px)"
               srcset="/assets/images/portfolio/port3-m.jpg"
@@ -429,7 +429,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
               height="560"
             />
           </picture>
-          <picture class="cs-picture cs-picture2">
+          <picture class="c-picture c-picture2">
             <source
               media="(max-width: 600px)"
               srcset="/assets/images/portfolio/port6-m.jpg"
@@ -448,7 +448,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
               height="560"
             />
           </picture>
-          <picture class="cs-picture cs-picture3">
+          <picture class="c-picture c-picture3">
             <source
               media="(max-width: 600px)"
               srcset="/assets/images/portfolio/port9-m.jpg"
@@ -469,7 +469,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
           </picture>
         </div>
       </div>
-      <a href="/projects" class="cs-button-solid">View all projects</a>
+      <a href="/projects" class="c-button-solid">View all projects</a>
     </div>
   </section>
 
@@ -483,20 +483,20 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!-- ============================================ -->
 
   <section class="reviews">
-    <div class="cs-container">
-      <span class="cs-topper">Testimonios</span>
-      <h2 class="cs-title">Lo que dicen de Belmontejo</h2>
-      <p class="cs-text">
+    <div class="c-container">
+      <span class="c-topper">Testimonios</span>
+      <h2 class="c-title">Lo que dicen de Belmontejo</h2>
+      <p class="c-text">
         Las voces de quienes han visitado nuestro pueblo y de quienes forman
         parte de nuestra comunidad. Belmontejo deja huella en todos los que
         descubren la calidez de la vida rural manchega y la belleza de los
         paisajes que nos rodean.
       </p>
-      <ul class="cs-card-group">
+      <ul class="c-card-group">
         <!-- Review 1 -->
-        <li class="cs-item">
+        <li class="c-card">
           <img
-            class="cs-item-img"
+            class="c-card-img"
             aria-hidden="true"
             loading="lazy"
             decoding="async"
@@ -505,18 +505,18 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
             width="80"
             height="80"
           />
-          <p class="cs-item-p">
+          <p class="c-card-p">
             Belmontejo es un remanso de paz en medio de la Mancha. Sus calles
             tranquilas y la hospitalidad de su gente hacen que uno se sienta
             como en casa. Es el lugar perfecto para desconectar y disfrutar de
             la autenticidad rural.
           </p>
-          <span class="cs-reviewer">
+          <span class="c-reviewer">
             María García
-            <span class="cs-desc">Visitante</span>
+            <span class="c-desc">Visitante</span>
           </span>
           <img
-            class="cs-item-stars"
+            class="c-card-stars"
             aria-hidden="true"
             loading="lazy"
             decoding="async"
@@ -527,9 +527,9 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
           />
         </li>
         <!-- Review 2 -->
-        <li class="cs-item">
+        <li class="c-card">
           <img
-            class="cs-item-img"
+            class="c-card-img"
             aria-hidden="true"
             loading="lazy"
             decoding="async"
@@ -538,17 +538,17 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
             width="80"
             height="80"
           />
-          <p class="cs-item-p">
+          <p class="c-card-p">
             Aquí el tiempo se detiene y uno puede apreciar la belleza sencilla
             de la vida rural. Los paisajes, las tradiciones y el patrimonio de
             Belmontejo crean una experiencia única que nunca se olvida.
           </p>
-          <span class="cs-reviewer">
+          <span class="c-reviewer">
             Antonio Ruiz
-            <span class="cs-desc">Vecino</span>
+            <span class="c-desc">Vecino</span>
           </span>
           <img
-            class="cs-item-stars"
+            class="c-card-stars"
             aria-hidden="true"
             loading="lazy"
             decoding="async"
@@ -562,7 +562,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
       <a
         aria-label="read more reviews"
         href="/testimonios"
-        class="cs-button-solid">Más testimonios</a
+        class="c-button-solid">Más testimonios</a
       >
     </div>
   </section>
@@ -572,11 +572,11 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!-- ============================================ -->
 
   <section class="featured-content">
-    <div class="cs-container">
-      <div class="cs-content">
-        <span class="cs-topper">Lo más relevante</span>
-        <h2 class="cs-title">Contenido Destacado</h2>
-        <p class="cs-text">
+    <div class="c-container">
+      <div class="c-content">
+        <span class="c-topper">Lo más relevante</span>
+        <h2 class="c-title">Contenido Destacado</h2>
+        <p class="c-text">
           Mantente al día con las noticias más importantes y los bandos
           oficiales de nuestro municipio.
         </p>
@@ -592,11 +592,11 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!-- ============================================ -->
 
   <section class="social-media-section">
-    <div class="cs-container">
-      <div class="cs-content">
-        <span class="cs-topper">Conecta con nosotros</span>
-        <h2 class="cs-title">Síguenos en Redes Sociales</h2>
-        <p class="cs-text">
+    <div class="c-container">
+      <div class="c-content">
+        <span class="c-topper">Conecta con nosotros</span>
+        <h2 class="c-title">Síguenos en Redes Sociales</h2>
+        <p class="c-text">
           Mantente informado de todas las novedades, eventos y noticias de
           nuestro municipio. Síguenos en nuestras redes sociales para estar al
           día.
