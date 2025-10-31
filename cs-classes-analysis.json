@@ -1,0 +1,2621 @@
+{
+  "timestamp": "2025-10-31T16:51:08.216Z",
+  "stats": {
+    "totalClasses": 76,
+    "totalOccurrences": 153,
+    "totalFiles": 37,
+    "classesWithCss": 73,
+    "classesWithoutCss": 3,
+    "classesWithAliases": 43,
+    "topClasses": [
+      {
+        "className": "cs-container",
+        "count": 12,
+        "files": 12
+      },
+      {
+        "className": "cs-button-solid",
+        "count": 7,
+        "files": 7
+      },
+      {
+        "className": "cs-topper",
+        "count": 6,
+        "files": 6
+      },
+      {
+        "className": "cs-title",
+        "count": 6,
+        "files": 6
+      },
+      {
+        "className": "cs-picture",
+        "count": 5,
+        "files": 5
+      },
+      {
+        "className": "cs-picture1",
+        "count": 5,
+        "files": 5
+      },
+      {
+        "className": "cs-picture2",
+        "count": 5,
+        "files": 5
+      },
+      {
+        "className": "cs-content",
+        "count": 5,
+        "files": 5
+      },
+      {
+        "className": "cs-text",
+        "count": 4,
+        "files": 4
+      },
+      {
+        "className": "cs-image-group",
+        "count": 4,
+        "files": 4
+      }
+    ],
+    "orphanClasses": [
+      "cs-content-flex",
+      "cs-nav",
+      "cs-button-text"
+    ],
+    "filesWithMostClasses": {}
+  },
+  "classes": [
+    {
+      "className": "cs-container",
+      "proposed": "c-container",
+      "count": 12,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/contacto.astro",
+        "src/pages/buscar.astro",
+        "src/layouts/NewsRecentArticles.astro",
+        "src/components/Header.astro",
+        "src/components/GoogleMap.astro",
+        "src/components/FAQ.astro",
+        "src/components/CTA.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 10,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/buscar.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/examples/footer-migrated.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/header.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/google-map.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-left",
+      "proposed": "c-left",
+      "count": 2,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 6,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-picture",
+      "proposed": "c-picture",
+      "count": 5,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-picture1",
+      "proposed": "c-picture1",
+      "count": 5,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 5,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-picture2",
+      "proposed": "c-picture2",
+      "count": 5,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 7,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-right",
+      "proposed": "c-right",
+      "count": 2,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-topper",
+      "proposed": "c-topper",
+      "count": 6,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro",
+        "src/pages/contacto.astro",
+        "src/layouts/NewsRecentArticles.astro",
+        "src/components/GoogleMap.astro",
+        "src/components/FAQ.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/root.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 8,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/google-map.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-title",
+      "proposed": "c-title",
+      "count": 6,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro",
+        "src/pages/contacto.astro",
+        "src/layouts/NewsRecentArticles.astro",
+        "src/components/GoogleMap.astro",
+        "src/components/FAQ.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/root.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 10,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 4,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/google-map.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-text",
+      "proposed": "c-text",
+      "count": 4,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro",
+        "src/pages/contacto.astro",
+        "src/components/GoogleMap.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/root.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 8,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 3,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/google-map.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-h3",
+      "proposed": "c-h3",
+      "count": 2,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/layouts/NewsRecentArticles.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-flex-group",
+      "proposed": "c-flex-group",
+      "count": 3,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro",
+        "src/components/FAQ.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 5,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-flex-p",
+      "proposed": "c-flex-p",
+      "count": 2,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-name",
+      "proposed": "c-name",
+      "count": 2,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-job",
+      "proposed": "c-job",
+      "count": 2,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-quote-icon",
+      "proposed": "c-quote-icon",
+      "count": 2,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-button-solid",
+      "proposed": "c-button",
+      "count": 7,
+      "files": [
+        "src/pages/sobre-el-pueblo.astro",
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/contacto.astro",
+        "src/components/CTA.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/root.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/MIGRATION_EXAMPLES.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/header.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/footer.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_footer.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-image-group",
+      "proposed": "c-image-group",
+      "count": 4,
+      "files": [
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-row",
+      "proposed": "c-row",
+      "count": 4,
+      "files": [
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-row-1",
+      "proposed": "c-row-1",
+      "count": 4,
+      "files": [
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-picture3",
+      "proposed": "c-picture3",
+      "count": 4,
+      "files": [
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-row-2",
+      "proposed": "c-row-2",
+      "count": 4,
+      "files": [
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-row-3",
+      "proposed": "c-row-3",
+      "count": 4,
+      "files": [
+        "src/pages/proyectos.astro",
+        "src/pages/index.astro",
+        "src/pages/proyectos/proyecto-2.astro",
+        "src/pages/proyectos/proyecto-1.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/proyectos.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-button-transparent",
+      "proposed": "c-button--outline",
+      "count": 1,
+      "files": [
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-card-group",
+      "proposed": "c-card-group",
+      "count": 2,
+      "files": [
+        "src/pages/index.astro",
+        "src/layouts/NewsRecentArticles.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-item",
+      "proposed": "c-card",
+      "count": 2,
+      "files": [
+        "src/pages/index.astro",
+        "src/layouts/NewsRecentArticles.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/dark.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 7,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 6,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-item-img",
+      "proposed": "c-item-img",
+      "count": 1,
+      "files": [
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-item-p",
+      "proposed": "c-item-p",
+      "count": 1,
+      "files": [
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-reviewer",
+      "proposed": "c-reviewer",
+      "count": 1,
+      "files": [
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-desc",
+      "proposed": "c-desc",
+      "count": 1,
+      "files": [
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-item-stars",
+      "proposed": "c-item-stars",
+      "count": 1,
+      "files": [
+        "src/pages/index.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-content",
+      "proposed": "c-content",
+      "count": 5,
+      "files": [
+        "src/pages/index.astro",
+        "src/pages/contacto.astro",
+        "src/layouts/NewsRecentArticles.astro",
+        "src/components/GoogleMap.astro",
+        "src/components/FAQ.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/google-map.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-contact",
+      "proposed": "c-contact",
+      "count": 1,
+      "files": [
+        "src/pages/contacto.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 9,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-form",
+      "proposed": "c-form",
+      "count": 1,
+      "files": [
+        "src/pages/contacto.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-label-message",
+      "proposed": "c-label-message",
+      "count": 1,
+      "files": [
+        "src/pages/contacto.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-right-section",
+      "proposed": "c-right-section",
+      "count": 1,
+      "files": [
+        "src/pages/contacto.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-header",
+      "proposed": "c-heading",
+      "count": 1,
+      "files": [
+        "src/pages/contacto.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-link",
+      "proposed": "c-link",
+      "count": 2,
+      "files": [
+        "src/pages/contacto.astro",
+        "src/layouts/NewsRecentArticles.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/examples/footer-migrated.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-block",
+      "proposed": "c-block",
+      "count": 1,
+      "files": [
+        "src/pages/contacto.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-bg-picture",
+      "proposed": "c-bg-picture",
+      "count": 1,
+      "files": [
+        "src/pages/contacto.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-search-section",
+      "proposed": "c-search-section",
+      "count": 1,
+      "files": [
+        "src/pages/buscar.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/buscar.less",
+          "count": 3,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-search-wrapper",
+      "proposed": "c-search-wrapper",
+      "count": 1,
+      "files": [
+        "src/pages/buscar.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/buscar.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-search-tips",
+      "proposed": "c-search-tips",
+      "count": 1,
+      "files": [
+        "src/pages/buscar.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/buscar.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 1,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-content-flex",
+      "proposed": "c-content-flex",
+      "count": 1,
+      "files": [
+        "src/layouts/NewsRecentArticles.astro"
+      ],
+      "hasCss": false,
+      "cssOccurrences": []
+    },
+    {
+      "className": "cs-flex",
+      "proposed": "c-flex",
+      "count": 1,
+      "files": [
+        "src/layouts/NewsRecentArticles.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 9,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-date",
+      "proposed": "c-date",
+      "count": 1,
+      "files": [
+        "src/layouts/NewsRecentArticles.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-item-text",
+      "proposed": "c-item-text",
+      "count": 2,
+      "files": [
+        "src/layouts/NewsRecentArticles.astro",
+        "src/components/FAQ.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 2,
+          "type": "alias"
+        },
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 4,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-arrow",
+      "proposed": "c-arrow",
+      "count": 1,
+      "files": [
+        "src/layouts/NewsRecentArticles.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/layouts/news-recent-articles.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-hide-on-desktop",
+      "proposed": "c-hide-on-desktop",
+      "count": 1,
+      "files": [
+        "src/layouts/NewsPostLayout.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/root.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-navigation",
+      "proposed": "c-navigation",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 8,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 5,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-logo",
+      "proposed": "c-logo",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/examples/header-migrated.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/header.less",
+          "count": 10,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 5,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    },
+    {
+      "className": "cs-logo-text",
+      "proposed": "c-logo-text",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/examples/header-migrated.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/header.less",
+          "count": 5,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-nav",
+      "proposed": "c-nav",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": false,
+      "cssOccurrences": []
+    },
+    {
+      "className": "cs-toggle",
+      "proposed": "c-toggle",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-box",
+      "proposed": "c-box",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-line",
+      "proposed": "c-line",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-line1",
+      "proposed": "c-line1",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-line2",
+      "proposed": "c-line2",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-line3",
+      "proposed": "c-line3",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-ul-wrapper",
+      "proposed": "c-ul-wrapper",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 3,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-ul",
+      "proposed": "c-list",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/examples/footer-migrated.less",
+          "count": 5,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/header.less",
+          "count": 5,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 6,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-drop-icon",
+      "proposed": "c-drop-icon",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 5,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-drop-ul",
+      "proposed": "c-drop-ul",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/examples/header-migrated.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/header.less",
+          "count": 5,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-drop-li",
+      "proposed": "c-drop-li",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/examples/header-migrated.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/header.less",
+          "count": 3,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-li-link",
+      "proposed": "c-li-link",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 8,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-drop-link",
+      "proposed": "c-drop-link",
+      "count": 1,
+      "files": [
+        "src/components/Header.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/header.less",
+          "count": 4,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-map-wrapper",
+      "proposed": "c-map-wrapper",
+      "count": 1,
+      "files": [
+        "src/components/GoogleMap.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/google-map.less",
+          "count": 3,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-map",
+      "proposed": "c-map",
+      "count": 1,
+      "files": [
+        "src/components/GoogleMap.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/google-map.less",
+          "count": 5,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-li",
+      "proposed": "c-list__item",
+      "count": 1,
+      "files": [
+        "src/components/Footer.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/examples/footer-migrated.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/header.less",
+          "count": 11,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 5,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-faq-group",
+      "proposed": "c-faq-group",
+      "count": 1,
+      "files": [
+        "src/components/FAQ.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-faq-item",
+      "proposed": "c-faq-item",
+      "count": 1,
+      "files": [
+        "src/components/FAQ.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-button",
+      "proposed": "c-button",
+      "count": 1,
+      "files": [
+        "src/components/FAQ.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/root.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/MIGRATION_EXAMPLES.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/sobre-el-pueblo.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/index.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/pages/contacto.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/legacy/_id-aliases.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/header.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/footer.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/faq.less",
+          "count": 4,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_header.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_footer.less",
+          "count": 1,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_cs-base.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-button-text",
+      "proposed": "c-button-text",
+      "count": 1,
+      "files": [
+        "src/components/FAQ.astro"
+      ],
+      "hasCss": false,
+      "cssOccurrences": []
+    },
+    {
+      "className": "cs-moon",
+      "proposed": "c-moon",
+      "count": 1,
+      "files": [
+        "src/components/DarkModeToggle.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/root.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_dark-mode-toggle.less",
+          "count": 3,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-sun",
+      "proposed": "c-sun",
+      "count": 1,
+      "files": [
+        "src/components/DarkModeToggle.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/root.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/_dark-mode-toggle.less",
+          "count": 2,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-toc-list",
+      "proposed": "c-toc-list",
+      "count": 1,
+      "files": [
+        "src/components/TemplateComponents/TableOfContents.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/table-of-contents.less",
+          "count": 1,
+          "type": "direct"
+        }
+      ]
+    },
+    {
+      "className": "cs-toc-link",
+      "proposed": "c-toc-link",
+      "count": 1,
+      "files": [
+        "src/components/TemplateComponents/TableOfContents.astro"
+      ],
+      "hasCss": true,
+      "cssOccurrences": [
+        {
+          "file": "src/styles/components/table-of-contents.less",
+          "count": 2,
+          "type": "direct"
+        },
+        {
+          "file": "src/styles/components/table-of-contents.less",
+          "count": 1,
+          "type": "alias"
+        }
+      ]
+    }
+  ]
+}
