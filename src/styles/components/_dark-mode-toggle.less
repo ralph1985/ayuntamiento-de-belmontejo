@@ -1,0 +1,93 @@
+/*-- -------------------------- -->
+<---  Dark Mode Toggle Component -->
+<--- -------------------------- -*/
+
+/**
+ * Migrated from #dark-mode-toggle to .dark-mode-toggle
+ * Uses lower specificity class selector
+ * Temporary alias maintained in legacy layer
+ * JS hook migrated to data-js="dark-mode-toggle"
+ */
+
+@media only screen and (min-width: 0em) {
+  .dark-mode-toggle {
+    width: (48/16rem);
+    height: (48/16rem);
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    display: block;
+    order: 2;
+    position: relative;
+    z-index: 1000;
+    overflow: hidden;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    img,
+    svg {
+      width: (20/16rem);
+      height: (20/16rem);
+      position: absolute;
+      top: (14/16rem);
+      right: (14/16rem);
+      pointer-events: none;
+    }
+
+    .cs-moon {
+      z-index: 2;
+      // Transition from light to dark
+      transition:
+        transform 0.3s,
+        opacity 0.3s;
+      fill: var(--primary);
+
+      // dark mode moon is a sun
+      transform: rotate(-14deg);
+    }
+
+    .cs-sun {
+      z-index: 1;
+      // Transition from dark to light
+      transition:
+        transform 0.3s,
+        opacity 0.3s;
+      opacity: 0;
+      transform: translate(-50%, 100%);
+    }
+  }
+}
+
+/* Desktop - 1024px */
+@media only screen and (min-width: 64em) {
+  .dark-mode-toggle {
+    margin: 0;
+    position: relative;
+
+    &:hover {
+      .cs-moon {
+        transform: rotate(-14deg) scale(1.1);
+      }
+    }
+  }
+}
+
+/* Dark Mode */
+@media only screen and (min-width: 0em) {
+  body.dark-mode {
+    .dark-mode-toggle {
+      .cs-moon {
+        opacity: 0;
+        transform: rotate(0deg) translate(-50%, -50%);
+      }
+
+      .cs-sun {
+        opacity: 1;
+        transform: translate(0, 0);
+      }
+    }
+  }
+}
