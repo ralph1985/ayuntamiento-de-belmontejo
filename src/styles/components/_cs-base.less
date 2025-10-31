@@ -1,0 +1,882 @@
+/*-- -------------------------- -->
+<---    CS Base Components      -->
+<--- -------------------------- -*/
+
+/**
+ * Componentes base extraídos del sistema CodeStitch
+ * 
+ * Estos componentes reutilizables están unificados aquí para evitar duplicación.
+ * Migrados desde root.less y archivos de páginas individuales.
+ * 
+ * Nomenclatura BEM ligera:
+ * - .c-{block}              → Componente base
+ * - .c-{block}--{modifier}  → Variante del componente
+ * - .c-{block}__{element}   → Elemento hijo del componente
+ * 
+ * Todos los valores usan tokens de diseño (variables CSS y LESS).
+ * 
+ * Ver: CS_COMPONENTS_INVENTORY.md para inventario completo
+ */
+
+/* =============================================================================
+   COMPONENTES DE TIPOGRAFÍA
+   ============================================================================= */
+
+/**
+ * Topper - Texto pequeño encima de títulos principales
+ * Migrado desde: root.less (.cs-topper)
+ * Usado en: index.less, sobre-el-pueblo.less, contacto.less
+ */
+@media only screen and (min-width: 0em) {
+  .c-topper {
+    /* 13px - 16px */
+    font-size: var(--font-size-topper, var(--topperFontSize));
+    font-weight: var(--font-weight-bold, 700);
+    line-height: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-secondary, var(--secondary));
+    display: block;
+  }
+}
+
+/**
+ * Title - Títulos principales de sección
+ * Migrado desde: root.less (.cs-title)
+ * Usado en: index.less, sobre-el-pueblo.less, contacto.less
+ */
+@media only screen and (min-width: 0em) {
+  .c-title {
+    /* 31px - 49px */
+    font-size: var(--font-size-heading-1, var(--headerFontSize));
+    font-weight: var(--font-weight-black, 900);
+    line-height: 1.2em;
+    margin: 0 auto (16/16rem);
+    color: var(--color-text-primary, var(--headerColor));
+    position: relative;
+  }
+
+  /* Modificador para títulos más grandes */
+  .c-title--large {
+    /* 39px - 61px */
+    font-size: clamp(2.4375rem, 4.5vw, 3.8125rem);
+  }
+
+  /* Modificador para títulos más pequeños */
+  .c-title--small {
+    /* 24px - 32px */
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: var(--font-weight-bold, 700);
+  }
+}
+
+/**
+ * Text - Texto de párrafo estándar
+ * Migrado desde: root.less (.cs-text)
+ * Usado en: index.less, sobre-el-pueblo.less
+ */
+@media only screen and (min-width: 0em) {
+  .c-text {
+    font-size: var(--font-size-body, var(--bodyFontSize));
+    line-height: 1.5em;
+    width: 100%;
+    margin: 0 auto;
+    color: var(--color-text-secondary, var(--bodyTextColor));
+  }
+
+  /* Modificador para texto lead (destacado) */
+  .c-text--lead {
+    font-size: (18/16rem);
+    line-height: 1.6em;
+    font-weight: var(--font-weight-medium, 500);
+  }
+}
+
+/**
+ * Heading 3 - Subtítulos de tercer nivel
+ * Migrado desde: sobre-el-pueblo.less (.cs-h3)
+ */
+@media only screen and (min-width: 0em) {
+  .c-heading-3 {
+    /* 20px - 25px */
+    font-size: clamp(1.25rem, 2.5vw, 1.5625rem);
+    font-weight: var(--font-weight-bold, 700);
+    line-height: 1.2em;
+    margin: (32/16rem) 0 (16/16rem) 0;
+    color: var(--color-text-primary, var(--headerColor));
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE BOTONES
+   ============================================================================= */
+
+/**
+ * Button - Botón primario sólido
+ * Migrado desde: root.less (.cs-button-solid)
+ * Usado en: index.less, sobre-el-pueblo.less, contacto.less
+ */
+@media only screen and (min-width: 0em) {
+  .c-button {
+    font-size: (16/16rem);
+    font-weight: bold;
+    line-height: (50/16em);
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    width: auto;
+    height: (50/16rem);
+    padding: 0 (30/16rem);
+
+    /* Colores desde tokens */
+    color: var(--color-text-white, var(--text-white));
+    background-color: var(--color-primary, var(--primary));
+
+    /* Layout */
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+
+    /* Transiciones */
+    transition: color 0.3s;
+    transition-delay: 0.1s;
+
+    &:hover {
+      color: var(--color-text-white, var(--text-white));
+
+      &:before {
+        width: 100%;
+      }
+    }
+
+    /* Efecto hover - barra deslizante */
+    &:before {
+      content: "";
+      width: 0;
+      height: 100%;
+      background-color: var(--color-accent, var(--accent));
+      opacity: 1;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      transition: width 0.3s;
+    }
+  }
+
+  /**
+   * Button Outline - Botón con borde transparente
+   * Migrado desde: index.less (.cs-button-transparent)
+   */
+  .c-button--outline {
+    font-size: (16/16rem);
+    font-weight: var(--font-weight-bold, 700);
+    /* 46px - 56px */
+    line-height: clamp(2.875em, 5.5vw, 3.5em);
+    text-decoration: none;
+    width: (180/16rem);
+    height: clamp(2.875em, 5.5vw, 3.5em);
+    margin: 0 (8/16rem);
+    padding: 0;
+    box-sizing: border-box;
+
+    /* Colores desde tokens */
+    color: var(--color-text-white, var(--bodyTextColorWhite));
+    background-color: transparent;
+    border: 1px solid var(--color-text-white, var(--bodyTextColorWhite));
+
+    /* Layout */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+
+    &:before {
+      content: "";
+      background: var(--color-bg-dark, #000);
+      opacity: 1;
+      display: block;
+      position: absolute;
+      /* Sits on top of border */
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: -1;
+      /* Grow effect on hover */
+      transform: scaleX(0);
+      transition: transform 0.3s;
+      transform-origin: left;
+    }
+
+    &:hover {
+      &:before {
+        transform: scaleX(1);
+      }
+    }
+
+    .c-button__icon {
+      margin-right: (12/16rem);
+      display: block;
+    }
+  }
+
+  /**
+   * Button Large - Botón de tamaño grande
+   */
+  .c-button--large {
+    height: (60/16rem);
+    line-height: (60/16em);
+    padding: 0 (48/16rem);
+    font-size: (18/16rem);
+  }
+
+  /**
+   * Button Small - Botón de tamaño pequeño
+   */
+  .c-button--small {
+    height: (40/16rem);
+    line-height: (40/16em);
+    padding: 0 (24/16rem);
+    font-size: (14/16rem);
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE LAYOUT
+   ============================================================================= */
+
+/**
+ * Container - Contenedor principal con max-width
+ * Migrado desde: múltiples archivos (.cs-container)
+ */
+@media only screen and (min-width: 0em) {
+  .c-container {
+    width: 100%;
+    max-width: var(--max-width-container, (1280/16rem));
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 16px - 20px */
+    gap: clamp(1rem, 2.5vw, 1.25rem);
+  }
+}
+
+/**
+ * Split Layout - Layout de dos columnas
+ * Migrado desde: index.less, sobre-el-pueblo.less (.cs-left, .cs-right)
+ */
+@media only screen and (min-width: 0em) {
+  .c-split {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .c-split__left,
+  .c-split__right {
+    width: 100%;
+  }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48em) {
+  .c-split {
+    flex-direction: row;
+    align-items: center;
+
+    &--reverse {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .c-split__left,
+  .c-split__right {
+    width: 50%;
+  }
+}
+
+/**
+ * Flex Group - Grupo de elementos flexbox
+ * Migrado desde: index.less, sobre-el-pueblo.less (.cs-flex-group)
+ */
+@media only screen and (min-width: 0em) {
+  .c-flex-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: (8/16rem);
+  }
+
+  .c-flex-text {
+    font-size: (16/16rem);
+    line-height: 1.5em;
+    margin: 0;
+    color: var(--color-text-secondary, var(--bodyTextColor));
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE MEDIA
+   ============================================================================= */
+
+/**
+ * Picture - Contenedor de imagen responsive
+ * Migrado desde: index.less, sobre-el-pueblo.less, proyectos.less (.cs-picture)
+ */
+@media only screen and (min-width: 0em) {
+  .c-picture {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    /* Modificador con bordes redondeados */
+    &--rounded {
+      border-radius: var(--border-radius-medium, (12/16rem));
+    }
+
+    /* Modificador con sombra */
+    &--shadow {
+      box-shadow: var(--shadow-medium, 0 4px 20px rgba(0, 0, 0, 0.1));
+    }
+
+    /* Modificador con efecto hover */
+    &--hover {
+      transition:
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+
+      &:hover {
+        box-shadow: var(--shadow-strong, 0 8px 30px rgba(0, 0, 0, 0.15));
+        transform: translateY(-4px);
+      }
+    }
+  }
+
+  .c-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+/**
+ * Image Group - Grupo de imágenes
+ * Migrado desde: proyectos.less (.cs-image-group)
+ */
+@media only screen and (min-width: 0em) {
+  .c-image-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: (30/16em);
+  }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48em) {
+  .c-image-group {
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE CONTENIDO
+   ============================================================================= */
+
+/**
+ * Name - Nombre de persona (testimonios, equipo, etc.)
+ * Migrado desde: index.less, sobre-el-pueblo.less (.cs-name)
+ */
+@media only screen and (min-width: 0em) {
+  .c-name {
+    font-size: (20/16rem);
+    font-weight: var(--font-weight-bold, 700);
+    line-height: 1.2em;
+    margin: 0 0 (4/16rem) 0;
+    color: var(--color-text-primary, var(--headerColor));
+  }
+}
+
+/**
+ * Job Title - Título de trabajo/cargo
+ * Migrado desde: index.less, sobre-el-pueblo.less (.cs-job)
+ */
+@media only screen and (min-width: 0em) {
+  .c-job-title {
+    font-size: (14/16rem);
+    line-height: 1.5em;
+    font-weight: var(--font-weight-regular, 400);
+    margin: 0;
+    color: var(--color-text-secondary, var(--bodyTextColor));
+    opacity: 0.8;
+  }
+}
+
+/**
+ * Quote Icon - Icono de cita
+ * Migrado desde: index.less, sobre-el-pueblo.less (.cs-quote-icon)
+ */
+@media only screen and (min-width: 0em) {
+  .c-quote-icon {
+    width: (40/16rem);
+    height: auto;
+    display: block;
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE FORMULARIO
+   ============================================================================= */
+
+/**
+ * Label Message - Label especial para campos de mensaje en formularios
+ * Migrado desde: contacto.less (.cs-label-message)
+ */
+@media only screen and (min-width: 0em) {
+  .c-label--message {
+    /* 32px - 48px */
+    margin-bottom: clamp(2rem, 6.3vw, 3rem);
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE SECCIÓN Y BACKGROUND
+   ============================================================================= */
+
+/**
+ * Background Picture - Imagen de fondo posicionada absolutamente
+ * Migrado desde: contacto.less (.cs-bg-picture)
+ */
+@media only screen and (min-width: 0em) {
+  .c-bg-picture {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: transform 0.6s;
+
+    &:before {
+      /* background color overlay */
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.8) 100%
+      );
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      /* Makes img tag act as a background image */
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+/**
+ * Contact Section - Sección de información de contacto con background
+ * Migrado desde: contacto.less (.cs-right-section)
+ */
+@media only screen and (min-width: 0em) {
+  .c-contact-section {
+    height: (320/16rem);
+    /* 24px - 40px top & bottom */
+    /* 20px - 40px left & right */
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem);
+    border-radius: (8/16rem);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    position: relative;
+    /* cuts off corners on img tag */
+    overflow: hidden;
+
+    &:hover {
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
+/**
+ * Section Header - Encabezado de sección
+ * Migrado desde: contacto.less (.cs-header)
+ */
+@media only screen and (min-width: 0em) {
+  .c-section__header {
+    /* 16px - 20px */
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    font-weight: var(--font-weight-bold, 700);
+    line-height: 1.2em;
+    margin-bottom: (8/16rem);
+    color: var(--color-text-white, var(--bodyTextColorWhite));
+    display: block;
+  }
+}
+
+/**
+ * Link - Enlaces con animación de subrayado
+ * Migrado desde: contacto.less (.cs-link)
+ */
+@media only screen and (min-width: 0em) {
+  .c-link {
+    /* 16px - 20px */
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    line-height: 1.2em;
+    text-decoration: none;
+    margin-bottom: (20/16rem);
+    color: var(--color-text-white, var(--bodyTextColorWhite));
+    display: block;
+    position: relative;
+
+    &:before {
+      /* Animated underline */
+      content: "";
+      width: 0%;
+      height: 2px;
+      /* current color of the parent */
+      background: currentColor;
+      opacity: 1;
+      display: block;
+      position: absolute;
+      bottom: (-2/16rem);
+      left: 0;
+      transition: width 0.3s;
+    }
+
+    &:hover {
+      &:before {
+        width: 100%;
+      }
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/**
+ * Block - Elemento de bloque genérico
+ * Migrado desde: contacto.less (.cs-block)
+ */
+@media only screen and (min-width: 0em) {
+  .c-block {
+    /* sends second address line to the bottom on its own line */
+    display: block;
+  }
+}
+
+/**
+ * Background - Fondo genérico
+ * Migrado desde: index.less (.cs-background)
+ */
+@media only screen and (min-width: 0em) {
+  .c-background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE GALLERY/GRID
+   ============================================================================= */
+
+/**
+ * Gallery Row - Contenedor de fila de galería
+ * Migrado desde: proyectos.less, index.less (.cs-row)
+ */
+@media only screen and (min-width: 0em) {
+  .c-gallery__row {
+    display: flex;
+    flex-direction: column;
+    gap: (16/16rem);
+    width: 100%;
+  }
+
+  /* Modificadores para filas específicas */
+  .c-gallery__row--1 {
+    /* Estilos específicos para la primera fila */
+  }
+
+  .c-gallery__row--2 {
+    /* Estilos específicos para la segunda fila */
+  }
+
+  .c-gallery__row--3 {
+    /* Estilos específicos para la tercera fila */
+  }
+}
+
+/**
+ * Gallery Picture - Imágenes dentro de galerías
+ * Migrado desde: proyectos.less, index.less (.cs-picture1, .cs-picture2, .cs-picture3)
+ */
+@media only screen and (min-width: 0em) {
+  .c-gallery__picture {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md, (8/16rem));
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  /* Modificadores para pictures específicas */
+  .c-gallery__picture--1 {
+    /* Estilos específicos para la primera picture */
+  }
+
+  .c-gallery__picture--2 {
+    /* Estilos específicos para la segunda picture */
+  }
+
+  .c-gallery__picture--3 {
+    /* Estilos específicos para la tercera picture */
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE REVIEWS/TESTIMONIOS
+   ============================================================================= */
+
+/**
+ * Review Cards - Contenedor de tarjetas de reseñas
+ * Migrado desde: index.less (.cs-card-group)
+ */
+@media only screen and (min-width: 0em) {
+  .c-review-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 3vw, 2rem);
+    width: 100%;
+  }
+}
+
+/**
+ * Review Card - Tarjeta individual de reseña/testimonio
+ * Migrado desde: index.less (.cs-item)
+ */
+@media only screen and (min-width: 0em) {
+  .c-review-card {
+    background: var(--color-bg-white, #fff);
+    border-radius: var(--radius-md, (8/16rem));
+    padding: clamp(1.5rem, 3vw, 2rem);
+    box-shadow: var(--shadow-card, 0 4px 20px rgba(0, 0, 0, 0.1));
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: (16/16rem);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .c-review-card__img {
+    width: 100%;
+    height: auto;
+    max-width: (80/16rem);
+    border-radius: 50%;
+    margin-bottom: (12/16rem);
+  }
+
+  .c-review-card__text {
+    font-size: var(--font-size-body, 1rem);
+    line-height: 1.6;
+    color: var(--color-text, var(--bodyTextColor));
+    margin: 0 0 (16/16rem) 0;
+  }
+
+  .c-review-card__author {
+    font-weight: var(--font-weight-bold, 700);
+    font-size: (16/16rem);
+    line-height: 1.2;
+    color: var(--color-text-dark, var(--headerColor));
+    margin: 0 0 (4/16rem) 0;
+  }
+
+  .c-review-card__desc {
+    font-size: var(--font-size-sm, 0.875rem);
+    line-height: 1.5;
+    color: var(--color-text-light, #575757);
+    margin: 0;
+  }
+
+  .c-review-card__stars {
+    display: flex;
+    gap: (4/16rem);
+    align-items: center;
+    margin-top: auto;
+
+    img {
+      width: auto;
+      height: (15/16rem);
+    }
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE BÚSQUEDA
+   ============================================================================= */
+
+/**
+ * Search Wrapper - Contenedor del buscador
+ * Migrado desde: buscar.less (.cs-search-wrapper)
+ */
+@media only screen and (min-width: 0em) {
+  .c-search__wrapper {
+    max-width: (600/16rem);
+    margin: 0 auto;
+    padding: var(--spacing-md, 1rem);
+  }
+}
+
+/**
+ * Search Tips - Tips/ayuda del buscador
+ * Migrado desde: buscar.less (.cs-search-tips)
+ */
+@media only screen and (min-width: 0em) {
+  .c-search__tips {
+    font-size: var(--font-size-sm, 0.875rem);
+    line-height: 1.5;
+    color: var(--color-text-light, #666);
+    margin-top: var(--spacing-sm, 0.5rem);
+    padding: (12/16rem);
+    background: var(--color-bg-light, #f5f5f5);
+    border-radius: var(--radius-sm, (4/16rem));
+  }
+}
+
+/* =============================================================================
+   COMPONENTES DE DARK MODE (específicos)
+   ============================================================================= */
+
+/* Dark Mode Styles */
+@media only screen and (min-width: 0em) {
+  body.dark-mode {
+    .c-topper {
+      color: var(--color-secondary-light, var(--secondaryLight));
+    }
+
+    .c-title,
+    .c-heading-3 {
+      color: var(--color-text-dark-primary, var(--text-white));
+    }
+
+    .c-text,
+    .c-flex-text {
+      color: var(--color-text-dark-secondary, var(--bodyTextColorWhite));
+      opacity: 0.9;
+    }
+
+    .c-name {
+      color: var(--color-text-dark-primary, var(--text-white));
+    }
+
+    .c-job-title {
+      color: var(--color-text-dark-secondary, var(--bodyTextColorWhite));
+    }
+
+    /* Nuevos componentes de sección y background */
+    .c-bg-picture {
+      background-color: #000;
+
+      img {
+        /* lets parent background-color bleed through and darken it */
+        opacity: 0.5;
+      }
+    }
+
+    .c-contact-section {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .c-section__header,
+    .c-link {
+      color: var(--color-text-white, var(--bodyTextColorWhite));
+    }
+
+    /* Componentes de reviews */
+    .c-review-card {
+      background: var(--color-bg-dark, #1a1a1a);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .c-review-card__text {
+      color: var(--color-text-dark-secondary, var(--bodyTextColorWhite));
+    }
+
+    .c-review-card__author {
+      color: var(--color-text-dark-primary, var(--text-white));
+    }
+
+    .c-review-card__desc {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Componentes de búsqueda */
+    .c-search__tips {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--color-text-dark-secondary, var(--bodyTextColorWhite));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+}

@@ -116,3 +116,213 @@
  * Status: Pendiente análisis
  * TODO: Determinar si necesitan migración o pueden mantener ID por accesibilidad
  */
+
+/* =============================================================================
+   ALIASES DE COMPONENTES .cs-* → .c-* (CodeStitch Base Components)
+   ============================================================================= */
+
+/**
+ * Aliases temporales para componentes CodeStitch migrados a nomenclatura BEM
+ * 
+ * Estrategia:
+ * - Los estilos reales están en @layer components (_cs-base.less)
+ * - Estos selectores mantienen compatibilidad durante la transición
+ * - Usan :where() para especificidad 0 (no interfieren con nuevos componentes)
+ * - Se eliminarán en Fase 5 tras migración completa del HTML
+ * 
+ * Estado actual: HTML usa dual class (ej: class="cs-topper c-topper")
+ * Estado futuro: HTML solo usará nueva clase (ej: class="c-topper")
+ * 
+ * Ver: CS_COMPONENTS_INVENTORY.md para lista completa
+ */
+
+/* Typography Components */
+:where(.cs-topper) {
+  /* Alias → .c-topper (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-title) {
+  /* Alias → .c-title (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-text) {
+  /* Alias → .c-text (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-h3) {
+  /* Alias → .c-heading-3 (especificidad: 0,0,0,0) */
+}
+
+/* Button Components */
+:where(.cs-button-solid) {
+  /* Alias → .c-button (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-button-transparent) {
+  /* Alias → .c-button--outline (especificidad: 0,0,0,0) */
+}
+
+/* Layout Components */
+:where(.cs-container) {
+  /* Alias → .c-container (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-left) {
+  /* Alias → .c-split__left (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-right) {
+  /* Alias → .c-split__right (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-flex-group) {
+  /* Alias → .c-flex-group (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-flex-p) {
+  /* Alias → .c-flex-text (especificidad: 0,0,0,0) */
+}
+
+/* Media Components */
+:where(.cs-picture) {
+  /* Alias → .c-picture (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-img) {
+  /* Alias → .c-img (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-image-group) {
+  /* Alias → .c-image-group (especificidad: 0,0,0,0) */
+}
+
+/* Content Components */
+:where(.cs-name) {
+  /* Alias → .c-name (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-job) {
+  /* Alias → .c-job-title (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-quote-icon) {
+  /* Alias → .c-quote-icon (especificidad: 0,0,0,0) */
+}
+
+/* Form Components */
+:where(.cs-label-message) {
+  /* Alias → .c-label--message (especificidad: 0,0,0,0) */
+}
+
+/* Section & Background Components */
+:where(.cs-bg-picture) {
+  /* Alias → .c-bg-picture (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-right-section) {
+  /* Alias → .c-contact-section (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-header) {
+  /* Alias → .c-section__header (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-link) {
+  /* Alias → .c-link (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-block) {
+  /* Alias → .c-block (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-background) {
+  /* Alias → .c-background (especificidad: 0,0,0,0) */
+}
+
+/* Gallery/Grid Components */
+:where(.cs-row) {
+  /* Alias → .c-gallery__row (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-row-1) {
+  /* Alias → .c-gallery__row--1 (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-row-2) {
+  /* Alias → .c-gallery__row--2 (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-row-3) {
+  /* Alias → .c-gallery__row--3 (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-picture1) {
+  /* Alias → .c-gallery__picture--1 (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-picture2) {
+  /* Alias → .c-gallery__picture--2 (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-picture3) {
+  /* Alias → .c-gallery__picture--3 (especificidad: 0,0,0,0) */
+}
+
+/* Review/Testimonial Components */
+:where(.cs-card-group) {
+  /* Alias → .c-review-cards (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-item) {
+  /* Alias → .c-review-card (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-item-img) {
+  /* Alias → .c-review-card__img (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-item-p) {
+  /* Alias → .c-review-card__text (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-reviewer) {
+  /* Alias → .c-review-card__author (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-desc) {
+  /* Alias → .c-review-card__desc (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-item-stars) {
+  /* Alias → .c-review-card__stars (especificidad: 0,0,0,0) */
+}
+
+/* Search Components */
+:where(.cs-search-wrapper) {
+  /* Alias → .c-search__wrapper (especificidad: 0,0,0,0) */
+}
+
+:where(.cs-search-tips) {
+  /* Alias → .c-search__tips (especificidad: 0,0,0,0) */
+}
+
+/**
+ * NOTA SOBRE :where()
+ * ==================
+ * 
+ * Usamos :where() para dar especificidad 0 a estos aliases.
+ * Esto garantiza que:
+ * 1. No interfieren con los nuevos componentes .c-* en @layer components
+ * 2. El HTML con dual class funciona correctamente
+ * 3. Fácil de eliminar en el futuro sin breaking changes
+ * 
+ * Ejemplo de funcionamiento:
+ * 
+ * HTML: <h2 class="cs-title c-title">Título</h2>
+ * 
+ * CSS aplicado:
+ * - .c-title (especificidad: 0,0,1,0) ← Estilos activos desde @layer components
+ * - :where(.cs-title) (especificidad: 0,0,0,0) ← Alias vacío, no interfiere
+ * 
+ * Resultado: Los estilos de .c-title se aplican correctamente
+ */
