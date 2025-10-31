@@ -11,7 +11,7 @@
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
-  #google-map {
+  .google-map {
     padding: var(--sectionPadding);
     background-color: var(--background-sections);
 
@@ -74,7 +74,7 @@
 
 /* Tablet - 768px */
 .mq-up(@bp-md, {
-  #google-map {
+  .google-map {
     .cs-container {
       gap: (64/16rem);
     }
@@ -87,7 +87,7 @@
 
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
-  #google-map {
+  .google-map {
     .cs-container {
       flex-direction: row;
       align-items: flex-start;
@@ -111,7 +111,7 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #google-map {
+    .google-map {
       background-color: var(--dark);
 
       .cs-topper {

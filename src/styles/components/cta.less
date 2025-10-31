@@ -7,7 +7,7 @@
 
 /* Mobile */
 @media only screen and (min-width: 0em) {
-  #cta {
+  .cta {
     padding: (50/16rem) 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     position: relative;
@@ -53,14 +53,14 @@
 
 /* Small Desktop */
 .mq-up(@bp-lg, {
-  #cta {
+  .cta {
     padding: (168/16rem) 0;
   }
 });
 
 /* Desktop XL - 1300px */
 .mq-up(@bp-desktop-xl, {
-  #cta {
+  .cta {
     margin-top: (100/16rem);
     position: relative;
 
@@ -95,7 +95,7 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #cta {
+    .cta {
       &:after {
         display: none;
       }

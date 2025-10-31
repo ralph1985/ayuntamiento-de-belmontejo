@@ -24,7 +24,7 @@
     --sectionPadding: clamp(3.75em, 7.82vw, 6.25em) 1rem;
   }
 
-  #cs-contact {
+  .cs-contact {
     font-family: "Roboto", "Arial", sans-serif;
     padding: var(--sectionPadding);
 
@@ -59,7 +59,7 @@
       margin-bottom: clamp(2.5rem, 6.3vw, 3rem);
     }
 
-    #cs-form {
+    .cs-form {
       margin-bottom: (40/16rem);
       background: white;
       border-radius: (12/16rem);
@@ -233,8 +233,8 @@
 
 /* Tablet - 700px */
 .mq-up(@bp-tablet-sm, {
-  #cs-contact {
-    #cs-form {
+  .cs-contact {
+    .cs-form {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -253,7 +253,7 @@
 
 /* Small Desktop - 1024px */
 .mq-up(@bp-lg, {
-  #cs-contact {
+  .cs-contact {
     .cs-container {
       max-width: (1280/16rem);
       display: flex;
@@ -262,7 +262,7 @@
       gap: (80/16rem);
     }
 
-    #cs-form {
+    .cs-form {
       max-width: (630/16rem);
       label {
         width: 100%;
@@ -293,8 +293,8 @@
 
 /* Desktop XL - 1300px */
 .mq-up(@bp-desktop-xl, {
-  #cs-contact {
-    #cs-form {
+  .cs-contact {
+    .cs-form {
       column-gap: (0/16rem);
       label {
         width: 48%;
@@ -315,16 +315,16 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #cs-contact :where(.cs-text),
-    #cs-contact :where(.cs-title) {
+    .cs-contact :where(.cs-text),
+    .cs-contact :where(.cs-title) {
       color: var(--bodyTextColorWhite);
     }
 
-    #cs-contact :where(.cs-topper) {
+    .cs-contact :where(.cs-topper) {
       color: var(--primaryLight);
     }
 
-    #cs-contact :where(#cs-form) {
+    .cs-contact :where(#cs-form) {
       label,
       input,
       textarea {
@@ -338,7 +338,7 @@
       }
     }
 
-    #cs-contact :where(.cs-bg-picture) {
+    .cs-contact :where(.cs-bg-picture) {
       background-color: #000;
 
       img {

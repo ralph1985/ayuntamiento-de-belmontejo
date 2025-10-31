@@ -13,7 +13,7 @@
 
 /* Mobile */
 @media only screen and (min-width: 0em) {
-  #reviews {
+  .reviews {
     margin: auto;
     padding-top: (120/16rem);
     padding-bottom: (50/16rem);
@@ -102,7 +102,7 @@
 
 /* Tablet */
 .mq-up(@bp-md, {
-  #reviews {
+  .reviews {
     padding-top: (150/16rem);
     padding-bottom: (50/16rem);
 
@@ -129,7 +129,7 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #reviews :where(.review) {
+    .reviews :where(.review) {
       background: var(--medium);
 
       :where(.star-group) {

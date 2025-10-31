@@ -13,7 +13,7 @@
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
-  #sbs {
+  .sbs {
     padding: var(--sectionPadding);
 
     .cs-container {
@@ -165,7 +165,7 @@
 
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
-  #sbs {
+  .sbs {
     .cs-container {
       flex-flow: row;
       justify-content: space-between;
@@ -186,41 +186,41 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #sbs :where(.cs-left) {
+    .sbs :where(.cs-left) {
       &:before,
       &:after {
         background: var(--accent);
       }
     }
 
-    #sbs :where(.cs-picture2) {
+    .sbs :where(.cs-picture2) {
       background-color: var(--dark);
       /* 6px - 12px */
       border: clamp(0.375em, 1.5vw, 0.75em) solid var(--dark);
     }
 
-    #sbs :where(.cs-topper) {
+    .sbs :where(.cs-topper) {
       color: var(--primaryLight);
     }
 
-    #sbs :where(.cs-title),
-    #sbs :where(.cs-text),
-    #sbs :where(.cs-h3),
-    #sbs :where(.cs-flex-p),
-    #sbs :where(.cs-name) {
+    .sbs :where(.cs-title),
+    .sbs :where(.cs-text),
+    .sbs :where(.cs-h3),
+    .sbs :where(.cs-flex-p),
+    .sbs :where(.cs-name) {
       color: var(--bodyTextColorWhite);
     }
 
-    #sbs :where(.cs-flex-group) {
+    .sbs :where(.cs-flex-group) {
       background-color: var(--accent);
     }
 
-    #sbs :where(.cs-job) {
+    .sbs :where(.cs-job) {
       color: var(--bodyTextColorWhite);
       opacity: 0.8;
     }
 
-    #sbs :where(.cs-quote-icon) {
+    .sbs :where(.cs-quote-icon) {
       opacity: 0.2;
     }
   }

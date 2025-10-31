@@ -13,7 +13,7 @@
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
-  #hero {
+  .hero {
     font-family: "Roboto", "Arial", sans-serif;
     /* Centers button */
     text-align: center;
@@ -191,7 +191,7 @@
 
 /* Tablet - 768px */
 .mq-up(@bp-md, {
-  #hero {
+  .hero {
     /* 32px - 40px */
     padding: 0 clamp(2em, 5vw, 2.5em);
 
@@ -229,7 +229,7 @@
 
 /* Desktop Parallax Effect - 1300px */
 .mq-up(@bp-desktop-xl, {
-  #hero {
+  .hero {
     background: url("/assets/images/vista_aerea.jpg");
     background-position: center;
     background-size: cover;
@@ -242,7 +242,7 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #hero :where(.cs-background) {
+    .hero :where(.cs-background) {
       &:before {
         opacity: 0.8;
       }
@@ -343,7 +343,7 @@
 /* Dark mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #services {
+    .services {
       background: var(--medium);
 
       :where(picture) {
@@ -366,7 +366,7 @@
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
-  #sbs {
+  .sbs {
     padding: var(--sectionPadding);
 
     .cs-container {
@@ -500,7 +500,7 @@
 
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
-  #sbs {
+  .sbs {
     .cs-container {
       flex-flow: row;
       justify-content: space-between;
@@ -521,41 +521,41 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #sbs :where(.cs-left) {
+    .sbs :where(.cs-left) {
       &:before,
       &:after {
         background: var(--accent);
       }
     }
 
-    #sbs :where(.cs-picture2) {
+    .sbs :where(.cs-picture2) {
       background-color: var(--dark);
       /* 6px - 12px */
       border: clamp(0.375em, 1.5vw, 0.75em) solid var(--dark);
     }
 
-    #sbs :where(.cs-topper) {
+    .sbs :where(.cs-topper) {
       color: var(--primaryLight);
     }
 
-    #sbs :where(.cs-title),
-    #sbs :where(.cs-text),
-    #sbs :where(.cs-h3),
-    #sbs :where(.cs-flex-p),
-    #sbs :where(.cs-name) {
+    .sbs :where(.cs-title),
+    .sbs :where(.cs-text),
+    .sbs :where(.cs-h3),
+    .sbs :where(.cs-flex-p),
+    .sbs :where(.cs-name) {
       color: var(--bodyTextColorWhite);
     }
 
-    #sbs :where(.cs-flex-group) {
+    .sbs :where(.cs-flex-group) {
       background-color: var(--accent);
     }
 
-    #sbs :where(.cs-job) {
+    .sbs :where(.cs-job) {
       color: var(--bodyTextColorWhite);
       opacity: 0.8;
     }
 
-    #sbs :where(.cs-quote-icon) {
+    .sbs :where(.cs-quote-icon) {
       opacity: 0.2;
     }
   }
@@ -567,7 +567,7 @@
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
-  #sbs-r {
+  .sbs-r {
     padding: var(--sectionPadding);
 
     .cs-container {
@@ -696,7 +696,7 @@
 
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
-  #sbs-r {
+  .sbs-r {
     .cs-container {
       flex-flow: row;
       justify-content: space-between;
@@ -719,41 +719,41 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #sbs-r :where(.cs-left) {
+    .sbs-r :where(.cs-left) {
       &:before,
       &:after {
         background: var(--accent);
       }
     }
 
-    #sbs-r :where(.cs-picture2) {
+    .sbs-r :where(.cs-picture2) {
       background-color: var(--dark);
       /* 6px - 12px */
       border: clamp(0.375em, 1.5vw, 0.75em) solid var(--dark);
     }
 
-    #sbs-r :where(.cs-topper) {
+    .sbs-r :where(.cs-topper) {
       color: var(--primaryLight);
     }
 
-    #sbs-r :where(.cs-title),
-    #sbs-r :where(.cs-text),
-    #sbs-r :where(.cs-h3),
-    #sbs-r :where(.cs-flex-p),
-    #sbs-r :where(.cs-name) {
+    .sbs-r :where(.cs-title),
+    .sbs-r :where(.cs-text),
+    .sbs-r :where(.cs-h3),
+    .sbs-r :where(.cs-flex-p),
+    .sbs-r :where(.cs-name) {
       color: var(--bodyTextColorWhite);
     }
 
-    #sbs-r :where(.cs-flex-group) {
+    .sbs-r :where(.cs-flex-group) {
       background-color: var(--accent);
     }
 
-    #sbs-r :where(.cs-job) {
+    .sbs-r :where(.cs-job) {
       color: var(--bodyTextColorWhite);
       opacity: 0.8;
     }
 
-    #sbs-r :where(.cs-quote-icon) {
+    .sbs-r :where(.cs-quote-icon) {
       opacity: 0.2;
     }
   }
@@ -765,7 +765,7 @@
 
 /* Mobile - 360px - Contains hover animation */
 @media only screen and (min-width: 0em) {
-  #gallery {
+  .gallery {
     /* Centers button */
     text-align: center;
     padding: var(--sectionPadding);
@@ -879,7 +879,7 @@
 /* Dark mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #gallery :where(.cs-title) {
+    .gallery :where(.cs-title) {
       color: var(--bodyTextColorWhite);
     }
   }
@@ -891,7 +891,7 @@
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
-  #reviews {
+  .reviews {
     /* Centers the button */
     text-align: center;
     padding: var(--sectionPadding);
@@ -1001,7 +1001,7 @@
 
 /* Tablet - 768px */
 .mq-up(@bp-md, {
-  #reviews {
+  .reviews {
     .cs-card-group {
       display: flex;
       justify-content: space-between;
@@ -1019,18 +1019,18 @@
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
   :root[data-theme="dark"] {
-    #reviews :where(.cs-title),
-    #reviews :where(.cs-text),
-    #reviews :where(.cs-item-p),
-    #reviews :where(.cs-reviewer) {
+    .reviews :where(.cs-title),
+    .reviews :where(.cs-text),
+    .reviews :where(.cs-item-p),
+    .reviews :where(.cs-reviewer) {
       color: var(--bodyTextColorWhite);
     }
 
-    #reviews :where(.cs-item) {
+    .reviews :where(.cs-item) {
       background: var(--medium);
     }
 
-    #reviews :where(.cs-desc) {
+    .reviews :where(.cs-desc) {
       color: var(--primaryLight);
     }
   }
@@ -1042,7 +1042,7 @@
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
-  #featured-content {
+  .featured-content {
     padding: var(--sectionPadding);
     background-color: #f7f7f7;
 
@@ -1160,7 +1160,7 @@
 
 /* Tablet - 768px */
 .mq-up(@bp-md, {
-  #featured-content {
+  .featured-content {
     .featured-content-wrapper {
       grid-template-columns: 1fr 1fr;
       gap: (24/16rem);
@@ -1170,7 +1170,7 @@
 
 /* Desktop - 1024px */
 .mq-up(@bp-lg, {
-  #featured-content {
+  .featured-content {
     .featured-content-wrapper {
       grid-template-columns: 1fr 1fr 1fr;
       gap: (32/16rem);
@@ -1184,7 +1184,7 @@
 
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
-  #social-media {
+  .social-media-section {
     padding: var(--sectionPadding);
     background-color: #f7f7f7;
 
@@ -1259,7 +1259,7 @@
 
 /* Tablet - 768px */
 .mq-up(@bp-md, {
-  #social-media {
+  .social-media-section {
     .social-links-wrapper {
       max-width: 600px;
     }
@@ -1267,6 +1267,6 @@
 });
 
 // Modo oscuro
-[data-theme="dark"] #social-media {
+[data-theme="dark"] .social-media-section {
   background-color: var(--dark);
 }
