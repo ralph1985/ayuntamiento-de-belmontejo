@@ -119,12 +119,17 @@
    BREAKPOINTS - Media queries
    ========================================================================= */
 
-@bp-xs: 0em; // 0px (mobile first)
-@bp-sm: 30em; // 480px (móvil grande)
-@bp-md: 48em; // 768px (tablet)
-@bp-lg: 64em; // 1024px (desktop)
-@bp-xl: 80em; // 1280px (desktop grande)
-@bp-2xl: 96em; // 1536px (desktop extra grande)
+/* Breakpoints estándar (mobile-first) */
+@bp-xs: 0em; // 0px - Mobile (base)
+@bp-sm: 30em; // 480px - Mobile grande
+@bp-md: 48em; // 768px - Tablet
+@bp-lg: 64em; // 1024px - Desktop
+@bp-xl: 80em; // 1280px - Desktop grande
+@bp-2xl: 96em; // 1536px - Desktop extra grande
+
+/* Breakpoints custom (casos específicos) */
+@bp-tablet-sm: 43.75em; // 700px - Tablet pequeña (formularios responsive)
+@bp-desktop-xl: 81.25em; // 1300px - Desktop extra grande (parallax, hero effects)
 
 /* ============================================================================
    Z-INDEX - Capas de apilamiento

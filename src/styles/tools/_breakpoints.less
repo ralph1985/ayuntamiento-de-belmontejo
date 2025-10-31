@@ -6,21 +6,18 @@
  * IMPORTANTE: Estos mixins usan los breakpoints definidos en settings/_tokens.less
  * NO crear nuevos breakpoints hard-coded. Usar siempre estos mixins para consistencia.
  * 
- * BREAKPOINTS DISPONIBLES:
+ * BREAKPOINTS ESTÁNDAR:
  * @bp-xs:  0em    (0px)     - Mobile (base, mobile-first)
  * @bp-sm:  30em   (480px)   - Mobile grande
  * @bp-md:  48em   (768px)   - Tablet
  * @bp-lg:  64em   (1024px)  - Desktop
  * @bp-xl:  80em   (1280px)  - Desktop grande
  * @bp-2xl: 96em   (1536px)  - Desktop extra grande
+ * 
+ * BREAKPOINTS CUSTOM (casos específicos):
+ * @bp-tablet-sm:   43.75em  (700px)   - Tablet pequeña (formularios responsive)
+ * @bp-desktop-xl:  81.25em  (1300px)  - Desktop XL (parallax, hero effects)
  */
-
-/* ============================================================================
-   IMPORTAR TOKENS
-   Para acceder a las variables de breakpoints
-   ========================================================================= */
-
-@import "../settings/_tokens.less";
 
 /* ============================================================================
    MIXINS DE MEDIA QUERIES
@@ -50,11 +47,9 @@
  *   .component { padding: 2rem; }
  * }
  */
-.mq-up(@bp) {
+.mq-up(@bp, @content) {
   @media (min-width: @bp) {
-    // & {
-    //   .-();
-    // }
+    @content();
   }
 }
 
@@ -84,13 +79,11 @@
  *   .component { display: block; }
  * }
  */
-.mq-down(@bp) {
+.mq-down(@bp, @content) {
   @breakpoint-minus-1px: @bp - 0.0625em;
 
   @media (max-width: @breakpoint-minus-1px) {
-    // & {
-    //   .-();
-    // }
+    @content();
   }
 }
 
@@ -116,13 +109,11 @@
  *   .component { font-size: 1.2rem; }
  * }
  */
-.mq-between(@min, @max) {
+.mq-between(@min, @max, @content) {
   @max-minus-1px: @max - 0.0625em;
 
   @media (min-width: @min) and (max-width: @max-minus-1px) {
-    // & {
-    //   .-();
-    // }
+    @content();
   }
 }
 

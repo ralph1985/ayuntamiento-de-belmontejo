@@ -22,6 +22,17 @@
  */
 
 /* ============================================================================
+   IMPORTS GLOBALES (fuera de layers)
+   Variables y mixins deben estar disponibles en todos los scopes
+   ========================================================================= */
+
+/* Settings - Variables globales */
+@import "./settings/index.less";
+
+/* Tools - Mixins y funciones */
+@import "./tools/index.less";
+
+/* ============================================================================
    Definición de capas CSS
    ========================================================================= */
 
@@ -33,12 +44,6 @@
    ========================================================================= */
 
 @layer base {
-  /* Settings - Variables globales y configuración */
-  @import "./settings/index.less";
-
-  /* Tools - Mixins y funciones LESS */
-  @import "./tools/index.less";
-
   /* Generic - Resets y normalización */
   @import "./generic/index.less";
 

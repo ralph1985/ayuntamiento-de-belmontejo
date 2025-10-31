@@ -1,3 +1,10 @@
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
   .news-link {
@@ -102,7 +109,7 @@
 }
 
 /* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   .news-container {
     flex-direction: row;
     align-items: flex-start;
@@ -112,7 +119,7 @@
   .main-content {
     width: 69%;
   }
-}
+});
 
 /*-- -------------------------- -->
 <---      Recent Articles       -->
@@ -220,7 +227,7 @@
 }
 
 /* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   .news-container {
     flex-direction: row;
     align-items: flex-start;
@@ -232,7 +239,7 @@
       max-width: (500/16rem);
     }
   }
-}
+});
 
 /*-- -------------------------- -->
 <---          Sidebar           -->

@@ -1,3 +1,10 @@
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /* Mobile */
 @media only screen and (min-width: 0em) {
   #cta {
@@ -45,14 +52,14 @@
 }
 
 /* Small Desktop */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   #cta {
     padding: (168/16rem) 0;
   }
-}
+});
 
-/* Large Desktop */
-@media only screen and (min-width: 1300px) {
+/* Desktop XL - 1300px */
+.mq-up(@bp-desktop-xl, {
   #cta {
     margin-top: (100/16rem);
     position: relative;
@@ -83,11 +90,11 @@
       margin: auto;
     }
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #cta {
       &:after {
         display: none;

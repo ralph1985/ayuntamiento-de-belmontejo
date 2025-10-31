@@ -1,5 +1,12 @@
 /* PAGE-SPECIFIC STYLES FOR THE ABOUT PAGE */
 
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /*-- -------------------------- -->
 <---       Side By Side         -->
 <--- -------------------------- -*/
@@ -157,7 +164,7 @@
 }
 
 /* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   #sbs {
     .cs-container {
       flex-flow: row;
@@ -174,11 +181,11 @@
       margin: 0;
     }
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #sbs {
       .cs-left {
         &:before,

@@ -1,3 +1,10 @@
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
   #noticias-1144 {
@@ -174,7 +181,7 @@
 }
 
 /* Tablet - 768px */
-@media only screen and (min-width: 48rem) {
+.mq-up(@bp-md, {
   #news-1144 {
     .cs-container {
       max-width: (1280/16rem);
@@ -195,7 +202,7 @@
       grid-column: span 4;
     }
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0rem) {

@@ -3,23 +3,7 @@
 <--- -------------------------- -*/
 
 /**
- * Migrated from #cs-    .cs-ul-wrapper {
-      width: 100%;
-      height: auto;
-      padding-bottom: (48/16em);
-      opacity: 0;
-      background-color: var(--nav-menu-bg);
-      box-shadow: inset rgba(0, 0, 0, 0.2) 0px 8px 24px;
-      overflow: hidden;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      z-index: -1;
-      transform: scaleY(0);
-      transform-origin: top;
-      transition:
-        transform 0.4s,
-        opacity 0.3s;-navigation
+ * Migrated from #cs-navigation
  * Uses lower specificity class selector
  * Temporary alias maintained in legacy layer
  */
@@ -278,7 +262,7 @@
 }
 
 /* Tablet - 768px */
-@media only screen and (min-width: 48em) {
+.mq-up(@bp-md, {
   .cs-navigation {
     .cs-toggle {
       display: none;
@@ -350,20 +334,20 @@
       display: block;
     }
   }
-}
+});
 
 /* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   .cs-navigation {
     .cs-ul {
       /* 20px - 52px */
       gap: clamp(1.25rem, 4vw, 3.25rem);
     }
   }
-}
+});
 
 /* Large Desktop - 1300px */
-@media only screen and (min-width: 81.25em) {
+@media (min-width: 81.25em) {
   .cs-navigation {
     .cs-container {
       max-width: (1920/16rem);

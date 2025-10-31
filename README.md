@@ -47,6 +47,51 @@ El proyecto implementa una arquitectura **ITCSS** (Inverted Triangle CSS) con **
 - ✅ Compatibilidad 100% con CSS existente
 - ✅ Variables LESS + CSS Custom Properties
 - ✅ Arquitectura escalable y mantenible
+- ✅ Mixins de breakpoints para media queries consistentes
+
+### 📱 Breakpoints y Media Queries
+
+El proyecto usa **mixins de breakpoints** centralizados para mantener consistencia en media queries.
+
+**Breakpoints disponibles:**
+
+```less
+@bp-xs: 0em // 0px - Mobile (base)
+  @bp-sm: 30em // 480px - Mobile grande
+  @bp-md: 48em // 768px - Tablet
+  @bp-lg: 64em // 1024px - Desktop
+  @bp-xl: 80em // 1280px - Desktop grande
+  @bp-2xl: 96em; // 1536px - Desktop extra grande
+```
+
+**Uso de mixins:**
+
+```less
+// Mobile-first (min-width)
+.component {
+  padding: 1rem;
+
+  .mq-up(@bp-md) {
+    padding: 2rem; // Tablet y superior
+  }
+}
+
+// Desktop-first (max-width)
+.component {
+  .mq-down(@bp-md) {
+    display: block; // Solo mobile
+  }
+}
+
+// Rango específico
+.component {
+  .mq-between(@bp-md, @bp-lg) {
+    font-size: 1.2rem; // Solo tablet
+  }
+}
+```
+
+**📖 Ver documentación completa:** [BREAKPOINTS_MIGRATION.md](./BREAKPOINTS_MIGRATION.md)
 
 ## Configuración y Ejecución
 

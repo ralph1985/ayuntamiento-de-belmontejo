@@ -162,7 +162,7 @@
 }
 
 /* Small Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   .footer {
     .container {
       max-width: (1320/16rem);
@@ -249,7 +249,7 @@
       }
     }
   }
-}
+});
 
 /* Dark Mode - DEPRECATED: Migrado a :root[data-theme="dark"] en _tokens.less */
 /* El footer ahora usa var(--footer-bg) y var(--footer-text) que cambian automáticamente */

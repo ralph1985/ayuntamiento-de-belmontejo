@@ -1,3 +1,10 @@
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /*-- -------------------------- -->
 <---        Google Map          -->
 <--- -------------------------- -*/
@@ -66,7 +73,7 @@
 }
 
 /* Tablet - 768px */
-@media only screen and (min-width: 48em) {
+.mq-up(@bp-md, {
   #google-map {
     .cs-container {
       gap: (64/16rem);
@@ -76,10 +83,10 @@
       height: (500/16rem);
     }
   }
-}
+});
 
 /* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   #google-map {
     .cs-container {
       flex-direction: row;
@@ -99,11 +106,11 @@
       height: (400/16rem);
     }
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #google-map {
       background-color: var(--dark);
 

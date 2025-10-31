@@ -1,3 +1,10 @@
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /*-- -------------------------- -->
 <---   Interior Page Header     -->
 <--- -------------------------- -*/
@@ -87,7 +94,7 @@
 }
 
 /* Small Desktop */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   #int-hero {
     height: auto;
     min-height: (300/16rem);
@@ -95,4 +102,4 @@
     background-attachment: fixed;
     padding-block-end: (100/16rem);
   }
-}
+});

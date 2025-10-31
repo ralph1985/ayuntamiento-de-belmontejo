@@ -1,3 +1,10 @@
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
   #faq-1741 {
@@ -193,7 +200,7 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0rem) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #faq-1741 {
       .cs-title,
       .cs-item-text {

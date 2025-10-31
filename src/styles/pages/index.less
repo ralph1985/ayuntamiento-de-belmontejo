@@ -1,5 +1,12 @@
 /* STYLES FOR ABOVE THE FOLD */
 
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /*-- -------------------------- -->
 <---           Hero             -->
 <--- -------------------------- -*/
@@ -183,7 +190,7 @@
 }
 
 /* Tablet - 768px */
-@media only screen and (min-width: 48em) {
+.mq-up(@bp-md, {
   #hero {
     /* 32px - 40px */
     padding: 0 clamp(2em, 5vw, 2.5em);
@@ -218,10 +225,10 @@
       margin-bottom: 0;
     }
   }
-}
+});
 
 /* Desktop Parallax Effect - 1300px */
-@media only screen and (min-width: 81.25em) {
+.mq-up(@bp-desktop-xl, {
   #hero {
     background: url("/assets/images/vista_aerea.jpg");
     background-position: center;
@@ -230,11 +237,11 @@
     /* creates parallax effect on background image */
     background-attachment: fixed;
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #hero {
       .cs-background {
         &:before {
@@ -308,8 +315,8 @@
   }
 }
 
-/* Inbetween */
-@media only screen and (min-width: 768px) {
+/* Tablet - 768px */
+.mq-up(@bp-md, {
   .services {
     font-size: ~"min(1.8vw, 1em)";
     width: 98%;
@@ -322,10 +329,10 @@
       margin: 0;
     }
   }
-}
+});
 
-/* Large Desktop */
-@media only screen and (min-width: 1300px) {
+/* Desktop XL - 1300px */
+.mq-up(@bp-desktop-xl, {
   .services {
     padding: (50/16em) (80/16em);
 
@@ -333,11 +340,11 @@
       max-width: (357/16em);
     }
   }
-}
+});
 
 /* Dark mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #services {
       background: var(--medium);
 
@@ -494,7 +501,7 @@
 }
 
 /* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   #sbs {
     .cs-container {
       flex-flow: row;
@@ -511,11 +518,11 @@
       margin: 0;
     }
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #sbs {
       .cs-left {
         &:before,
@@ -692,7 +699,7 @@
 }
 
 /* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   #sbs-r {
     .cs-container {
       flex-flow: row;
@@ -711,11 +718,11 @@
       margin: 0;
     }
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #sbs-r {
       .cs-left {
         &:before,
@@ -877,7 +884,7 @@
 
 /* Dark mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #gallery {
       .cs-title {
         color: var(--bodyTextColorWhite);
@@ -1001,7 +1008,7 @@
 }
 
 /* Tablet - 768px */
-@media only screen and (min-width: 48em) {
+.mq-up(@bp-md, {
   #reviews {
     .cs-card-group {
       display: flex;
@@ -1015,11 +1022,11 @@
       margin: 0;
     }
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #reviews {
       .cs-title,
       .cs-text,
@@ -1162,24 +1169,24 @@
 }
 
 /* Tablet - 768px */
-@media only screen and (min-width: 48em) {
+.mq-up(@bp-md, {
   #featured-content {
     .featured-content-wrapper {
       grid-template-columns: 1fr 1fr;
       gap: (24/16rem);
     }
   }
-}
+});
 
 /* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   #featured-content {
     .featured-content-wrapper {
       grid-template-columns: 1fr 1fr 1fr;
       gap: (32/16rem);
     }
   }
-}
+});
 
 /*-- -------------------------- -->
 <---       Social Media         -->
@@ -1261,13 +1268,13 @@
 }
 
 /* Tablet - 768px */
-@media only screen and (min-width: 48em) {
+.mq-up(@bp-md, {
   #social-media {
     .social-links-wrapper {
       max-width: 600px;
     }
   }
-}
+});
 
 // Modo oscuro
 [data-theme="dark"] #social-media {

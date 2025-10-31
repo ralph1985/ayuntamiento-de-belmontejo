@@ -1,5 +1,12 @@
 /* PAGE-SPECIFIC STYLES FOR THE REVIEWS PAGE */
 
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /*-- -------------------------- -->
 <---           Reviews          -->
 <--- -------------------------- -*/
@@ -94,7 +101,7 @@
 }
 
 /* Tablet */
-@media only screen and (min-width: 48em) {
+.mq-up(@bp-md, {
   #reviews {
     padding-top: (150/16rem);
     padding-bottom: (50/16rem);
@@ -117,11 +124,11 @@
       }
     }
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #reviews {
       .review {
         background: var(--medium);

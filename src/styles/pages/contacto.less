@@ -1,5 +1,12 @@
 /* PAGE-SPECIFIC STYLES FOR THE CONTACT PAGE */
 
+/* ============================================================================
+   IMPORTS - Variables y mixins necesarios
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+@import "../tools/_breakpoints.less";
+
 /*-- -------------------------- -->
 <---          Contact           -->
 <--- -------------------------- -*/
@@ -225,7 +232,7 @@
 }
 
 /* Tablet - 700px */
-@media only screen and (min-width: 43.75em) {
+.mq-up(@bp-tablet-sm, {
   #cs-contact {
     #cs-form {
       display: flex;
@@ -242,10 +249,10 @@
       }
     }
   }
-}
+});
 
 /* Small Desktop - 1024px */
-@media only screen and (min-width: 64em) {
+.mq-up(@bp-lg, {
   #cs-contact {
     .cs-container {
       max-width: (1280/16rem);
@@ -282,10 +289,10 @@
       display: inline-block;
     }
   }
-}
+});
 
-/* Small Desktop - 1300px */
-@media only screen and (min-width: 81.25em) {
+/* Desktop XL - 1300px */
+.mq-up(@bp-desktop-xl, {
   #cs-contact {
     #cs-form {
       column-gap: (0/16rem);
@@ -303,11 +310,11 @@
       height: (578/16rem);
     }
   }
-}
+});
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
+  :root[data-theme="dark"] {
     #cs-contact {
       .cs-text,
       .cs-title {
