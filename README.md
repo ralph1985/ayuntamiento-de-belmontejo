@@ -203,6 +203,11 @@ El proyecto incluye un **sistema mínimo y controlado de utilidades** para casos
 - **`npm run lint:css:fix`:** Ejecuta Stylelint y corrige automáticamente los problemas de formato.
 - **`npm run format`:** Verifica el formato del código con Prettier.
 - **`npm run format:write`:** Formatea todo el código con Prettier.
+- **`npm run purge:dry`:** Analiza qué CSS se eliminaría sin modificar archivos (dry-run).
+- **`npm run purge:apply`:** Aplica purgado real de CSS no usado (protege @layer legacy).
+- **`npm run build:css`:** Minifica CSS con cssnano + autoprefixer (producción).
+- **`npm run optimize:css`:** Pipeline completo: build + purge + minify (recomendado para deploy).
+- **`npm run analyze:css`:** Compila y analiza tamaño de CSS sin modificar archivos.
 
 ### 🎨 Linting CSS/LESS
 
@@ -230,6 +235,66 @@ El proyecto utiliza **Stylelint** para mantener la calidad y consistencia del c�
 **Archivos ignorados:**
 
 - `/dist/**`, `/build/**`, `/.astro/**`, `/public/**`
+
+### ⚡ Optimización de CSS
+
+El proyecto implementa un **sistema de poda y minificado selectivo** para reducir el tamaño del CSS final.
+
+**Características:**
+
+- ✂️ **PurgeCSS**: Elimina automáticamente clases CSS no usadas
+- 🛡️ **Protección de Legacy**: La capa `@layer legacy` NUNCA se purga (migración segura)
+- 🗜️ **Minificación**: cssnano optimiza y comprime el CSS final
+- 📊 **Análisis Detallado**: Dry-run muestra qué se eliminaría sin modificar archivos
+- 🎯 **Safelist Inteligente**: Protege utilidades (`u-*`), componentes (`c-*`, `cs-*`) y estados
+
+**Uso rápido:**
+
+```bash
+# 1. Analizar (sin modificar archivos)
+npm run analyze:css
+
+# 2. Revisar reportes
+cat dist/purge-analysis/*.analysis.txt
+
+# 3. Optimizar para producción
+npm run optimize:css
+```
+
+**Safelist (clases siempre protegidas):**
+
+- `u-*` - Todas las utilidades atómicas
+- `c-*` - Componentes BEM
+- `cs-*` - CodeStitch components
+- `is-*`, `has-*` - Estados dinámicos
+- `data-theme`, `dark-mode` - Dark mode
+- `astro-*` - Clases de Astro
+
+**Métricas esperadas:**
+
+- Reducción estimada: ~30-50% del CSS total
+- `@layer legacy` protegida completamente
+- Solo purga: `base`, `components`, `utilities`
+
+**📖 Ver documentación completa:** [CSS_OPTIMIZATION.md](./docs/CSS_OPTIMIZATION.md)
+
+**Flujo de trabajo:**
+
+1. **Desarrollo:** `npm run dev` (sin optimizaciones)
+2. **Pre-deploy:** `npm run analyze:css` (verificar qué se eliminaría)
+3. **Producción:** `npm run optimize:css` (pipeline completo)
+4. **Revisar:** `npm run preview` (validar que todo funciona)
+
+**Troubleshooting:**
+
+Si una clase necesaria desaparece, añádela a la safelist en `postcss.config.cjs`:
+
+```javascript
+safelist: {
+  standard: ['mi-clase-especial'],
+  deep: [/^patron-/],
+}
+```
 
 ## Despliegue
 
