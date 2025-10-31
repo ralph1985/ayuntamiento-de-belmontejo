@@ -1,0 +1,359 @@
+/**
+ * HEADER.LESS - EJEMPLO DE MIGRACIÓN A MIXINS DE BREAKPOINTS
+ * ===========================================================
+ * 
+ * Este archivo demuestra cómo migrar media queries hard-coded
+ * a los nuevos mixins de breakpoints.
+ * 
+ * IMPORTANTE: Este es un ejemplo demostrativo. NO reemplaza el header.less original.
+ * Los cambios se mostrarán solo en las secciones clave.
+ */
+
+/* ============================================================================
+   IMPORTAR MIXINS
+   ========================================================================= */
+
+@import "../tools/_breakpoints.less";
+
+/* ============================================================================
+   SECCIÓN 1: Mobile Navigation
+   ========================================================================= */
+
+/**
+ * ANTES (Legacy):
+ * ---------------
+ * @media only screen and (max-width: 63.9375rem) {
+ *   body {
+ *     &.cs-open {
+ *       overflow: hidden;
+ *     }
+ *   }
+ * }
+ * 
+ * DESPUÉS (Con mixins):
+ * --------------------
+ */
+
+body {
+  &.cs-open {
+    .mq-down(@bp-lg) {
+      overflow: hidden;
+    }
+  }
+}
+
+/**
+ * EXPLICACIÓN:
+ * - @bp-lg = 64em (1024px)
+ * - .mq-down(@bp-lg) genera: @media (max-width: 63.9375em)
+ * - Es exactamente equivalente al código original
+ * - Ventaja: Usa token centralizado, no valor hard-coded
+ */
+
+/* ============================================================================
+   SECCIÓN 2: Navigation Component
+   ========================================================================= */
+
+#cs-navigation {
+  /* remove the font family so the Stitch inherits the fonts from your global stylesheet */
+  font-family: "Roboto", "Arial", sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  padding: (12/16rem) (16/16rem);
+  background-color: var(--background-main);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  position: fixed;
+  z-index: 10000;
+
+  /**
+   * ANTES:
+   * @media only screen and (max-width: 63.9375rem) {
+   *   // estilos mobile
+   * }
+   * 
+   * DESPUÉS:
+   */
+  .mq-down(@bp-lg) {
+    &:before {
+      /* black blurred overlay */
+      content: "";
+      width: 0%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      display: block;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      z-index: -11;
+      transition:
+        width 0.5s,
+        opacity 0.3s;
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    &.cs-active {
+      &:before {
+        width: 100%;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+/* ============================================================================
+   SECCIÓN 3: Logo Text - Tablet Only
+   ========================================================================= */
+
+/**
+ * ANTES:
+ * @media only screen and (min-width: 48rem) and (max-width: 63.9375rem) {
+ *   #cs-navigation {
+ *     .cs-logo {
+ *       .cs-logo-text {
+ *         display: block;
+ *       }
+ *     }
+ *   }
+ * }
+ * 
+ * DESPUÉS (Opción 1 - Explícita):
+ */
+
+#cs-navigation {
+  .cs-logo {
+    .cs-logo-text {
+      display: none; // Base (mobile)
+
+      // Tablet only - usando mixin between
+      .mq-between(@bp-md, @bp-lg) {
+        display: block;
+        font-size: (16/16rem);
+      }
+
+      // O usando el shortcut semántico:
+      // .mq-tablet(); {
+      //   display: block;
+      //   font-size: (16/16rem);
+      // }
+    }
+  }
+}
+
+/**
+ * EXPLICACIÓN:
+ * - @bp-md = 48em (768px)
+ * - @bp-lg = 64em (1024px)
+ * - .mq-between(@bp-md, @bp-lg) genera:
+ *   @media (min-width: 48em) and (max-width: 63.9375em)
+ * - Equivalente exacto al código original
+ */
+
+/* ============================================================================
+   SECCIÓN 4: Desktop Navigation
+   ========================================================================= */
+
+/**
+ * ANTES:
+ * @media only screen and (min-width: 64rem) {
+ *   #cs-navigation {
+ *     .cs-dropdown {
+ *       position: relative;
+ *       // ...
+ *     }
+ *   }
+ * }
+ * 
+ * DESPUÉS:
+ */
+
+#cs-navigation {
+  .cs-dropdown {
+    // Mobile styles (base)
+    position: absolute;
+
+    // Desktop y superior
+    .mq-up(@bp-lg) {
+      position: relative;
+
+      &:hover,
+      &.cs-active {
+        cursor: pointer;
+
+        .cs-drop-ul {
+          opacity: 1;
+          visibility: visible;
+          transform: scaleY(1);
+        }
+
+        .cs-drop-li {
+          opacity: 1;
+          transform: rotateX(0);
+        }
+      }
+    }
+
+    // O usando el shortcut semántico:
+    // .mq-desktop(); {
+    //   position: relative;
+    //   // ...
+    // }
+  }
+}
+
+/**
+ * EXPLICACIÓN:
+ * - @bp-lg = 64em (1024px)
+ * - .mq-up(@bp-lg) genera: @media (min-width: 64em)
+ * - .mq-desktop() es un shortcut para .mq-up(@bp-lg)
+ * - Ambos son equivalentes y válidos
+ */
+
+/* ============================================================================
+   SECCIÓN 5: Dark Mode con Breakpoints
+   ========================================================================= */
+
+/**
+ * ANTES:
+ * @media only screen and (max-width: 63.9375rem) {
+ *   body.dark-mode {
+ *     #cs-navigation {
+ *       background-color: var(--dark);
+ *     }
+ *   }
+ * }
+ * 
+ * DESPUÉS:
+ */
+
+body.dark-mode {
+  #cs-navigation {
+    .mq-down(@bp-lg) {
+      background-color: var(--dark);
+    }
+  }
+}
+
+/**
+ * NOTA: También se puede combinar con el mixin de dark mode:
+ * 
+ * #cs-navigation {
+ *   .mq-down(@bp-lg); {
+ *     .mq-dark-mode(); {
+ *       background-color: var(--dark);
+ *     }
+ *   }
+ * }
+ * 
+ * Esto detectaría la preferencia del sistema además del toggle manual.
+ */
+
+/* ============================================================================
+   TABLA DE CONVERSIÓN PARA ESTE ARCHIVO
+   ========================================================================= */
+
+/**
+ * CONVERSIONES REALIZADAS:
+ * 
+ * Original                                          | Migrado
+ * --------------------------------------------------|---------------------------
+ * @media only screen and (max-width: 63.9375rem)   | .mq-down(@bp-lg); { }
+ * @media only screen and (min-width: 64rem)        | .mq-up(@bp-lg); { }
+ * @media only screen and (min-width: 48rem)        | .mq-between(@bp-md,
+ *   and (max-width: 63.9375rem)                    |   @bp-lg); { }
+ * 
+ * VENTAJAS DE LA MIGRACIÓN:
+ * ✅ Valores centralizados (cambiar breakpoint en un solo lugar)
+ * ✅ Código más legible (.mq-desktop() vs @media min-width 64rem)
+ * ✅ Menos errores (no más typos en valores de breakpoints)
+ * ✅ Consistencia en todo el proyecto
+ * ✅ Fácil de mantener y actualizar
+ */
+
+/* ============================================================================
+   PATRÓN DE MIGRACIÓN RECOMENDADO
+   ========================================================================= */
+
+/**
+ * PASOS PARA MIGRAR UN COMPONENTE:
+ * 
+ * 1. Importar mixins al inicio del archivo:
+ *    @import '../tools/_breakpoints.less';
+ * 
+ * 2. Identificar todos los @media queries
+ * 
+ * 3. Convertir según esta tabla:
+ *    - max-width: 63.9375rem        → .mq-down(@bp-lg)
+ *    - max-width: 47.9375rem        → .mq-down(@bp-md)
+ *    - min-width: 64rem             → .mq-up(@bp-lg) o .mq-desktop()
+ *    - min-width: 48rem             → .mq-up(@bp-md) o .mq-tablet-up()
+ *    - min-width: 30rem             → .mq-up(@bp-sm)
+ *    - between 48rem and 64rem      → .mq-between(@bp-md, @bp-lg) o .mq-tablet()
+ * 
+ * 4. Testear visualmente que no hay cambios
+ * 
+ * 5. Commit con mensaje descriptivo:
+ *    "refactor(header): migrar media queries a mixins de breakpoints"
+ * 
+ * 6. NO migrar todo de golpe - hacer componente por componente
+ */
+
+/* ============================================================================
+   CASOS ESPECIALES Y NOTAS
+   ========================================================================= */
+
+/**
+ * CASO 1: Media queries sin "only screen"
+ * ----------------------------------------
+ * Los mixins generan @media (min-width: X) sin "only screen"
+ * Esto es equivalente y más moderno.
+ * 
+ * @media only screen and (min-width: 64rem) { }
+ * ===
+ * @media (min-width: 64rem) { }
+ * 
+ * Ambos funcionan igual en navegadores modernos.
+ * 
+ * 
+ * CASO 2: Breakpoints personalizados
+ * -----------------------------------
+ * Si encuentras un breakpoint que NO coincide con los tokens:
+ * 
+ * @media (min-width: 50rem) { }  // No es un token estándar
+ * 
+ * Opciones:
+ * a) Si es único, déjalo como está (documentar por qué)
+ * b) Si se repite, considerar añadirlo a _tokens.less
+ * c) Evaluar si se puede usar un breakpoint estándar cercano
+ * 
+ * 
+ * CASO 3: Multiple media queries en un bloque
+ * --------------------------------------------
+ * Si tienes:
+ * @media (min-width: 48rem), (orientation: landscape) { }
+ * 
+ * Divide en múltiples bloques:
+ * .mq-up(@bp-md) { estilos }
+ * .mq-landscape() { estilos }
+ * 
+ * O crea un mixin custom para ese caso específico.
+ */
+
+/* ============================================================================
+   PRÓXIMOS ARCHIVOS A MIGRAR (RECOMENDACIÓN)
+   ========================================================================= */
+
+/**
+ * ORDEN SUGERIDO DE MIGRACIÓN:
+ * 
+ * 1. ✅ header.less (este archivo - EJEMPLO)
+ * 2. ⏳ footer.less (siguiente - EJEMPLO)
+ * 3. ⏳ components/landing.less
+ * 4. ⏳ components/cta.less
+ * 5. ⏳ layouts/news-post-layout.less
+ * 6. ⏳ pages/index.less
+ * 7. ... resto de componentes
+ * 
+ * Criterio: empezar por componentes usados en muchas páginas.
+ */

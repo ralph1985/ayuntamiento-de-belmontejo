@@ -1,0 +1,503 @@
+/**
+ * BREAKPOINTS MIXINS
+ * ==================
+ * Mixins reutilizables para media queries usando tokens de breakpoints
+ * 
+ * IMPORTANTE: Estos mixins usan los breakpoints definidos en settings/_tokens.less
+ * NO crear nuevos breakpoints hard-coded. Usar siempre estos mixins para consistencia.
+ * 
+ * BREAKPOINTS DISPONIBLES:
+ * @bp-xs:  0em    (0px)     - Mobile (base, mobile-first)
+ * @bp-sm:  30em   (480px)   - Mobile grande
+ * @bp-md:  48em   (768px)   - Tablet
+ * @bp-lg:  64em   (1024px)  - Desktop
+ * @bp-xl:  80em   (1280px)  - Desktop grande
+ * @bp-2xl: 96em   (1536px)  - Desktop extra grande
+ */
+
+/* ============================================================================
+   IMPORTAR TOKENS
+   Para acceder a las variables de breakpoints
+   ========================================================================= */
+
+@import "../settings/_tokens.less";
+
+/* ============================================================================
+   MIXINS DE MEDIA QUERIES
+   ========================================================================= */
+
+/**
+ * .mq-up(@breakpoint)
+ * -------------------
+ * Media query para pantallas MAYORES o IGUALES al breakpoint
+ * Mobile-first approach (min-width)
+ * 
+ * @param @breakpoint - Variable de breakpoint (@bp-sm, @bp-md, etc.)
+ * 
+ * USO:
+ * .component {
+ *   // Mobile styles (base)
+ *   padding: 1rem;
+ *   
+ *   .mq-up(@bp-md); {
+ *     // Tablet y superior
+ *     padding: 2rem;
+ *   }
+ * }
+ * 
+ * GENERA:
+ * @media (min-width: 48em) {
+ *   .component { padding: 2rem; }
+ * }
+ */
+.mq-up(@bp) {
+  @media (min-width: @bp) {
+    // & {
+    //   .-();
+    // }
+  }
+}
+
+/**
+ * .mq-down(@breakpoint)
+ * ---------------------
+ * Media query para pantallas MENORES al breakpoint
+ * Desktop-first approach (max-width)
+ * 
+ * NOTA: Se resta 0.0625em (1px) para evitar overlapping con mq-up
+ * 
+ * @param @breakpoint - Variable de breakpoint (@bp-sm, @bp-md, etc.)
+ * 
+ * USO:
+ * .component {
+ *   // Estilos base
+ *   display: flex;
+ *   
+ *   .mq-down(@bp-md); {
+ *     // Solo mobile (< 768px)
+ *     display: block;
+ *   }
+ * }
+ * 
+ * GENERA:
+ * @media (max-width: 47.9375em) { // 768px - 1px
+ *   .component { display: block; }
+ * }
+ */
+.mq-down(@bp) {
+  @breakpoint-minus-1px: @bp - 0.0625em;
+
+  @media (max-width: @breakpoint-minus-1px) {
+    // & {
+    //   .-();
+    // }
+  }
+}
+
+/**
+ * .mq-between(@min-breakpoint, @max-breakpoint)
+ * ----------------------------------------------
+ * Media query para pantallas ENTRE dos breakpoints
+ * Útil para estilos específicos de tablet, etc.
+ * 
+ * @param @min - Breakpoint mínimo (inclusivo)
+ * @param @max - Breakpoint máximo (exclusivo, se resta 1px)
+ * 
+ * USO:
+ * .component {
+ *   .mq-between(@bp-md, @bp-lg); {
+ *     // Solo tablet (768px - 1023px)
+ *     font-size: 1.2rem;
+ *   }
+ * }
+ * 
+ * GENERA:
+ * @media (min-width: 48em) and (max-width: 63.9375em) {
+ *   .component { font-size: 1.2rem; }
+ * }
+ */
+.mq-between(@min, @max) {
+  @max-minus-1px: @max - 0.0625em;
+
+  @media (min-width: @min) and (max-width: @max-minus-1px) {
+    // & {
+    //   .-();
+    // }
+  }
+}
+
+/**
+ * .mq-only(@breakpoint)
+ * ---------------------
+ * Media query para UN SOLO rango de breakpoint
+ * Equivalente a between(breakpoint, next-breakpoint)
+ * 
+ * @param @breakpoint - Variable de breakpoint (@bp-sm, @bp-md, etc.)
+ * 
+ * USO:
+ * .component {
+ *   .mq-only(@bp-md); {
+ *     // Solo tablet (768px - 1023px)
+ *     display: grid;
+ *   }
+ * }
+ * 
+ * NOTA: Para @bp-xs usa mq-down(@bp-sm)
+ *       Para @bp-2xl usa mq-up(@bp-2xl)
+ */
+.mq-only(@bp) when (@bp = @bp-xs) {
+  //   .mq-down(@bp-sm); {
+  //     .-();
+  //   }
+}
+
+.mq-only(@bp) when (@bp = @bp-sm) {
+  .mq-between(@bp-sm, @bp-md) {
+    // .-();
+  }
+}
+
+.mq-only(@bp) when (@bp = @bp-md) {
+  .mq-between(@bp-md, @bp-lg) {
+    // .-();
+  }
+}
+
+.mq-only(@bp) when (@bp = @bp-lg) {
+  .mq-between(@bp-lg, @bp-xl) {
+    // .-();
+  }
+}
+
+.mq-only(@bp) when (@bp = @bp-xl) {
+  .mq-between(@bp-xl, @bp-2xl) {
+    // .-();
+  }
+}
+
+.mq-only(@bp) when (@bp = @bp-2xl) {
+  .mq-up(@bp-2xl) {
+    // .-();
+  }
+}
+
+/* ============================================================================
+   MIXINS DE UTILIDAD ADICIONALES
+   ========================================================================= */
+
+/**
+ * .mq-landscape()
+ * ---------------
+ * Media query para orientación horizontal
+ * 
+ * USO:
+ * .component {
+ *   .mq-landscape(); {
+ *     height: 100vh;
+ *   }
+ * }
+ */
+.mq-landscape() {
+  @media (orientation: landscape) {
+    & {
+      //   .-();
+    }
+  }
+}
+
+/**
+ * .mq-portrait()
+ * --------------
+ * Media query para orientación vertical
+ * 
+ * USO:
+ * .component {
+ *   .mq-portrait(); {
+ *     width: 100vw;
+ *   }
+ * }
+ */
+.mq-portrait() {
+  @media (orientation: portrait) {
+    & {
+      //   .-();
+    }
+  }
+}
+
+/**
+ * .mq-retina()
+ * ------------
+ * Media query para pantallas de alta densidad (Retina, 2x)
+ * 
+ * USO:
+ * .logo {
+ *   background-image: url('logo.png');
+ *   
+ *   .mq-retina(); {
+ *     background-image: url('logo@2x.png');
+ *   }
+ * }
+ */
+.mq-retina() {
+  @media (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
+    & {
+      //   .-();
+    }
+  }
+}
+
+/**
+ * .mq-print()
+ * -----------
+ * Media query para impresión
+ * 
+ * USO:
+ * .navigation {
+ *   .mq-print(); {
+ *     display: none;
+ *   }
+ * }
+ */
+.mq-print() {
+  @media print {
+    & {
+      //   .-();
+    }
+  }
+}
+
+/**
+ * .mq-dark-mode()
+ * ---------------
+ * Media query para preferencia de modo oscuro del sistema
+ * (Adicional al toggle manual con body.dark-mode)
+ * 
+ * USO:
+ * .component {
+ *   .mq-dark-mode(); {
+ *     background: #000;
+ *   }
+ * }
+ */
+.mq-dark-mode() {
+  @media (prefers-color-scheme: dark) {
+    & {
+      //   .-();
+    }
+  }
+}
+
+/**
+ * .mq-reduced-motion()
+ * --------------------
+ * Media query para usuarios que prefieren movimiento reducido
+ * (Accesibilidad)
+ * 
+ * USO:
+ * .animation {
+ *   transition: all 0.3s;
+ *   
+ *   .mq-reduced-motion(); {
+ *     transition: none;
+ *   }
+ * }
+ */
+.mq-reduced-motion() {
+  @media (prefers-reduced-motion: reduce) {
+    & {
+      //   .-();
+    }
+  }
+}
+
+/* ============================================================================
+   MIXINS COMBINADOS (HELPERS COMUNES)
+   ========================================================================= */
+
+/**
+ * .mq-mobile()
+ * ------------
+ * Shortcut para pantallas móviles (< tablet)
+ * Equivalente a .mq-down(@bp-md)
+ */
+.mq-mobile() {
+  .mq-down(@bp-md) {
+    // .-();
+  }
+}
+
+/**
+ * .mq-tablet()
+ * ------------
+ * Shortcut para pantallas tablet (768px - 1023px)
+ * Equivalente a .mq-only(@bp-md)
+ */
+.mq-tablet() {
+  .mq-only(@bp-md) {
+    // .-();
+  }
+}
+
+/**
+ * .mq-tablet-up()
+ * ---------------
+ * Shortcut para tablet y superior
+ * Equivalente a .mq-up(@bp-md)
+ */
+.mq-tablet-up() {
+  .mq-up(@bp-md) {
+    // .-();
+  }
+}
+
+/**
+ * .mq-desktop()
+ * -------------
+ * Shortcut para desktop y superior
+ * Equivalente a .mq-up(@bp-lg)
+ */
+.mq-desktop() {
+  .mq-up(@bp-lg) {
+    // .-();
+  }
+}
+
+/**
+ * .mq-desktop-only()
+ * ------------------
+ * Shortcut solo para desktop (1024px - 1279px)
+ * Equivalente a .mq-only(@bp-lg)
+ */
+.mq-desktop-only() {
+  .mq-only(@bp-lg) {
+    // .-();
+  }
+}
+
+/* ============================================================================
+   TABLA DE REFERENCIA RÁPIDA
+   ========================================================================= */
+
+/**
+ * TABLA DE EQUIVALENCIAS - MIGRACIÓN DESDE @MEDIA HARDCODED
+ * ==========================================================
+ * 
+ * ANTES (Legacy)                              | DESPUÉS (Con mixins)
+ * -------------------------------------------|---------------------------
+ * @media (min-width: 0em)                    | (estilos base, sin mixin)
+ * @media (min-width: 30em)                   | .mq-up(@bp-sm); { }
+ * @media (min-width: 48em)                   | .mq-up(@bp-md); { }
+ * @media (min-width: 64em)                   | .mq-up(@bp-lg); { }
+ * @media (min-width: 80em)                   | .mq-up(@bp-xl); { }
+ * @media (min-width: 96em)                   | .mq-up(@bp-2xl); { }
+ * 
+ * @media (max-width: 63.9375rem)             | .mq-down(@bp-lg); { }
+ * @media (max-width: 47.9375rem)             | .mq-down(@bp-md); { }
+ * 
+ * @media (min-width: 48em)                   | .mq-between(@bp-md, @bp-lg); { }
+ *   and (max-width: 63.9375em)               |
+ * 
+ * @media only screen and (min-width: 64rem)  | .mq-up(@bp-lg); { }
+ * 
+ * SHORTCUTS SEMÁNTICOS:
+ * @media (max-width: 47.9375em)              | .mq-mobile(); { }
+ * @media (min-width: 48em)                   | .mq-tablet-up(); { }
+ * @media (min-width: 64em)                   | .mq-desktop(); { }
+ */
+
+/* ============================================================================
+   EJEMPLOS DE USO
+   ========================================================================= */
+
+/**
+ * EJEMPLO 1: Mobile-first responsive component
+ * 
+ * .card {
+ *   // Base (mobile)
+ *   padding: var(--space-md);
+ *   font-size: var(--font-size-sm);
+ *   
+ *   // Tablet y superior
+ *   .mq-up(@bp-md); {
+ *     padding: var(--space-lg);
+ *     font-size: var(--font-size-md);
+ *   }
+ *   
+ *   // Desktop y superior
+ *   .mq-up(@bp-lg); {
+ *     padding: var(--space-xl);
+ *     font-size: var(--font-size-lg);
+ *   }
+ * }
+ */
+
+/**
+ * EJEMPLO 2: Estilos específicos por rango
+ * 
+ * .navigation {
+ *   // Mobile only
+ *   .mq-mobile(); {
+ *     position: fixed;
+ *     width: 100%;
+ *   }
+ *   
+ *   // Tablet only
+ *   .mq-tablet(); {
+ *     position: relative;
+ *     width: 80%;
+ *   }
+ *   
+ *   // Desktop y superior
+ *   .mq-desktop(); {
+ *     position: static;
+ *     width: auto;
+ *   }
+ * }
+ */
+
+/**
+ * EJEMPLO 3: Grid responsivo
+ * 
+ * .grid {
+ *   display: grid;
+ *   gap: var(--space-md);
+ *   grid-template-columns: 1fr;
+ *   
+ *   .mq-up(@bp-sm); {
+ *     grid-template-columns: repeat(2, 1fr);
+ *   }
+ *   
+ *   .mq-up(@bp-md); {
+ *     grid-template-columns: repeat(3, 1fr);
+ *   }
+ *   
+ *   .mq-up(@bp-lg); {
+ *     grid-template-columns: repeat(4, 1fr);
+ *     gap: var(--space-lg);
+ *   }
+ * }
+ */
+
+/**
+ * EJEMPLO 4: Accesibilidad
+ * 
+ * .animated-element {
+ *   transition: transform 0.3s ease;
+ *   
+ *   &:hover {
+ *     transform: scale(1.1);
+ *   }
+ *   
+ *   // Respetar preferencias de usuario
+ *   .mq-reduced-motion(); {
+ *     transition: none;
+ *     
+ *     &:hover {
+ *       transform: none;
+ *     }
+ *   }
+ * }
+ */

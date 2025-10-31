@@ -1,0 +1,402 @@
+/**
+ * FOOTER.LESS - EJEMPLO DE MIGRACIÓN A MIXINS DE BREAKPOINTS
+ * ===========================================================
+ * 
+ * Este archivo demuestra cómo migrar el footer a los nuevos mixins.
+ * Complementa el ejemplo de header-migrated.less
+ */
+
+/* ============================================================================
+   IMPORTAR MIXINS
+   ========================================================================= */
+
+@import "../tools/_breakpoints.less";
+
+/* ============================================================================
+   SECCIÓN 1: Footer Base (Mobile-first)
+   ========================================================================= */
+
+/**
+ * ANTES:
+ * @media only screen and (min-width: 0em) {
+ *   #cs-footer-269 {
+ *     // estilos base
+ *   }
+ * }
+ * 
+ * DESPUÉS:
+ * Los estilos para mobile (min-width: 0) van FUERA de cualquier media query.
+ * Es el enfoque mobile-first estándar.
+ */
+
+#cs-footer-269 {
+  /* Mobile estilos - SIN media query */
+  padding: var(--sectionPadding);
+  background-color: #1a1a1a;
+
+  /* Eliminar el wrapper @media (min-width: 0em) innecesario */
+  .cs-container {
+    width: 100%;
+    max-width: (1280/16rem);
+    margin: auto;
+    padding: 0 (16/16rem);
+  }
+
+  .cs-ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: (12/16rem);
+
+    /**
+     * ANTES:
+     * @media only screen and (min-width: 64em) {
+     *   .cs-ul {
+     *     flex-direction: row;
+     *     gap: (32/16rem);
+     *   }
+     * }
+     * 
+     * DESPUÉS:
+     */
+    .mq-up(@bp-lg) {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: (32/16rem);
+    }
+  }
+
+  .cs-li {
+    list-style: none;
+  }
+
+  .cs-link {
+    /* 14px - 16px */
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    line-height: 1.5em;
+    text-decoration: none;
+    font-weight: 700;
+    color: #f7f7f7;
+    position: relative;
+
+    &:hover {
+      &:before {
+        width: 100%;
+      }
+    }
+
+    &:before {
+      /* active state underline */
+      content: "";
+      width: 0%;
+      height: 2px;
+      background: var(--primary);
+      opacity: 1;
+      display: block;
+      position: absolute;
+      bottom: (0/16rem);
+      left: 0;
+      transition: width 0.3s;
+    }
+  }
+}
+
+/* ============================================================================
+   SECCIÓN 2: Footer Bottom (Copyright, etc.)
+   ========================================================================= */
+
+/**
+ * ANTES:
+ * @media only screen and (min-width: 0em) {
+ *   #cs-footer-269 {
+ *     .cs-bottom {
+ *       // estilos mobile
+ *     }
+ *   }
+ * }
+ * 
+ * @media only screen and (min-width: 64em) {
+ *   #cs-footer-269 {
+ *     .cs-bottom {
+ *       // estilos desktop
+ *     }
+ *   }
+ * }
+ * 
+ * DESPUÉS:
+ * Consolidar en un solo bloque con mobile-first approach
+ */
+
+#cs-footer-269 {
+  .cs-bottom {
+    /* Mobile (base) */
+    padding: (16/16rem) 0;
+    background-color: #000;
+    text-align: center;
+
+    /* Desktop */
+    .mq-up(@bp-lg) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+    }
+  }
+
+  .cs-copyright {
+    font-size: (16/16rem);
+    line-height: 1.5em;
+    color: #b4b2c7;
+    display: block;
+    margin: 0 auto (16/16rem);
+
+    .mq-up(@bp-lg) {
+      margin: 0; // Remove auto-margin on desktop
+    }
+  }
+
+  .cs-social {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: (12/16rem);
+
+    .mq-up(@bp-lg) {
+      /* Desktop - align to the right */
+      justify-content: flex-end;
+    }
+  }
+
+  .cs-social-link {
+    width: (32/16rem);
+    height: (32/16rem);
+    background-color: #4e4b66;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: var(--primary);
+    }
+
+    /* Accesibilidad - sin animación si el usuario lo prefiere */
+    .mq-reduced-motion() {
+      transition: none;
+    }
+  }
+}
+
+/* ============================================================================
+   COMPARACIÓN: ANTES vs DESPUÉS
+   ========================================================================= */
+
+/**
+ * CÓDIGO ORIGINAL (Simplified):
+ * ------------------------------
+ * 
+ * @media only screen and (min-width: 0em) {
+ *   #cs-footer-269 {
+ *     .cs-ul {
+ *       flex-direction: column;
+ *     }
+ *   }
+ * }
+ * 
+ * @media only screen and (min-width: 64em) {
+ *   #cs-footer-269 {
+ *     .cs-ul {
+ *       flex-direction: row;
+ *     }
+ *   }
+ * }
+ * 
+ * 
+ * CÓDIGO MIGRADO:
+ * ---------------
+ * 
+ * #cs-footer-269 {
+ *   .cs-ul {
+ *     // Mobile (base) - SIN media query
+ *     flex-direction: column;
+ *     
+ *     // Desktop
+ *     .mq-up(@bp-lg); {
+ *       flex-direction: row;
+ *     }
+ *   }
+ * }
+ * 
+ * 
+ * VENTAJAS:
+ * ---------
+ * ✅ Menos código duplicado
+ * ✅ Mobile-first approach claro
+ * ✅ Breakpoints centralizados
+ * ✅ Más legible y mantenible
+ * ✅ Todos los estilos del componente en un solo bloque
+ */
+
+/* ============================================================================
+   CONVERSIONES REALIZADAS
+   ========================================================================= */
+
+/**
+ * Original                                    | Migrado
+ * --------------------------------------------|---------------------------
+ * @media only screen and (min-width: 0em)    | (sin media query - base)
+ * @media only screen and (min-width: 64em)   | .mq-up(@bp-lg); { }
+ * 
+ * PATRÓN IDENTIFICADO:
+ * --------------------
+ * En el footer, el patrón es simple:
+ * - Mobile: estilos base (sin media query)
+ * - Desktop (64em+): usando .mq-up(@bp-lg)
+ * 
+ * Este es el patrón IDEAL de mobile-first.
+ */
+
+/* ============================================================================
+   MEJORAS ADICIONALES APLICADAS
+   ========================================================================= */
+
+/**
+ * MEJORA 1: Eliminación de @media (min-width: 0em)
+ * -------------------------------------------------
+ * El media query con min-width: 0 es redundante.
+ * Los estilos base NO necesitan media query.
+ * 
+ * 
+ * MEJORA 2: Consolidación de bloques
+ * -----------------------------------
+ * Antes: Múltiples bloques separados por breakpoint
+ * Después: Un solo bloque por componente con media queries anidadas
+ * 
+ * Beneficios:
+ * - Todos los estilos del componente juntos
+ * - Más fácil de mantener
+ * - Menos scroll para encontrar estilos relacionados
+ * 
+ * 
+ * MEJORA 3: Accesibilidad
+ * -----------------------
+ * Añadido .mq-reduced-motion() para respetar preferencias del usuario:
+ * 
+ * .cs-social-link {
+ *   transition: background-color 0.3s;
+ *   
+ *   .mq-reduced-motion(); {
+ *     transition: none;
+ *   }
+ * }
+ */
+
+/* ============================================================================
+   PATRONES COMUNES EN FOOTER
+   ========================================================================= */
+
+/**
+ * PATRÓN 1: Cambio de flex-direction
+ * -----------------------------------
+ * Muy común en listas y navegación
+ */
+.example-list {
+  display: flex;
+  flex-direction: column; // Mobile
+
+  .mq-up(@bp-lg) {
+    flex-direction: row; // Desktop
+  }
+}
+
+/**
+ * PATRÓN 2: Text-align
+ * --------------------
+ * Centrado en mobile, alineado en desktop
+ */
+.example-text {
+  text-align: center; // Mobile
+
+  .mq-desktop() {
+    text-align: left; // Desktop
+  }
+}
+
+/**
+ * PATRÓN 3: Gaps y spacing
+ * -------------------------
+ * Espaciado más pequeño en mobile
+ */
+.example-container {
+  gap: var(--space-sm); // Mobile
+
+  .mq-tablet-up() {
+    gap: var(--space-md); // Tablet+
+  }
+
+  .mq-desktop() {
+    gap: var(--space-lg); // Desktop
+  }
+}
+
+/**
+ * PATRÓN 4: Full-width vs constrained
+ * ------------------------------------
+ * Ancho completo en mobile, limitado en desktop
+ */
+.example-section {
+  width: 100%; // Mobile
+  padding: var(--space-md);
+
+  .mq-desktop() {
+    max-width: (1280/16rem); // Desktop
+    margin: 0 auto;
+    padding: var(--space-xl);
+  }
+}
+
+/* ============================================================================
+   CHECKLIST DE MIGRACIÓN PARA FOOTER
+   ========================================================================= */
+
+/**
+ * ✅ COMPLETADO:
+ * --------------
+ * ✅ Importar mixins de breakpoints
+ * ✅ Eliminar @media (min-width: 0em) redundante
+ * ✅ Convertir @media (min-width: 64em) a .mq-up(@bp-lg)
+ * ✅ Consolidar estilos por componente
+ * ✅ Aplicar mobile-first approach consistente
+ * ✅ Añadir mejoras de accesibilidad
+ * ✅ Documentar patrones comunes
+ * 
+ * ⏳ PENDIENTE (para migración real):
+ * ------------------------------------
+ * - Testear visualmente en todos los breakpoints
+ * - Verificar en navegadores target
+ * - Comparar con diseño original
+ * - Hacer commit atómico con este cambio
+ * - Actualizar documentación si es necesario
+ */
+
+/* ============================================================================
+   SIGUIENTE PASO
+   ========================================================================= */
+
+/**
+ * Después de migrar header.less y footer.less,
+ * continuar con componentes más pequeños:
+ * 
+ * 1. components/cta.less (simple, buen candidato)
+ * 2. components/landing.less
+ * 3. layouts/news-post-layout.less
+ * 4. pages/contacto.less
+ * 5. etc.
+ * 
+ * Criterio: De más simple a más complejo.
+ * Migrar 1-2 archivos por sesión para evitar errores.
+ */

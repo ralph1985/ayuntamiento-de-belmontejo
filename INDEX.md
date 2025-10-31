@@ -28,12 +28,15 @@
 | Documento                                                           | Descripción                             | Cuándo Usarlo                        |
 | ------------------------------------------------------------------- | --------------------------------------- | ------------------------------------ |
 | **[README.md](./README.md)**                                        | Documentación general del proyecto      | Información del proyecto completo    |
+| **[INDEX.md](./INDEX.md)**                                          | Índice maestro de documentación         | Navegación y búsqueda de docs        |
 | **[TOKENS_SUMMARY.md](./TOKENS_SUMMARY.md)**                        | Resumen ejecutivo del sistema de tokens | Vista rápida, overview para managers |
 | **[TOKENS_README.md](./TOKENS_README.md)**                          | Guía rápida y referencia de tokens      | Uso diario, consulta de tokens       |
+| **[BREAKPOINTS_GUIDE.md](./BREAKPOINTS_GUIDE.md)**                  | 🆕 Guía de mixins de breakpoints        | Uso de media queries con mixins      |
 | **[MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)**                      | Guía detallada de migración             | Al migrar componentes legacy         |
 | **[ARCHITECTURE_EXPLAINED.md](./ARCHITECTURE_EXPLAINED.md)**        | Explicación técnica profunda            | Entender funcionamiento interno      |
 | **[MIGRATION_EXAMPLES.less](./src/styles/MIGRATION_EXAMPLES.less)** | Ejemplos prácticos de código            | Referencia de patrones de código     |
 | **[\_tokens.less](./src/styles/settings/_tokens.less)**             | Archivo fuente de tokens                | Ver/editar tokens disponibles        |
+| **[\_breakpoints.less](./src/styles/tools/_breakpoints.less)**      | 🆕 Mixins de breakpoints                | Código fuente de mixins              |
 
 ---
 
@@ -73,6 +76,16 @@
 
 → **[MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)** - Sección "Convención de Nombres"  
 → **[TOKENS_README.md](./TOKENS_README.md)** - Tabla de categorías
+
+### "¿Cómo usar breakpoints responsivos?" 🆕
+
+→ **[BREAKPOINTS_GUIDE.md](./BREAKPOINTS_GUIDE.md)** - Guía completa de mixins  
+→ **[\_breakpoints.less](./src/styles/tools/_breakpoints.less)** - Código fuente
+
+### "¿Cómo migrar @media queries a mixins?" 🆕
+
+→ **[BREAKPOINTS_GUIDE.md](./BREAKPOINTS_GUIDE.md)** - Sección "Migración desde @media"  
+→ **[examples/header-migrated.less](./src/styles/examples/header-migrated.less)** - Ejemplo práctico
 
 ---
 
