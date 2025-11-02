@@ -76,7 +76,12 @@ const filteredNavData = navData.filter(entry => {
                     href={entry.url}
                     class:list={[
                       'cs-li-link',
-                      { 'cs-active': Astro.url.pathname === entry.url },
+                      {
+                        'cs-active':
+                          entry.url === '/'
+                            ? Astro.url.pathname === entry.url
+                            : Astro.url.pathname.startsWith(entry.url),
+                      },
                     ]}
                     aria-current={
                       Astro.url.pathname === entry.url ? 'page' : undefined
