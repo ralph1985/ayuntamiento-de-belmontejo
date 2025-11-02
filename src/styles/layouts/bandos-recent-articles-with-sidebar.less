@@ -151,7 +151,7 @@
     .news-header {
       padding: clamp(30px, 5vw, 50px);
       border: 1px solid #ebebeb;
-      border-radius: 0 0 (8/16em) (8/16em);
+      border-radius: (8/16em) (8/16em);
       background: white;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       transition: box-shadow 0.3s ease;
@@ -326,6 +326,10 @@
           color: #ffffff;
         }
       }
+    }
+
+    .news-header {
+      background-color: var(--background-sections) !important;
     }
   }
 }
