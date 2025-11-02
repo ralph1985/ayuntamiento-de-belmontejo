@@ -267,17 +267,19 @@
   }
 
   #dark-mode-toggle {
-    width: (48/16rem);
-    height: (48/16rem);
+    /* 44px - 48px */
+    width: clamp(2.75rem, 6vw, 3rem);
+    height: clamp(2.75rem, 6vw, 3rem);
     padding: 0;
     background: transparent;
     border: none;
-    display: block;
-    position: absolute;
-    top: (10/16rem);
-    right: (70/16rem);
-    z-index: 1000;
+    border-radius: (4/16rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     overflow: hidden;
+    order: 2; // En móvil: Logo (1), DarkMode (2), Hamburguesa (3)
 
     img,
     svg {
@@ -313,14 +315,12 @@
   }
 }
 
-/* Desktop - 1024px */
-@media only screen and (min-width: 64rem) {
+/* Desktop - 1196px (matching navigation breakpoint) */
+@media only screen and (min-width: 74.75rem) {
   #dark-mode-toggle {
-    margin: 0;
-    position: relative;
-    top: auto;
-    right: auto;
-    transform: none;
+    width: (48/16rem);
+    height: (48/16rem);
+    order: 3; // En desktop: Logo (1), Nav (2), DarkMode (3)
 
     &:hover {
       cursor: pointer;
