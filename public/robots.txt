@@ -17,7 +17,7 @@ Disallow: /*.json$
 Disallow: /src/
 
 # Permitir específicamente el acceso a recursos públicos importantes
-Allow: /favicon.svg
+Allow: /favicon.ico
 Allow: /robots.txt
 Allow: /sitemap-index.xml
 Allow: /sitemap*.xml
