@@ -130,7 +130,7 @@
 @media only screen and (min-width: 0em) {
   body.dark-mode {
     .news-sidebar_widget-header {
-      color: var(--bodyTextColorWhite);
+      color: var(--bodyTextColorWhite) !important;
 
       &:after {
         background: var(--primary);
@@ -140,6 +140,11 @@
     .news-sidebar_widget-date {
       color: var(--bodyTextColorWhite);
       opacity: 0.8;
+    }
+
+    .news-sidebar_widget-link {
+      color: var(--bodyTextColorWhite);
+      background-color: var(--background-main) !important;
     }
   }
 }
