@@ -1,0 +1,145 @@
+---
+/**
+ * * This component displays information about the BandoMovil mobile app with download links
+ **/
+---
+
+<section class="bandomovil-app">
+  <div class="bandomovil-app__container">
+    <div class="bandomovil-app__content">
+      <h2 class="bandomovil-app__title">
+        Descarga la aplicación de BandoMovil
+      </h2>
+      <p class="bandomovil-app__description">
+        Mantente informado de todos los bandos y comunicados del Ayuntamiento
+        directamente en tu móvil. Descarga la aplicación oficial de BandoMovil
+        de forma gratuita.
+      </p>
+      <div class="bandomovil-app__badges">
+        <a
+          href="https://play.google.com/store/apps/details?id=com.bandomovil.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bandomovil-app__badge"
+          aria-label="Descargar en Google Play"
+        >
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+            alt="Disponible en Google Play"
+            width="180"
+            height="53"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <a
+          href="https://apps.apple.com/es/app/bandomovil/id1049832681"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bandomovil-app__badge"
+          aria-label="Descargar en App Store"
+        >
+          <img
+            src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+            alt="Disponible en Apple Store"
+            width="180"
+            height="53"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="less">
+  @import '@styles/root.less';
+
+  .bandomovil-app {
+    background-color: var(--primary);
+    padding: 4rem 1rem;
+    margin-top: 4rem;
+
+    @media only screen and (min-width: 48rem) {
+      padding: 5rem 1rem;
+    }
+
+    &__container {
+      max-width: 80rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    &__content {
+      max-width: 48rem;
+      margin: 0 auto;
+    }
+
+    &__title {
+      font-size: clamp(1.9375rem, 3.9vw, 3.0625rem);
+      font-weight: 900;
+      line-height: 1.2em;
+      margin: 0 0 1rem 0;
+      color: var(--bodyTextColorWhite);
+      position: relative;
+    }
+
+    &__description {
+      font-size: 1rem;
+      line-height: 1.5em;
+      margin: 0 0 2rem 0;
+      color: var(--bodyTextColorWhite);
+      opacity: 0.9;
+
+      @media only screen and (min-width: 48rem) {
+        font-size: 1.125rem;
+      }
+    }
+
+    &__badges {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      justify-content: center;
+
+      @media only screen and (min-width: 40rem) {
+        flex-direction: row;
+        gap: 1.5rem;
+      }
+    }
+
+    &__badge {
+      display: inline-block;
+      transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+
+      &:hover,
+      &:focus {
+        transform: scale(1.05);
+        opacity: 0.9;
+      }
+
+      img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+      }
+    }
+  }
+
+  // Dark mode adjustments
+  @media only screen and (prefers-color-scheme: dark) {
+    .bandomovil-app {
+      background-color: var(--dark);
+    }
+  }
+
+  body.dark-mode {
+    .bandomovil-app {
+      background-color: var(--dark);
+    }
+  }
+</style>

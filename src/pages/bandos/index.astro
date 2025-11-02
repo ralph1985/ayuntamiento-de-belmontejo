@@ -11,6 +11,7 @@ import '@styles/sidebar.less';
 
 import Landing from '@components/Landing.astro';
 import BandosRecentArticlesWithSidebar from '@layouts/BandosRecentArticlesWithSidebar.astro';
+import BandoMovilApp from '@components/BandoMovilApp.astro';
 
 const posts = await getCollection('bandos');
 posts.sort(
@@ -36,5 +37,6 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 
   <!-- Use the BandosRecentArticlesWithSidebar layout to display the recent bandos in a custom sidebar layout-->
   <BandosRecentArticlesWithSidebar posts={posts} />
+  <BandoMovilApp />
   <CTA />
 </BaseLayout>
