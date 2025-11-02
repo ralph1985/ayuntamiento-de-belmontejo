@@ -255,3 +255,164 @@
     padding: 1rem;
   }
 }
+
+/* Dark Mode Styles */
+body.dark-mode {
+  .cookie-policy {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--medium) 100%);
+  }
+
+  .cookie-policy-header {
+    background: var(--medium);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+    h1 {
+      color: var(--text-primary);
+    }
+  }
+
+  .subtitle {
+    color: var(--text-secondary);
+  }
+
+  .last-updated {
+    color: var(--text-secondary);
+  }
+
+  .cookie-policy-content {
+    background: var(--medium);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .policy-section {
+    border-bottom: 1px solid var(--accent);
+
+    h2 {
+      color: var(--text-primary);
+      border-bottom: 2px solid var(--primary);
+    }
+
+    h3 {
+      color: var(--text-primary);
+    }
+
+    p {
+      color: var(--text-secondary);
+    }
+
+    li {
+      color: var(--text-secondary);
+    }
+  }
+
+  .cookie-type {
+    background: var(--dark);
+    border-left: 4px solid var(--primary);
+
+    h3 {
+      color: var(--text-primary);
+    }
+  }
+
+  .cookie-list {
+    background: var(--medium);
+
+    h4 {
+      color: var(--text-primary);
+    }
+
+    code {
+      background: #9a7e3a;
+      color: var(--text-primary);
+    }
+  }
+
+  .privacy-note {
+    background: #2d4a2d;
+    border-left: 4px solid var(--secondary);
+
+    strong {
+      color: var(--text-primary);
+    }
+  }
+
+  .right-item {
+    background: var(--dark);
+    border: 1px solid var(--accent);
+
+    h3 {
+      color: var(--text-primary);
+    }
+
+    p {
+      color: var(--text-secondary);
+    }
+  }
+
+  .manage-cookies {
+    background: linear-gradient(135deg, var(--primary), #4a6f9e);
+
+    h3 {
+      color: var(--text-white);
+    }
+
+    p {
+      color: var(--text-white);
+    }
+  }
+
+  .btn-primary {
+    background: var(--text-white);
+    color: var(--primary);
+
+    &:hover {
+      background: var(--text-primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .browser-instructions {
+    details {
+      border: 1px solid var(--accent);
+      background: var(--dark);
+    }
+
+    summary {
+      background: var(--dark);
+      border-bottom: 1px solid var(--accent);
+      color: var(--text-primary);
+
+      &:hover {
+        background: var(--accent);
+      }
+    }
+
+    ol {
+      color: var(--text-secondary);
+
+      li {
+        color: var(--text-secondary);
+      }
+    }
+  }
+
+  .contact-info {
+    background: var(--dark);
+
+    p {
+      color: var(--text-secondary);
+
+      strong {
+        color: var(--text-primary);
+      }
+    }
+
+    a {
+      color: var(--primary);
+
+      &:hover {
+        color: var(--primaryLight);
+      }
+    }
+  }
+}
