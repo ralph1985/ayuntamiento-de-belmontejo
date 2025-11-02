@@ -1181,6 +1181,18 @@
   }
 }
 
+@media only screen and (min-width: 0em) {
+  body.dark-mode {
+    #featured-content {
+      background-color: var(--background-sections);
+    }
+
+    .cs-title {
+      color: var(--bodyTextColorWhite) !important;
+    }
+  }
+}
+
 /*-- -------------------------- -->
 <---       Social Media         -->
 <--- -------------------------- -*/
@@ -1258,6 +1270,12 @@
       }
     }
   }
+
+  body.dark-mode {
+    #social-media {
+      background-color: var(--background-main);
+    }
+  }
 }
 
 /* Tablet - 768px */
@@ -1267,9 +1285,4 @@
       max-width: 600px;
     }
   }
-}
-
-// Modo oscuro
-[data-theme="dark"] #social-media {
-  background-color: var(--dark);
 }
