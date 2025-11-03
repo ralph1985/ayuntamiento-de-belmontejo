@@ -3,7 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: true,
-  snapshotPathTemplate: '{testDir}/__screenshots__/{projectName}/{testFilePath}/{arg}{ext}',
+  snapshotPathTemplate:
+    '{testDir}/__screenshots__/{projectName}/{testFilePath}/{arg}{ext}',
   timeout: 30 * 1000,
   expect: {
     timeout: 10 * 1000,
