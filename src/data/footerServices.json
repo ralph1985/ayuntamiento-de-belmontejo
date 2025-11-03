@@ -15,6 +15,13 @@
       "isActive": true
     },
     {
+      "id": 5,
+      "title": "Turismo Castilla-La Mancha",
+      "url": "https://www.turismocastillalamancha.es/patrimonio/belmontejo-19831/",
+      "isExternal": true,
+      "isActive": true
+    },
+    {
       "id": 1,
       "title": "Información municipal",
       "url": "",
