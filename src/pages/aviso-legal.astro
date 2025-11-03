@@ -1,0 +1,203 @@
+---
+import Landing from '../components/Landing.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import client from '../data/client.json';
+import { getImage } from 'astro:assets';
+import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
+
+const optimizedImage = await getImage({ src: vistaAerea });
+
+const pageTitle = 'Aviso Legal - Ayuntamiento de Belmontejo';
+const description =
+  'Marco legal, condiciones de uso y responsabilidades del sitio web oficial del Ayuntamiento de Belmontejo.';
+---
+
+<BaseLayout title={pageTitle} description={description}>
+  <Landing title="⚖️ Aviso Legal" image={optimizedImage}>
+    <p class="subtitle">
+      Información jurídica esencial sobre el sitio web del {client.name}
+      <br />
+      <strong>Última actualización:</strong>
+      <span class="pending-data">[Pendiente de confirmación]</span>
+    </p>
+  </Landing>
+
+  <section class="legal-notice">
+    <div class="container">
+      <div class="legal-notice-content">
+        <section class="legal-section" id="identificacion">
+          <h2>1. Identificación del titular</h2>
+          <p>
+            De acuerdo con lo previsto en la Ley 34/2002, de 11 de julio, de
+            Servicios de la Sociedad de la Información y de Comercio
+            Electrónico (LSSI-CE), se informa que este sitio web es titularidad
+            del {client.name}.
+          </p>
+          <ul class="legal-list">
+            <li>
+              <strong>Domicilio:</strong> {client.address.lineOne}, {client.address.lineTwo}
+              ({client.address.zip}, {client.address.city})
+            </li>
+            <li>
+              <strong>Teléfono:</strong>
+              <a href={`tel:${client.phoneForTel}`}>{client.phoneForTel}</a>
+            </li>
+            <li>
+              <strong>Correo electrónico:</strong>
+              <a href={`mailto:${client.email}`}>{client.email}</a>
+            </li>
+            <li>
+              <strong>CIF:</strong>
+              <span class="pending-data">[Pendiente de facilitar por el ayuntamiento]</span>
+            </li>
+            <li>
+              <strong>Datos registrales / DIR3:</strong>
+              <span class="pending-data">[Pendiente de facilitar por el ayuntamiento]</span>
+            </li>
+            <li>
+              <strong>Horario de atención:</strong>
+              <span class="pending-data">[Pendiente de facilitar por el ayuntamiento]</span>
+            </li>
+          </ul>
+          <p class="note">
+            👉 Sustituye los campos marcados como «Pendiente» en cuanto dispongas
+            de los datos oficiales proporcionados por el ayuntamiento.
+          </p>
+        </section>
+
+        <section class="legal-section" id="condiciones-de-uso">
+          <h2>2. Condiciones de uso del sitio web</h2>
+          <p>
+            El acceso y navegación por este sitio web implica la aceptación de
+            las presentes condiciones generales de uso. El {client.name}
+            facilita información y servicios municipales con el objetivo de
+            mejorar la comunicación con la ciudadanía.
+          </p>
+          <ul class="legal-list">
+            <li>
+              El usuario se compromete a realizar un uso adecuado y lícito del
+              contenido publicado, evitando actividades ilegales, ilícitas o
+              contrarias a la buena fe.
+            </li>
+            <li>
+              El ayuntamiento se reserva el derecho a actualizar, modificar o
+              eliminar la información publicada, así como a limitar o impedir el
+              acceso cuando se detecten usos indebidos.
+            </li>
+            <li>
+              El uso de formularios u otros canales de comunicación no implica
+              la creación de una relación contractual ni el inicio automático de
+              procedimientos administrativos.
+            </li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="propiedad-intelectual">
+          <h2>3. Propiedad intelectual e industrial</h2>
+          <p>
+            Los contenidos, diseños, logotipos, fotografías, archivos de audio o
+            vídeo y cualquier otro material presente en este sitio web son
+            titularidad del {client.name} o se utilizan con las correspondientes
+            licencias. Queda prohibida su reproducción, distribución o
+            comunicación pública sin autorización expresa, salvo en los supuestos
+            permitidos por la normativa de reutilización de la información del
+            sector público.
+          </p>
+          <p>
+            Cuando se publiquen contenidos procedentes de terceros, se
+            mencionará expresamente su autoría y licencias asociadas.
+          </p>
+        </section>
+
+        <section class="legal-section" id="responsabilidad">
+          <h2>4. Responsabilidad y enlaces</h2>
+          <p>
+            El {client.name} trabaja para que la información sea exacta y esté
+            actualizada, si bien no puede garantizar la inexistencia de errores
+            u omisiones. En caso de detectar alguna incidencia, puedes
+            comunicarla a través de los canales de contacto facilitados.
+          </p>
+          <p>
+            El sitio puede incluir enlaces a páginas externas sobre las que el
+            ayuntamiento no tiene control. La presencia de dichos enlaces tiene
+            carácter informativo y no supone la asunción de responsabilidades
+            sobre los contenidos enlazados.
+          </p>
+        </section>
+
+        <section class="legal-section" id="proteccion-de-datos">
+          <h2>5. Protección de datos personales</h2>
+          <p>
+            Los datos personales recabados a través de este sitio web serán
+            tratados conforme al Reglamento (UE) 2016/679 (RGPD) y a la Ley
+            Orgánica 3/2018, de 5 de diciembre. Encontrarás toda la información
+            detallada sobre finalidades, legitimación, plazos de conservación y
+            derechos en la futura Política de Privacidad.
+          </p>
+          <ul class="legal-list">
+            <li>
+              <strong>Delegado/a de Protección de Datos:</strong>
+              <span class="pending-data">[Pendiente de facilitar por el ayuntamiento]</span>
+            </li>
+            <li>
+              <strong>Ejercicio de derechos ARSOPL:</strong> Puedes dirigirte al
+              correo electrónico indicado en este aviso o a la dirección postal
+              del ayuntamiento. Una vez designado, añade el contacto directo del
+              DPD.
+            </li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="cookies">
+          <h2>6. Política de cookies</h2>
+          <p>
+            El uso de cookies y tecnologías similares se detalla en la
+            <a href="/politica-de-cookies">Política de Cookies</a> del sitio. En
+            ella encontrarás la información sobre los tipos de cookies
+            utilizadas, su finalidad y el modo de gestionar tus preferencias.
+          </p>
+        </section>
+
+        <section class="legal-section" id="notificaciones">
+          <h2>7. Notificaciones y medios de contacto oficiales</h2>
+          <p>
+            Para comunicaciones formales relacionadas con el contenido de este
+            aviso legal, puedes utilizar los siguientes canales oficiales:
+          </p>
+          <ul class="legal-list">
+            <li>
+              <strong>Correo electrónico:</strong>
+              <a href={`mailto:${client.email}`}>{client.email}</a>
+            </li>
+            <li>
+              <strong>Teléfono:</strong>
+              <a href={`tel:${client.phoneForTel}`}>{client.phoneForTel}</a>
+            </li>
+            <li>
+              <strong>Sede física:</strong> {client.address.lineOne},
+              {client.address.lineTwo} ({client.address.zip}, {client.address.city})
+            </li>
+            <li>
+              <strong>Sede electrónica / registro:</strong>
+              <span class="pending-data">[Añadir enlace oficial cuando esté disponible]</span>
+            </li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="actualizaciones">
+          <h2>8. Actualizaciones del aviso</h2>
+          <p>
+            El contenido de este aviso legal podrá modificarse para adaptarse a
+            novedades legislativas o a cambios en la prestación de servicios del
+            ayuntamiento. Se recomienda revisar periódicamente esta sección para
+            mantenerse informado sobre su versión vigente.
+          </p>
+        </section>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style lang="less">
+  @import '../styles/pages/aviso-legal.less';
+</style>
