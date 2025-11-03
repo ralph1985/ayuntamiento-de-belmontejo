@@ -66,6 +66,29 @@ El proyecto sigue la estructura estándar de Astro:
 - **`npm run build`:** Compila el sitio para producción.
 - **`npm run preview`:** Vista previa del sitio compilado.
 - **`npm run fetch-bandos`:** Script para obtener y actualizar los bandos municipales.
+- **`npm run test:e2e`:** Construye el sitio y ejecuta la batería de pruebas end-to-end con Playwright.
+
+### Pruebas end-to-end
+
+Las pruebas visuales están implementadas con [Playwright](https://playwright.dev/) y generan capturas de referencia para detectar regresiones.
+
+1. Instala los navegadores de Playwright (una sola vez):
+
+   ```bash
+   npx playwright install
+   ```
+
+2. Ejecuta las pruebas (construye el sitio y lanza las comparaciones). El script asigna valores ficticios a `OAUTH_GITHUB_CLIENT_ID` y `OAUTH_GITHUB_CLIENT_SECRET` si no están definidos para que el build no falle durante el pipeline local:
+
+   ```bash
+   npm run test:e2e
+   ```
+
+La primera vez que se ejecute la suite se generarán las capturas de referencia en `tests/e2e/__screenshots__/`. Si hay cambios visuales esperados, actualiza las capturas con:
+
+```bash
+npm run test:e2e -- --update-snapshots
+```
 
 ## Despliegue
 
