@@ -4,8 +4,10 @@ const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const npxCommand = process.platform === 'win32' ? 'npx.cmd' : 'npx';
 const env = {
   ...process.env,
-  OAUTH_GITHUB_CLIENT_ID: process.env.OAUTH_GITHUB_CLIENT_ID ?? 'test-client-id',
-  OAUTH_GITHUB_CLIENT_SECRET: process.env.OAUTH_GITHUB_CLIENT_SECRET ?? 'test-client-secret',
+  OAUTH_GITHUB_CLIENT_ID:
+    process.env.OAUTH_GITHUB_CLIENT_ID ?? 'test-client-id',
+  OAUTH_GITHUB_CLIENT_SECRET:
+    process.env.OAUTH_GITHUB_CLIENT_SECRET ?? 'test-client-secret',
 };
 
 const buildResult = spawnSync(npmCommand, ['run', 'build'], {
