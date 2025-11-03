@@ -1,16 +1,22 @@
-echo "Running lint and format checks..."
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
 
-# Run linting
-npm run lint
-if [ $? -ne 0 ]; then
+set -e
+
+echo "Running lint, format, and e2e checks..."
+
+if ! npm run lint; then
   echo "❌ Linting failed. Please fix the issues before pushing."
   exit 1
 fi
 
-# Run format check
-npm run format
-if [ $? -ne 0 ]; then
+if ! npm run format; then
   echo "❌ Code formatting check failed. Please run 'npm run format:write' to fix formatting issues."
+  exit 1
+fi
+
+if ! npm run test:e2e; then
+  echo "❌ E2E tests failed. Please address the reported issues before pushing."
   exit 1
 fi
 
