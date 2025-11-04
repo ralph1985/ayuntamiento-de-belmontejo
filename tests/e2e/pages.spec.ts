@@ -1,21 +1,22 @@
 import { test, expect } from '@playwright/test';
 
 const routes = [
-  { path: '/sobre-el-pueblo', name: 'about' },
-  { path: '/testimonios', name: 'testimonials' },
-  { path: '/contacto', name: 'contact' },
-  { path: '/buscar', name: 'search' },
-  { path: '/politica-de-cookies', name: 'cookies' },
-  { path: '/proyectos', name: 'projects' },
-  { path: '/proyectos/proyecto-1', name: 'project-1' },
-  { path: '/proyectos/proyecto-2', name: 'project-2' },
-  { path: '/noticias', name: 'news' },
-  { path: '/noticias/ayudas-despoblacion-cuenca', name: 'news-detail' },
+  { path: '/', name: 'inicio' },
+  { path: '/sobre-el-pueblo', name: 'sobre-el-pueblo' },
+  { path: '/contacto', name: 'contacto' },
+  { path: '/noticias', name: 'noticias' },
+  { path: '/noticias/ayudas-despoblacion-cuenca', name: 'noticias-detalle' },
   { path: '/bandos', name: 'bandos' },
   {
     path: '/bandos/1386492-uso-de-las-fuentes-del-parque-y-fronton',
-    name: 'bandos-detail',
+    name: 'bandos-detalle',
   },
+  { path: '/proyectos', name: 'proyectos' },
+  { path: '/proyectos/proyecto-1', name: 'proyecto-1' },
+  { path: '/proyectos/proyecto-2', name: 'proyecto-2' },
+  { path: '/testimonios', name: 'testimonios' },
+  { path: '/buscar', name: 'buscar' },
+  { path: '/politica-de-cookies', name: 'politica-de-cookies' },
 ];
 
 for (const { path, name } of routes) {
@@ -28,7 +29,9 @@ for (const { path, name } of routes) {
       });
     });
 
-    test(`captura visual estable en modo oscuro (${path})`, async ({ page }) => {
+    test(`captura visual estable en modo oscuro (${path})`, async ({
+      page,
+    }) => {
       await page.addInitScript(() => {
         window.localStorage.setItem('theme', 'dark');
       });
