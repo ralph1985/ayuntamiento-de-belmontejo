@@ -2,6 +2,7 @@
 import client from '@data/client.json';
 import navData from '@data/navData.json';
 import footerServices from '@data/footerServices.json';
+import { filterFooterNavigationEntries, resolveFooterServiceLink } from '@components/footer.helpers';
 import { getCurrentYear } from '@js/utils';
 import packageJson from '../../package.json';
 
@@ -10,12 +11,7 @@ const version = packageJson.version;
 
 // Filter navigation data to show admin menu only when enabled
 const showAdminMenu = import.meta.env.PUBLIC_ADMIN_MENU === 'true';
-const filteredNavData = navData.filter(entry => {
-  if (entry.isAdmin) {
-    return showAdminMenu;
-  }
-  return true;
-});
+const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
 ---
 
 <!-- ============================================ --><!--                   Footer                     --><!-- ============================================ -->
@@ -66,21 +62,25 @@ const filteredNavData = navData.filter(entry => {
             <h2>Servicios</h2>
           </li>
           {
-            footerServices.services.map(service => (
-              <li>
-                {service.isActive && service.url ? (
-                  <a
-                    href={service.url}
-                    target={service.isExternal ? '_blank' : undefined}
-                    rel={service.isExternal ? 'noopener noreferrer' : undefined}
-                  >
-                    {service.title}
-                  </a>
-                ) : (
-                  service.title
-                )}
-              </li>
-            ))
+            footerServices.services.map(service => {
+              const serviceLink = resolveFooterServiceLink(service);
+
+              return (
+                <li>
+                  {serviceLink.isLink && service.url ? (
+                    <a
+                      href={service.url}
+                      target={serviceLink.target}
+                      rel={serviceLink.rel}
+                    >
+                      {service.title}
+                    </a>
+                  ) : (
+                    service.title
+                  )}
+                </li>
+              );
+            })
           }
         </ul>
         <ul>
