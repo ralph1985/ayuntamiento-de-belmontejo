@@ -1,10 +1,18 @@
+// Checks the value of aria expanded on an element and changes it accordingly whether it is expanded or not
+function ariaExpanded(element) {
+  const isExpanded = element.getAttribute('aria-expanded');
+  element.setAttribute(
+    'aria-expanded',
+    isExpanded === 'false' ? 'true' : 'false'
+  );
+}
+
 // Astro:page-load wrapper for View Transitions purposes
 document.addEventListener('astro:page-load', () => {
   // Make the script controlling the <Hamburger /> mobile menu component available after navigating to a new page.
 
   const CSbody = document.querySelector('body');
   const CSnavbarMenu = document.getElementById('cs-navigation');
-  // const CSUlWrapper = document.getElementById('cs-ul-wrapper');
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
 
   function toggleMenu() {
@@ -32,18 +40,9 @@ document.addEventListener('astro:page-load', () => {
     }
   });
 
-  // Checks the value of aria expanded on an element and changes it accordingly whether it is expanded or not
-  function ariaExpanded(element) {
-    const isExpanded = element.getAttribute('aria-expanded');
-    element.setAttribute(
-      'aria-expanded',
-      isExpanded === 'false' ? 'true' : 'false'
-    );
-  }
-
   // Add event listeners to each dropdown element for accessibility
   const dropdownElements = document.querySelectorAll('.cs-dropdown');
-  dropdownElements.forEach(element => {
+  for (const element of dropdownElements) {
     // This variable tracks if the Escape key was pressed. This flag will be checked in the focusout event handler to ensure that pressing the Escape key does not trigger the focusout event and subsequently remove the cs-active class from the dropdown
     let escapePressed = false;
 
@@ -94,7 +93,7 @@ document.addEventListener('astro:page-load', () => {
 
     // Handles dropdown menus on mobile - the matching media query (max-width: 63.9375rem) is necessary so that clicking the dropdown button on desktop does not add the active class and thus interfere with the hover state
 
-    const maxWidthMediaQuery = window.matchMedia('(max-width: 63.9375rem)');
+    const maxWidthMediaQuery = globalThis.matchMedia('(max-width: 63.9375rem)');
     if (maxWidthMediaQuery.matches) {
       element.addEventListener('click', () => {
         element.classList.toggle('cs-active');
@@ -114,15 +113,15 @@ document.addEventListener('astro:page-load', () => {
         }
       });
     }
-  });
+  }
 
   // Pressing Enter will redirect to the href
   const dropdownLinks = document.querySelectorAll('.cs-drop-li > .cs-li-link');
-  dropdownLinks.forEach(link => {
+  for (const link of dropdownLinks) {
     link.addEventListener('keydown', function (event) {
       if (event.key === 'Enter') {
-        window.location.href = this.href;
+        globalThis.location.href = this.href;
       }
     });
-  });
+  }
 });
