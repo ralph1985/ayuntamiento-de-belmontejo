@@ -48,7 +48,7 @@ export function resolveElementTag(href?: string | null): 'a' | 'button' {
 
 export function resolveRelAttribute(
   target?: string | null,
-  rel?: string | null,
+  rel?: string | null
 ): string | undefined {
   if (rel && rel.trim().length > 0) {
     return rel.trim();
