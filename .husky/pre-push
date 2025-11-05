@@ -17,13 +17,8 @@ if ! npm run test:unit; then
   exit 1
 fi
 
-if ! npm run test:e2e:navigation; then
-  echo "❌ Navigation tests failed. Please address the reported issues before pushing."
-  exit 1
-fi
-
-if ! npm run test:e2e:visual; then
-  echo "❌ Visual regression tests failed. Please address the reported issues before pushing."
+if ! npm run test:e2e; then
+  echo "❌ End-to-end tests failed. Please address the reported issues before pushing."
   exit 1
 fi
 
