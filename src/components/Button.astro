@@ -52,8 +52,7 @@ const classes = buildButtonClassList({
   className,
 });
 
-const computedRel =
-  tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
+const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
 ---
 
 {
@@ -68,11 +67,7 @@ const computedRel =
       <slot />
     </a>
   ) : (
-    <button
-      class={classes}
-      type={type}
-      {...(rest as Record<string, unknown>)}
-    >
+    <button class={classes} type={type} {...(rest as Record<string, unknown>)}>
       <slot />
     </button>
   )

@@ -8,7 +8,7 @@ import { describe, expect, it } from 'vitest';
 describe('buildButtonClassList', () => {
   it('returns default classes when no options provided', () => {
     expect(buildButtonClassList()).toBe(
-      'c-button c-button--primary c-button--md',
+      'c-button c-button--primary c-button--md'
     );
   });
 
@@ -20,7 +20,7 @@ describe('buildButtonClassList', () => {
     });
 
     expect(result).toBe(
-      'c-button c-button--secondary c-button--lg c-button--full',
+      'c-button c-button--secondary c-button--lg c-button--full'
     );
   });
 
@@ -51,13 +51,13 @@ describe('resolveRelAttribute', () => {
 
   it('falls back to noopener when target is _blank', () => {
     expect(resolveRelAttribute('_blank', undefined)).toBe(
-      'noopener noreferrer',
+      'noopener noreferrer'
     );
   });
 
   it('is case insensitive for target matching', () => {
     expect(resolveRelAttribute('_BLANK', undefined)).toBe(
-      'noopener noreferrer',
+      'noopener noreferrer'
     );
   });
 
