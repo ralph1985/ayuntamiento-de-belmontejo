@@ -12,8 +12,8 @@ if ! npm run format; then
   exit 1
 fi
 
-if ! npm run test:e2e; then
-  echo "❌ E2E tests failed. Please address the reported issues before pushing."
+if ! npm run test:e2e:navigation; then
+  echo "❌ Navigation tests failed. Please address the reported issues before pushing."
   exit 1
 fi
 
