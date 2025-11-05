@@ -106,7 +106,7 @@ function generateFilename(title, guid) {
     .replaceAll(/[^a-z0-9\s-]/g, '') // Remove special characters
     .replaceAll(/\s+/g, '-') // Replace spaces with hyphens
     .replaceAll(/-+/g, '-') // Replace multiple hyphens with single
-    .replaceAll(/^-|-$/g, ''); // Remove leading/trailing hyphens
+    .replaceAll(/(?:^-|-$)/g, ''); // Remove leading/trailing hyphens
 
   // Limit slug length
   if (slug.length > 50) {
