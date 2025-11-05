@@ -124,9 +124,9 @@ test.describe('Navegación interna de contenido', () => {
     await page.goto('/noticias');
 
     const firstArticle = page.locator('article.recent-articles').first();
-    const articleTitle = (await firstArticle
-      .getByRole('heading', { level: 2 })
-      .innerText()).trim();
+    const articleTitle = (
+      await firstArticle.getByRole('heading', { level: 2 }).innerText()
+    ).trim();
 
     const newsLink = firstArticle.getByRole('link', {
       name: 'Continuar leyendo',
@@ -154,9 +154,9 @@ test.describe('Navegación interna de contenido', () => {
     await page.goto('/bandos');
 
     const firstBando = page.locator('article.recent-articles').first();
-    const bandoTitle = (await firstBando
-      .getByRole('heading', { level: 2 })
-      .innerText()).trim();
+    const bandoTitle = (
+      await firstBando.getByRole('heading', { level: 2 }).innerText()
+    ).trim();
 
     const bandoLink = firstBando.getByRole('link', {
       name: 'Leer bando',
