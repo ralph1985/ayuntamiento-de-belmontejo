@@ -19,6 +19,7 @@
     "test:unit:coverage": "vitest --run --coverage",
     "test:e2e": "node scripts/run-e2e.js",
     "test:e2e:visual": "node scripts/run-e2e.js tests/e2e/pages.spec.ts tests/e2e/pages.mobile.spec.ts",
+    "test:e2e:visual:last": "node scripts/run-e2e.js --last-failed tests/e2e/pages.spec.ts tests/e2e/pages.mobile.spec.ts",
     "test:e2e:navigation": "node scripts/run-e2e.js tests/e2e/navigation.spec.ts",
     "sonar:scan": "dotenv -e .env -- sonar-scanner"
   },
