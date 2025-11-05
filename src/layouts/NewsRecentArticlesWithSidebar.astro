@@ -46,7 +46,7 @@ const { posts } = Astro.props;
               </div>
               <h2 class="news-h1">{post.data.title}</h2>
               <p class="news-desc">{post.data.description}</p>
-              <a href={post.id} class="news-link">
+              <a href={`/noticias/${post.id}`} class="news-link">
                 Continuar leyendo
               </a>
             </div>
