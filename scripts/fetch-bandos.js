@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -102,11 +102,11 @@ function generateFilename(title, guid) {
   let slug = title
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Remove accents
-    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-') // Replace multiple hyphens with single
-    .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+    .replaceAll(/[\u0300-\u036f]/g, '') // Remove accents
+    .replaceAll(/[^a-z0-9\s-]/g, '') // Remove special characters
+    .replaceAll(/\s+/g, '-') // Replace spaces with hyphens
+    .replaceAll(/-+/g, '-') // Replace multiple hyphens with single
+    .replaceAll(/^-|-$/g, ''); // Remove leading/trailing hyphens
 
   // Limit slug length
   if (slug.length > 50) {
@@ -127,8 +127,7 @@ function generateFrontmatter(item) {
   }
 
   // Mark some bandos as featured based on keywords or recent date
-  // TODO: definir criterios para destacados
-  const featuredKeywords = [];
+  const featuredKeywords = ['Belmontejo', 'importante', 'urgente', 'aviso'];
   const isRecent = Date.now() - date.getTime() < 30 * 24 * 60 * 60 * 1000; // Last 30 days
   const hasKeyword = featuredKeywords.some(
     keyword =>
@@ -153,39 +152,39 @@ function generateContent(item) {
 
   // Basic HTML to markdown conversion
   content = content
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<\/p>/gi, '\n\n')
-    .replace(/<p[^>]*>/gi, '')
-    .replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**')
-    .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
-    .replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
-    .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
-    .replace(/<u[^>]*>(.*?)<\/u>/gi, '*$1*') // Use * for underlined text
-    .replace(/<span[^>]*>(.*?)<\/span>/gi, '$1')
-    .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n')
-    .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n')
-    .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n')
-    .replace(/<h4[^>]*>(.*?)<\/h4>/gi, '#### $1\n')
-    .replace(/<h5[^>]*>(.*?)<\/h5>/gi, '##### $1\n')
-    .replace(/<h6[^>]*>(.*?)<\/h6>/gi, '###### $1\n');
+    .replaceAll(/<br\s*\/?>/gi, '\n')
+    .replaceAll(/<\/p>/gi, '\n\n')
+    .replaceAll(/<p[^>]*>/gi, '')
+    .replaceAll(/<b[^>]*>(.*?)<\/b>/gi, '**$1**')
+    .replaceAll(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
+    .replaceAll(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
+    .replaceAll(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
+    .replaceAll(/<u[^>]*>(.*?)<\/u>/gi, '*$1*') // Use * for underlined text
+    .replaceAll(/<span[^>]*>(.*?)<\/span>/gi, '$1')
+    .replaceAll(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n')
+    .replaceAll(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n')
+    .replaceAll(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n')
+    .replaceAll(/<h4[^>]*>(.*?)<\/h4>/gi, '#### $1\n')
+    .replaceAll(/<h5[^>]*>(.*?)<\/h5>/gi, '##### $1\n')
+    .replaceAll(/<h6[^>]*>(.*?)<\/h6>/gi, '###### $1\n');
 
   // Handle images
   const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
-  content = content.replace(imgRegex, (match, src) => {
+  content = content.replaceAll(imgRegex, (match, src) => {
     const altMatch = match.match(/alt=["']([^"']*)["']/gi);
     const alt = altMatch ? altMatch[1] : 'Imagen';
     return `![${alt}](${src})`;
   });
 
   // Remove remaining HTML tags
-  content = content.replace(/<[^>]+>/g, '');
+  content = content.replaceAll(/<[^>]+>/g, '');
 
   // Clean up whitespace more carefully
   content = content
-    .replace(/\n\s*\n\s*\n/g, '\n\n') // Remove multiple blank lines
-    .replace(/\n[ \t]+/g, '\n') // Remove lines with only spaces/tabs
-    .replace(/[ \t]+\n/g, '\n') // Remove trailing spaces on lines
-    .replace(/[ \t]+/g, ' ') // Replace multiple spaces with single space
+    .replaceAll(/\n\s*\n\s*\n/g, '\n\n') // Remove multiple blank lines
+    .replaceAll(/\n[ \t]+/g, '\n') // Remove lines with only spaces/tabs
+    .replaceAll(/[ \t]+\n/g, '\n') // Remove trailing spaces on lines
+    .replaceAll(/[ \t]+/g, ' ') // Replace multiple spaces with single space
     .trim();
 
   // Split into paragraphs and clean each one
@@ -200,14 +199,14 @@ function generateContent(item) {
 
 function cleanHTML(html) {
   return html
-    .replace(/<[^>]+>/g, '') // Remove HTML tags
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ')
+    .replaceAll(/<[^>]+>/g, '') // Remove HTML tags
+    .replaceAll('&nbsp;', ' ')
+    .replaceAll('&amp;', '&')
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&#39;', "'")
+    .replaceAll(/\s+/g, ' ')
     .trim();
 }
 
@@ -222,4 +221,4 @@ function escapeYaml(str) {
 }
 
 // Run the script
-fetchBandos();
+await fetchBandos();
