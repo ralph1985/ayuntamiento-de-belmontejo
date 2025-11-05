@@ -2,6 +2,7 @@
 import Landing from '../components/Landing.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import client from '../data/client.json';
+import Button from '@components/Button.astro';
 import { getImage } from 'astro:assets';
 import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
 
@@ -150,9 +151,7 @@ const description =
               Haga clic en el botón siguiente para abrir el panel de
               configuración de cookies:
             </p>
-            <button id="open-cookie-settings" class="btn-primary">
-              Configurar Cookies
-            </button>
+            <Button id="open-cookie-settings">Configurar Cookies</Button>
           </div>
         </section>
 

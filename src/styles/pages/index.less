@@ -123,61 +123,26 @@
       color: var(--bodyTextColorWhite);
     }
 
-    .cs-button-solid {
-      line-height: clamp(2.875em, 5.5vw, 3.5em);
-      height: initial;
+    .c-button {
       margin-bottom: calc(16 / 16 * 1rem);
     }
 
-    .cs-button-transparent {
+    .c-button--primary {
+      min-height: clamp(2.875em, 5.5vw, 3.5em);
+      padding-inline: clamp(1.875rem, 4vw, 2.5rem);
+    }
+
+    .c-button--ghost {
+      --button-ghost-color: var(--bodyTextColorWhite);
+      --button-ghost-fill: #000;
       font-size: (16/16rem);
       font-weight: 700;
-      /* 46px - 56px */
-      line-height: clamp(2.875em, 5.5vw, 3.5em);
-      text-decoration: none;
+      min-height: clamp(2.875em, 5.5vw, 3.5em);
       width: (180/16rem);
-      /* 46px - 56px */
-      height: clamp(2.875em, 5.5vw, 3.5em);
       margin: 0 (8/16rem);
       box-sizing: border-box;
       padding: 0;
-      color: #fff;
-      background-color: transparent;
-      border: 1px solid var(--bodyTextColorWhite);
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-
-      &:before {
-        content: "";
-        background: #000;
-        opacity: 1;
-        display: block;
-        position: absolute;
-        /* so it sits on top of the border */
-        top: -1px;
-        right: -1px;
-        bottom: -1px;
-        left: -1px;
-        z-index: -1;
-        /* this is what creates the grow affect on hover */
-        transform: scaleX(0);
-        transition: transform 0.3s;
-        transform-origin: left;
-      }
-
-      &:hover {
-        &:before {
-          transform: scaleX(1);
-        }
-      }
-
-      .cs-img {
-        margin-right: (12/16rem);
-        display: block;
-      }
+      text-decoration: none;
     }
   }
 }
@@ -213,7 +178,7 @@
       }
     }
 
-    .cs-button-solid {
+    .c-button {
       margin-right: (20/16rem);
       margin-bottom: 0;
     }
@@ -487,7 +452,7 @@
       bottom: (0/16rem);
     }
 
-    .cs-button-solid {
+    .c-button {
       margin-top: (32/16rem);
     }
   }

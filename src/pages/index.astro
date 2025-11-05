@@ -4,6 +4,7 @@ import CTA from '@components/CTA.astro';
 import FAQ from '@components/FAQ.astro';
 import FeaturedContent from '@components/FeaturedContent.astro';
 import SocialMediaLinks from '@components/SocialMediaLinks.astro';
+import Button from '@components/Button.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -38,8 +39,8 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
           detenerse, donde las raíces siguen vivas y donde cada rincón cuenta
           una historia.
         </p>
-        <a href="/sobre-el-pueblo" class="cs-button-solid">Descubre más</a>
-        <a href="/contacto" class="cs-button-transparent"> Contactar </a>
+        <Button href="/sobre-el-pueblo">Descubre más</Button>
+        <Button href="/contacto" variant="ghost">Contactar</Button>
       </div>
     </div>
 
@@ -201,9 +202,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
             height="77"
           />
         </div>
-        <a href="/sobre-el-pueblo" class="cs-button-solid"
-          >Conoce más sobre nosotros</a
-        >
+        <Button href="/sobre-el-pueblo"> Conoce más sobre nosotros </Button>
       </div>
     </div>
   </section>
@@ -469,7 +468,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
           </picture>
         </div>
       </div>
-      <a href="/proyectos" class="cs-button-solid">Ver todos los proyectos</a>
+      <Button href="/proyectos">Ver todos los proyectos</Button>
     </div>
   </section>
 
@@ -559,11 +558,9 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
           />
         </li>
       </ul>
-      <a
-        aria-label="read more reviews"
-        href="/testimonios"
-        class="cs-button-solid">Más testimonios</a
-      >
+      <Button aria-label="read more reviews" href="/testimonios">
+        Más testimonios
+      </Button>
     </div>
   </section>
 

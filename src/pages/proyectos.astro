@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/CTA.astro';
 import Landing from '@components/Landing.astro';
+import Button from '@components/Button.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -217,7 +218,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
         </div>
       </div>
-      <a href="/contacto" class="cs-button-solid">Contactar</a>
+      <Button href="/contacto">Contactar</Button>
     </div>
   </section>
   <CTA />

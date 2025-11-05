@@ -15,6 +15,7 @@
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "prepare": "husky",
+    "test:unit": "vitest --run",
     "test:e2e": "node scripts/run-e2e.js",
     "test:e2e:visual": "node scripts/run-e2e.js tests/e2e/pages.spec.ts",
     "test:e2e:navigation": "node scripts/run-e2e.js tests/e2e/navigation.spec.ts"
@@ -43,6 +44,7 @@
     "eslint-plugin-jsx-a11y": "6.10.2",
     "husky": "9.1.7",
     "prettier": "3.6.2",
-    "prettier-plugin-astro": "0.14.1"
+    "prettier-plugin-astro": "0.14.1",
+    "vitest": "2.1.4"
   }
 }
