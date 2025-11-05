@@ -1,17 +1,26 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, devices } from '@playwright/test';
 import { visualRoutes } from './routes';
 
+const mobileDevice = devices['iPhone 13 Pro'];
+
+test.use({
+  ...mobileDevice,
+  viewport: mobileDevice.viewport,
+});
+
 for (const { path, name } of visualRoutes) {
-  test.describe(`Página ${path}`, () => {
-    test(`captura visual estable en modo claro (${path})`, async ({ page }) => {
+  test.describe(`Página ${path} (móvil)`, () => {
+    test(`captura visual estable en modo claro móvil (${path})`, async ({
+      page,
+    }) => {
       await page.goto(path, { waitUntil: 'networkidle' });
-      await expect(page).toHaveScreenshot(`${name}-light.png`, {
+      await expect(page).toHaveScreenshot(`${name}-mobile-light.png`, {
         fullPage: true,
         animations: 'disabled',
       });
     });
 
-    test(`captura visual estable en modo oscuro (${path})`, async ({
+    test(`captura visual estable en modo oscuro móvil (${path})`, async ({
       page,
     }) => {
       await page.addInitScript(() => {
@@ -21,7 +30,7 @@ for (const { path, name } of visualRoutes) {
       await page.waitForFunction(() =>
         document.body.classList.contains('dark-mode')
       );
-      await expect(page).toHaveScreenshot(`${name}-dark.png`, {
+      await expect(page).toHaveScreenshot(`${name}-mobile-dark.png`, {
         fullPage: true,
         animations: 'disabled',
       });
