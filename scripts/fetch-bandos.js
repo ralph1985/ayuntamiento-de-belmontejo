@@ -1,10 +1,13 @@
 /* eslint-disable no-console */
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const execFileAsync = promisify(execFile);
 
 async function fetchBandos() {
   const RSS_URL = 'https://www.bandomovil.com/rss.php?codigo=belmontejo';
@@ -44,6 +47,9 @@ async function fetchBandos() {
       fs.writeFileSync(filePath, markdownContent, 'utf8');
       console.log(`Created: ${filename}.md`);
     }
+
+    // Normalize formatting after generating bandos
+    await runFormatter();
 
     console.log('RSS import completed successfully!');
   } catch (error) {
@@ -179,6 +185,9 @@ function generateContent(item) {
   // Remove remaining HTML tags
   content = content.replaceAll(/<[^>]+>/g, '');
 
+  // Decode HTML entities (e.g. &nbsp;)
+  content = decodeHtmlEntities(content);
+
   // Clean up whitespace more carefully
   content = content
     .replaceAll(/\n\s*\n\s*\n/g, '\n\n') // Remove multiple blank lines
@@ -197,17 +206,76 @@ function generateContent(item) {
   return cleanParagraphs.join('\n\n');
 }
 
+function decodeHtmlEntities(text) {
+  if (!text) return '';
+
+  const named = {
+    amp: '&',
+    lt: '<',
+    gt: '>',
+    quot: '"',
+    apos: "'",
+    nbsp: ' ',
+  };
+
+  let result = text;
+  let previous;
+
+  do {
+    previous = result;
+    result = result.replaceAll(
+      /&(#x[0-9a-f]+|#\d+|[a-z]+);/gi,
+      (match, entity) => {
+        if (entity[0] === '#') {
+          const isHex = entity[1]?.toLowerCase() === 'x';
+          const codePoint = Number.parseInt(
+            isHex ? entity.slice(2) : entity.slice(1),
+            isHex ? 16 : 10
+          );
+          if (!Number.isNaN(codePoint)) {
+            return String.fromCodePoint(codePoint);
+          }
+          return match;
+        }
+
+        const replacement = named[entity.toLowerCase()];
+        return typeof replacement === 'string' ? replacement : match;
+      }
+    );
+  } while (result !== previous);
+
+  return result.replaceAll('\u00a0', ' ');
+}
+
 function cleanHTML(html) {
-  return html
-    .replaceAll(/<[^>]+>/g, '') // Remove HTML tags
-    .replaceAll('&nbsp;', ' ')
-    .replaceAll('&amp;', '&')
-    .replaceAll('&lt;', '<')
-    .replaceAll('&gt;', '>')
-    .replaceAll('&quot;', '"')
-    .replaceAll('&#39;', "'")
-    .replaceAll(/\s+/g, ' ')
-    .trim();
+  if (!html) return '';
+
+  const withoutTags = html.replaceAll(/<[^>]+>/g, ' ');
+
+  return decodeHtmlEntities(withoutTags).replaceAll(/\s+/g, ' ').trim();
+}
+
+async function runFormatter() {
+  const projectRoot = path.join(__dirname, '..');
+
+  console.log('Running formatter (npm run format:write)...');
+
+  try {
+    const { stdout, stderr } = await execFileAsync(
+      'npm',
+      ['run', 'format:write'],
+      {
+        cwd: projectRoot,
+      }
+    );
+
+    if (stdout) console.log(stdout.trim());
+    if (stderr) console.error(stderr.trim());
+  } catch (error) {
+    const details = error?.stderr || error;
+    console.error('Formatter command failed:', details);
+    throw error;
+  }
 }
 
 function escapeYaml(str) {
