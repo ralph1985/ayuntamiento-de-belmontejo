@@ -3,7 +3,7 @@ import {
   resolveElementTag,
   resolveRelAttribute,
 } from '../../src/components/button.helpers';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 describe('buildButtonClassList', () => {
   it('returns default classes when no options provided', () => {
@@ -30,6 +30,28 @@ describe('buildButtonClassList', () => {
     });
 
     expect(result).toBe('c-button c-button--primary c-button--md extra');
+  });
+
+  it('skips falsy tokens when downstream consumers add them', () => {
+    const mockTokens = ['extra', undefined] as unknown as string[];
+    Object.defineProperty(mockTokens, 'filter', {
+      configurable: true,
+      value: function () {
+        return this as unknown as string[];
+      },
+    });
+
+    const splitSpy = vi
+      .spyOn(String.prototype, 'split')
+      .mockReturnValue(mockTokens);
+
+    const result = buildButtonClassList({
+      className: 'ignored',
+    });
+
+    expect(result).toBe('c-button c-button--primary c-button--md extra');
+
+    splitSpy.mockRestore();
   });
 });
 
