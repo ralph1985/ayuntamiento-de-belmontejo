@@ -62,4 +62,3 @@ test.describe('Buscador municipal', () => {
     }
   });
 });
-
