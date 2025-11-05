@@ -16,6 +16,8 @@ pnpm-debug.log*
 # playwright artifacts
 playwright-report/
 test-results/
+coverage/
+.scannerwork/
 
 
 # environment variables

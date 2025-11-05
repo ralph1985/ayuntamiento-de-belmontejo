@@ -16,9 +16,11 @@
     "format:write": "prettier --write .",
     "prepare": "husky",
     "test:unit": "vitest --run",
+    "test:unit:coverage": "vitest --run --coverage",
     "test:e2e": "node scripts/run-e2e.js",
     "test:e2e:visual": "node scripts/run-e2e.js tests/e2e/pages.spec.ts tests/e2e/pages.mobile.spec.ts",
-    "test:e2e:navigation": "node scripts/run-e2e.js tests/e2e/navigation.spec.ts"
+    "test:e2e:navigation": "node scripts/run-e2e.js tests/e2e/navigation.spec.ts",
+    "sonar:scan": "dotenv -e .env -- sonar-scanner"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.6.0",
@@ -45,6 +47,9 @@
     "husky": "9.1.7",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1",
+    "dotenv-cli": "7.3.0",
+    "sonarqube-scanner": "4.3.2",
+    "@vitest/coverage-v8": "2.1.4",
     "vitest": "2.1.4"
   }
 }
