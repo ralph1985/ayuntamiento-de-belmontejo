@@ -8,6 +8,7 @@ import CSPicture from '@components/TemplateComponents/CSPicture.astro';
 import mobileImage from '@assets/images/CTA/DJI_0167.jpg';
 import desktopImage from '@assets/images/CTA/DJI_0167.jpg';
 import fallbackImage from '@assets/images/CTA/DJI_0167.jpg';
+import Button from '@components/Button.astro';
 ---
 
 <section id="cta">
@@ -24,7 +25,7 @@ import fallbackImage from '@assets/images/CTA/DJI_0167.jpg';
       manchega. Ven y descubre por qué los pequeños pueblos guardan los tesoros
       más grandes.
     </p>
-    <a href="/contacto" class="cs-button-solid">Planifica tu visita</a>
+    <Button href="/contacto">Planifica tu visita</Button>
   </div>
   <CSPicture
     mobileImgUrl={mobileImage}

@@ -15,7 +15,8 @@
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "prepare": "husky",
-    "test:e2e": "node scripts/run-e2e.js"
+    "test:e2e": "node scripts/run-e2e.js",
+    "test:unit": "vitest --run"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.6.0",
@@ -41,6 +42,7 @@
     "eslint-plugin-jsx-a11y": "6.10.2",
     "husky": "9.1.7",
     "prettier": "3.6.2",
-    "prettier-plugin-astro": "0.14.1"
+    "prettier-plugin-astro": "0.14.1",
+    "vitest": "2.1.4"
   }
 }
