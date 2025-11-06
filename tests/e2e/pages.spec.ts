@@ -1,9 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { visualRoutes } from './routes';
-import {
-  acceptCookiesBeforeNavigation,
-  stabilizeVisualFlakes,
-} from './utils';
+import { acceptCookiesBeforeNavigation, stabilizeVisualFlakes } from './utils';
 
 for (const { path, name } of visualRoutes) {
   test.describe(`Página ${path}`, () => {

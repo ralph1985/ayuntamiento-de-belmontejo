@@ -1,9 +1,6 @@
 import { test, expect, devices } from '@playwright/test';
 import { visualRoutes } from './routes';
-import {
-  acceptCookiesBeforeNavigation,
-  stabilizeVisualFlakes,
-} from './utils';
+import { acceptCookiesBeforeNavigation, stabilizeVisualFlakes } from './utils';
 
 const mobileDevice = devices['iPhone 13 Pro'];
 

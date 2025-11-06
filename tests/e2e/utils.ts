@@ -39,13 +39,16 @@ export async function stabilizeFooterVersion(page: Page) {
 }
 
 export async function ensureCookieBannerHidden(page: Page) {
-  await page.evaluate(({ bannerId }) => {
-    const banner = document.getElementById(bannerId);
+  await page.evaluate(
+    ({ bannerId }) => {
+      const banner = document.getElementById(bannerId);
 
-    banner?.remove();
-  }, {
-    bannerId: COOKIE_BANNER_ID,
-  });
+      banner?.remove();
+    },
+    {
+      bannerId: COOKIE_BANNER_ID,
+    }
+  );
 }
 
 export async function stabilizeVisualFlakes(page: Page) {
