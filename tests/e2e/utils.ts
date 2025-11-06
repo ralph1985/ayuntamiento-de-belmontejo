@@ -51,21 +51,33 @@ export async function ensureCookieBannerHidden(page: Page) {
   );
 }
 
-async function replaceVideoWithPlaceholder(page: Page) {
-  await page.addStyleTag({
-    content: `
-      .cs-video-wrapper {
-        background-image: url('/assets/images/vista_aerea.jpg');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-      }
+const VIDEO_PLACEHOLDER_SRC = '/assets/images/vista_aerea.jpg';
 
-      .cs-video-wrapper iframe {
-        opacity: 0 !important;
-      }
-    `,
-  });
+async function replaceVideoWithPlaceholder(page: Page) {
+  await page.evaluate(({ placeholderSrc }) => {
+    const wrapper = document.querySelector('.cs-video-wrapper');
+
+    if (!wrapper || wrapper.querySelector('[data-visual-placeholder="video"]')) {
+      return;
+    }
+
+    const iframe = wrapper.querySelector('iframe');
+
+    if (iframe) {
+      iframe.remove();
+    }
+
+    const placeholder = document.createElement('img');
+    placeholder.src = placeholderSrc;
+    placeholder.alt = iframe?.getAttribute('title') ?? 'Vista aérea de Belmontejo';
+    placeholder.setAttribute('data-visual-placeholder', 'video');
+    placeholder.style.width = '100%';
+    placeholder.style.height = '100%';
+    placeholder.style.objectFit = 'cover';
+    placeholder.loading = 'lazy';
+
+    wrapper.appendChild(placeholder);
+  }, { placeholderSrc: VIDEO_PLACEHOLDER_SRC });
 }
 
 export async function stabilizeVisualFlakes(page: Page, routePath?: string) {
