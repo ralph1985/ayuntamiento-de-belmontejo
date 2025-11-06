@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 
 /**
  * Suggests a semantic version bump based on recent commits and optionally updates package.json.
