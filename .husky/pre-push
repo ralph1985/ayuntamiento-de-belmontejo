@@ -1,5 +1,8 @@
 set -e
 
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
 REMOTE_NAME="${1:-origin}"
 
 TARGET_BRANCH=""
@@ -48,12 +51,40 @@ if [ "${SKIP_VERSION_CHECK}" != "1" ]; then
     else
       echo "❌ Version check failed: remember to bump \"version\" in $VERSION_FILE before pushing."
     fi
+    if command -v node >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/suggest-version-bump.js" ]; then
+      if node "$REPO_ROOT/scripts/suggest-version-bump.js" "$REMOTE_NAME" "$TARGET_BRANCH" "$TARGET_SHA"; then
+        echo "   Version updated automatically. Review, stage, and retry your push."
+      else
+        STATUS=$?
+        if [ "$STATUS" -eq 2 ]; then
+          echo "   Version suggestion skipped. Update the version manually or rerun the hook."
+        else
+          echo "   Version suggestion failed. Update the version manually."
+        fi
+      fi
+    else
+      echo "   Version helper unavailable (Node.js missing or script not found). Update manually."
+    fi
     echo "   Set SKIP_VERSION_CHECK=1 to bypass in exceptional cases."
     exit 1
   fi
 
   if ! printf "%s" "$VERSION_DIFF" | grep -q '^[+-][[:space:]]*"version"[[:space:]]*:'; then
     echo "❌ Found changes in $VERSION_FILE but no \"version\" bump detected."
+    if command -v node >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/suggest-version-bump.js" ]; then
+      if node "$REPO_ROOT/scripts/suggest-version-bump.js" "$REMOTE_NAME" "$TARGET_BRANCH" "$TARGET_SHA"; then
+        echo "   Version updated automatically. Review, stage, and retry your push."
+      else
+        STATUS=$?
+        if [ "$STATUS" -eq 2 ]; then
+          echo "   Version suggestion skipped. Update the version manually or rerun the hook."
+        else
+          echo "   Version suggestion failed. Update the version manually."
+        fi
+      fi
+    else
+      echo "   Version helper unavailable (Node.js missing or script not found). Update manually."
+    fi
     echo "   Update the \"version\" field or set SKIP_VERSION_CHECK=1 to bypass in exceptional cases."
     exit 1
   fi
