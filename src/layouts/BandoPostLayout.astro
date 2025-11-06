@@ -6,6 +6,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import FeaturedContent from '@components/sections/FeaturedContent.astro';
 import TableOfContents from '@components/content/TableOfContents.astro';
 import CTA from '@components/sections/CTA.astro';
+import Button from '@components/ui/Button.astro';
 import '@styles/markdown.less';
 
 const { post } = Astro.props;
@@ -81,11 +82,15 @@ const { Content, headings } = await render(post);
 
         {
           link && (
-            <div class="bando-external-link">
-              <a href={link} target="_blank" rel="noopener noreferrer">
-                Ver bando original en Bandomovil
-              </a>
-            </div>
+            <Button
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="ghost"
+              class="bando-external-link"
+            >
+              Ver bando original en Bandomovil
+            </Button>
           )
         }
       </article>
