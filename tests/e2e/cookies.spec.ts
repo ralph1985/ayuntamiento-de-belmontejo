@@ -26,21 +26,23 @@ test.describe('Gestión de cookies', () => {
     ).toBeVisible();
 
     const getLocalStorageValue = (storageKey: string) =>
-      page.evaluate((key) => localStorage.getItem(key), storageKey);
+      page.evaluate(key => localStorage.getItem(key), storageKey);
 
     await Promise.all([
       page.waitForNavigation({ waitUntil: 'networkidle' }),
-      banner.getByRole('button', { name: 'Aceptar todas', exact: true }).click(),
+      banner
+        .getByRole('button', { name: 'Aceptar todas', exact: true })
+        .click(),
     ]);
 
     await expect(page).toHaveURL(/\/$/);
 
-    await expect.poll(async () =>
-      getLocalStorageValue(COOKIE_CONSENT_KEY)
-    ).toBe('true');
-    await expect.poll(async () =>
-      getLocalStorageValue(ANALYTICS_CONSENT_KEY)
-    ).toBe('true');
+    await expect
+      .poll(async () => getLocalStorageValue(COOKIE_CONSENT_KEY))
+      .toBe('true');
+    await expect
+      .poll(async () => getLocalStorageValue(ANALYTICS_CONSENT_KEY))
+      .toBe('true');
 
     await expect(page.locator('#cookie-banner')).toBeHidden();
     await expect(
@@ -54,7 +56,7 @@ test.describe('Gestión de cookies', () => {
     await page.goto('/politica-de-cookies', { waitUntil: 'networkidle' });
 
     const getLocalStorageValue = (storageKey: string) =>
-      page.evaluate((key) => localStorage.getItem(key), storageKey);
+      page.evaluate(key => localStorage.getItem(key), storageKey);
 
     const banner = page.locator('#cookie-banner');
     await expect(banner).toBeVisible();
@@ -68,12 +70,12 @@ test.describe('Gestión de cookies', () => {
 
     await expect(page).toHaveURL(/\/politica-de-cookies\/?$/);
 
-    await expect.poll(async () =>
-      getLocalStorageValue(COOKIE_CONSENT_KEY)
-    ).toBe('true');
-    await expect.poll(async () =>
-      getLocalStorageValue(ANALYTICS_CONSENT_KEY)
-    ).toBe('false');
+    await expect
+      .poll(async () => getLocalStorageValue(COOKIE_CONSENT_KEY))
+      .toBe('true');
+    await expect
+      .poll(async () => getLocalStorageValue(ANALYTICS_CONSENT_KEY))
+      .toBe('false');
 
     await expect(
       page.getByRole('heading', { level: 1, name: /Política de Cookies/i })
@@ -101,9 +103,9 @@ test.describe('Gestión de cookies', () => {
 
     await expect(page).toHaveURL(/\/politica-de-cookies\/?$/);
 
-    await expect.poll(async () =>
-      getLocalStorageValue(ANALYTICS_CONSENT_KEY)
-    ).toBe('true');
+    await expect
+      .poll(async () => getLocalStorageValue(ANALYTICS_CONSENT_KEY))
+      .toBe('true');
 
     await expect(page.locator('#cookie-banner')).toBeHidden();
 
