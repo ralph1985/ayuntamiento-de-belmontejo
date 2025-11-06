@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const execFileAsync = promisify(execFile);
 
-async function fetchBandos() {
+export async function fetchBandos() {
   const RSS_URL = 'https://www.bandomovil.com/rss.php?codigo=belmontejo';
 
   try {
@@ -58,7 +58,7 @@ async function fetchBandos() {
   }
 }
 
-function parseRSSItems(xmlText) {
+export function parseRSSItems(xmlText) {
   const items = [];
 
   // Extract items using regex (simple XML parsing)
@@ -83,7 +83,7 @@ function parseRSSItems(xmlText) {
   return items;
 }
 
-function extractXMLContent(xml, tag) {
+export function extractXMLContent(xml, tag) {
   const regex = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i');
   const match = xml.match(regex);
 
@@ -99,7 +99,7 @@ function extractXMLContent(xml, tag) {
   return content;
 }
 
-function generateFilename(title, guid) {
+export function generateFilename(title, guid) {
   // Extract ID from guid if possible
   const guidMatch = guid.match(/id=(\d+)/);
   const id = guidMatch ? guidMatch[1] : '';
@@ -122,7 +122,7 @@ function generateFilename(title, guid) {
   return id ? `${id}-${slug}` : slug;
 }
 
-function generateFrontmatter(item) {
+export function generateFrontmatter(item) {
   const date = new Date(item.pubDate);
   const isoDate = date.toISOString();
 
@@ -152,7 +152,7 @@ link: '${escapeYaml(item.link)}'
 isFeatured: ${isFeatured}`;
 }
 
-function generateContent(item) {
+export function generateContent(item) {
   // Convert HTML description to markdown-friendly format
   let content = item.description;
 
@@ -177,7 +177,7 @@ function generateContent(item) {
   // Handle images
   const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
   content = content.replaceAll(imgRegex, (match, src) => {
-    const altMatch = match.match(/alt=["']([^"']*)["']/gi);
+    const altMatch = match.match(/alt=["']([^"']*)["']/i);
     const alt = altMatch ? altMatch[1] : 'Imagen';
     return `![${alt}](${src})`;
   });
@@ -206,7 +206,7 @@ function generateContent(item) {
   return cleanParagraphs.join('\n\n');
 }
 
-function decodeHtmlEntities(text) {
+export function decodeHtmlEntities(text) {
   if (!text) return '';
 
   const named = {
@@ -247,7 +247,7 @@ function decodeHtmlEntities(text) {
   return result.replaceAll('\u00a0', ' ');
 }
 
-function cleanHTML(html) {
+export function cleanHTML(html) {
   if (!html) return '';
 
   const withoutTags = html.replaceAll(/<[^>]+>/g, ' ');
@@ -255,7 +255,7 @@ function cleanHTML(html) {
   return decodeHtmlEntities(withoutTags).replaceAll(/\s+/g, ' ').trim();
 }
 
-async function runFormatter() {
+export async function runFormatter() {
   const projectRoot = path.join(__dirname, '..');
 
   console.log('Running formatter (npm run format:write)...');
@@ -278,7 +278,7 @@ async function runFormatter() {
   }
 }
 
-function escapeYaml(str) {
+export function escapeYaml(str) {
   if (!str) return '';
   return str
     .replaceAll('\\', '\\\\')
@@ -288,5 +288,9 @@ function escapeYaml(str) {
     .replaceAll('\t', '\\t');
 }
 
-// Run the script
-await fetchBandos();
+const isCliInvocation =
+  process.argv[1] && path.resolve(process.argv[1]) === __filename;
+
+if (isCliInvocation) {
+  await fetchBandos();
+}
