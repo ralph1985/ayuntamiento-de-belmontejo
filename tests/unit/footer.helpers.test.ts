@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import type { NavigationEntry } from '../../src/components/navigation.helpers';
+import type { NavigationEntry } from '../../src/components/layout/navigation.helpers';
 import {
   filterFooterNavigationEntries,
   resolveFooterServiceLink,
   type FooterService,
-} from '../../src/components/footer.helpers';
+} from '../../src/components/layout/footer.helpers';
 
 const navigationEntries: NavigationEntry[] = [
   { key: 'Inicio', url: '/' },

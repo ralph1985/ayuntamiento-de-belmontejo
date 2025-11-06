@@ -2,7 +2,7 @@ import {
   buildButtonClassList,
   resolveElementTag,
   resolveRelAttribute,
-} from '../../src/components/button.helpers';
+} from '../../src/components/ui/button.helpers';
 import { describe, expect, it, vi } from 'vitest';
 
 describe('buildButtonClassList', () => {

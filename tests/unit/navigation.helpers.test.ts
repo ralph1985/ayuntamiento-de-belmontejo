@@ -3,7 +3,7 @@ import {
   filterNavigationEntries,
   isActiveNavigationLink,
   type NavigationEntry,
-} from '../../src/components/navigation.helpers';
+} from '../../src/components/layout/navigation.helpers';
 
 const baseEntries: NavigationEntry[] = [
   { key: 'Inicio', url: '/' },
