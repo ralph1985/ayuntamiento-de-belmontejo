@@ -16,7 +16,7 @@ for (const { path, name } of visualRoutes) {
     }) => {
       await acceptCookiesBeforeNavigation(page);
       await page.goto(path, { waitUntil: 'networkidle' });
-      await stabilizeVisualFlakes(page);
+      await stabilizeVisualFlakes(page, path);
       await expect(page).toHaveScreenshot(`${name}-mobile-light.png`, {
         fullPage: true,
         animations: 'disabled',
@@ -34,7 +34,7 @@ for (const { path, name } of visualRoutes) {
       await page.waitForFunction(() =>
         document.body.classList.contains('dark-mode')
       );
-      await stabilizeVisualFlakes(page);
+      await stabilizeVisualFlakes(page, path);
       await expect(page).toHaveScreenshot(`${name}-mobile-dark.png`, {
         fullPage: true,
         animations: 'disabled',

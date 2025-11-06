@@ -51,7 +51,28 @@ export async function ensureCookieBannerHidden(page: Page) {
   );
 }
 
-export async function stabilizeVisualFlakes(page: Page) {
+async function replaceVideoWithPlaceholder(page: Page) {
+  await page.addStyleTag({
+    content: `
+      .cs-video-wrapper {
+        background-image: url('/assets/images/vista_aerea.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .cs-video-wrapper iframe {
+        opacity: 0 !important;
+      }
+    `,
+  });
+}
+
+export async function stabilizeVisualFlakes(page: Page, routePath?: string) {
   await stabilizeFooterVersion(page);
   await ensureCookieBannerHidden(page);
+
+  if (routePath === '/sobre-el-pueblo') {
+    await replaceVideoWithPlaceholder(page);
+  }
 }
