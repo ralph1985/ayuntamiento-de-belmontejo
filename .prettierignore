@@ -122,4 +122,4 @@ ehthumbs.db
 Thumbs.db
 
 # Temporary exclusions
-src/components/GoogleAnalytics.astro
+src/components/integrations/GoogleAnalytics.astro

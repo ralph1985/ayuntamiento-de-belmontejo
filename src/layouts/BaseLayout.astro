@@ -2,11 +2,11 @@
 import { ClientRouter } from 'astro:transitions';
 import type { GetImageResult } from 'astro';
 import client from '@data/client.json';
-import Header from '@components/Header.astro';
-import Footer from '@components/Footer.astro';
-import GoogleAnalytics from '@components/GoogleAnalytics.astro';
-import CookieConsent from '@components/CookieConsent.astro';
-import FloatingCookieManager from '@components/FloatingCookieManager.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import GoogleAnalytics from '@components/integrations/GoogleAnalytics.astro';
+import CookieConsent from '@components/integrations/CookieConsent.astro';
+import FloatingCookieManager from '@components/integrations/FloatingCookieManager.astro';
 import '@styles/root.less';
 import '@styles/dark.less';
 

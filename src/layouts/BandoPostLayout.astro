@@ -3,9 +3,9 @@ import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 import { formatDate } from '@js/utils';
 import BaseLayout from '@layouts/BaseLayout.astro';
-import FeaturedContent from '@components/FeaturedContent.astro';
-import TableOfContents from '@components/TemplateComponents/TableOfContents.astro';
-import CTA from '@components/CTA.astro';
+import FeaturedContent from '@components/sections/FeaturedContent.astro';
+import TableOfContents from '@components/content/TableOfContents.astro';
+import CTA from '@components/sections/CTA.astro';
 import '@styles/markdown.less';
 
 const { post } = Astro.props;

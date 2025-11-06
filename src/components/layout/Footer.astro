@@ -5,9 +5,9 @@ import footerServices from '@data/footerServices.json';
 import {
   filterFooterNavigationEntries,
   resolveFooterServiceLink,
-} from '@components/footer.helpers';
+} from '@components/layout/footer.helpers';
 import { getCurrentYear } from '@js/utils';
-import packageJson from '../../package.json';
+import packageJson from '../../../package.json';
 
 const currentYear = getCurrentYear();
 const version = packageJson.version;
@@ -170,5 +170,5 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
 </footer>
 
 <style lang="less">
-  @import '../styles/components/footer.less';
+  @import '../../styles/components/footer.less';
 </style>
