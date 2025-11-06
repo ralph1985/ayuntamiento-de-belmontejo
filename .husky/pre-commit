@@ -1,0 +1,19 @@
+set -eu
+
+echo "Running Prettier on staged files..."
+
+FILES=$(git diff --cached --name-only --diff-filter=ACMR -- '*.astro' '*.cjs' '*.css' '*.html' '*.js' '*.jsx' '*.json' '*.less' '*.mjs' '*.md' '*.mdx' '*.scss' '*.ts' '*.tsx' '*.yaml' '*.yml')
+
+if [ -z "$FILES" ]; then
+  echo "No staged files require formatting."
+  exit 0
+fi
+
+printf "%s\n" "$FILES" | while IFS= read -r file; do
+  if [ -f "$file" ]; then
+    prettier --write --ignore-unknown "$file"
+    git add "$file"
+  fi
+done
+
+echo "Prettier formatting applied and staged."

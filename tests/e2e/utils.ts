@@ -28,7 +28,7 @@ export async function stabilizeFooterVersion(page: Page) {
       }
 
       const originalText = versionElement.textContent ?? '';
-      const updatedText = originalText.replace(/v[^\s]+/g, versionText);
+      const updatedText = originalText.replaceAll(/v[^\s]+/g, versionText);
 
       if (updatedText !== originalText) {
         versionElement.textContent = updatedText;
