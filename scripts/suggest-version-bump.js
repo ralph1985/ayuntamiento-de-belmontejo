@@ -15,8 +15,12 @@ const TARGET_SHA = process.argv[4] || '';
 
 const PACKAGE_JSON_PATH = path.resolve('package.json');
 
+function spawnGit(args, options = {}) {
+  return spawnSync('git', args, { encoding: 'utf8', ...options });
+}
+
 function runGit(args) {
-  const result = spawnSync('git', args, { encoding: 'utf8' });
+  const result = spawnGit(args);
   if (result.status !== 0) {
     return null;
   }
@@ -214,7 +218,12 @@ function prompt(question) {
   });
 }
 
-function main() {
+async function promptYes(question) {
+  const answer = await prompt(question);
+  return answer === 'y' || answer === 'yes';
+}
+
+async function main() {
   if (!ensureInteractive()) {
     console.error(
       '⚠️  Cannot suggest version bump in a non-interactive shell.'
@@ -281,39 +290,82 @@ function main() {
   console.log(`Proposed new version: ${nextVersion}`);
   console.log('');
 
-  return prompt('Apply this version to package.json? [y/N] ')
-    .then(answer => {
-      if (answer !== 'y' && answer !== 'yes') {
-        console.log(
-          'ℹ️  Version unchanged. Review the suggestion and update manually if desired.'
-        );
-        return 2;
-      }
+  const shouldApply = await promptYes(
+    'Apply this version to package.json? [y/N] '
+  );
+  if (!shouldApply) {
+    console.log(
+      'ℹ️  Version unchanged. Review the suggestion and update manually if desired.'
+    );
+    return 2;
+  }
 
-      packageJson.version = nextVersion;
-      const jsonOutput = JSON.stringify(packageJson, null, 2) + '\n';
+  packageJson.version = nextVersion;
+  const jsonOutput = JSON.stringify(packageJson, null, 2) + '\n';
 
-      try {
-        writeFileSync(PACKAGE_JSON_PATH, jsonOutput, 'utf8');
-      } catch (error) {
-        console.error(
-          `❌ Failed to write ${PACKAGE_JSON_PATH}: ${error.message}`
-        );
-        return 1;
-      }
+  try {
+    writeFileSync(PACKAGE_JSON_PATH, jsonOutput, 'utf8');
+  } catch (error) {
+    console.error(`❌ Failed to write ${PACKAGE_JSON_PATH}: ${error.message}`);
+    return 1;
+  }
 
-      console.log(
-        `✅ package.json updated to version ${nextVersion}. Please review and stage the change.`
-      );
-      return 0;
-    })
-    .catch(error => {
-      console.error(`❌ Failed to prompt for confirmation: ${error.message}`);
-      return 1;
-    });
+  console.log(`✅ package.json updated to version ${nextVersion}.`);
+
+  const wantsCommit = await promptYes(
+    'Create commit with this version now? [y/N] '
+  );
+  if (!wantsCommit) {
+    console.log(
+      'ℹ️  Version change ready but not committed. Stage and commit manually when ready.'
+    );
+    return 0;
+  }
+
+  const addResult = spawnGit(['add', 'package.json']);
+  if (addResult.status !== 0) {
+    console.error('❌ Failed to stage package.json for commit.');
+    if (addResult.stderr) {
+      console.error(addResult.stderr.trim());
+    }
+    return 1;
+  }
+
+  const commitMessage = `chore(release): bump version to ${nextVersion}`;
+  const commitResult = spawnGit([
+    'commit',
+    '--only',
+    'package.json',
+    '-m',
+    commitMessage,
+  ]);
+
+  if (commitResult.status !== 0) {
+    console.error('❌ Failed to create commit automatically.');
+    if (commitResult.stdout) {
+      console.error(commitResult.stdout.trim());
+    }
+    if (commitResult.stderr) {
+      console.error(commitResult.stderr.trim());
+    }
+    return 1;
+  }
+
+  if (commitResult.stdout) {
+    console.log(commitResult.stdout.trim());
+  }
+
+  const shortHash = runGit(['rev-parse', '--short', 'HEAD']);
+  if (shortHash) {
+    console.log(`✅ Commit created (${shortHash}): ${commitMessage}`);
+  } else {
+    console.log(`✅ Commit created: ${commitMessage}`);
+  }
+
+  return 0;
 }
 
-Promise.resolve(main())
+main()
   .then(exitCode => {
     process.exit(typeof exitCode === 'number' ? exitCode : 0);
   })

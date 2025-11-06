@@ -53,7 +53,7 @@ if [ "${SKIP_VERSION_CHECK}" != "1" ]; then
     fi
     if command -v node >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/suggest-version-bump.js" ]; then
       if node "$REPO_ROOT/scripts/suggest-version-bump.js" "$REMOTE_NAME" "$TARGET_BRANCH" "$TARGET_SHA"; then
-        echo "   Version updated automatically. Review, stage, and retry your push."
+        echo "   Version updated automatically. Review the changes (a commit may have been created) and retry your push."
       else
         STATUS=$?
         if [ "$STATUS" -eq 2 ]; then
@@ -73,7 +73,7 @@ if [ "${SKIP_VERSION_CHECK}" != "1" ]; then
     echo "❌ Found changes in $VERSION_FILE but no \"version\" bump detected."
     if command -v node >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/suggest-version-bump.js" ]; then
       if node "$REPO_ROOT/scripts/suggest-version-bump.js" "$REMOTE_NAME" "$TARGET_BRANCH" "$TARGET_SHA"; then
-        echo "   Version updated automatically. Review, stage, and retry your push."
+        echo "   Version updated automatically. Review the changes (a commit may have been created) and retry your push."
       else
         STATUS=$?
         if [ "$STATUS" -eq 2 ]; then
