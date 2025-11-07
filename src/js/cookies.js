@@ -33,9 +33,9 @@ const handleModalBackdropClick = event => {
 const handleFloatingButtonClick = () => showCookieModal();
 const handlePolicyButtonClick = () => showCookieModal();
 
-READY_EVENTS.forEach(eventName => {
+for (const eventName of READY_EVENTS) {
   document.addEventListener(eventName, initializeCookieFeatures);
-});
+}
 
 if (document.readyState !== 'loading') {
   initializeCookieFeatures();
@@ -97,7 +97,7 @@ function registerStorageListener() {
 
   storageListenerRegistered = true;
 
-  window.addEventListener('storage', event => {
+  globalThis.addEventListener('storage', event => {
     if (event.key === COOKIE_CONSENT_KEY) {
       updateFloatingButtonVisibility();
       updateBannerVisibility();
@@ -110,12 +110,12 @@ function registerStorageListener() {
 }
 
 function exposeConsentChecker() {
-  if (consentCheckerExposed || typeof window === 'undefined') {
+  if (consentCheckerExposed || typeof globalThis === 'undefined') {
     return;
   }
 
   consentCheckerExposed = true;
-  window.hasAnalyticsConsent = function () {
+  globalThis.hasAnalyticsConsent = function () {
     return localStorage.getItem(ANALYTICS_CONSENT_KEY) === 'true';
   };
 }
@@ -194,7 +194,7 @@ function setConsentAndReload(analyticsConsent) {
   localStorage.setItem(COOKIE_CONSENT_KEY, 'true');
   localStorage.setItem(ANALYTICS_CONSENT_KEY, analyticsConsent.toString());
   updateFloatingButtonVisibility();
-  window.location.reload();
+  globalThis.location.reload();
 }
 
 function updateFloatingButtonVisibility() {
