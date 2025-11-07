@@ -1,12 +1,14 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import FeaturedContent from '@components/sections/FeaturedContent.astro';
 import CTA from '@components/sections/CTA.astro';
 import FAQ from '@components/sections/FAQ.astro';
-import FeaturedContent from '@components/sections/FeaturedContent.astro';
+import IconBulletList from '@components/sections/IconBulletList.astro';
 import SocialMediaLinks from '@components/layout/SocialMediaLinks.astro';
 import Button from '@components/ui/Button.astro';
 import TestimonialCard from '@components/testimonials/TestimonialCard.astro';
 import { testimonials } from '@data/testimonials';
+import { homeServices } from '@data/homeServices';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -74,59 +76,7 @@ const featuredTestimonials = testimonials.slice(0, 2);
   <!--                  Services                    -->
   <!-- ============================================ -->
 
-  <section id="services" class="services">
-    <div class="card">
-      <picture>
-        <img
-          aria-hidden="true"
-          decoding="async"
-          src="/assets/svgs/service1.svg"
-          alt="historia"
-          width="48"
-          height="48"
-        />
-      </picture>
-      <h2>Historia y Patrimonio</h2>
-      <p>
-        Descubre los vestigios arqueológicos y el rico patrimonio histórico que
-        ha marcado la identidad de Belmontejo a través de los siglos.
-      </p>
-    </div>
-    <div class="card">
-      <picture>
-        <img
-          aria-hidden="true"
-          decoding="async"
-          src="/assets/svgs/service2.svg"
-          alt="naturaleza"
-          width="48"
-          height="48"
-        />
-      </picture>
-      <h2>Naturaleza y Paisaje</h2>
-      <p>
-        Disfruta de los campos de la Manchuela conquense, sus senderos rurales y
-        la tranquilidad de un entorno natural privilegiado.
-      </p>
-    </div>
-    <div class="card">
-      <picture>
-        <img
-          aria-hidden="true"
-          decoding="async"
-          src="/assets/svgs/service3.svg"
-          alt="tradicion"
-          width="48"
-          height="48"
-        />
-      </picture>
-      <h2>Tradición y Cultura</h2>
-      <p>
-        Vive las tradiciones locales, conoce las costumbres manchegas y
-        participa en la vida comunitaria de nuestro pueblo.
-      </p>
-    </div>
-  </section>
+  <IconBulletList id="services" items={homeServices} />
 
   <!-- ============================================ -->
   <!--                 Side By Side                 -->
