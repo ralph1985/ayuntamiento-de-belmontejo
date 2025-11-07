@@ -12,16 +12,26 @@ const boundEvents = new WeakMap();
 let storageListenerRegistered = false;
 let consentCheckerExposed = false;
 
+function isInputElement(element) {
+  if (
+    typeof globalThis === 'undefined' ||
+    typeof globalThis.HTMLInputElement === 'undefined'
+  ) {
+    return false;
+  }
+
+  return element instanceof globalThis.HTMLInputElement;
+}
+
 const handleAcceptAllCookies = () => setConsentAndReload(true);
 const handleAcceptNecessaryCookies = () => setConsentAndReload(false);
 const handleOpenSettings = () => showCookieModal();
 const handleCloseModal = () => hideCookieModal();
 const handleSavePreferences = () => {
   const analyticsCheckbox = document.getElementById('analytics-cookies');
-  const analyticsConsent =
-    analyticsCheckbox instanceof HTMLInputElement
-      ? analyticsCheckbox.checked
-      : false;
+  const analyticsConsent = isInputElement(analyticsCheckbox)
+    ? analyticsCheckbox.checked
+    : false;
 
   hideCookieModal();
   hideCookieBanner();
@@ -186,7 +196,7 @@ function updateBannerVisibility() {
 
 function syncAnalyticsCheckbox() {
   const analyticsCheckbox = document.getElementById('analytics-cookies');
-  if (analyticsCheckbox instanceof HTMLInputElement) {
+  if (isInputElement(analyticsCheckbox)) {
     analyticsCheckbox.checked =
       localStorage.getItem(ANALYTICS_CONSENT_KEY) === 'true';
   }
