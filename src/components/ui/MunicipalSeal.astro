@@ -1,0 +1,34 @@
+---
+type Props = {
+  alt?: string;
+  width?: number | string;
+  height?: number | string;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  decoding?: 'sync' | 'async' | 'auto';
+  src?: string;
+} & Record<string, unknown>;
+
+const {
+  alt = 'Escudo del Ayuntamiento de Belmontejo',
+  width,
+  height,
+  class: className,
+  loading,
+  decoding = 'async',
+  ...rest
+} = Astro.props as Props;
+
+const { src: _ignoredSrc, ...attrs } = rest;
+---
+
+<img
+  src="/assets/images/escudo.png"
+  alt={alt}
+  width={width}
+  height={height}
+  class={className}
+  loading={loading}
+  decoding={decoding}
+  {...attrs}
+/>

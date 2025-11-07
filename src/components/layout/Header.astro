@@ -1,6 +1,7 @@
 ---
 import DarkModeToggle from '@components/ui/DarkModeToggle.astro';
 import Navigation from '@components/layout/Navigation.astro';
+import MunicipalSeal from '@components/ui/MunicipalSeal.astro';
 ---
 
 <!-- ============================================ --><!--                 Navigation                   --><!-- ============================================ -->
@@ -8,12 +9,11 @@ import Navigation from '@components/layout/Navigation.astro';
   <div class="cs-container">
     <!--Nav Logo-->
     <a href="/" class="cs-logo" aria-label="back to home">
-      <img
-        src="/assets/images/escudo.png"
+      <MunicipalSeal
+        class="cs-logo-img"
         alt="Escudo de Belmontejo"
-        width="210"
-        height="29"
-        decoding="async"
+        width={210}
+        height={29}
       />
       <span class="cs-logo-text">Ayuntamiento de Belmontejo</span>
     </a>

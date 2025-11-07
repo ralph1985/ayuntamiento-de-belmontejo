@@ -2,6 +2,7 @@
 import client from '@data/client.json';
 import navData from '@data/navData.json';
 import footerServices from '@data/footerServices.json';
+import MunicipalSeal from '@components/ui/MunicipalSeal.astro';
 import {
   filterFooterNavigationEntries,
   resolveFooterServiceLink,
@@ -22,13 +23,12 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
   <div class="container">
     <div class="left-section">
       <a class="logo" href="/"
-        ><img
-          loading="lazy"
-          decoding="async"
-          src="/assets/images/escudo.png"
+        ><MunicipalSeal
+          class="footer-logo-img"
           alt="logo"
-          width="264"
-          height="78"
+          width={264}
+          height={78}
+          loading="lazy"
         /></a
       >
       <p>
