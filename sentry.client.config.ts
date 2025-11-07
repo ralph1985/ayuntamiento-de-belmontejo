@@ -19,32 +19,61 @@ const getAnalyticsConsent = () => {
   }
 };
 
+let sentryInitPromise: Promise<void> | null = null;
+
 const registerSentry = async () => {
-  const dsn = import.meta.env.PUBLIC_SENTRY_DSN;
-  if (!dsn || !getAnalyticsConsent()) {
+  if (sentryInitPromise || !getAnalyticsConsent()) {
     return;
   }
 
-  const { init } = await import('@sentry/astro');
+  const dsn = import.meta.env.PUBLIC_SENTRY_DSN;
+  if (!dsn) {
+    return;
+  }
 
-  init({
-    dsn,
-    environment:
-      import.meta.env.PUBLIC_SENTRY_ENVIRONMENT ?? import.meta.env.MODE,
-    release:
-      import.meta.env.PUBLIC_SENTRY_RELEASE ??
-      import.meta.env.PUBLIC_APP_VERSION,
-    tracesSampleRate: toNumber(
-      import.meta.env.PUBLIC_SENTRY_TRACES_SAMPLE_RATE,
-      0.1
-    ),
-  });
+  sentryInitPromise = (async () => {
+    const { init } = await import('@sentry/astro');
+
+    init({
+      dsn,
+      environment:
+        import.meta.env.PUBLIC_SENTRY_ENVIRONMENT ?? import.meta.env.MODE,
+      release:
+        import.meta.env.PUBLIC_SENTRY_RELEASE ??
+        import.meta.env.PUBLIC_APP_VERSION,
+      tracesSampleRate: toNumber(
+        import.meta.env.PUBLIC_SENTRY_TRACES_SAMPLE_RATE,
+        0.1
+      ),
+    });
+  })();
+
+  try {
+    await sentryInitPromise;
+  } catch (error) {
+    sentryInitPromise = null;
+    throw error;
+  }
 };
 
+function scheduleSentryRegistration() {
+  void registerSentry();
+}
+
+for (const eventName of ['astro:page-load', 'astro:after-swap']) {
+  document.addEventListener(eventName, scheduleSentryRegistration);
+}
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', registerSentry, {
+  document.addEventListener('DOMContentLoaded', scheduleSentryRegistration, {
     once: true,
   });
 } else {
-  registerSentry();
+  scheduleSentryRegistration();
 }
+
+globalThis.addEventListener('storage', event => {
+  if (event.key === 'analytics-consent' && event.newValue === 'true') {
+    scheduleSentryRegistration();
+  }
+});
