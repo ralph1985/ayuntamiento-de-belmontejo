@@ -1,0 +1,24 @@
+---
+export interface Props {
+  question: string;
+  isActive?: boolean;
+}
+
+const { question, isActive = false } = Astro.props;
+const classes = ['cs-faq-item', isActive ? 'active' : '']
+  .filter(Boolean)
+  .join(' ');
+---
+
+<li class={classes} data-question={question}>
+  <button
+    class="cs-button"
+    type="button"
+    aria-expanded={isActive ? 'true' : 'false'}
+  >
+    <span class="cs-button-text">{question}</span>
+  </button>
+  <div class="cs-item-text">
+    <slot />
+  </div>
+</li>

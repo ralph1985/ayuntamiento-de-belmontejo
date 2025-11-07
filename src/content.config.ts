@@ -42,7 +42,21 @@ const bandosCollection = defineCollection({
     }),
 });
 
+const faqCollection = defineCollection({
+  loader: glob({
+    pattern: '**/[^_]*.{md,mdx}',
+    base: './src/content/faqs',
+  }),
+  schema: () =>
+    z.object({
+      question: z.string(),
+      order: z.number().int().optional().default(0),
+      isDefaultOpen: z.boolean().optional().default(false),
+    }),
+});
+
 export const collections = {
   noticias: newsCollection,
   bandos: bandosCollection,
+  faqs: faqCollection,
 };
