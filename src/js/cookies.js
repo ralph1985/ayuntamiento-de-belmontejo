@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 const COOKIE_CONSENT_KEY = 'cookie-consent';
 const ANALYTICS_CONSENT_KEY = 'analytics-consent';
 const READY_EVENTS = [
