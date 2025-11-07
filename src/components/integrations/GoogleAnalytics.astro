@@ -7,43 +7,104 @@ const GOOGLE_ANALYTICS_ID = import.meta.env.PUBLIC_GOOGLE_ANALYTICS_ID;
 {GOOGLE_ANALYTICS_ID && (
   <>
     <script is:inline define:vars={{ GOOGLE_ANALYTICS_ID }}>
-      // Check if user has given analytics consent
-      function hasAnalyticsConsent() {
-        return localStorage.getItem("analytics-consent") === "true";
-      }
+      (function () {
+        const SCRIPT_ID = 'ga-gtag-script';
+        let analyticsInitPromise = null;
 
-      // Load Google Analytics only if consent is given
-      function loadGoogleAnalytics() {
-        if (!hasAnalyticsConsent()) {
-          return;
+        function hasAnalyticsConsent() {
+          if (typeof window !== 'undefined' && typeof window.hasAnalyticsConsent === 'function') {
+            return window.hasAnalyticsConsent();
+          }
+
+          try {
+            return localStorage.getItem('analytics-consent') === 'true';
+          } catch {
+            return false;
+          }
         }
 
-        // Create and load gtag script
-        const script = document.createElement("script");
-        script.async = true;
-        script.src = "https://www.googletagmanager.com/gtag/js?id=" + GOOGLE_ANALYTICS_ID;
-        document.head.appendChild(script);
+        function loadGAScript() {
+          if (analyticsInitPromise || !hasAnalyticsConsent()) {
+            return analyticsInitPromise;
+          }
 
-        // Initialize gtag
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){window.dataLayer.push(arguments);}
-        window.gtag = gtag;
+          analyticsInitPromise = new Promise((resolve, reject) => {
+            if (window.dataLayer && typeof window.gtag === 'function') {
+              resolve();
+              return;
+            }
 
-        gtag("js", new Date());
-        gtag("config", GOOGLE_ANALYTICS_ID, {
-          // Enhanced privacy configuration for GDPR compliance
-          anonymize_ip: true,
-          send_page_view: true,
-          cookie_flags: "max-age=7200;secure;samesite=strict"
+            let script = document.getElementById(SCRIPT_ID);
+            if (!script) {
+              script = document.createElement('script');
+              script.id = SCRIPT_ID;
+              script.async = true;
+              script.src =
+                'https://www.googletagmanager.com/gtag/js?id=' + GOOGLE_ANALYTICS_ID;
+              script.onload = resolve;
+              script.onerror = reject;
+              document.head.appendChild(script);
+            } else {
+              script.addEventListener('load', resolve, { once: true });
+              script.addEventListener('error', reject, { once: true });
+            }
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              window.dataLayer.push(arguments);
+            }
+            window.gtag = gtag;
+
+            gtag('js', new Date());
+            gtag('config', GOOGLE_ANALYTICS_ID, {
+              anonymize_ip: true,
+              send_page_view: false,
+              cookie_flags: 'max-age=7200;secure;samesite=strict',
+            });
+          }).catch(error => {
+            analyticsInitPromise = null;
+            throw error;
+          });
+
+          return analyticsInitPromise;
+        }
+
+        function trackPageView() {
+          if (!hasAnalyticsConsent()) {
+            return;
+          }
+
+          loadGAScript()?.then(() => {
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', 'page_view', {
+                page_location: window.location.href,
+                page_path: window.location.pathname + window.location.search,
+                page_title: document.title,
+              });
+            }
+          });
+        }
+
+        function schedulePageView() {
+          trackPageView();
+        }
+
+        ['DOMContentLoaded', 'astro:page-load', 'astro:after-swap'].forEach(
+          eventName => {
+            document.addEventListener(eventName, schedulePageView, {
+              once: eventName === 'DOMContentLoaded',
+            });
+          }
+        );
+
+        window.addEventListener('storage', event => {
+          if (event.key === 'analytics-consent' && event.newValue === 'true') {
+            trackPageView();
+          }
         });
-      }
 
-      // Load analytics immediately if consent is already given
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", loadGoogleAnalytics);
-      } else {
-        loadGoogleAnalytics();
-      }
+        schedulePageView();
+      })();
     </script>
   </>
 )}
