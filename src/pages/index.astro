@@ -5,11 +5,14 @@ import FAQ from '@components/sections/FAQ.astro';
 import FeaturedContent from '@components/sections/FeaturedContent.astro';
 import SocialMediaLinks from '@components/layout/SocialMediaLinks.astro';
 import Button from '@components/ui/Button.astro';
+import TestimonialCard from '@components/testimonials/TestimonialCard.astro';
+import { testimonials } from '@data/testimonials';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 import { getImage } from 'astro:assets';
 const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
+const featuredTestimonials = testimonials.slice(0, 2);
 ---
 
 <BaseLayout
@@ -492,71 +495,11 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
         paisajes que nos rodean.
       </p>
       <ul class="cs-card-group">
-        <!-- Review 1 -->
-        <li class="cs-item">
-          <img
-            class="cs-item-img"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="/assets/images/reviews/profile5.png"
-            alt="profile picture"
-            width="80"
-            height="80"
-          />
-          <p class="cs-item-p">
-            Belmontejo es un remanso de paz en medio de la Mancha. Sus calles
-            tranquilas y la hospitalidad de su gente hacen que uno se sienta
-            como en casa. Es el lugar perfecto para desconectar y disfrutar de
-            la autenticidad rural.
-          </p>
-          <span class="cs-reviewer">
-            María García
-            <span class="cs-desc">Visitante</span>
-          </span>
-          <img
-            class="cs-item-stars"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="/assets/images/graphics/stars-yellow.svg"
-            alt="stars"
-            width="96"
-            height="16"
-          />
-        </li>
-        <!-- Review 2 -->
-        <li class="cs-item">
-          <img
-            class="cs-item-img"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="/assets/images/reviews/profile-4.png"
-            alt="profile picture"
-            width="80"
-            height="80"
-          />
-          <p class="cs-item-p">
-            Aquí el tiempo se detiene y uno puede apreciar la belleza sencilla
-            de la vida rural. Los paisajes, las tradiciones y el patrimonio de
-            Belmontejo crean una experiencia única que nunca se olvida.
-          </p>
-          <span class="cs-reviewer">
-            Antonio Ruiz
-            <span class="cs-desc">Vecino</span>
-          </span>
-          <img
-            class="cs-item-stars"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="/assets/images/graphics/stars-yellow.svg"
-            alt="stars"
-            width="96"
-            height="16"
-          />
-        </li>
+        {
+          featuredTestimonials.map(testimonial => (
+            <TestimonialCard testimonial={testimonial} variant="home" />
+          ))
+        }
       </ul>
       <Button aria-label="read more reviews" href="/testimonios">
         Más testimonios
