@@ -11,46 +11,6 @@
   🍪
 </button>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', function () {
-    const floatingBtn = document.getElementById('floating-cookie-manager');
-
-    if (floatingBtn) {
-      // Show floating button only if user has already made a cookie choice
-      const hasConsent = localStorage.getItem('cookie-consent');
-      if (hasConsent) {
-        floatingBtn.style.display = 'block';
-      }
-
-      // Handle click to open cookie settings
-      floatingBtn.addEventListener('click', function () {
-        const modal = document.getElementById('cookie-settings-modal');
-        if (modal) {
-          modal.style.display = 'flex';
-          // Set current preferences
-          const analyticsConsent =
-            localStorage.getItem('analytics-consent') === 'true';
-          const analyticsCheckbox =
-            document.getElementById('analytics-cookies');
-          if (analyticsCheckbox) {
-            analyticsCheckbox.checked = analyticsConsent;
-          }
-        }
-      });
-    }
-  });
-
-  // Listen for cookie consent changes to show/hide the floating button
-  window.addEventListener('storage', function (e) {
-    if (e.key === 'cookie-consent') {
-      const floatingBtn = document.getElementById('floating-cookie-manager');
-      if (floatingBtn && e.newValue) {
-        floatingBtn.style.display = 'block';
-      }
-    }
-  });
-</script>
-
 <style>
   .floating-cookie-btn {
     position: fixed;

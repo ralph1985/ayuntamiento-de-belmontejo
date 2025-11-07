@@ -256,31 +256,6 @@ const description =
   </section>
 </BaseLayout>
 
-<script>
-  // Open cookie settings from the policy page
-  document.addEventListener('DOMContentLoaded', function () {
-    const openSettingsBtn = document.getElementById('open-cookie-settings');
-    if (openSettingsBtn) {
-      openSettingsBtn.addEventListener('click', function () {
-        // Show the cookie settings modal if it exists
-        const modal = document.getElementById('cookie-settings-modal');
-        if (modal) {
-          modal.style.display = 'flex';
-          // Set current preferences
-          const analyticsConsent =
-            localStorage.getItem('analytics-consent') === 'true';
-          const analyticsCheckbox = document.getElementById(
-            'analytics-cookies'
-          ) as HTMLInputElement;
-          if (analyticsCheckbox) {
-            analyticsCheckbox.checked = analyticsConsent;
-          }
-        }
-      });
-    }
-  });
-</script>
-
 <style lang="less">
   @import '../styles/pages/politica-de-cookies.less';
 </style>
