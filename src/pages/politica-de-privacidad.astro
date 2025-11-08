@@ -1,0 +1,263 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Landing from '@components/sections/Landing.astro';
+import client from '@data/client.json';
+import { getImage } from 'astro:assets';
+import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
+
+const pageTitle = 'Política de Privacidad - Ayuntamiento de Belmontejo';
+const description =
+  'Conoce cómo tratamos tus datos personales en el Ayuntamiento de Belmontejo, qué derechos te asisten y cómo ejercerlos conforme al RGPD y la LOPDGDD.';
+const optimizedImage = await getImage({ src: vistaAerea });
+
+const processingActivities = [
+  {
+    title: 'Gestión de consultas y solicitudes ciudadanas',
+    data: 'Nombre y apellidos, teléfono, correo electrónico, contenido de la consulta, metadatos técnicos básicos (IP, agente de usuario)',
+    purpose:
+      'Registrar y dar respuesta a peticiones, incidencias o solicitudes recibidas a través de formularios, correo electrónico o teléfono',
+    legalBasis: 'Consentimiento de la persona interesada (art. 6.1.a RGPD)',
+  },
+  {
+    title: 'Comunicaciones institucionales y avisos municipales',
+    data: 'Datos identificativos y de contacto facilitados por la ciudadanía o representantes de entidades locales',
+    purpose:
+      'Emitir avisos, bandos o comunicaciones relacionadas con servicios municipales y asuntos de interés público',
+    legalBasis:
+      'Cumplimiento de una misión realizada en interés público o en el ejercicio de poderes públicos (art. 6.1.e RGPD)',
+  },
+  {
+    title: 'Analítica y mejora del sitio web',
+    data: 'Información pseudonimizada de navegación, identificadores de cookies, dirección IP anonimizada, dispositivo y acciones en la web',
+    purpose:
+      'Medir el uso del sitio, detectar errores técnicos y mejorar la accesibilidad y seguridad del portal',
+    legalBasis:
+      'Consentimiento de la persona usuaria para cookies analíticas (art. 6.1.a RGPD)',
+  },
+];
+
+const retentionPolicies = [
+  {
+    context: 'Consultas recibidas vía formulario o email',
+    period:
+      'Se conservarán mientras se tramita la solicitud y, una vez resuelta, durante los plazos necesarios para atender posibles responsabilidades administrativas (hasta 5 años).',
+  },
+  {
+    context: 'Documentación asociada a expedientes municipales',
+    period:
+      'Se integra en el archivo municipal cumpliendo la normativa de archivos y patrimonio documental.',
+  },
+  {
+    context: 'Datos usados para comunicaciones institucionales',
+    period:
+      'Mientras sigan vigentes los motivos que justifican la comunicación o hasta que se solicite la baja.',
+  },
+  {
+    context: 'Datos obtenidos mediante cookies analíticas',
+    period:
+      'Hasta 24 meses, según los plazos definidos para cada cookie y siempre que no se revoque el consentimiento.',
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={description}>
+  <Landing title="🔒 Política de Privacidad" image={optimizedImage}>
+    <p class="subtitle">
+      Compromiso del {client.name} con la protección de los datos personales
+      <br />
+      <strong>Última actualización:</strong> 8 de noviembre de 2025
+    </p>
+  </Landing>
+
+  <section class="privacy-policy">
+    <div class="container">
+      <div class="policy-section">
+        <h2>1. Responsable del tratamiento</h2>
+        <div class="info-grid">
+          <article class="info-card">
+            <h3>Entidad responsable</h3>
+            <p>
+              {client.name}<br />
+              CIF: P1603400A (Ayuntamiento de Belmontejo)<br />
+              {client.address.lineOne}<br />
+              {client.address.lineTwo} ({client.address.zip}) - {
+                client.address.city
+              }, Cuenca
+            </p>
+          </article>
+          <article class="info-card">
+            <h3>Contacto</h3>
+            <ul>
+              <li>
+                Teléfono: <a href={`tel:${client.phoneForTel}`}
+                  >{client.phoneForTel}</a
+                >
+              </li>
+              <li>
+                Correo electrónico:
+                <a href={`mailto:${client.email}`}>{client.email}</a>
+              </li>
+              <li>
+                Sede electrónica / web:
+                <a href={client.domain} rel="noopener noreferrer"
+                  >{client.domain}</a
+                >
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2>2. Delegado/a de Protección de Datos (DPD)</h2>
+        <p>
+          El Ayuntamiento de Belmontejo no se encuentra obligado a designar una
+          persona Delegada de Protección de Datos por sus dimensiones y volumen
+          de tratamientos. Aun así, todas las consultas o reclamaciones
+          relacionadas con privacidad pueden dirigirse a {client.email} o de forma
+          presencial en {client.address.lineOne}, {client.address.lineTwo}.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>3. Finalidades, datos tratados y legitimación</h2>
+        <p>
+          Tratamos los datos estrictamente necesarios para prestar servicios
+          municipales. A continuación, detallamos las principales actividades de
+          tratamiento:
+        </p>
+        <div class="activities-grid">
+          {
+            processingActivities.map(activity => (
+              <article class="activity-card">
+                <h3>{activity.title}</h3>
+                <p>
+                  <strong>Datos tratados:</strong> {activity.data}
+                </p>
+                <p>
+                  <strong>Finalidad:</strong> {activity.purpose}
+                </p>
+                <p>
+                  <strong>Base jurídica:</strong> {activity.legalBasis}
+                </p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2>4. Plazos de conservación</h2>
+        <p>
+          Los datos se conservarán únicamente durante los periodos necesarios
+          para cumplir la finalidad con la que se obtuvieron y atender posibles
+          responsabilidades legales:
+        </p>
+        <ul class="retention-list">
+          {
+            retentionPolicies.map(policy => (
+              <li>
+                <strong>{policy.context}:</strong> {policy.period}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="policy-section">
+        <h2>5. Destinatarios y encargados</h2>
+        <ul>
+          <li>
+            Proveedores tecnológicos necesarios para la prestación del servicio
+            (alojamiento, mantenimiento web, herramientas de correo), con los
+            que se han firmado contratos de encargo de tratamiento conforme al
+            art. 28 RGPD.
+          </li>
+          <li>
+            Google LLC, únicamente cuando la persona usuaria acepta las cookies
+            analíticas. En este caso se aplican cláusulas contractuales tipo y
+            se anonimizan las direcciones IP.
+          </li>
+          <li>
+            Administraciones públicas competentes cuando exista una obligación
+            legal (por ejemplo, órganos judiciales, Junta de Comunidades de
+            Castilla-La Mancha, Tribunal de Cuentas o Agencia Tributaria).
+          </li>
+        </ul>
+        <p>
+          No se realizan ventas de datos personales ni se adoptan decisiones
+          automatizadas con efectos jurídicos para las personas usuarias.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>6. Transferencias internacionales</h2>
+        <p>
+          Con carácter general no se prevén transferencias de datos fuera del
+          Espacio Económico Europeo. Las herramientas alojadas en terceros
+          países (como Google Analytics) solo operan con su consentimiento y
+          aplican las garantías reconocidas por el RGPD (cláusulas contractuales
+          tipo y medidas complementarias como la anonimización de IP).
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>7. Derechos de las personas interesadas</h2>
+        <p>
+          Puede ejercer los derechos de acceso, rectificación, supresión,
+          oposición, limitación del tratamiento y portabilidad de los datos, así
+          como retirar el consentimiento otorgado.
+        </p>
+        <div class="rights-grid">
+          <article class="right-card">
+            <h3>Cómo ejercerlos</h3>
+            <p>
+              Enviando una solicitud escrita al Ayuntamiento ({
+                client.address.lineOne
+              }, {client.address.zip}, {client.address.city}) o por correo
+              electrónico a {client.email}.
+            </p>
+          </article>
+          <article class="right-card">
+            <h3>Información necesaria</h3>
+            <p>
+              Incluya nombre completo, medio de contacto, derecho que desea
+              ejercitar y copia de un documento que acredite su identidad.
+            </p>
+          </article>
+          <article class="right-card">
+            <h3>Plazos de respuesta</h3>
+            <p>
+              Responderemos en el plazo máximo de un mes, ampliable a dos meses
+              en casos complejos conforme al art. 12 RGPD.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2>8. Reclamaciones ante la autoridad de control</h2>
+        <p>
+          Si considera que sus derechos no han sido atendidos, puede presentar
+          una reclamación ante la Agencia Española de Protección de Datos (AEPD)
+          a través de <a href="https://www.aepd.es" rel="noopener noreferrer"
+            >www.aepd.es</a
+          > o en la calle Jorge Juan 6, 28001 Madrid.
+        </p>
+      </div>
+
+      <div class="policy-section">
+        <h2>9. Actualización de la política</h2>
+        <p>
+          Revisaremos esta política cuando existan cambios normativos o en los
+          tratamientos realizados. Publicaremos la fecha de la última revisión y
+          avisaremos mediante los canales habituales del Ayuntamiento.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style lang="less">
+  @import '../styles/pages/politica-de-privacidad.less';
+</style>

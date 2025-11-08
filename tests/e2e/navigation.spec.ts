@@ -179,4 +179,25 @@ test.describe('Navegación interna de contenido', () => {
       })
     ).toBeVisible();
   });
+
+  test('el pie incluye acceso a la Política de Privacidad', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    const footer = page.getByRole('contentinfo');
+    await Promise.all([
+      page.waitForURL(/\/politica-de-privacidad\/?$/),
+      footer
+        .getByRole('link', { name: 'Política de Privacidad', exact: true })
+        .click(),
+    ]);
+
+    await expect(
+      page.getByRole('heading', {
+        level: 1,
+        name: /política de privacidad/i,
+      })
+    ).toBeVisible();
+  });
 });

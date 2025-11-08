@@ -15,4 +15,5 @@ export const visualRoutes = [
   { path: '/testimonios', name: 'testimonios' },
   { path: '/buscar', name: 'buscar' },
   { path: '/politica-de-cookies', name: 'politica-de-cookies' },
+  { path: '/politica-de-privacidad', name: 'politica-de-privacidad' },
 ];
