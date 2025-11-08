@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content';
 import { Image } from 'astro:assets';
+import client from '@data/client.json';
 import { formatDate } from '@js/utils';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import FeaturedContent from '@components/sections/FeaturedContent.astro';
@@ -13,6 +14,54 @@ const { post } = Astro.props;
 const { title, date, description, image, imageAlt, author, category, link } =
   post.data;
 const { Content, headings } = await render(post);
+const baseSiteUrl =
+  Astro.site && Astro.site.length > 0 ? Astro.site : client.domain;
+const normalizedBaseUrl = baseSiteUrl.endsWith('/')
+  ? baseSiteUrl
+  : `${baseSiteUrl}/`;
+const canonicalUrl = new URL(Astro.url.pathname, normalizedBaseUrl).href;
+const imageSrc =
+  typeof image === 'string'
+    ? image
+    : typeof image === 'object' && image?.src
+      ? image.src
+      : undefined;
+const featuredImageUrl = imageSrc
+  ? new URL(imageSrc, normalizedBaseUrl).href
+  : undefined;
+const publisherLogoUrl = new URL(
+  '/assets/favicons/android-chrome-192x192.png',
+  normalizedBaseUrl
+).href;
+const updatedAt = post.data.updatedAt ?? date;
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: title,
+  description,
+  inLanguage: 'es',
+  isAccessibleForFree: true,
+  mainEntityOfPage: canonicalUrl,
+  url: canonicalUrl,
+  articleSection: category || 'Bandos',
+  datePublished: new Date(date).toISOString(),
+  dateModified: new Date(updatedAt).toISOString(),
+  ...(featuredImageUrl && { image: [featuredImageUrl] }),
+  ...(post.body && { articleBody: post.body }),
+  author: author
+    ? { '@type': 'Person', name: author }
+    : { '@type': 'Organization', name: client.name },
+  publisher: {
+    '@type': 'Organization',
+    name: client.name,
+    logo: {
+      '@type': 'ImageObject',
+      url: publisherLogoUrl,
+    },
+  },
+  identifier: post.data.guid || post.id,
+  ...(link && { sameAs: [link] }),
+};
 ---
 
 <BaseLayout title={title} description={description} preloadedImage={image}>
@@ -24,6 +73,11 @@ const { Content, headings } = await render(post);
     <!--Main content -->
     <section class="main-content">
       <article class="news-article">
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(articleSchema)}
+        />
         <!--Article Info-->
         <header class="news-header">
           <h1 class="news-h1">{title}</h1>

@@ -29,7 +29,7 @@
 - Accesibilidad práctica:
   - Asegurar foco y trampa de foco en el modal de cookies; revisar contraste y orden de tabulación.
   - PDF/Documentos: si se publican documentos, establecer pautas para PDFs accesibles (etiquetados, texto seleccionable, contraste, estructura).
-- Datos estructurados: añadir JSON‑LD (`GovernmentOrganization`/`Organization`) y `NewsArticle` para noticias/bandos.
+- Datos estructurados: validar los nuevos `GovernmentOrganization` y `NewsArticle` con la Rich Results Test y ajustar `client.domain`/`astro.config.mjs` cuando se confirme el dominio final para que las URLs del schema sean definitivas.
 
 ## Bug detectado
 
