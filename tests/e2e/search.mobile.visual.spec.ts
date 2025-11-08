@@ -1,4 +1,5 @@
 import { expect, test, devices, type Page } from '@playwright/test';
+import { URL } from 'node:url';
 import { acceptCookiesBeforeNavigation, stabilizeVisualFlakes } from './utils';
 
 const mobileDevice = devices['iPhone 13 Pro'];

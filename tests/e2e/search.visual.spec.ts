@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
+import { URL } from 'node:url';
 import { acceptCookiesBeforeNavigation, stabilizeVisualFlakes } from './utils';
 
 const SEARCH_QUERY = 'agua';
