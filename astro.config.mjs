@@ -19,6 +19,10 @@ const appVersion = pkg?.version ?? '0.0.0';
 export default defineConfig({
   site: 'https://ayuntamiento-de-belmontejo.vercel.app/',
   output: 'server',
+  devToolbar: {
+    // Hide Astro dev toolbar during automated preview/tests (env default true)
+    enabled: process.env.ASTRO_DEV_TOOLBAR !== 'false',
+  },
   adapter: vercel(),
   integrations: [
     icon(),
