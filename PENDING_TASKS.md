@@ -30,6 +30,12 @@
   - Asegurar foco y trampa de foco en el modal de cookies; revisar contraste y orden de tabulación.
   - PDF/Documentos: si se publican documentos, establecer pautas para PDFs accesibles (etiquetados, texto seleccionable, contraste, estructura).
 - Datos estructurados: validar los nuevos `GovernmentOrganization` y `NewsArticle` con la Rich Results Test y ajustar `client.domain`/`astro.config.mjs` cuando se confirme el dominio final para que las URLs del schema sean definitivas.
+- Google Analytics: cuando tengamos el dominio definitivo hay que migrar la propiedad de GA (ajustar `measurementId`, dominios de referencia y filtros de tráfico interno) y revisar consentimiento/carga diferida para que los datos históricos no queden fragmentados.
+- Redes sociales: los enlaces de Facebook e Instagram no se abren en Chrome iOS (posible bloqueo por esquema `intent://` o `target="_blank"`). Reproducir el bug en un dispositivo real, revisar atributos `rel` y usar URLs HTTPS limpias que funcionen en WebView móviles.
+- Dependencias npm: crear una rutina trimestral para revisar qué paquetes pueden actualizarse (todas las versiones están fijadas). Documentar en `PENDING_TASKS.md` o un changelog interno qué versión tenía cada paquete y cuál se sube, y apoyarse en Codex/Dependabot para automatizar PRs.
+- SEO avanzado: además del sitemap, revisar Core Web Vitals, etiquetar imágenes con `alt`, añadir `lang`, ajustar títulos/meta por sección y evaluar datos estructurados adicionales (`BreadcrumbList`, `FAQ`). Preparar checklist antes del lanzamiento del dominio final.
+- Tests unitarios: ampliar la cobertura de componentes críticos (cards de bandos, layout, formularios) con Vitest y testing-library para asegurar estados de carga, errores y accesibilidad básica.
+- Tests de integración: definir una suite que cubra flujos completos (p. ej., creación/edición de bandos vía CMS mock + render en frontend) y servicios como `fetch-bandos.js`, de modo que validemos la integración entre scripts, contenido y UI más allá de los e2e visuales.
 
 ## Bug detectado
 
