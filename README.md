@@ -71,6 +71,23 @@ El proyecto sigue la convención de Astro y añade algunos directorios auxiliare
    npm run build
    ```
 
+### Git LFS para capturas de Playwright
+
+Las capturas visuales (`tests/e2e/__screenshots__/**`) se gestionan con [Git LFS](https://git-lfs.com/) para evitar inflar el historial. Después de clonar el repo asegúrate de:
+
+```bash
+# Instalar la extensión si aún no la tienes
+brew install git-lfs
+
+# Registrar los filtros en tu usuario (solo la primera vez)
+git lfs install
+
+# Descargar las capturas almacenadas en LFS
+git lfs pull
+```
+
+Si ya tenías el repositorio clonado antes de activar LFS, ejecuta igualmente `git lfs install --force` dentro del proyecto seguido de `git lfs pull` para convertir tu working copy. A partir de ahí, cualquier `git add tests/e2e/__screenshots__/**` creará automáticamente los punteros correctos en los futuros commits.
+
 ## Scripts Disponibles
 
 | Script                                | Descripción                                                                                                              |
