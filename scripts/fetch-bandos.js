@@ -1,12 +1,15 @@
 /* eslint-disable no-console */
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from 'node:fs';
+import path from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const execFileAsync = promisify(execFile);
 
-async function fetchBandos() {
+export async function fetchBandos() {
   const RSS_URL = 'https://www.bandomovil.com/rss.php?codigo=belmontejo';
 
   try {
@@ -45,6 +48,9 @@ async function fetchBandos() {
       console.log(`Created: ${filename}.md`);
     }
 
+    // Normalize formatting after generating bandos
+    await runFormatter();
+
     console.log('RSS import completed successfully!');
   } catch (error) {
     console.error('Error fetching bandos:', error);
@@ -52,7 +58,7 @@ async function fetchBandos() {
   }
 }
 
-function parseRSSItems(xmlText) {
+export function parseRSSItems(xmlText) {
   const items = [];
 
   // Extract items using regex (simple XML parsing)
@@ -77,7 +83,7 @@ function parseRSSItems(xmlText) {
   return items;
 }
 
-function extractXMLContent(xml, tag) {
+export function extractXMLContent(xml, tag) {
   const regex = new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i');
   const match = xml.match(regex);
 
@@ -93,7 +99,7 @@ function extractXMLContent(xml, tag) {
   return content;
 }
 
-function generateFilename(title, guid) {
+export function generateFilename(title, guid) {
   // Extract ID from guid if possible
   const guidMatch = guid.match(/id=(\d+)/);
   const id = guidMatch ? guidMatch[1] : '';
@@ -102,11 +108,11 @@ function generateFilename(title, guid) {
   let slug = title
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') // Remove accents
-    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-') // Replace multiple hyphens with single
-    .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+    .replaceAll(/[\u0300-\u036f]/g, '') // Remove accents
+    .replaceAll(/[^a-z0-9\s-]/g, '') // Remove special characters
+    .replaceAll(/\s+/g, '-') // Replace spaces with hyphens
+    .replaceAll(/-+/g, '-') // Replace multiple hyphens with single
+    .replaceAll(/(?:^-|-$)/g, ''); // Remove leading/trailing hyphens
 
   // Limit slug length
   if (slug.length > 50) {
@@ -116,7 +122,7 @@ function generateFilename(title, guid) {
   return id ? `${id}-${slug}` : slug;
 }
 
-function generateFrontmatter(item) {
+export function generateFrontmatter(item) {
   const date = new Date(item.pubDate);
   const isoDate = date.toISOString();
 
@@ -127,8 +133,7 @@ function generateFrontmatter(item) {
   }
 
   // Mark some bandos as featured based on keywords or recent date
-  // TODO: definir criterios para destacados
-  const featuredKeywords = [];
+  const featuredKeywords = ['Belmontejo', 'importante', 'urgente', 'aviso'];
   const isRecent = Date.now() - date.getTime() < 30 * 24 * 60 * 60 * 1000; // Last 30 days
   const hasKeyword = featuredKeywords.some(
     keyword =>
@@ -147,45 +152,48 @@ link: '${escapeYaml(item.link)}'
 isFeatured: ${isFeatured}`;
 }
 
-function generateContent(item) {
+export function generateContent(item) {
   // Convert HTML description to markdown-friendly format
   let content = item.description;
 
   // Basic HTML to markdown conversion
   content = content
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<\/p>/gi, '\n\n')
-    .replace(/<p[^>]*>/gi, '')
-    .replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**')
-    .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
-    .replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
-    .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
-    .replace(/<u[^>]*>(.*?)<\/u>/gi, '*$1*') // Use * for underlined text
-    .replace(/<span[^>]*>(.*?)<\/span>/gi, '$1')
-    .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n')
-    .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n')
-    .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n')
-    .replace(/<h4[^>]*>(.*?)<\/h4>/gi, '#### $1\n')
-    .replace(/<h5[^>]*>(.*?)<\/h5>/gi, '##### $1\n')
-    .replace(/<h6[^>]*>(.*?)<\/h6>/gi, '###### $1\n');
+    .replaceAll(/<br\s*\/?>/gi, '\n')
+    .replaceAll(/<\/p>/gi, '\n\n')
+    .replaceAll(/<p[^>]*>/gi, '')
+    .replaceAll(/<b[^>]*>(.*?)<\/b>/gi, '**$1**')
+    .replaceAll(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
+    .replaceAll(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
+    .replaceAll(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
+    .replaceAll(/<u[^>]*>(.*?)<\/u>/gi, '*$1*') // Use * for underlined text
+    .replaceAll(/<span[^>]*>(.*?)<\/span>/gi, '$1')
+    .replaceAll(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n')
+    .replaceAll(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n')
+    .replaceAll(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n')
+    .replaceAll(/<h4[^>]*>(.*?)<\/h4>/gi, '#### $1\n')
+    .replaceAll(/<h5[^>]*>(.*?)<\/h5>/gi, '##### $1\n')
+    .replaceAll(/<h6[^>]*>(.*?)<\/h6>/gi, '###### $1\n');
 
   // Handle images
   const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
-  content = content.replace(imgRegex, (match, src) => {
-    const altMatch = match.match(/alt=["']([^"']*)["']/gi);
+  content = content.replaceAll(imgRegex, (match, src) => {
+    const altMatch = match.match(/alt=["']([^"']*)["']/i);
     const alt = altMatch ? altMatch[1] : 'Imagen';
     return `![${alt}](${src})`;
   });
 
   // Remove remaining HTML tags
-  content = content.replace(/<[^>]+>/g, '');
+  content = content.replaceAll(/<[^>]+>/g, '');
+
+  // Decode HTML entities (e.g. &nbsp;)
+  content = decodeHtmlEntities(content);
 
   // Clean up whitespace more carefully
   content = content
-    .replace(/\n\s*\n\s*\n/g, '\n\n') // Remove multiple blank lines
-    .replace(/\n[ \t]+/g, '\n') // Remove lines with only spaces/tabs
-    .replace(/[ \t]+\n/g, '\n') // Remove trailing spaces on lines
-    .replace(/[ \t]+/g, ' ') // Replace multiple spaces with single space
+    .replaceAll(/\n\s*\n\s*\n/g, '\n\n') // Remove multiple blank lines
+    .replaceAll(/\n[ \t]+/g, '\n') // Remove lines with only spaces/tabs
+    .replaceAll(/[ \t]+\n/g, '\n') // Remove trailing spaces on lines
+    .replaceAll(/[ \t]+/g, ' ') // Replace multiple spaces with single space
     .trim();
 
   // Split into paragraphs and clean each one
@@ -198,20 +206,79 @@ function generateContent(item) {
   return cleanParagraphs.join('\n\n');
 }
 
-function cleanHTML(html) {
-  return html
-    .replace(/<[^>]+>/g, '') // Remove HTML tags
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ')
-    .trim();
+export function decodeHtmlEntities(text) {
+  if (!text) return '';
+
+  const named = {
+    amp: '&',
+    lt: '<',
+    gt: '>',
+    quot: '"',
+    apos: "'",
+    nbsp: ' ',
+  };
+
+  let result = text;
+  let previous;
+
+  do {
+    previous = result;
+    result = result.replaceAll(
+      /&(#x[0-9a-f]+|#\d+|[a-z]+);/gi,
+      (match, entity) => {
+        if (entity[0] === '#') {
+          const isHex = entity[1]?.toLowerCase() === 'x';
+          const codePoint = Number.parseInt(
+            isHex ? entity.slice(2) : entity.slice(1),
+            isHex ? 16 : 10
+          );
+          if (!Number.isNaN(codePoint)) {
+            return String.fromCodePoint(codePoint);
+          }
+          return match;
+        }
+
+        const replacement = named[entity.toLowerCase()];
+        return typeof replacement === 'string' ? replacement : match;
+      }
+    );
+  } while (result !== previous);
+
+  return result.replaceAll('\u00a0', ' ');
 }
 
-function escapeYaml(str) {
+export function cleanHTML(html) {
+  if (!html) return '';
+
+  const withoutTags = html.replaceAll(/<[^>]+>/g, ' ');
+
+  return decodeHtmlEntities(withoutTags).replaceAll(/\s+/g, ' ').trim();
+}
+
+export async function runFormatter() {
+  const projectRoot = path.join(__dirname, '..');
+
+  console.log('Running formatter (npm run format:write)...');
+
+  try {
+    const { stdout, stderr } = await execFileAsync(
+      'npm',
+      ['run', 'format:write'],
+      {
+        cwd: projectRoot,
+      }
+    );
+
+    if (stdout) console.log(stdout.trim());
+    if (stderr) console.error(stderr.trim());
+  } catch (error) {
+    const details = error?.stderr || error;
+    console.error('Formatter command failed:', details);
+    throw error;
+  }
+}
+
+export function escapeYaml(str) {
   if (!str) return '';
   return str
     .replaceAll('\\', '\\\\')
@@ -221,5 +288,9 @@ function escapeYaml(str) {
     .replaceAll('\t', '\\t');
 }
 
-// Run the script
-fetchBandos();
+const isCliInvocation =
+  process.argv[1] && path.resolve(process.argv[1]) === __filename;
+
+if (isCliInvocation) {
+  await fetchBandos();
+}

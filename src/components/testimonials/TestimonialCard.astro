@@ -1,0 +1,274 @@
+---
+import type { Testimonial } from '@data/testimonials';
+
+type Variant = 'page' | 'home';
+
+interface Props {
+  testimonial: Testimonial;
+  variant?: Variant;
+}
+
+const { testimonial, variant = 'page' } = Astro.props;
+const avatarAlt = testimonial.imageAlt || `Retrato de ${testimonial.name}`;
+const isHomeVariant = variant === 'home';
+const homeClasses = [
+  'cs-item',
+  'testimonial-card',
+  'testimonial-card--home',
+].join(' ');
+const pageClasses = [
+  'review',
+  'testimonial-card',
+  'testimonial-card--page',
+].join(' ');
+---
+
+{
+  isHomeVariant ? (
+    <li class={homeClasses}>
+      <img
+        class="cs-item-img testimonial-card__avatar"
+        loading="lazy"
+        decoding="async"
+        src={testimonial.image}
+        alt={avatarAlt}
+        width="80"
+        height="80"
+      />
+      <p class="cs-item-p testimonial-card__text">{testimonial.text}</p>
+      <span class="cs-reviewer testimonial-card__reviewer">
+        {testimonial.name}
+        <span class="cs-desc testimonial-card__role">{testimonial.role}</span>
+      </span>
+      <img
+        class="cs-item-stars testimonial-card__stars"
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        src="/assets/images/graphics/stars-yellow.svg"
+        alt="Valoración máxima"
+        width="96"
+        height="16"
+      />
+    </li>
+  ) : (
+    <div class={pageClasses}>
+      <picture>
+        <img
+          class="profile testimonial-card__avatar"
+          loading="lazy"
+          decoding="async"
+          src={testimonial.image}
+          alt={avatarAlt}
+          width="99"
+          height="99"
+        />
+      </picture>
+      <p class="testimonial-card__text">{testimonial.text}</p>
+      <div class="star-group">
+        <span class="name testimonial-card__reviewer">
+          {testimonial.name}
+          <span class="desc testimonial-card__role">{testimonial.role}</span>
+        </span>
+        <picture>
+          <img
+            class="testimonial-card__stars"
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+            src="/assets/svgs/stars.svg"
+            alt="Valoración de 5 estrellas"
+            width="91"
+            height="15"
+          />
+        </picture>
+      </div>
+    </div>
+  )
+}
+
+<style lang="less">
+  .testimonial-card {
+    list-style: none;
+    --testimonial-reviewer-color: var(--headerColor);
+    --testimonial-role-color: #353535;
+  }
+
+  .testimonial-card__reviewer {
+    color: var(--testimonial-reviewer-color);
+  }
+
+  .testimonial-card__role {
+    color: var(--testimonial-role-color);
+  }
+
+  .testimonial-card--home {
+    text-align: left;
+    width: 100%;
+    max-width: 33.875rem;
+    margin: 0 auto 4rem;
+    box-sizing: border-box;
+    padding: 3.75rem clamp(1rem, 3.2vw, 2rem) clamp(2rem, 5.4vw, 2.5rem);
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+
+    &:hover {
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .testimonial-card__avatar {
+      width: 5rem;
+      height: 5rem;
+      position: absolute;
+      top: -2.5rem;
+    }
+
+    .testimonial-card__text {
+      font-size: 1rem;
+      line-height: 1.5;
+      margin: 0 0 1.25rem;
+      padding-bottom: 1.25rem;
+      color: var(--bodyTextColor);
+      border-bottom: 1px solid #e8e9ec;
+      width: 100%;
+    }
+
+    .testimonial-card__reviewer {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.5;
+      width: 40%;
+      margin: 0 auto 0 0;
+      display: block;
+    }
+
+    .testimonial-card__role {
+      font-size: 0.875rem;
+      font-weight: 400;
+      display: block;
+    }
+
+    .testimonial-card__stars {
+      width: 6rem;
+      height: 1rem;
+    }
+  }
+
+  @media only screen and (min-width: 48em) {
+    .testimonial-card--home {
+      margin: 0;
+    }
+  }
+
+  .testimonial-card--page {
+    --testimonial-reviewer-color: #1a1a1a;
+    --testimonial-role-color: #575757;
+    width: 100%;
+    max-width: 25.625rem;
+    margin: 0 auto 6.25rem;
+    padding: 4rem 1.875rem 1.125rem;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 0.75rem;
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &:hover {
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+      transform: translateY(-4px);
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .testimonial-card__avatar {
+      width: 6.1875rem;
+      height: 6.1875rem;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      position: absolute;
+      top: -3.1875rem;
+      left: 1.875rem;
+    }
+
+    .testimonial-card__text {
+      line-height: 1.5;
+      text-align: left;
+      margin-bottom: 1.75rem;
+    }
+
+    .star-group {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid #e7e7e7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .testimonial-card__reviewer {
+      font-weight: 700;
+      line-height: 1.5rem;
+      text-align: left;
+      display: block;
+    }
+
+    .testimonial-card__role {
+      font-weight: 400;
+      display: block;
+    }
+
+    .testimonial-card__stars {
+      width: 5.6875rem;
+      height: 0.9375rem;
+      margin: 0;
+      display: block;
+    }
+  }
+
+  @media only screen and (min-width: 48em) {
+    .testimonial-card--page {
+      margin: 0 0 9.375rem;
+
+      &:last-of-type {
+        margin-bottom: 9.375rem;
+      }
+    }
+  }
+
+  :global(body.dark-mode) {
+    .testimonial-card {
+      --testimonial-reviewer-color: var(--bodyTextColorWhite);
+      --testimonial-role-color: var(--text-secondary, var(--primaryLight));
+    }
+
+    .testimonial-card--home,
+    .testimonial-card--page {
+      background: var(--medium);
+    }
+
+    .testimonial-card__text {
+      color: var(--bodyTextColorWhite);
+    }
+  }
+</style>

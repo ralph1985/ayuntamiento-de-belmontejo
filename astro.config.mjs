@@ -1,20 +1,40 @@
+import 'dotenv/config';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import sentry from '@sentry/astro';
 import icon from 'astro-icon';
 import vercel from '@astrojs/vercel/serverless';
+import pkg from './package.json' assert { type: 'json' };
 
 import decapCmsOauth from 'astro-decap-cms-oauth';
 
 // Check if admin should be enabled based on environment variable
 const adminEnabled = process.env.PUBLIC_ADMIN_MENU === 'true';
+const hasClientSentryDsn = Boolean(process.env.PUBLIC_SENTRY_DSN);
+const hasServerSentryDsn = Boolean(process.env.SENTRY_DSN);
+const serverSentryEnabled =
+  hasServerSentryDsn && process.env.SENTRY_ENABLE_SERVER === 'true';
+const appVersion = pkg?.version ?? '0.0.0';
 
-// TODO: meter "site" en una variable de entorno o un fichero de configuración para ponerlo sólo 1 vez
 export default defineConfig({
   site: 'https://ayuntamiento-de-belmontejo.vercel.app/',
   output: 'server',
+  devToolbar: {
+    // Hide Astro dev toolbar during automated preview/tests (env default true)
+    enabled: process.env.ASTRO_DEV_TOOLBAR !== 'false',
+  },
   adapter: vercel(),
   integrations: [
     icon(),
+    sentry({
+      enabled: {
+        client: hasClientSentryDsn,
+        server: serverSentryEnabled,
+      },
+      sourcemaps: {
+        disable: true,
+      },
+    }),
     sitemap({
       filter: page => !page.includes('/admin'),
       customPages: [
@@ -68,4 +88,9 @@ export default defineConfig({
       adminDisabled: !adminEnabled,
     }),
   ],
+  vite: {
+    define: {
+      'import.meta.env.PUBLIC_APP_VERSION': JSON.stringify(appVersion),
+    },
+  },
 });

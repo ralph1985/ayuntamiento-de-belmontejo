@@ -2,11 +2,11 @@
 import { ClientRouter } from 'astro:transitions';
 import type { GetImageResult } from 'astro';
 import client from '@data/client.json';
-import Header from '@components/Header.astro';
-import Footer from '@components/Footer.astro';
-import GoogleAnalytics from '@components/GoogleAnalytics.astro';
-import CookieConsent from '@components/CookieConsent.astro';
-import FloatingCookieManager from '@components/FloatingCookieManager.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import GoogleAnalytics from '@components/integrations/GoogleAnalytics.astro';
+import CookieConsent from '@components/integrations/CookieConsent.astro';
+import FloatingCookieManager from '@components/integrations/FloatingCookieManager.astro';
 import '@styles/root.less';
 import '@styles/dark.less';
 
@@ -28,6 +28,42 @@ interface Props {
 }
 
 const { description, title, preloadedImage } = Astro.props as Props;
+const baseSiteUrl =
+  Astro.site && Astro.site.length > 0 ? Astro.site : client.domain;
+const normalizedBaseUrl = baseSiteUrl.endsWith('/')
+  ? baseSiteUrl
+  : `${baseSiteUrl}/`;
+const canonicalUrl = new URL(Astro.url.pathname, normalizedBaseUrl).href;
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'GovernmentOrganization',
+  name: client.name,
+  url: normalizedBaseUrl,
+  ...(client.email && { email: client.email }),
+  ...(client.phoneForTel && { telephone: `+34 ${client.phoneForTel}` }),
+  address: {
+    '@type': 'PostalAddress',
+    ...(client.address.lineOne && { streetAddress: client.address.lineOne }),
+    ...(client.address.lineTwo || client.address.city
+      ? { addressLocality: client.address.lineTwo || client.address.city }
+      : {}),
+    ...(client.address.city && {
+      addressRegion: client.address.state || client.address.city,
+    }),
+    ...(client.address.zip && { postalCode: client.address.zip }),
+    addressCountry: 'ES',
+  },
+  logo: {
+    '@type': 'ImageObject',
+    url: new URL(
+      '/assets/favicons/android-chrome-192x192.png',
+      normalizedBaseUrl
+    ).href,
+  },
+  ...(client.socialMedia && {
+    sameAs: Object.values(client.socialMedia).filter(Boolean),
+  }),
+};
 ---
 
 <!-- A fully fleshed-out <head>, dynamically changing based on client.json and the page front matter -->
@@ -42,10 +78,7 @@ const { description, title, preloadedImage } = Astro.props as Props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="keywords" content="" />
-    <link
-      rel="canonical"
-      href={`https://${client.domain}${Astro.url.pathname}`}
-    />
+    <link rel="canonical" href={canonicalUrl} />
 
     <!-- If present, preloads the image passed as a prop -->
     {
@@ -58,10 +91,7 @@ const { description, title, preloadedImage } = Astro.props as Props;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content={`https://${client.domain}${Astro.url.pathname}`}
-    />
+    <meta property="og:url" content={canonicalUrl} />
     {
       preloadedImage && (
         <>
@@ -117,9 +147,15 @@ const { description, title, preloadedImage } = Astro.props as Props;
 
     <!-- Sitewide Scripts -->
     <script src="@js/nav.js"></script>
+    <script src="@js/cookies.js"></script>
 
     <!-- Google Analytics -->
     <GoogleAnalytics />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(organizationSchema)}
+    />
   </head>
   <body>
     <!-- Screen reader skip main nav -->

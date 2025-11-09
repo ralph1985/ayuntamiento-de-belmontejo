@@ -2,9 +2,8 @@
 /**
  * * This custom layout displays bandos posts and a sidebar
  **/
-import FeaturedContent from '@components/FeaturedContent.astro';
-import { formatDate } from '@js/utils';
-import { Picture } from 'astro:assets';
+import FeaturedContent from '@components/sections/FeaturedContent.astro';
+import RecentArticleCard from '@components/ui/RecentArticleCard.astro';
 
 const { posts } = Astro.props;
 ---
@@ -15,62 +14,29 @@ const { posts } = Astro.props;
     {
       posts.length >= 1 &&
         posts.map(post => (
-          <article class="recent-articles">
-            {post.data.image && (
-              <Picture
-                pictureAttributes={{
-                  class: 'news-mainImage',
-                }}
-                src={post.data.image}
-                quality={'mid'}
-                formats={['avif', 'webp', 'jpg']}
-                alt={post.data.imageAlt || post.data.title}
-                loading="lazy"
-                decoding="async"
-                aria-hidden="true"
-              />
-            )}
-
-            <div class="news-header">
-              <div class="news-authorGroup">
-                <picture class="news-author-img">
-                  <img
-                    src="/assets/svgs/profile.svg"
-                    alt="house"
-                    width="32"
-                    height="32"
-                    decoding="async"
-                  />
-                </picture>
-                <span class="news-author">{post.data.author}</span>
-                <span aria-hidden="true" class="news-dot" />
-                <span class="news-date">{formatDate(post.data.date)}</span>
-                {post.data.category && (
-                  <>
-                    <span aria-hidden="true" class="news-dot" />
-                    <span class="news-category">{post.data.category}</span>
-                  </>
-                )}
-              </div>
-              <h2 class="news-h1">{post.data.title}</h2>
-              <p class="news-desc">{post.data.description}</p>
-              <div class="bando-links">
-                <a href={`/bandos/${post.id}`} class="news-link">
-                  Leer bando
-                </a>
-                {post.data.link && (
-                  <a
-                    href={post.data.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="news-link news-link--external"
-                  >
-                    Ver original
-                  </a>
-                )}
-              </div>
-            </div>
-          </article>
+          <RecentArticleCard
+            title={post.data.title}
+            description={post.data.description}
+            author={post.data.author}
+            date={post.data.date}
+            image={post.data.image}
+            imageAlt={post.data.imageAlt ?? post.data.title}
+            category={post.data.category}
+            primaryLink={{
+              href: `/bandos/${post.id}`,
+              label: 'Leer bando',
+            }}
+            secondaryLink={
+              post.data.link
+                ? {
+                    href: post.data.link,
+                    label: 'Ver original',
+                    external: true,
+                  }
+                : undefined
+            }
+            variant="bandos"
+          />
         ))
     }
   </section>

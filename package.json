@@ -1,25 +1,37 @@
 {
   "name": "ayuntamiento-de-belmontejo",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.14.0",
+  "license": "MIT",
   "scripts": {
     "astro": "astro dev",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "astro dev",
     "fetch-bandos": "node scripts/fetch-bandos.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:unit": "vitest --run",
+    "test:unit:coverage": "vitest --run --coverage",
+    "test:e2e": "node scripts/run-e2e.js",
+    "test:e2e:visual": "node scripts/run-e2e.js --group visual:all",
+    "test:e2e:visual:update": "node scripts/run-e2e.js --update-snapshots=all --group visual:all",
+    "test:e2e:visual:last": "node scripts/run-e2e.js --last-failed --group visual:all",
+    "test:e2e:visual:last:update": "node scripts/run-e2e.js --last-failed --update-snapshots=all --group visual:all",
+    "test:e2e:navigation": "node scripts/run-e2e.js --group flows:navigation",
+    "sonar:scan": "dotenv -e .env -- sonar-scanner",
+    "version:suggest": "node scripts/suggest-version-bump.js"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.6.0",
-    "@astrojs/vercel": "8.0.4",
+    "@astrojs/vercel": "8.2.11",
+    "@sentry/astro": "10.23.0",
     "@types/simple-oauth2": "2.5.2",
-    "@vercel/node": "2.3.0",
+    "@vercel/node": "2.15.10",
     "astro": "5.14.7",
     "astro-decap-cms-oauth": "0.5.1",
     "astro-icon": "1.1.5",
@@ -30,14 +42,23 @@
     "simple-oauth2": "5.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.56.1",
     "@types/cors": "2.8.13",
     "@typescript-eslint/eslint-plugin": "8.46.2",
     "@typescript-eslint/parser": "8.46.2",
+    "@vitest/coverage-v8": "4.0.7",
+    "dotenv-cli": "7.3.0",
     "eslint": "9.38.0",
     "eslint-plugin-astro": "1.3.1",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "husky": "9.1.7",
     "prettier": "3.6.2",
-    "prettier-plugin-astro": "0.14.1"
+    "prettier-plugin-astro": "0.14.1",
+    "sonarqube-scanner": "4.3.2",
+    "vitest": "4.0.7"
+  },
+  "overrides": {
+    "esbuild": "0.25.12",
+    "path-to-regexp": "6.3.0"
   }
 }

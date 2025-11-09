@@ -1,17 +1,119 @@
-echo "Running lint and format checks..."
+set -e
 
-# Run linting
-npm run lint
-if [ $? -ne 0 ]; then
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+REMOTE_NAME="${1:-origin}"
+
+TARGET_BRANCH=""
+TARGET_SHA=""
+if [ ! -t 0 ]; then
+  while IFS=' ' read -r local_ref local_sha remote_ref remote_sha; do
+    if [ -z "$TARGET_BRANCH" ] && [ "${remote_ref#refs/heads/}" != "$remote_ref" ]; then
+      TARGET_BRANCH="${remote_ref#refs/heads/}"
+      TARGET_SHA="$remote_sha"
+    fi
+  done
+fi
+
+if [ "${SKIP_VERSION_CHECK}" != "1" ]; then
+  VERSION_FILE="package.json"
+
+  BASE_REF=""
+  if [ -n "$TARGET_BRANCH" ]; then
+    REMOTE_TRACKING_REF="refs/remotes/${REMOTE_NAME}/${TARGET_BRANCH}"
+    if git rev-parse --quiet --verify "$REMOTE_TRACKING_REF" >/dev/null 2>&1; then
+      BASE_REF="$(git merge-base HEAD "$REMOTE_TRACKING_REF" 2>/dev/null || true)"
+    fi
+
+    if [ -z "$BASE_REF" ] && [ -n "$TARGET_SHA" ] && [ "$TARGET_SHA" != "0000000000000000000000000000000000000000" ]; then
+      if git cat-file -e "${TARGET_SHA}^{commit}" >/dev/null 2>&1; then
+        BASE_REF="$TARGET_SHA"
+      fi
+    fi
+  fi
+
+  if [ -z "$BASE_REF" ]; then
+    if git rev-parse --quiet --verify origin/main >/dev/null 2>&1; then
+      BASE_REF="$(git merge-base HEAD origin/main 2>/dev/null || true)"
+    fi
+  fi
+
+  if [ -z "$BASE_REF" ]; then
+    BASE_REF="$(git rev-list --max-parents=0 HEAD | tail -n 1)"
+  fi
+
+  VERSION_DIFF="$(git diff "$BASE_REF" HEAD -- "$VERSION_FILE")"
+
+  if [ -z "$VERSION_DIFF" ]; then
+    if [ -n "$TARGET_BRANCH" ]; then
+      echo "❌ Version check failed: remember to bump \"version\" in $VERSION_FILE before pushing to ${REMOTE_NAME}/${TARGET_BRANCH}."
+    else
+      echo "❌ Version check failed: remember to bump \"version\" in $VERSION_FILE before pushing."
+    fi
+    if command -v node >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/suggest-version-bump.js" ]; then
+      if node "$REPO_ROOT/scripts/suggest-version-bump.js" "$REMOTE_NAME" "$TARGET_BRANCH" "$TARGET_SHA"; then
+        echo "   Version updated automatically. Review the changes (a commit may have been created) and retry your push."
+      else
+        STATUS=$?
+        if [ "$STATUS" -eq 2 ]; then
+          echo "   Version suggestion skipped. Update the version manually or rerun the hook."
+        else
+          echo "   Version suggestion failed. Update the version manually."
+        fi
+      fi
+    else
+      echo "   Version helper unavailable (Node.js missing or script not found). Update manually."
+    fi
+    echo "   Set SKIP_VERSION_CHECK=1 to bypass in exceptional cases."
+    exit 1
+  fi
+
+  if ! printf "%s" "$VERSION_DIFF" | grep -q '^[+-][[:space:]]*"version"[[:space:]]*:'; then
+    echo "❌ Found changes in $VERSION_FILE but no \"version\" bump detected."
+    if command -v node >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/suggest-version-bump.js" ]; then
+      if node "$REPO_ROOT/scripts/suggest-version-bump.js" "$REMOTE_NAME" "$TARGET_BRANCH" "$TARGET_SHA"; then
+        echo "   Version updated automatically. Review the changes (a commit may have been created) and retry your push."
+      else
+        STATUS=$?
+        if [ "$STATUS" -eq 2 ]; then
+          echo "   Version suggestion skipped. Update the version manually or rerun the hook."
+        else
+          echo "   Version suggestion failed. Update the version manually."
+        fi
+      fi
+    else
+      echo "   Version helper unavailable (Node.js missing or script not found). Update manually."
+    fi
+    echo "   Update the \"version\" field or set SKIP_VERSION_CHECK=1 to bypass in exceptional cases."
+    exit 1
+  fi
+fi
+
+echo "Running lint, format, and e2e checks..."
+
+if ! npm run lint; then
   echo "❌ Linting failed. Please fix the issues before pushing."
   exit 1
 fi
 
-# Run format check
-npm run format
-if [ $? -ne 0 ]; then
+if ! npm run format; then
   echo "❌ Code formatting check failed. Please run 'npm run format:write' to fix formatting issues."
   exit 1
+fi
+
+if ! npm run test:unit; then
+  echo "❌ Unit tests failed. Please fix the issues before pushing."
+  exit 1
+fi
+
+if ! npm run test:e2e; then
+  echo "⚠️  End-to-end tests failed. Re-running only the failed specs..."
+  if ! npm run test:e2e -- --last-failed; then
+    echo "❌ End-to-end tests failed again. Please address the reported issues before pushing."
+    exit 1
+  fi
+  echo "✅ End-to-end retry passed. Continuing with push."
 fi
 
 echo "✅ All checks passed!"

@@ -1,6 +1,6 @@
 ---
 title: 'Ampliación del Cementerio Municipal'
-description: '📢 Anuncio del Ayuntamiento de BelmontejoAmpliación del Cementerio MunicipalEl Ayuntamiento de Belmontejo informa a todos los vecinos y vecinas que se está p...'
+description: '📢 Anuncio del Ayuntamiento de Belmontejo Ampliación del Cementerio Municipal El Ayuntamiento de Belmontejo informa a todos los vecinos y vecinas que se está...'
 author: 'Ayuntamiento de Belmontejo'
 date: 2025-08-07T12:03:39.000Z
 category: 'Info General'

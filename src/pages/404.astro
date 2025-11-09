@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
 import '@styles/pages/404.less';
 ---
 
@@ -13,9 +14,9 @@ import '@styles/pages/404.less';
       <h2>Página no encontrada</h2>
       <p>Lo sentimos, la página que buscas no existe o ha sido movida.</p>
       <div class="navigation-links">
-        <a href="/" class="btn-primary">Volver al inicio</a>
-        <a href="/noticias" class="btn-secondary">Ver noticias</a>
-        <a href="/contacto" class="btn-secondary">Contactar</a>
+        <Button href="/">Volver al inicio</Button>
+        <Button href="/noticias" variant="secondary">Ver noticias</Button>
+        <Button href="/contacto" variant="secondary">Contactar</Button>
       </div>
     </div>
   </main>

@@ -1,0 +1,211 @@
+---
+import Button from '@components/ui/Button.astro';
+import type { GalleryCta, GalleryHeading, GalleryImage } from '@types/content';
+
+interface Props {
+  id?: string;
+  class?: string;
+  heading?: GalleryHeading;
+  rows?: GalleryImage[][];
+  cta?: GalleryCta;
+}
+
+const baseClass = 'c-image-gallery';
+
+const {
+  id = 'gallery',
+  class: customClass = '',
+  heading,
+  rows = [],
+  cta,
+} = Astro.props as Props;
+
+const sectionClass = [baseClass, customClass].filter(Boolean).join(' ');
+---
+
+<section id={id} class={sectionClass}>
+  <div class="cs-container">
+    {heading?.topper && <span class="cs-topper">{heading.topper}</span>}
+    {heading?.title && <h2 class="cs-title">{heading.title}</h2>}
+    {heading?.description && <p class="cs-text">{heading.description}</p>}
+
+    <div class="cs-image-group">
+      {
+        rows.map((row, rowIndex) => (
+          <div class={`cs-row cs-row-${rowIndex + 1}`}>
+            {row.map((image, imageIndex) => (
+              <picture class={`cs-picture cs-picture${imageIndex + 1}`}>
+                <source
+                  media="(max-width: 600px)"
+                  srcset={image.mobileSrc ?? image.desktopSrc}
+                />
+                <source media="(min-width: 601px)" srcset={image.desktopSrc} />
+                <img
+                  aria-hidden="true"
+                  decoding="async"
+                  src={image.desktopSrc}
+                  alt={image.alt}
+                  loading={image.loading ?? 'lazy'}
+                  width={image.width ?? 400}
+                  height={image.height ?? 560}
+                />
+              </picture>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+
+    {
+      cta && (
+        <Button
+          href={cta.href}
+          aria-label={cta.ariaLabel}
+          variant={cta.variant}
+        >
+          {cta.label}
+        </Button>
+      )
+    }
+  </div>
+</section>
+
+<style lang="less" is:global>
+  @media only screen and (min-width: 0em) {
+    .c-image-gallery {
+      text-align: center;
+      padding: var(--sectionPadding);
+      position: relative;
+      overflow: hidden;
+
+      .cs-container {
+        width: 100%;
+        max-width: (1322/16em);
+        margin: auto;
+      }
+
+      .cs-topper {
+        text-align: center;
+        margin-bottom: (16/16rem);
+      }
+
+      .cs-title {
+        text-align: center;
+        max-width: (621/16rem);
+        margin: 0 auto (40/16rem);
+      }
+
+      .cs-text {
+        max-width: (700/16rem);
+        margin: 0 auto (40/16rem);
+        opacity: 0.8;
+      }
+
+      .cs-image-group {
+        font-size: ~'min(1.1vw, 1em)';
+        width: 100%;
+        max-width: (1322/16em);
+        margin: 0 auto (60/16rem);
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: (30/16em);
+      }
+
+      .cs-row {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: (30/16em);
+      }
+
+      .cs-picture {
+        border-radius: (12/16em);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition:
+          box-shadow 0.3s ease,
+          transform 0.3s ease;
+        display: block;
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+          transform: translateY(-4px);
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+
+      .cs-row-1 {
+        .cs-picture1 {
+          width: (420/16em);
+          height: (567/16em);
+        }
+
+        .cs-picture2 {
+          width: (420/16em);
+          height: (629/16em);
+        }
+
+        .cs-picture3 {
+          width: (420/16em);
+          height: (512/16em);
+        }
+      }
+
+      .cs-row-2 {
+        .cs-picture1 {
+          width: (420/16em);
+          height: (492/16em);
+        }
+
+        .cs-picture2 {
+          width: (420/16em);
+          height: (517/16em);
+        }
+
+        .cs-picture3 {
+          width: (420/16em);
+          height: (629/16em);
+        }
+      }
+
+      .cs-row-3 {
+        .cs-picture1 {
+          width: (420/16em);
+          height: (625/16em);
+        }
+
+        .cs-picture2 {
+          width: (420/16em);
+          height: (452/16em);
+        }
+
+        .cs-picture3 {
+          width: (420/16em);
+          height: (629/16em);
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 0em) {
+    body.dark-mode {
+      .c-image-gallery {
+        .cs-title {
+          color: var(--bodyTextColorWhite);
+        }
+      }
+    }
+  }
+</style>

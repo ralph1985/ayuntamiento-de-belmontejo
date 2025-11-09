@@ -1,0 +1,48 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  mapId?: string;
+}
+
+const {
+  title = 'Ubicación',
+  subtitle = 'Encuéntranos en el mapa',
+  mapId = 'belmontejo-map',
+} = Astro.props;
+---
+
+<!-- ============================================ --><!--                 Google Map                   --><!-- ============================================ -->
+<section id="google-map">
+  <div class="cs-container">
+    <div class="cs-content">
+      <span class="cs-topper">{subtitle}</span>
+      <h2 class="cs-title">{title}</h2>
+      <p class="cs-text">
+        Belmontejo se encuentra en la provincia de Cuenca, en la comarca de la
+        Manchuela. Su ubicación estratégica le permite disfrutar tanto de la
+        tranquilidad rural como de un fácil acceso a las principales vías de
+        comunicación de la región.
+      </p>
+    </div>
+    <div class="cs-map-wrapper">
+      <iframe
+        id={mapId}
+        class="cs-map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3064.332427429821!2d-2.3477586732267373!3d39.82196387154136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd67fb1cf1bc9843%3A0x3ee48dbef9ea2994!2s16779%20Belmontejo%2C%20Cuenca!5e0!3m2!1ses!2ses!4v1761373475830!5m2!1ses!2ses"
+        width="100%"
+        height="450"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa de Belmontejo, Cuenca"
+      >
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<style lang="less">
+  @import '../../styles/components/google-map.less';
+</style>

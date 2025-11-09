@@ -40,7 +40,7 @@ const { posts } = Astro.props;
                 <span class="cs-date">{formatDate(post.data.date)}</span>
                 <h3 class="cs-h3">{post.data.title}</h3>
                 <p class="cs-item-text">{post.data.description}</p>
-                <a href={post.id} class="cs-link">
+                <a href={`/noticias/${post.id}`} class="cs-link">
                   Read More
                   <img
                     class="cs-arrow"

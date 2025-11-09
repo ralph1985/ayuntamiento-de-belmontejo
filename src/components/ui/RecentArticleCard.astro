@@ -1,0 +1,354 @@
+---
+import type { ImageMetadata } from 'astro:assets';
+import { Picture } from 'astro:assets';
+import { formatDate } from '@js/utils';
+
+type ArticleLink = {
+  href: string;
+  label: string;
+  external?: boolean;
+};
+
+interface Props {
+  title: string;
+  description: string;
+  author: string;
+  date: string | number | Date;
+  image?: ImageMetadata;
+  imageAlt?: string | null;
+  category?: string;
+  primaryLink: ArticleLink;
+  secondaryLink?: ArticleLink;
+  variant?: 'news' | 'bandos';
+}
+
+const {
+  title,
+  description,
+  author,
+  date,
+  image,
+  imageAlt,
+  category,
+  primaryLink,
+  secondaryLink,
+  variant = 'news',
+} = Astro.props satisfies Props;
+
+const hasImage = Boolean(image);
+const resolvedAlt = imageAlt ?? title;
+const formattedDate = formatDate(date);
+---
+
+<article
+  class:list={{
+    'recent-articles': true,
+    'recent-articles--with-image': hasImage,
+    'recent-articles--without-image': !hasImage,
+    'recent-articles--bandos': variant === 'bandos',
+    'recent-articles--news': variant === 'news',
+  }}
+>
+  {
+    hasImage && image && (
+      <Picture
+        pictureAttributes={{
+          class: 'news-mainImage',
+        }}
+        src={image}
+        quality="mid"
+        formats={['avif', 'webp', 'jpg']}
+        alt={resolvedAlt}
+        loading="lazy"
+        decoding="async"
+        aria-hidden="true"
+      />
+    )
+  }
+
+  <div class="news-header">
+    <div class="news-authorGroup">
+      <picture class="news-author-img">
+        <img
+          src="/assets/svgs/profile.svg"
+          alt="house"
+          width="32"
+          height="32"
+          decoding="async"
+        />
+      </picture>
+      <span class="news-author">{author}</span>
+      <span aria-hidden="true" class="news-dot"></span>
+      <span class="news-date">{formattedDate}</span>
+      {
+        category && (
+          <>
+            <span aria-hidden="true" class="news-dot" />
+            <span class="news-category">{category}</span>
+          </>
+        )
+      }
+    </div>
+    <h2 class="news-h1">{title}</h2>
+    <p class="news-desc">{description}</p>
+
+    {
+      secondaryLink ? (
+        <div class="recent-articles__links">
+          <a href={primaryLink.href} class="news-link">
+            {primaryLink.label}
+          </a>
+          <a
+            href={secondaryLink.href}
+            target={secondaryLink.external ? '_blank' : undefined}
+            rel={secondaryLink.external ? 'noopener noreferrer' : undefined}
+            class:list={{
+              'news-link': true,
+              'news-link--external': secondaryLink.external,
+            }}
+          >
+            {secondaryLink.label}
+          </a>
+        </div>
+      ) : (
+        <a href={primaryLink.href} class="news-link">
+          {primaryLink.label}
+        </a>
+      )
+    }
+  </div>
+</article>
+
+<style lang="less">
+  @media only screen and (min-width: 0em) {
+    .recent-articles {
+      width: 100%;
+      max-width: (795/16em);
+      flex: none;
+    }
+
+    .recent-articles--with-image {
+      .news-header {
+        border-radius: 0 0 (8/16em) (8/16em);
+      }
+    }
+
+    .recent-articles--without-image {
+      .news-header {
+        border-radius: (8/16em);
+      }
+    }
+
+    .recent-articles {
+      .news-mainImage {
+        width: 100%;
+        height: clamp(200px, 30vw, 400px);
+        border-radius: (8/16em) (8/16em) 0 0;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        display: block;
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+          box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+
+      .news-header {
+        padding: clamp(30px, 5vw, 50px);
+        border: 1px solid #ebebeb;
+        background: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+
+        &:hover {
+          box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        }
+      }
+
+      .news-authorGroup {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: (12/16rem);
+      }
+
+      .news-author-img {
+        width: (32/16em);
+        height: (32/16em);
+        border-radius: 50%;
+        display: block;
+        position: relative;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+
+      .news-author,
+      .news-date {
+        font-size: (14/16rem);
+        line-height: 1.5em;
+        color: var(--bodyTextColor);
+      }
+
+      .news-dot {
+        width: 3px;
+        height: 3px;
+        background-color: var(--primary);
+        border-radius: 50%;
+        display: block;
+      }
+
+      .news-category {
+        color: #6b7280;
+        font-size: 0.875rem;
+        font-style: italic;
+      }
+
+      .news-h1 {
+        font-size: clamp(20px, 5vw, 32px);
+        font-weight: 700;
+        line-height: 1.4em;
+        margin: (16/16rem) 0;
+        color: var(--headerColor);
+      }
+
+      .news-desc {
+        font-size: (16/16rem);
+        line-height: 1.5em;
+        margin: (16/16rem) 0 (32/16rem);
+        color: var(--bodyTextColor);
+      }
+    }
+
+    .recent-articles__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .news-link {
+      font-size: (16/16rem);
+      font-weight: 700;
+      line-height: clamp(2.875em, 5.5vw, 3.5em);
+      text-align: center;
+      text-decoration: none;
+      min-width: (150/16rem);
+      margin: auto;
+      box-sizing: border-box;
+      padding: 0 (24/16rem);
+      color: var(--headerColor);
+      background-color: var(--primary);
+      border-radius: (4/16rem);
+      display: inline-block;
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s;
+
+      &:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        background: #fff;
+        opacity: 0;
+        border: 1px solid var(--headerColor);
+        border-radius: (4/16rem);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: opacity 0.3s;
+      }
+
+      &:hover {
+        color: var(--headerColor);
+
+        &:before {
+          opacity: 1;
+        }
+      }
+    }
+
+    .news-link--external {
+      background-color: #0ea5e9;
+    }
+  }
+
+  @media only screen and (min-width: 64em) {
+    .recent-articles .news-h1 {
+      max-width: (500/16rem);
+    }
+  }
+
+  :global(body.dark-mode) {
+    .recent-articles {
+      .news-h1,
+      .news-desc,
+      .news-author,
+      .news-date {
+        color: #f7f7f7;
+      }
+
+      .news-header {
+        background-color: var(--background-sections) !important;
+      }
+    }
+
+    .recent-articles--bandos {
+      .news-header {
+        border-color: #3e3e3b;
+      }
+
+      .news-category {
+        color: var(--text-secondary);
+      }
+
+      .news-link {
+        color: var(--text-primary);
+        background-color: var(--primary);
+
+        &:before {
+          background: var(--medium);
+          border-color: var(--text-primary);
+        }
+
+        &:hover {
+          color: var(--text-primary);
+        }
+      }
+
+      .news-link--external {
+        background-color: #0ea5e9;
+        color: #ffffff;
+
+        &:before {
+          background: var(--medium);
+          border-color: #ffffff;
+        }
+
+        &:hover {
+          color: #ffffff;
+        }
+      }
+    }
+  }
+</style>

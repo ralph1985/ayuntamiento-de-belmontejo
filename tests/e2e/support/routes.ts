@@ -1,0 +1,19 @@
+export const visualRoutes = [
+  { path: '/', name: 'inicio' },
+  { path: '/sobre-el-pueblo', name: 'sobre-el-pueblo' },
+  { path: '/contacto', name: 'contacto' },
+  { path: '/noticias', name: 'noticias' },
+  { path: '/noticias/ayudas-despoblacion-cuenca', name: 'noticias-detalle' },
+  { path: '/bandos', name: 'bandos' },
+  {
+    path: '/bandos/1386492-uso-de-las-fuentes-del-parque-y-fronton',
+    name: 'bandos-detalle',
+  },
+  { path: '/proyectos', name: 'proyectos' },
+  { path: '/proyectos/proyecto-1', name: 'proyecto-1' },
+  { path: '/proyectos/proyecto-2', name: 'proyecto-2' },
+  { path: '/testimonios', name: 'testimonios' },
+  { path: '/buscar', name: 'buscar' },
+  { path: '/politica-de-cookies', name: 'politica-de-cookies' },
+  { path: '/politica-de-privacidad', name: 'politica-de-privacidad' },
+];

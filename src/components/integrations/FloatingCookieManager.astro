@@ -1,0 +1,50 @@
+---
+// Floating Cookie Manager Button
+// Provides easy access to cookie settings after the banner is dismissed
+---
+
+<button
+  id="floating-cookie-manager"
+  class="floating-cookie-btn"
+  title="Gestionar cookies"
+>
+  🍪
+</button>
+
+<style>
+  .floating-cookie-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 9998;
+    display: none; /* Hidden by default, shown via JavaScript */
+    transition: all 0.3s ease;
+    opacity: 0.8;
+  }
+
+  .floating-cookie-btn:hover {
+    background: #34495e;
+    transform: scale(1.1);
+    opacity: 1;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .floating-cookie-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Hide on mobile to avoid interference with mobile navigation */
+  /* Adjust position when cookie banner is visible */
+  body:has(#cookie-banner[style*='block']) .floating-cookie-btn {
+    bottom: 120px;
+  }
+</style>

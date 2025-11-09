@@ -1,0 +1,208 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import {
+  buildButtonClassList,
+  resolveElementTag,
+  resolveRelAttribute,
+  type ButtonVariant,
+  type ButtonSize,
+} from './button.helpers.ts';
+
+type CommonProps = {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  fullWidth?: boolean;
+  class?: string;
+};
+
+type ButtonAttributes = HTMLAttributes<'button'>;
+type AnchorAttributes = HTMLAttributes<'a'>;
+
+type ButtonProps = CommonProps &
+  ButtonAttributes & {
+    href?: undefined;
+    type?: ButtonAttributes['type'];
+  };
+
+type AnchorProps = CommonProps &
+  AnchorAttributes & {
+    href: string;
+  };
+
+type Props = ButtonProps | AnchorProps;
+
+const {
+  variant = 'primary',
+  size = 'md',
+  fullWidth = false,
+  class: className,
+  href,
+  type = 'button',
+  target,
+  rel,
+  ...rest
+} = Astro.props as Props;
+
+const tag = resolveElementTag(href);
+
+const classes = buildButtonClassList({
+  variant,
+  size,
+  fullWidth,
+  className,
+});
+
+const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
+---
+
+{
+  tag === 'a' ? (
+    <a
+      class={classes}
+      href={href}
+      target={target}
+      rel={computedRel}
+      {...(rest as Record<string, unknown>)}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button class={classes} type={type} {...(rest as Record<string, unknown>)}>
+      <slot />
+    </button>
+  )
+}
+
+<style lang="less">
+  .c-button {
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 1.875rem;
+    min-height: 3.125rem;
+    color: inherit;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      transform 0.2s ease;
+
+    &:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    &--full {
+      width: 100%;
+      display: inline-flex;
+    }
+
+    &--sm {
+      font-size: 0.875rem;
+      padding: 0 1.5rem;
+      min-height: 2.75rem;
+    }
+
+    &--md {
+      min-height: 3.125rem;
+    }
+
+    &--lg {
+      font-size: 1.0625rem;
+      padding: 0 2.25rem;
+      min-height: 3.5rem;
+    }
+
+    &--primary {
+      color: var(--text-white);
+      background-color: var(--primary);
+      z-index: 0;
+
+      &:before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: var(--accent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+        z-index: -1;
+      }
+
+      &:hover:before,
+      &:focus-visible:before {
+        transform: scaleX(1);
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: var(--text-white);
+      }
+    }
+
+    &--secondary {
+      background-color: transparent;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--primary);
+        color: var(--text-white);
+      }
+    }
+
+    &--ghost {
+      background: transparent;
+      border: 1px solid var(--button-ghost-border, currentColor);
+      color: var(--button-ghost-color, inherit);
+      z-index: 0;
+
+      &:before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        background: var(--button-ghost-fill, currentColor);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+        z-index: -1;
+      }
+
+      &:hover:before,
+      &:focus-visible:before {
+        transform: scaleX(1);
+      }
+
+      &:hover,
+      &:focus-visible {
+        color: var(--button-ghost-hover-color, var(--text-white));
+      }
+    }
+  }
+
+  :global(.dark-mode) {
+    .c-button--secondary {
+      border-color: var(--secondaryLight);
+      color: var(--secondaryLight);
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--secondaryLight);
+        color: var(--text-white);
+      }
+    }
+  }
+</style>

@@ -1,0 +1,241 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import { formatDate } from '@js/utils';
+import '@styles/sidebar.less';
+
+interface Props {
+  type?: 'noticias' | 'bandos' | 'both';
+  limit?: number;
+  excludeCurrentPost?: string;
+}
+
+const { type = 'both', limit = 3, excludeCurrentPost } = Astro.props;
+
+let featuredContent: any[] = [];
+
+if (type === 'noticias' || type === 'both') {
+  const noticias = await getCollection('noticias');
+  const featuredNoticias = noticias
+    .filter(post => post.data.isFeatured === true)
+    .filter(post =>
+      excludeCurrentPost ? post.id !== excludeCurrentPost : true
+    )
+    .map(post => ({ ...post, contentType: 'noticias' }));
+  featuredContent.push(...featuredNoticias);
+}
+
+if (type === 'bandos' || type === 'both') {
+  const bandos = await getCollection('bandos');
+  const featuredBandos = bandos
+    .filter(post => post.data.isFeatured === true)
+    .filter(post =>
+      excludeCurrentPost ? post.id !== excludeCurrentPost : true
+    )
+    .map(post => ({ ...post, contentType: 'bandos' }));
+  featuredContent.push(...featuredBandos);
+}
+
+// Sort by date and limit results
+featuredContent = featuredContent
+  .sort(
+    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+  )
+  .slice(0, limit);
+
+const getUrlPath = (post: any) => {
+  return post.contentType === 'noticias'
+    ? `/noticias/${post.id}`
+    : `/bandos/${post.id}`;
+};
+
+const getContentTypeLabel = (contentType: string) => {
+  return contentType === 'noticias' ? 'Noticia' : 'Bando';
+};
+---
+
+{
+  type === 'noticias' && (
+    <h3 class="news-sidebar_widget-header">Noticias Destacadas</h3>
+  )
+}
+{
+  type === 'bandos' && (
+    <h3 class="news-sidebar_widget-header">Bandos Destacados</h3>
+  )
+}
+
+{
+  featuredContent.length === 0 && (
+    <p class="no-featured-message">
+      {type === 'noticias' && 'No hay noticias destacadas disponibles.'}
+      {type === 'bandos' && 'No hay bandos destacados disponibles.'}
+      {type === 'both' && 'No hay contenido destacado disponible.'}
+    </p>
+  )
+}
+
+{
+  featuredContent.map(post => (
+    <a class="news-sidebar_widget-link" href={getUrlPath(post)}>
+      {post.data.image ? (
+        <picture class="news-sidebar_widget-image">
+          <Image
+            src={post.data.image}
+            alt={post.data.imageAlt || post.data.title}
+            width="60"
+            height="60"
+            decoding="async"
+          />
+        </picture>
+      ) : (
+        <div class="news-sidebar_widget-image news-sidebar_widget-image--placeholder">
+          {post.contentType === 'noticias' ? (
+            <svg
+              width="60"
+              height="60"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"
+                fill="currentColor"
+              />
+            </svg>
+          ) : (
+            <svg
+              width="60"
+              height="60"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <polyline
+                points="14,2 14,8 20,8"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <line
+                x1="16"
+                y1="13"
+                x2="8"
+                y2="13"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <line
+                x1="16"
+                y1="17"
+                x2="8"
+                y2="17"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <polyline
+                points="10,9 9,9 8,9"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          )}
+        </div>
+      )}
+      <div class="content-group">
+        <h4 class="news-sidebar_widget-h4">{post.data.title}</h4>
+        <span class="news-sidebar_widget-date">
+          {formatDate(post.data.date)}
+        </span>
+        {type === 'both' && (
+          <span class="content-type-badge content-type-badge--{post.contentType}">
+            {getContentTypeLabel(post.contentType)}
+          </span>
+        )}
+        {post.data.category && post.contentType === 'bandos' && (
+          <span class="news-sidebar_widget-category">{post.data.category}</span>
+        )}
+      </div>
+    </a>
+  ))
+}
+
+<style>
+  .no-featured-message {
+    color: #6b7280;
+    font-style: italic;
+    font-size: 0.875rem;
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .news-sidebar_widget-image--placeholder {
+    background-color: #f3f4f6;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+  }
+
+  .news-sidebar_widget-category {
+    display: block;
+    font-size: 0.75rem;
+    color: #0ea5e9;
+    font-weight: 500;
+    margin-top: 0.25rem;
+  }
+
+  .content-type-badge {
+    --badge-bg: var(--primary, #285c8d);
+    --badge-color: var(--text-white, #f5f1e9);
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    background-color: var(--badge-bg);
+    color: var(--badge-color);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .content-type-badge--noticias {
+    --badge-bg: var(--primary, #285c8d);
+    --badge-color: var(--text-white, #f5f1e9);
+  }
+
+  .content-type-badge--bandos {
+    --badge-bg: var(--accent, #b35030);
+    --badge-color: var(--text-white, #f5f1e9);
+  }
+
+  body.dark-mode .content-type-badge {
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  }
+</style>

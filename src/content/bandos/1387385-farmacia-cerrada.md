@@ -1,6 +1,6 @@
 ---
 title: 'Farmacia cerrada'
-description: 'Se recuerda a los vecinos que la farmacia de Belmontejo permanecerá cerrada el próximo viernes 8 de agosto.Perdonen las molestias'
+description: 'Se recuerda a los vecinos que la farmacia de Belmontejo permanecerá cerrada el próximo viernes 8 de agosto. Perdonen las molestias'
 author: 'Ayuntamiento de Belmontejo'
 date: 2025-08-07T08:22:01.000Z
 category: 'Info General'

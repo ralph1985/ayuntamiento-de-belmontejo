@@ -1,14 +1,22 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import CTA from '@components/CTA.astro';
-import FAQ from '@components/FAQ.astro';
-import FeaturedContent from '@components/FeaturedContent.astro';
-import SocialMediaLinks from '@components/SocialMediaLinks.astro';
+import FeaturedContent from '@components/sections/FeaturedContent.astro';
+import CTA from '@components/sections/CTA.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import IconBulletList from '@components/sections/IconBulletList.astro';
+import ImageGallery from '@components/sections/ImageGallery.astro';
+import SocialMediaLinks from '@components/layout/SocialMediaLinks.astro';
+import Button from '@components/ui/Button.astro';
+import TestimonialCard from '@components/testimonials/TestimonialCard.astro';
+import { testimonials } from '@data/testimonials';
+import { homeServices } from '@data/homeServices';
+import { portfolioGallery } from '@data/galleryImages';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 import { getImage } from 'astro:assets';
 const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
+const featuredTestimonials = testimonials.slice(0, 2);
 ---
 
 <BaseLayout
@@ -38,8 +46,8 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
           detenerse, donde las raíces siguen vivas y donde cada rincón cuenta
           una historia.
         </p>
-        <a href="/sobre-el-pueblo" class="cs-button-solid">Descubre más</a>
-        <a href="/contacto" class="cs-button-transparent"> Contactar </a>
+        <Button href="/sobre-el-pueblo">Descubre más</Button>
+        <Button href="/contacto" variant="ghost">Contactar</Button>
       </div>
     </div>
 
@@ -70,59 +78,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!--                  Services                    -->
   <!-- ============================================ -->
 
-  <section id="services" class="services">
-    <div class="card">
-      <picture>
-        <img
-          aria-hidden="true"
-          decoding="async"
-          src="/assets/svgs/service1.svg"
-          alt="historia"
-          width="48"
-          height="48"
-        />
-      </picture>
-      <h2>Historia y Patrimonio</h2>
-      <p>
-        Descubre los vestigios arqueológicos y el rico patrimonio histórico que
-        ha marcado la identidad de Belmontejo a través de los siglos.
-      </p>
-    </div>
-    <div class="card">
-      <picture>
-        <img
-          aria-hidden="true"
-          decoding="async"
-          src="/assets/svgs/service2.svg"
-          alt="naturaleza"
-          width="48"
-          height="48"
-        />
-      </picture>
-      <h2>Naturaleza y Paisaje</h2>
-      <p>
-        Disfruta de los campos de la Manchuela conquense, sus senderos rurales y
-        la tranquilidad de un entorno natural privilegiado.
-      </p>
-    </div>
-    <div class="card">
-      <picture>
-        <img
-          aria-hidden="true"
-          decoding="async"
-          src="/assets/svgs/service3.svg"
-          alt="tradicion"
-          width="48"
-          height="48"
-        />
-      </picture>
-      <h2>Tradición y Cultura</h2>
-      <p>
-        Vive las tradiciones locales, conoce las costumbres manchegas y
-        participa en la vida comunitaria de nuestro pueblo.
-      </p>
-    </div>
-  </section>
+  <IconBulletList id="services" items={homeServices} />
 
   <!-- ============================================ -->
   <!--                 Side By Side                 -->
@@ -201,9 +157,7 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
             height="77"
           />
         </div>
-        <a href="/sobre-el-pueblo" class="cs-button-solid"
-          >Conoce más sobre nosotros</a
-        >
+        <Button href="/sobre-el-pueblo"> Conoce más sobre nosotros </Button>
       </div>
     </div>
   </section>
@@ -280,198 +234,18 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!--                   Gallery                    -->
   <!-- ============================================ -->
 
-  <section id="gallery">
-    <div class="cs-container">
-      <span class="cs-topper">Nuestros Paisajes</span>
-      <h2 class="cs-title">Los campos y rincones de Belmontejo</h2>
-      <div class="cs-image-group">
-        <!-- Row 1-->
-        <div class="cs-row cs-row-1">
-          <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
-          <picture class="cs-picture cs-picture1">
-            <source
-              media="(max-width: 600px)"
-              srcset="/assets/images/portfolio/port1-m.jpg"
-            />
-            <source
-              media="(min-width: 601px)"
-              srcset="/assets/images/portfolio/port1.jpg"
-            />
-            <img
-              aria-hidden="true"
-              decoding="async"
-              src="/assets/images/portfolio/port1.jpg"
-              alt="new hallway"
-              loading="lazy"
-              width="400"
-              height="560"
-            />
-          </picture>
-          <picture class="cs-picture cs-picture2">
-            <source
-              media="(max-width: 600px)"
-              srcset="/assets/images/portfolio/port4-m.jpg"
-            />
-            <source
-              media="(min-width: 601px)"
-              srcset="/assets/images/portfolio/port4.jpg"
-            />
-            <img
-              aria-hidden="true"
-              decoding="async"
-              src="/assets/images/portfolio/port4.jpg"
-              alt="new home construction"
-              loading="lazy"
-              width="400"
-              height="560"
-            />
-          </picture>
-          <picture class="cs-picture cs-picture3">
-            <source
-              media="(max-width: 600px)"
-              srcset="/assets/images/portfolio/port7-m.jpg"
-            />
-            <source
-              media="(min-width: 601px)"
-              srcset="/assets/images/portfolio/port7.jpg"
-            />
-            <img
-              aria-hidden="true"
-              decoding="async"
-              src="/assets/images/portfolio/port7.jpg"
-              alt="building a new wall"
-              loading="lazy"
-              width="400"
-              height="560"
-            />
-          </picture>
-        </div>
-        <!-- Row 2 -->
-        <div class="cs-row cs-row-2">
-          <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
-          <picture class="cs-picture cs-picture1">
-            <source
-              media="(max-width: 600px)"
-              srcset="/assets/images/portfolio/port2-m.jpg"
-            />
-            <source
-              media="(min-width: 601px)"
-              srcset="/assets/images/portfolio/port2.jpg"
-            />
-            <img
-              aria-hidden="true"
-              decoding="async"
-              src="/assets/images/portfolio/port2.jpg"
-              alt="new kitchen"
-              loading="lazy"
-              width="400"
-              height="560"
-            />
-          </picture>
-          <picture class="cs-picture cs-picture2">
-            <source
-              media="(max-width: 600px)"
-              srcset="/assets/images/portfolio/port5-m.jpg"
-            />
-            <source
-              media="(min-width: 601px)"
-              srcset="/assets/images/portfolio/port5.jpg"
-            />
-            <img
-              aria-hidden="true"
-              decoding="async"
-              src="/assets/images/portfolio/port5.jpg"
-              alt="apartment addition"
-              loading="lazy"
-              width="400"
-              height="560"
-            />
-          </picture>
-          <picture class="cs-picture cs-picture3">
-            <source
-              media="(max-width: 600px)"
-              srcset="/assets/images/portfolio/port8-m.jpg"
-            />
-            <source
-              media="(min-width: 601px)"
-              srcset="/assets/images/portfolio/port8.jpg"
-            />
-            <img
-              aria-hidden="true"
-              decoding="async"
-              src="/assets/images/portfolio/port8.jpg"
-              alt="kew kitchen cabinets"
-              loading="lazy"
-              width="400"
-              height="560"
-            />
-          </picture>
-        </div>
-        <!-- Row 3 -->
-        <div class="cs-row cs-row-3">
-          <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
-          <picture class="cs-picture cs-picture1">
-            <source
-              media="(max-width: 600px)"
-              srcset="/assets/images/portfolio/port3-m.jpg"
-            />
-            <source
-              media="(min-width: 601px)"
-              srcset="/assets/images/portfolio/port3.jpg"
-            />
-            <img
-              aria-hidden="true"
-              decoding="async"
-              src="/assets/images/portfolio/port3.jpg"
-              alt="new kitchen"
-              loading="lazy"
-              width="400"
-              height="560"
-            />
-          </picture>
-          <picture class="cs-picture cs-picture2">
-            <source
-              media="(max-width: 600px)"
-              srcset="/assets/images/portfolio/port6-m.jpg"
-            />
-            <source
-              media="(min-width: 601px)"
-              srcset="/assets/images/portfolio/port6.jpg"
-            />
-            <img
-              aria-hidden="true"
-              decoding="async"
-              src="/assets/images/portfolio/port6.jpg"
-              alt="apartment addition"
-              loading="lazy"
-              width="400"
-              height="560"
-            />
-          </picture>
-          <picture class="cs-picture cs-picture3">
-            <source
-              media="(max-width: 600px)"
-              srcset="/assets/images/portfolio/port9-m.jpg"
-            />
-            <source
-              media="(min-width: 601px)"
-              srcset="/assets/images/portfolio/port9.jpg"
-            />
-            <img
-              aria-hidden="true"
-              decoding="async"
-              src="/assets/images/portfolio/port9.jpg"
-              alt="kew kitchen cabinets"
-              loading="lazy"
-              width="400"
-              height="560"
-            />
-          </picture>
-        </div>
-      </div>
-      <a href="/proyectos" class="cs-button-solid">Ver todos los proyectos</a>
-    </div>
-  </section>
+  <ImageGallery
+    id="gallery"
+    heading={{
+      topper: 'Nuestros Paisajes',
+      title: 'Los campos y rincones de Belmontejo',
+    }}
+    rows={portfolioGallery}
+    cta={{
+      href: '/proyectos',
+      label: 'Ver todos los proyectos',
+    }}
+  />
 
   <!-- ============================================ -->
   <!--                    FAQ                       -->
@@ -493,77 +267,15 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
         paisajes que nos rodean.
       </p>
       <ul class="cs-card-group">
-        <!-- Review 1 -->
-        <li class="cs-item">
-          <img
-            class="cs-item-img"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="/assets/images/reviews/profile5.png"
-            alt="profile picture"
-            width="80"
-            height="80"
-          />
-          <p class="cs-item-p">
-            Belmontejo es un remanso de paz en medio de la Mancha. Sus calles
-            tranquilas y la hospitalidad de su gente hacen que uno se sienta
-            como en casa. Es el lugar perfecto para desconectar y disfrutar de
-            la autenticidad rural.
-          </p>
-          <span class="cs-reviewer">
-            María García
-            <span class="cs-desc">Visitante</span>
-          </span>
-          <img
-            class="cs-item-stars"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="/assets/images/graphics/stars-yellow.svg"
-            alt="stars"
-            width="96"
-            height="16"
-          />
-        </li>
-        <!-- Review 2 -->
-        <li class="cs-item">
-          <img
-            class="cs-item-img"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="/assets/images/reviews/profile-4.png"
-            alt="profile picture"
-            width="80"
-            height="80"
-          />
-          <p class="cs-item-p">
-            Aquí el tiempo se detiene y uno puede apreciar la belleza sencilla
-            de la vida rural. Los paisajes, las tradiciones y el patrimonio de
-            Belmontejo crean una experiencia única que nunca se olvida.
-          </p>
-          <span class="cs-reviewer">
-            Antonio Ruiz
-            <span class="cs-desc">Vecino</span>
-          </span>
-          <img
-            class="cs-item-stars"
-            aria-hidden="true"
-            loading="lazy"
-            decoding="async"
-            src="/assets/images/graphics/stars-yellow.svg"
-            alt="stars"
-            width="96"
-            height="16"
-          />
-        </li>
+        {
+          featuredTestimonials.map(testimonial => (
+            <TestimonialCard testimonial={testimonial} variant="home" />
+          ))
+        }
       </ul>
-      <a
-        aria-label="read more reviews"
-        href="/testimonios"
-        class="cs-button-solid">Más testimonios</a
-      >
+      <Button aria-label="read more reviews" href="/testimonios">
+        Más testimonios
+      </Button>
     </div>
   </section>
 

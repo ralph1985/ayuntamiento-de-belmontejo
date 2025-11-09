@@ -2,9 +2,8 @@
 /**
  * * This custom layout displays noticias posts and a sidebar
  **/
-import FeaturedContent from '@components/FeaturedContent.astro';
-import { formatDate } from '@js/utils';
-import { Picture } from 'astro:assets';
+import FeaturedContent from '@components/sections/FeaturedContent.astro';
+import RecentArticleCard from '@components/ui/RecentArticleCard.astro';
 
 const { posts } = Astro.props;
 ---
@@ -15,42 +14,19 @@ const { posts } = Astro.props;
     {
       posts.length >= 1 &&
         posts.map(post => (
-          <article class="recent-articles">
-            <Picture
-              pictureAttributes={{
-                class: 'news-mainImage',
-              }}
-              src={post.data.image}
-              quality={'mid'}
-              formats={['avif', 'webp', 'jpg']}
-              alt={post.data.imageAlt}
-              loading="lazy"
-              decoding="async"
-              aria-hidden="true"
-            />
-
-            <div class="news-header">
-              <div class="news-authorGroup">
-                <picture class="news-author-img">
-                  <img
-                    src="/assets/svgs/profile.svg"
-                    alt="house"
-                    width="32"
-                    height="32"
-                    decoding="async"
-                  />
-                </picture>
-                <span class="news-author">{post.data.author}</span>
-                <span aria-hidden="true" class="news-dot" />
-                <span class="news-date">{formatDate(post.data.date)}</span>
-              </div>
-              <h2 class="news-h1">{post.data.title}</h2>
-              <p class="news-desc">{post.data.description}</p>
-              <a href={post.id} class="news-link">
-                Continuar leyendo
-              </a>
-            </div>
-          </article>
+          <RecentArticleCard
+            title={post.data.title}
+            description={post.data.description}
+            author={post.data.author}
+            date={post.data.date}
+            image={post.data.image}
+            imageAlt={post.data.imageAlt ?? post.data.title}
+            primaryLink={{
+              href: `/noticias/${post.id}`,
+              label: 'Continuar leyendo',
+            }}
+            variant="news"
+          />
         ))
     }
   </section>

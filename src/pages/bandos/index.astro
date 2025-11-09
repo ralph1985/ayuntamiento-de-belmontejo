@@ -4,14 +4,14 @@
  **/
 
 import BaseLayout from '@layouts/BaseLayout.astro';
-import CTA from '@components/CTA.astro';
+import CTA from '@components/sections/CTA.astro';
 import { getCollection } from 'astro:content';
 import { getImage } from 'astro:assets';
 import '@styles/sidebar.less';
 
-import Landing from '@components/Landing.astro';
+import Landing from '@components/sections/Landing.astro';
 import BandosRecentArticlesWithSidebar from '@layouts/BandosRecentArticlesWithSidebar.astro';
-import BandoMovilApp from '@components/BandoMovilApp.astro';
+import BandoMovilApp from '@components/sections/BandoMovilApp.astro';
 
 const posts = await getCollection('bandos');
 posts.sort(

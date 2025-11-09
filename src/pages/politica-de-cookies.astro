@@ -1,7 +1,8 @@
 ---
-import Landing from '../components/Landing.astro';
+import Landing from '../components/sections/Landing.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import client from '../data/client.json';
+import Button from '@components/ui/Button.astro';
 import { getImage } from 'astro:assets';
 import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
 
@@ -150,9 +151,7 @@ const description =
               Haga clic en el botón siguiente para abrir el panel de
               configuración de cookies:
             </p>
-            <button id="open-cookie-settings" class="btn-primary">
-              Configurar Cookies
-            </button>
+            <Button id="open-cookie-settings">Configurar Cookies</Button>
           </div>
         </section>
 
@@ -256,31 +255,6 @@ const description =
     </div>
   </section>
 </BaseLayout>
-
-<script>
-  // Open cookie settings from the policy page
-  document.addEventListener('DOMContentLoaded', function () {
-    const openSettingsBtn = document.getElementById('open-cookie-settings');
-    if (openSettingsBtn) {
-      openSettingsBtn.addEventListener('click', function () {
-        // Show the cookie settings modal if it exists
-        const modal = document.getElementById('cookie-settings-modal');
-        if (modal) {
-          modal.style.display = 'flex';
-          // Set current preferences
-          const analyticsConsent =
-            localStorage.getItem('analytics-consent') === 'true';
-          const analyticsCheckbox = document.getElementById(
-            'analytics-cookies'
-          ) as HTMLInputElement;
-          if (analyticsCheckbox) {
-            analyticsCheckbox.checked = analyticsConsent;
-          }
-        }
-      });
-    }
-  });
-</script>
 
 <style lang="less">
   @import '../styles/pages/politica-de-cookies.less';

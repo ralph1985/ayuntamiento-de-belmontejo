@@ -1,0 +1,107 @@
+---
+import navData from '@data/navData.json';
+import { Icon } from 'astro-icon/components';
+import {
+  filterNavigationEntries,
+  isActiveNavigationLink,
+  type NavigationEntry,
+} from './navigation.helpers';
+
+const {
+  entries = navData as NavigationEntry[],
+  currentPathname = Astro.url.pathname,
+  showAdminMenu = import.meta.env.PUBLIC_ADMIN_MENU === 'true',
+} = Astro.props;
+
+const filteredEntries = filterNavigationEntries(entries, showAdminMenu);
+const isActiveLink = (url: string | undefined) =>
+  isActiveNavigationLink(url, currentPathname);
+---
+
+<nav class="cs-nav" role="navigation">
+  <!--Mobile Nav Toggle-->
+  <button
+    class="cs-toggle"
+    id="mobile-menu-toggle"
+    aria-expanded="false"
+    aria-controls="cs-expanded-ul"
+    aria-label="Toggle mobile menu."
+  >
+    <div class="cs-box" aria-hidden="true">
+      <span class="cs-line cs-line1" aria-hidden="true"></span>
+      <span class="cs-line cs-line2" aria-hidden="true"></span>
+      <span class="cs-line cs-line3" aria-hidden="true"></span>
+    </div>
+  </button>
+  <!-- If you want to use another navigation stitch and enjoy the benefits of dynamic routing, replace the .cs-ul-wrapper in the navigation stitch with this one below -->
+  <div class="cs-ul-wrapper">
+    <ul id="cs-expanded-ul" class="cs-ul">
+      {
+        filteredEntries.map(entry => (
+          <li
+            class:list={[
+              'cs-li',
+              { 'cs-dropdown': entry.children?.length > 0 },
+            ]}
+          >
+            {entry.children?.length > 0 ? (
+              // If entry has children in navData.json, create a button and a dropdown icon
+              <button
+                aria-expanded="false"
+                aria-controls={`submenu-${entry.key}`}
+                class:list={[
+                  'cs-li-link cs-dropdown-button',
+                  { 'cs-active': isActiveLink(entry.url) },
+                ]}
+              >
+                {entry.key}
+                <Icon name="mdi--caret" class="cs-drop-icon" />
+              </button>
+            ) : (
+              // If entry does not have children in navData.json, create an anchor
+              <a
+                href={entry.url}
+                class:list={[
+                  'cs-li-link',
+                  {
+                    'cs-active': isActiveLink(entry.url),
+                  },
+                ]}
+                aria-current={
+                  currentPathname === entry.url ? 'page' : undefined
+                }
+                target={entry.isAdmin ? '_blank' : undefined}
+                rel={entry.isAdmin ? 'noopener noreferrer' : undefined}
+              >
+                {entry.key}
+              </a>
+            )}
+
+            {entry.children?.length > 0 && (
+              // If entry has children in navData.json, create a drop down menu
+              <ul id={`submenu-${entry.key}`} class="cs-drop-ul">
+                {entry.children.map(child => (
+                  <li class="cs-drop-li">
+                    <a
+                      href={child.url}
+                      class="cs-li-link cs-drop-link"
+                      aria-current={
+                        currentPathname === child.url ? 'page' : undefined
+                      }
+                    >
+                      {child.key}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<style lang="less">
+  @import '../../styles/components/navigation.less';
+</style>

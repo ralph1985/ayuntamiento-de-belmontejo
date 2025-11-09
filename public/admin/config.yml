@@ -113,6 +113,21 @@ collections:
         }
       - { label: 'Contenido', name: 'body', widget: 'markdown' }
 
+  - name: 'faqs'
+    label: 'Preguntas frecuentes'
+    folder: 'src/content/faqs'
+    create: true
+    fields:
+      - { label: 'Pregunta', name: 'question', widget: 'string' }
+      - { label: 'Orden', name: 'order', widget: 'number', default: 0 }
+      - {
+          label: '¿Mostrar abierta por defecto?',
+          name: 'isDefaultOpen',
+          widget: 'boolean',
+          default: false,
+        }
+      - { label: 'Respuesta', name: 'body', widget: 'markdown' }
+
   - name: 'footer-services' # Collection for managing footer services links
     label: 'Enlaces de Servicios' # Used in the admin dashboard UI
     files:

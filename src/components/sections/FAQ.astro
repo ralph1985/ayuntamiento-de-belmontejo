@@ -1,0 +1,70 @@
+---
+import { getCollection, render } from 'astro:content';
+import FaqItem from '@components/faq/FaqItem.astro';
+
+const faqCollection = await getCollection('faqs');
+const sortedFaqs = faqCollection.sort(
+  (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)
+);
+
+const faqEntries = await Promise.all(
+  sortedFaqs.map(async faq => {
+    const { Content } = await render(faq);
+    return {
+      id: faq.id,
+      question: faq.data.question,
+      isDefaultOpen: faq.data.isDefaultOpen ?? false,
+      Content,
+    };
+  })
+);
+
+const defaultActiveId =
+  faqEntries.find(faq => faq.isDefaultOpen)?.id ?? faqEntries[0]?.id ?? null;
+---
+
+<section id="faq-1741">
+  <div class="cs-container">
+    <div class="cs-content">
+      <span class="cs-topper">Preguntas frecuentes</span>
+      <h2 class="cs-title">Todo lo que necesitas saber sobre Belmontejo</h2>
+    </div>
+    <div class="cs-flex-group">
+      {
+        faqEntries.length ? (
+          <ul class="cs-faq-group">
+            {faqEntries.map(({ id, question, Content }) => (
+              <FaqItem question={question} isActive={id === defaultActiveId}>
+                <Content />
+              </FaqItem>
+            ))}
+          </ul>
+        ) : (
+          <p class="cs-item-text">
+            Estamos preparando las preguntas frecuentes. Por favor, vuelve más
+            tarde.
+          </p>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const faqItems = Array.from(document.querySelectorAll('.cs-faq-item'));
+    for (const item of faqItems) {
+      const button = item.querySelector('.cs-button');
+      if (!button) continue;
+
+      button.addEventListener('click', () => {
+        const isActive = item.classList.toggle('active');
+        button.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+      });
+    }
+  });
+</script>
+
+<style lang="less" is:global>
+  @import '../../styles/components/faq.less';
+</style>
