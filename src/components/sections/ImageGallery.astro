@@ -34,22 +34,34 @@ const sectionClass = [baseClass, customClass].filter(Boolean).join(' ');
         rows.map((row, rowIndex) => (
           <div class={`cs-row cs-row-${rowIndex + 1}`}>
             {row.map((image, imageIndex) => (
-              <picture class={`cs-picture cs-picture${imageIndex + 1}`}>
-                <source
-                  media="(max-width: 600px)"
-                  srcset={image.mobileSrc ?? image.desktopSrc}
-                />
-                <source media="(min-width: 601px)" srcset={image.desktopSrc} />
-                <img
-                  aria-hidden="true"
-                  decoding="async"
-                  src={image.desktopSrc}
-                  alt={image.alt}
-                  loading={image.loading ?? 'lazy'}
-                  width={image.width ?? 400}
-                  height={image.height ?? 560}
-                />
-              </picture>
+              <div
+                class="cs-picture-button"
+                role="button"
+                tabindex="0"
+                aria-label={`Ver imagen: ${image.alt}`}
+                data-modal-trigger
+                data-image-src={image.desktopSrc}
+                data-image-alt={image.alt}
+              >
+                <picture class={`cs-picture cs-picture${imageIndex + 1}`}>
+                  <source
+                    media="(max-width: 600px)"
+                    srcset={image.mobileSrc ?? image.desktopSrc}
+                  />
+                  <source
+                    media="(min-width: 601px)"
+                    srcset={image.desktopSrc}
+                  />
+                  <img
+                    decoding="async"
+                    src={image.desktopSrc}
+                    alt={image.alt}
+                    loading={image.loading ?? 'lazy'}
+                    width={image.width ?? 400}
+                    height={image.height ?? 560}
+                  />
+                </picture>
+              </div>
             ))}
           </div>
         ))
@@ -67,6 +79,27 @@ const sectionClass = [baseClass, customClass].filter(Boolean).join(' ');
         </Button>
       )
     }
+  </div>
+
+  <div class="cs-modal" data-gallery-modal hidden>
+    <div class="cs-modal-overlay" data-modal-close aria-hidden="true"></div>
+    <figure
+      class="cs-modal-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Vista ampliada de la imagen del proyecto"
+    >
+      <button
+        type="button"
+        class="cs-modal-close"
+        aria-label="Cerrar imagen ampliada"
+        data-modal-close
+      >
+        &times;
+      </button>
+      <img data-modal-image alt="" src="" />
+      <figcaption class="cs-modal-caption" data-modal-caption></figcaption>
+    </figure>
   </div>
 </section>
 
@@ -121,6 +154,28 @@ const sectionClass = [baseClass, customClass].filter(Boolean).join(' ');
         gap: (30/16em);
       }
 
+      .cs-picture-button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: zoom-in;
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
+
+        &:focus-visible {
+          outline: 3px solid var(--primary, #006a6a);
+          outline-offset: 4px;
+        }
+
+        &:hover .cs-picture,
+        &:focus-visible .cs-picture {
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+          transform: translateY(-4px);
+        }
+      }
+
       .cs-picture {
         border-radius: (12/16em);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -131,18 +186,11 @@ const sectionClass = [baseClass, customClass].filter(Boolean).join(' ');
         position: relative;
         overflow: hidden;
 
-        &:hover {
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-          transform: translateY(-4px);
-        }
-
         img {
+          display: block;
           width: 100%;
           height: 100%;
           object-fit: cover;
-          position: absolute;
-          top: 0;
-          left: 0;
         }
       }
 
@@ -206,6 +254,97 @@ const sectionClass = [baseClass, customClass].filter(Boolean).join(' ');
           color: var(--bodyTextColorWhite);
         }
       }
+
+      .cs-modal {
+        .cs-modal-dialog {
+          background: var(--medium);
+          color: var(--bodyTextColorWhite, #f5f5f5);
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cs-modal-caption {
+          color: var(--bodyTextColorWhite, #f5f5f5);
+        }
+
+        .cs-modal-close {
+          background: rgba(255, 255, 255, 0.2);
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .cs-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: (24/16rem);
+    z-index: 1000;
+
+    &.is-open {
+      display: flex;
+    }
+
+    .cs-modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(2px);
+    }
+
+    .cs-modal-dialog {
+      position: relative;
+      width: min(90vw, (900/16rem));
+      max-width: calc(100vw - 2rem);
+      max-height: min(90vh, (720/16rem));
+      margin: auto;
+      background: #fff;
+      border-radius: (16/16rem);
+      padding: (24/16rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: (12/16rem);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+      box-sizing: border-box;
+
+      img {
+        width: 100%;
+        height: auto;
+        max-height: calc(90vh - 20rem);
+        object-fit: contain;
+        display: block;
+      }
+    }
+
+    .cs-modal-close {
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      width: (32/16rem);
+      height: (32/16rem);
+      font-size: (24/16rem);
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: absolute;
+      top: (12/16rem);
+      right: (12/16rem);
+    }
+
+    .cs-modal-caption {
+      font-size: (16/16rem);
+      color: #333;
+      text-align: left;
     }
   }
 </style>
+
+<script src="@js/galleryModal.js"></script>
