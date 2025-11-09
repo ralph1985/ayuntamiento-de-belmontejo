@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { acceptCookiesBeforeNavigation, stabilizeVisualFlakes } from './utils';
+import {
+  acceptCookiesBeforeNavigation,
+  stabilizeVisualFlakes,
+} from '../../support/browser-helpers';
 
 test.describe('FAQ accordion interactions', () => {
   test('permite abrir y cerrar preguntas en la home', async ({ page }) => {

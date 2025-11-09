@@ -1,9 +1,17 @@
-import { expect, test } from '@playwright/test';
-import type { Page } from '@playwright/test';
+import { expect, test, devices, type Page } from '@playwright/test';
 import { URL } from 'node:url';
-import { acceptCookiesBeforeNavigation, stabilizeVisualFlakes } from './utils';
+import {
+  acceptCookiesBeforeNavigation,
+  stabilizeVisualFlakes,
+} from '../../../support/browser-helpers';
 
+const mobileDevice = devices['iPhone 13 Pro'];
 const SEARCH_QUERY = 'agua';
+
+test.use({
+  ...mobileDevice,
+  viewport: mobileDevice.viewport,
+});
 
 function waitForSearchData(page: Page) {
   return page.waitForResponse(response => {
@@ -28,8 +36,10 @@ async function showSearchResults(page: Page) {
   });
 }
 
-test.describe('Buscador con resultados visibles', () => {
-  test('captura visual modo claro con resultados', async ({ page }) => {
+test.describe('Buscador móvil con resultados visibles', () => {
+  test('captura visual móvil en modo claro con resultados', async ({
+    page,
+  }) => {
     await acceptCookiesBeforeNavigation(page);
     const searchDataResponse = waitForSearchData(page);
     await page.goto('/buscar', { waitUntil: 'networkidle' });
@@ -38,13 +48,15 @@ test.describe('Buscador con resultados visibles', () => {
     await showSearchResults(page);
     await stabilizeVisualFlakes(page, '/buscar');
 
-    await expect(page).toHaveScreenshot('buscar-resultados-light.png', {
+    await expect(page).toHaveScreenshot('buscar-resultados-mobile-light.png', {
       fullPage: true,
       animations: 'disabled',
     });
   });
 
-  test('captura visual modo oscuro con resultados', async ({ page }) => {
+  test('captura visual móvil en modo oscuro con resultados', async ({
+    page,
+  }) => {
     await acceptCookiesBeforeNavigation(page);
     await page.addInitScript(() => {
       window.localStorage.setItem('theme', 'dark');
@@ -60,7 +72,7 @@ test.describe('Buscador con resultados visibles', () => {
     await showSearchResults(page);
     await stabilizeVisualFlakes(page, '/buscar');
 
-    await expect(page).toHaveScreenshot('buscar-resultados-dark.png', {
+    await expect(page).toHaveScreenshot('buscar-resultados-mobile-dark.png', {
       fullPage: true,
       animations: 'disabled',
     });

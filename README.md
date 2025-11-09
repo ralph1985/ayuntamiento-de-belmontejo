@@ -86,9 +86,9 @@ El proyecto sigue la convención de Astro y añade algunos directorios auxiliare
 | `npm run test:unit`                   | Lanza las pruebas unitarias de Vitest.                                                                                   |
 | `npm run test:unit:coverage`          | Ejecuta Vitest y genera cobertura en `coverage/unit/`.                                                                   |
 | `npm run test:e2e`                    | Construye el sitio y ejecuta Playwright mediante `scripts/run-e2e.js`.                                                   |
-| `npm run test:e2e:visual`             | Ejecuta solo los escenarios visuales (desktop y mobile).                                                                 |
-| `npm run test:e2e:visual:update`      | Ejecuta los escenarios visuales actualizando todos los snapshots.                                                        |
-| `npm run test:e2e:visual:last`        | Repite únicamente los escenarios visuales que fallaron en la última ejecución.                                           |
+| `npm run test:e2e:visual`             | Ejecuta todos los escenarios visuales (páginas y buscador, desktop y mobile).                                            |
+| `npm run test:e2e:visual:update`      | Ejecuta todos los escenarios visuales actualizando sus snapshots.                                                        |
+| `npm run test:e2e:visual:last`        | Repite únicamente los escenarios visuales (páginas/buscador) que fallaron en la última ejecución.                        |
 | `npm run test:e2e:visual:last:update` | Repite los escenarios visuales fallidos y actualiza sus snapshots.                                                       |
 | `npm run test:e2e:navigation`         | Suite ligera centrada en flujos de navegación.                                                                           |
 | `npm run sonar:scan`                  | Ejecuta el análisis de SonarQube/SonarCloud empleando `sonar-project.properties` y las variables definidas en `.env`.    |
@@ -104,6 +104,7 @@ El proyecto sigue la convención de Astro y añade algunos directorios auxiliare
 
 - `scripts/run-e2e.js` se asegura de construir el sitio antes de lanzar Playwright y aporta valores ficticios para `OAUTH_GITHUB_CLIENT_ID` y `OAUTH_GITHUB_CLIENT_SECRET` si no están definidos.
 - Todas las banderas y argumentos tras `npm run test:e2e -- ...` se transfieren a `npx playwright test` (por ejemplo, `--update-snapshots`, `--project=chromium`).
+- Puedes limitar la ejecución a subconjuntos definidos en `scripts/e2e-groups.js` con `npm run test:e2e -- --group <nombre>` (por ejemplo, `visual:all`, `flows:navigation`).
 - Los snapshots visuales viven en `tests/e2e/__screenshots__/`. Actualízalos solo cuando la diferencia sea intencionada (`npm run test:e2e -- --update-snapshots` o los atajos `test:e2e:visual:*`).
 - El servidor que utiliza Playwright se levanta con `npm run preview -- --host 127.0.0.1 --port 4173`.
 
