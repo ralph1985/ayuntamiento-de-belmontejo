@@ -9,6 +9,7 @@ export const visualRoutes = [
     path: '/bandos/1386492-uso-de-las-fuentes-del-parque-y-fronton',
     name: 'bandos-detalle',
   },
+  { path: '/aviso-legal', name: 'aviso-legal' },
   { path: '/proyectos', name: 'proyectos' },
   { path: '/proyectos/proyecto-1', name: 'proyecto-1' },
   { path: '/proyectos/proyecto-2', name: 'proyecto-2' },

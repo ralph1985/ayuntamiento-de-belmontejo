@@ -10,7 +10,7 @@
 
 ## Pendiente/importante (Administración pública en España)
 
-- Aviso Legal: no hay página. Necesaria por LSSI-CE (titular, CIF, contacto, condiciones de uso, propiedad intelectual, responsabilidades).
+- Aviso Legal: página base creada en `src/pages/aviso-legal.astro`, pero quedan por completar/validar los datos oficiales (titular, CIF definitivo, datos registrales/DIR3, horario, sede electrónica, DPD y fecha de última actualización). Revisar con la documentación municipal antes de publicar.
 - Validar el CIF indicado (actualmente `P1603400A`) en la nueva política de privacidad y actualizarlo según la documentación oficial del Ayuntamiento.
 - Revisión jurídica: el Ayuntamiento/asesoría legal (o IA supervisada) debe revisar con calma el texto completo de la Política de Privacidad para asegurar que cubre todos los tratamientos y obligaciones reales.
 - Declaración de Accesibilidad: no hay página ni enlace en footer. Requerida por RD 1112/2018 (estado de conformidad, contenidos no accesibles, procedimiento de comunicación/quejas y reclamación, fecha última revisión).

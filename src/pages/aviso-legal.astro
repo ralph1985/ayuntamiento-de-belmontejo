@@ -1,7 +1,7 @@
 ---
-import Landing from '../components/Landing.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import client from '../data/client.json';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Landing from '@components/sections/Landing.astro';
+import client from '@data/client.json';
 import { getImage } from 'astro:assets';
 import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
 
@@ -29,13 +29,15 @@ const description =
           <h2>1. Identificación del titular</h2>
           <p>
             De acuerdo con lo previsto en la Ley 34/2002, de 11 de julio, de
-            Servicios de la Sociedad de la Información y de Comercio
-            Electrónico (LSSI-CE), se informa que este sitio web es titularidad
-            del {client.name}.
+            Servicios de la Sociedad de la Información y de Comercio Electrónico
+            (LSSI-CE), se informa que este sitio web es titularidad del {
+              client.name
+            }.
           </p>
           <ul class="legal-list">
             <li>
-              <strong>Domicilio:</strong> {client.address.lineOne}, {client.address.lineTwo}
+              <strong>Domicilio:</strong>
+              {client.address.lineOne}, {client.address.lineTwo}
               ({client.address.zip}, {client.address.city})
             </li>
             <li>
@@ -48,20 +50,26 @@ const description =
             </li>
             <li>
               <strong>CIF:</strong>
-              <span class="pending-data">[Pendiente de facilitar por el ayuntamiento]</span>
+              <span class="pending-data"
+                >[Pendiente de facilitar por el ayuntamiento]</span
+              >
             </li>
             <li>
               <strong>Datos registrales / DIR3:</strong>
-              <span class="pending-data">[Pendiente de facilitar por el ayuntamiento]</span>
+              <span class="pending-data"
+                >[Pendiente de facilitar por el ayuntamiento]</span
+              >
             </li>
             <li>
               <strong>Horario de atención:</strong>
-              <span class="pending-data">[Pendiente de facilitar por el ayuntamiento]</span>
+              <span class="pending-data"
+                >[Pendiente de facilitar por el ayuntamiento]</span
+              >
             </li>
           </ul>
           <p class="note">
-            👉 Sustituye los campos marcados como «Pendiente» en cuanto dispongas
-            de los datos oficiales proporcionados por el ayuntamiento.
+            👉 Sustituye los campos marcados como «Pendiente» en cuanto
+            dispongas de los datos oficiales proporcionados por el ayuntamiento.
           </p>
         </section>
 
@@ -70,8 +78,8 @@ const description =
           <p>
             El acceso y navegación por este sitio web implica la aceptación de
             las presentes condiciones generales de uso. El {client.name}
-            facilita información y servicios municipales con el objetivo de
-            mejorar la comunicación con la ciudadanía.
+            facilita información y servicios municipales con el objetivo de mejorar
+            la comunicación con la ciudadanía.
           </p>
           <ul class="legal-list">
             <li>
@@ -98,10 +106,9 @@ const description =
             Los contenidos, diseños, logotipos, fotografías, archivos de audio o
             vídeo y cualquier otro material presente en este sitio web son
             titularidad del {client.name} o se utilizan con las correspondientes
-            licencias. Queda prohibida su reproducción, distribución o
-            comunicación pública sin autorización expresa, salvo en los supuestos
-            permitidos por la normativa de reutilización de la información del
-            sector público.
+            licencias. Queda prohibida su reproducción, distribución o comunicación
+            pública sin autorización expresa, salvo en los supuestos permitidos por
+            la normativa de reutilización de la información del sector público.
           </p>
           <p>
             Cuando se publiquen contenidos procedentes de terceros, se
@@ -112,10 +119,10 @@ const description =
         <section class="legal-section" id="responsabilidad">
           <h2>4. Responsabilidad y enlaces</h2>
           <p>
-            El {client.name} trabaja para que la información sea exacta y esté
-            actualizada, si bien no puede garantizar la inexistencia de errores
-            u omisiones. En caso de detectar alguna incidencia, puedes
-            comunicarla a través de los canales de contacto facilitados.
+            El {client.name} trabaja para que la información sea exacta y esté actualizada,
+            si bien no puede garantizar la inexistencia de errores u omisiones. En
+            caso de detectar alguna incidencia, puedes comunicarla a través de los
+            canales de contacto facilitados.
           </p>
           <p>
             El sitio puede incluir enlaces a páginas externas sobre las que el
@@ -137,13 +144,14 @@ const description =
           <ul class="legal-list">
             <li>
               <strong>Delegado/a de Protección de Datos:</strong>
-              <span class="pending-data">[Pendiente de facilitar por el ayuntamiento]</span>
+              <span class="pending-data"
+                >[Pendiente de facilitar por el ayuntamiento]</span
+              >
             </li>
             <li>
               <strong>Ejercicio de derechos ARSOPL:</strong> Puedes dirigirte al
-              correo electrónico indicado en este aviso o a la dirección postal
-              del ayuntamiento. Una vez designado, añade el contacto directo del
-              DPD.
+              correo electrónico indicado en este aviso o a la dirección postal del
+              ayuntamiento. Una vez designado, añade el contacto directo del DPD.
             </li>
           </ul>
         </section>
@@ -153,8 +161,8 @@ const description =
           <p>
             El uso de cookies y tecnologías similares se detalla en la
             <a href="/politica-de-cookies">Política de Cookies</a> del sitio. En
-            ella encontrarás la información sobre los tipos de cookies
-            utilizadas, su finalidad y el modo de gestionar tus preferencias.
+            ella encontrarás la información sobre los tipos de cookies utilizadas,
+            su finalidad y el modo de gestionar tus preferencias.
           </p>
         </section>
 
@@ -174,12 +182,17 @@ const description =
               <a href={`tel:${client.phoneForTel}`}>{client.phoneForTel}</a>
             </li>
             <li>
-              <strong>Sede física:</strong> {client.address.lineOne},
-              {client.address.lineTwo} ({client.address.zip}, {client.address.city})
+              <strong>Sede física:</strong>
+              {client.address.lineOne},
+              {client.address.lineTwo} ({client.address.zip}, {
+                client.address.city
+              })
             </li>
             <li>
               <strong>Sede electrónica / registro:</strong>
-              <span class="pending-data">[Añadir enlace oficial cuando esté disponible]</span>
+              <span class="pending-data"
+                >[Añadir enlace oficial cuando esté disponible]</span
+              >
             </li>
           </ul>
         </section>

@@ -2,10 +2,14 @@
 
 .legal-notice {
   padding: 2rem 0 4rem;
-  background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+  background: linear-gradient(
+    135deg,
+    var(--background-main) 0%,
+    var(--background-sections) 100%
+  );
 }
 
-.container {
+.legal-notice .container {
   max-width: 860px;
   margin: 0 auto;
   padding: 0 1.25rem;
@@ -13,7 +17,7 @@
 
 .subtitle {
   font-size: 1.1rem;
-  color: #5a6c7d;
+  color: var(--text-secondary);
   margin-bottom: 0.5rem;
   text-align: center;
 }
@@ -30,7 +34,7 @@
 }
 
 .legal-notice-content {
-  background: #ffffff;
+  background: #fff;
   border-radius: 16px;
   box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1);
   overflow: hidden;
@@ -38,7 +42,7 @@
 
 .legal-section {
   padding: 2.25rem 2.5rem;
-  border-bottom: 1px solid #e5ecf3;
+  border-bottom: 1px solid var(--border-color);
 
   &:last-child {
     border-bottom: none;
@@ -46,16 +50,25 @@
 
   h2 {
     font-size: 1.6rem;
-    color: #1f2a44;
+    color: var(--text-primary);
     margin-bottom: 1rem;
     padding-bottom: 0.75rem;
-    border-bottom: 3px solid #3b82f6;
+    border-bottom: 3px solid var(--primary);
   }
 
   p {
-    color: #3f4c5d;
+    color: var(--text-secondary);
     line-height: 1.65;
     margin-bottom: 1rem;
+  }
+
+  a {
+    color: var(--primary);
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -65,11 +78,11 @@
 
   li {
     margin-bottom: 0.75rem;
-    color: #3f4c5d;
+    color: var(--text-secondary);
     line-height: 1.6;
 
     a {
-      color: #2563eb;
+      color: var(--primary);
       font-weight: 600;
 
       &:hover {
@@ -82,9 +95,9 @@
 .note {
   margin-top: 1.5rem;
   padding: 1rem 1.25rem;
-  border-left: 4px solid #f97316;
-  background: rgba(249, 115, 22, 0.08);
-  color: #92400e;
+  border-left: 4px solid var(--accent);
+  background: rgba(226, 122, 88, 0.12);
+  color: var(--text-primary);
   border-radius: 8px;
   font-size: 0.95rem;
 }
@@ -100,5 +113,39 @@
 
   .subtitle {
     font-size: 1rem;
+  }
+}
+
+body.dark-mode {
+  .legal-notice {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--medium) 100%);
+  }
+
+  .legal-notice-content {
+    background: var(--medium);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+  }
+
+  .legal-section {
+    border-color: var(--accent);
+
+    h2 {
+      border-color: var(--primary);
+    }
+  }
+
+  .legal-list li {
+    color: var(--text-primary);
+  }
+
+  .pending-data {
+    background: rgba(226, 122, 88, 0.25);
+    color: var(--text-primary);
+  }
+
+  .note {
+    background: rgba(226, 122, 88, 0.2);
+    color: var(--text-primary);
+    border-left-color: var(--accent);
   }
 }
