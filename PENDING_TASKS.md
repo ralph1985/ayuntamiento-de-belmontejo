@@ -8,34 +8,42 @@
 - Sede electrónica: enlace en footer data (`src/data/footerServices.json`).
 - CMS: Decap CMS con OAuth y menú condicionado por `PUBLIC_ADMIN_MENU`. Robots bloquea `/admin`.
 
-## Pendiente/importante (Administración pública en España)
+## Pendiente (organizado por tipo e importancia)
 
-- Aviso Legal: página base creada en `src/pages/aviso-legal.astro`, pero quedan por completar/validar los datos oficiales (titular, CIF definitivo, datos registrales/DIR3, horario, sede electrónica, DPD y fecha de última actualización). Revisar con la documentación municipal antes de publicar.
-- Validar el CIF indicado (actualmente `P1603400A`) en la nueva política de privacidad y actualizarlo según la documentación oficial del Ayuntamiento.
-- Revisión jurídica: el Ayuntamiento/asesoría legal (o IA supervisada) debe revisar con calma el texto completo de la Política de Privacidad para asegurar que cubre todos los tratamientos y obligaciones reales.
-- Declaración de Accesibilidad: no hay página ni enlace en footer. Requerida por RD 1112/2018 (estado de conformidad, contenidos no accesibles, procedimiento de comunicación/quejas y reclamación, fecha última revisión).
-- Enlaces “transparencia y contratación”: añadir en el footer links visibles a:
-  - Portal de Transparencia (propio o autonómico).
-  - Perfil del contratante (Plataforma de Contratación del Sector Público).
-  - Buzón de quejas y sugerencias / Procedimiento de accesibilidad (si no se gestiona en Sede).
-- Contacto y formularios:
-  - El formulario en `src/pages/contacto.astro` no tiene backend ni consentimiento explícito. Añadir:
-    - Casilla obligatoria de aceptación con enlace a la privacidad.
-    - Protección antispam (hCaptcha/Turnstile) y validación server-side.
-    - Envío vía API (email o proveedor con contrato de encargo).
-    - Cláusula informativa corta bajo el botón (responsable, finalidad, derechos).
-- Seguridad: cabeceras HTTP de seguridad no configuradas (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, COOP/COEP). En Vercel se pueden aplicar vía middleware de Astro o `vercel.json` (headers).
-- Sitemap/robots: `public/robots.txt:37` contiene dominio fijo de Vercel. Mantenerlo sincronizado con el dominio final o generarlo dinámicamente.
-- Accesibilidad práctica:
-  - Asegurar foco y trampa de foco en el modal de cookies; revisar contraste y orden de tabulación.
-  - PDF/Documentos: si se publican documentos, establecer pautas para PDFs accesibles (etiquetados, texto seleccionable, contraste, estructura).
-- Datos estructurados: validar los nuevos `GovernmentOrganization` y `NewsArticle` con la Rich Results Test y ajustar `client.domain`/`astro.config.mjs` cuando se confirme el dominio final para que las URLs del schema sean definitivas.
-- Google Analytics: cuando tengamos el dominio definitivo hay que migrar la propiedad de GA (ajustar `measurementId`, dominios de referencia y filtros de tráfico interno) y revisar consentimiento/carga diferida para que los datos históricos no queden fragmentados.
-- Redes sociales: los enlaces de Facebook e Instagram no se abren en Chrome iOS (posible bloqueo por esquema `intent://` o `target="_blank"`). Reproducir el bug en un dispositivo real, revisar atributos `rel` y usar URLs HTTPS limpias que funcionen en WebView móviles.
-- Dependencias npm: crear una rutina trimestral para revisar qué paquetes pueden actualizarse (todas las versiones están fijadas). Documentar en `PENDING_TASKS.md` o un changelog interno qué versión tenía cada paquete y cuál se sube, y apoyarse en Codex/Dependabot para automatizar PRs.
-- SEO avanzado: además del sitemap, revisar Core Web Vitals, etiquetar imágenes con `alt`, añadir `lang`, ajustar títulos/meta por sección y evaluar datos estructurados adicionales (`BreadcrumbList`, `FAQ`). Preparar checklist antes del lanzamiento del dominio final.
-- Tests unitarios: ampliar la cobertura de componentes críticos (cards de bandos, layout, formularios) con Vitest y testing-library para asegurar estados de carga, errores y accesibilidad básica.
-- Tests de integración: definir una suite que cubra flujos completos (p. ej., creación/edición de bandos vía CMS mock + render en frontend) y servicios como `fetch-bandos.js`, de modo que validemos la integración entre scripts, contenido y UI más allá de los e2e visuales.
+### Legal y cumplimiento institucional
+
+- **Alta** Aviso Legal: página base creada en `src/pages/aviso-legal.astro`, pero quedan por completar/validar los datos oficiales (titular, CIF definitivo, datos registrales/DIR3, horario, sede electrónica, DPD y fecha de última actualización). Revisar con la documentación municipal antes de publicar.
+- **Alta** Validar el CIF indicado (actualmente `P1603400A`) en la nueva política de privacidad y actualizarlo según la documentación oficial del Ayuntamiento.
+- **Alta** Revisión jurídica: el Ayuntamiento/asesoría legal (o IA supervisada) debe revisar con calma el texto completo de la Política de Privacidad para asegurar que cubre todos los tratamientos y obligaciones reales.
+- **Alta** Enlaces “transparencia y contratación”: añadir en el footer links visibles al Portal de Transparencia (propio o autonómico), al Perfil del contratante (Plataforma de Contratación del Sector Público) y a un buzón de quejas/sugerencias o procedimiento de accesibilidad.
+
+### Accesibilidad y experiencia de usuario
+
+- **Alta** Declaración de Accesibilidad: no hay página ni enlace en footer. Requerida por RD 1112/2018 (estado de conformidad, contenidos no accesibles, procedimiento de comunicación/quejas y reclamación, fecha última revisión).
+- **Alta** Accesibilidad práctica: asegurar foco y trampa de foco en el modal de cookies; revisar contraste y orden de tabulación; establecer pautas para PDFs accesibles (etiquetados, texto seleccionable, contraste, estructura).
+- **Media** Redes sociales: los enlaces de Facebook e Instagram no se abren en Chrome iOS (posible bloqueo por esquema `intent://` o `target="_blank"`). Reproducir el bug en un dispositivo real, revisar atributos `rel` y usar URLs HTTPS limpias que funcionen en WebView móviles.
+
+### Atención ciudadana y formularios
+
+- **Alta** Contacto y formularios: el formulario en `src/pages/contacto.astro` no tiene backend ni consentimiento explícito. Añadir casilla obligatoria de aceptación con enlace a la privacidad, protección antispam (hCaptcha/Turnstile) y validación server-side, envío vía API (email o proveedor con contrato de encargo) y una cláusula informativa corta bajo el botón (responsable, finalidad, derechos).
+
+### Seguridad y operaciones
+
+- **Alta** Seguridad: cabeceras HTTP (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, COOP/COEP) no configuradas. En Vercel se pueden aplicar vía middleware de Astro o `vercel.json` (headers).
+
+### SEO y analítica
+
+- **Alta** Sitemap/robots: `public/robots.txt:37` contiene dominio fijo de Vercel. Mantenerlo sincronizado con el dominio final o generarlo dinámicamente.
+- **Media** Datos estructurados: validar los nuevos `GovernmentOrganization` y `NewsArticle` con la Rich Results Test y ajustar `client.domain`/`astro.config.mjs` cuando se confirme el dominio final para que las URLs del schema sean definitivas.
+- **Media** Google Analytics: cuando tengamos el dominio definitivo hay que migrar la propiedad de GA (ajustar `measurementId`, dominios de referencia y filtros de tráfico interno) y revisar consentimiento/carga diferida para que los datos históricos no queden fragmentados.
+- **Media** SEO avanzado: además del sitemap, revisar Core Web Vitals, etiquetar imágenes con `alt`, añadir `lang`, ajustar títulos/meta por sección y evaluar datos estructurados adicionales (`BreadcrumbList`, `FAQ`). Preparar checklist antes del lanzamiento del dominio final.
+
+### QA y mantenimiento técnico
+
+- **Alta** Tests unitarios: ampliar la cobertura de componentes críticos (cards de bandos, layout, formularios) con Vitest y testing-library para asegurar estados de carga, errores y accesibilidad básica.
+- **Alta** Tests de integración: definir una suite que cubra flujos completos (p. ej., creación/edición de bandos vía CMS mock + render en frontend) y servicios como `fetch-bandos.js`, de modo que validemos la integración entre scripts, contenido y UI más allá de los e2e visuales.
+- **Alta** Revisar tipados TypeScript: auditar componentes, scripts y configuración para asegurar tipados estrictos (comprobar/activar `strict` en `tsconfig`, añadir tipos en layouts, scripts y endpoints y documentar las convenciones en el repo).
+- **Media** Dependencias npm: crear una rutina trimestral para revisar qué paquetes pueden actualizarse (todas las versiones están fijadas). Documentar en `PENDING_TASKS.md` o un changelog interno qué versión tenía cada paquete y cuál se sube, y apoyarse en Codex/Dependabot para automatizar PRs.
 
 ## Bug detectado
 
