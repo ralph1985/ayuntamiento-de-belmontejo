@@ -137,6 +137,43 @@
     transition: background-color 0.3s;
   }
 
+  main[transition-name="page"] {
+    view-transition-name: page;
+    contain: layout paint;
+  }
+
+  ::view-transition-old(page) {
+    animation: page-slide-out 0.45s ease forwards;
+  }
+
+  ::view-transition-new(page) {
+    animation: page-slide-in 0.45s ease both;
+  }
+
+  @keyframes page-slide-in {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes page-slide-out {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
   .container {
     width: 92%;
     margin: auto;
@@ -197,6 +234,13 @@
   body,
   html {
     font-size: 0.85vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(page),
+  ::view-transition-new(page) {
+    animation: none !important;
   }
 }
 
