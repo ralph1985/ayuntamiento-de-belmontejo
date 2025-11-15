@@ -1,0 +1,170 @@
+---
+import {
+  MODAL_BASE_CLASS,
+  MODAL_CLOSE_BASE_CLASS,
+  MODAL_DIALOG_BASE_CLASS,
+  MODAL_OVERLAY_BASE_CLASS,
+  MODAL_OPEN_CLASS,
+  buildModalClassList,
+  buildModalCloseButtonClassList,
+  buildModalDialogClassList,
+} from './modal.helpers';
+
+interface Props {
+  id: string;
+  class?: string;
+  dialogClass?: string;
+  overlayClass?: string;
+  dialogTag?: keyof HTMLElementTagNameMap | 'div';
+  ariaLabel?: string;
+  labelledBy?: string;
+  closeLabel?: string;
+  closeButton?: boolean;
+  closeButtonClass?: string;
+  closeButtonId?: string;
+  isOpen?: boolean;
+  overlayClosable?: boolean;
+  role?: string;
+}
+
+const {
+  id,
+  class: customClass = '',
+  dialogClass = '',
+  overlayClass = '',
+  dialogTag = 'div',
+  ariaLabel,
+  labelledBy,
+  closeLabel = 'Cerrar',
+  closeButton = true,
+  closeButtonClass = '',
+  closeButtonId,
+  isOpen = false,
+  overlayClosable = true,
+  role = 'dialog',
+} = Astro.props as Props;
+
+const modalClass = buildModalClassList({ className: customClass, isOpen });
+const dialogClassName = buildModalDialogClassList({ className: dialogClass });
+const closeClassName = buildModalCloseButtonClassList({
+  className: closeButtonClass,
+});
+const overlayClassName = [MODAL_OVERLAY_BASE_CLASS, overlayClass]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<div
+  id={id}
+  class={modalClass}
+  data-modal-root
+  data-modal-id={id}
+  hidden={!isOpen}
+  aria-hidden={isOpen ? 'false' : 'true'}
+>
+  <div
+    class={overlayClassName}
+    data-modal-close={overlayClosable ? '' : undefined}
+    aria-hidden="true"
+  >
+  </div>
+  <component
+    this={dialogTag}
+    class={dialogClassName}
+    role={role}
+    aria-modal="true"
+    aria-label={ariaLabel}
+    aria-labelledby={labelledBy}
+  >
+    {
+      closeButton && (
+        <button
+          type="button"
+          id={closeButtonId}
+          class={closeClassName}
+          aria-label={closeLabel}
+          data-modal-close
+        >
+          <slot name="close-icon">&times;</slot>
+        </button>
+      )
+    }
+    <slot />
+  </component>
+</div>
+
+<style is:global>
+  .c-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--modal-padding, 1.5rem);
+    z-index: var(--modal-z-index, 1000);
+  }
+
+  .c-modal[hidden] {
+    display: none !important;
+  }
+
+  .c-modal.is-open {
+    opacity: 1;
+  }
+
+  .c-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--modal-overlay-background, rgba(15, 23, 42, 0.6));
+  }
+
+  .c-modal__dialog {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: min(90vw, 40rem);
+    max-height: 90vh;
+    overflow-y: auto;
+    background: var(--modal-dialog-background, #ffffff);
+    border-radius: var(--modal-dialog-radius, 1rem);
+    padding: var(--modal-dialog-padding, 1.5rem);
+    box-shadow: var(--modal-dialog-shadow, 0 24px 48px rgba(15, 23, 42, 0.2));
+  }
+
+  .c-modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--modal-close-color, #111827);
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .c-modal__close:focus-visible {
+    outline: 3px solid var(--modal-close-focus-outline, #0f766e);
+    outline-offset: 4px;
+  }
+
+  .c-modal__close:hover {
+    color: var(--modal-close-hover-color, #0f172a);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .c-modal {
+      transition: opacity 200ms ease-in-out;
+      opacity: 0;
+    }
+
+    .c-modal.is-open {
+      opacity: 1;
+    }
+
+    .c-modal__dialog {
+      transition: transform 200ms ease-in-out;
+      transform: translateY(0);
+    }
+  }
+</style>

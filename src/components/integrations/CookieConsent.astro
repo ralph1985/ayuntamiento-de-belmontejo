@@ -1,6 +1,8 @@
 ---
-// Cookie Consent Banner Component
-// Manages user consent for cookies according to GDPR requirements
+import Modal from '@components/ui/Modal.astro';
+
+const cookieModalId = 'cookie-settings-modal';
+const cookieModalTitleId = 'cookie-settings-title';
 ---
 
 <div id="cookie-banner" class="cookie-banner" style="display: none;">
@@ -37,49 +39,61 @@
 </div>
 
 <!-- Cookie Settings Modal -->
-<div id="cookie-settings-modal" class="cookie-modal" style="display: none;">
-  <div class="cookie-modal-content">
-    <div class="cookie-modal-header">
-      <h3>Configuración de Cookies</h3>
-      <button id="close-cookie-modal" class="cookie-modal-close">&times;</button
-      >
-    </div>
-    <div class="cookie-modal-body">
-      <div class="cookie-category">
-        <div class="cookie-category-header">
-          <input type="checkbox" id="necessary-cookies" checked disabled />
-          <label for="necessary-cookies">
-            <strong>Cookies Necesarias</strong>
-          </label>
-        </div>
-        <p class="cookie-category-description">
-          Estas cookies son esenciales para el funcionamiento del sitio web y no
-          se pueden desactivar.
-        </p>
+<Modal
+  id={cookieModalId}
+  ariaLabel="Configuración de Cookies"
+  labelledBy={cookieModalTitleId}
+  class="cookie-modal"
+  dialogClass="cookie-modal-content"
+  closeButton={false}
+>
+  <div class="cookie-modal-header">
+    <h3 id={cookieModalTitleId}>Configuración de Cookies</h3>
+    <button
+      id="close-cookie-modal"
+      class="cookie-modal-close"
+      type="button"
+      aria-label="Cerrar configuración de cookies"
+      data-modal-close
+    >
+      &times;
+    </button>
+  </div>
+  <div class="cookie-modal-body">
+    <div class="cookie-category">
+      <div class="cookie-category-header">
+        <input type="checkbox" id="necessary-cookies" checked disabled />
+        <label for="necessary-cookies">
+          <strong>Cookies Necesarias</strong>
+        </label>
       </div>
+      <p class="cookie-category-description">
+        Estas cookies son esenciales para el funcionamiento del sitio web y no
+        se pueden desactivar.
+      </p>
+    </div>
 
-      <div class="cookie-category">
-        <div class="cookie-category-header">
-          <input type="checkbox" id="analytics-cookies" />
-          <label for="analytics-cookies">
-            <strong>Cookies Analíticas</strong>
-          </label>
-        </div>
-        <p class="cookie-category-description">
-          Estas cookies nos permiten analizar el uso del sitio web para mejorar
-          su rendimiento y experiencia de usuario, además de detectar errores de
-          forma proactiva. Utilizamos Google Analytics y Sentry para estos
-          propósitos.
-        </p>
+    <div class="cookie-category">
+      <div class="cookie-category-header">
+        <input type="checkbox" id="analytics-cookies" />
+        <label for="analytics-cookies">
+          <strong>Cookies Analíticas</strong>
+        </label>
       </div>
-    </div>
-    <div class="cookie-modal-footer">
-      <button id="save-cookie-preferences" class="cookie-btn cookie-btn-accept">
-        Guardar preferencias
-      </button>
+      <p class="cookie-category-description">
+        Estas cookies nos permiten analizar el uso del sitio web para mejorar su
+        rendimiento y experiencia de usuario, además de detectar errores de
+        forma proactiva. Utilizamos Google Analytics y Sentry para estos
+        propósitos.
+      </p>
     </div>
   </div>
-</div>
+  <div class="cookie-modal-footer">
+    <button id="save-cookie-preferences" class="cookie-btn cookie-btn-accept">
+      Guardar preferencias
+    </button>
+  </div>
+</Modal>
 
 <style>
   .cookie-banner {
@@ -173,27 +187,23 @@
 
   /* Modal styles */
   .cookie-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-    padding: 1rem;
+    --modal-padding: 1rem;
+    --modal-overlay-background: rgba(0, 0, 0, 0.5);
+    --modal-dialog-background: #ffffff;
+    --modal-dialog-radius: 8px;
+    --modal-dialog-padding: 0;
+    --modal-dialog-shadow: 0 24px 48px rgba(15, 23, 42, 0.25);
+    --modal-z-index: 10000;
   }
 
   .cookie-modal-content {
-    background: white;
-    border-radius: 8px;
     max-width: 600px;
     width: 100%;
     max-height: 80vh;
     overflow-y: auto;
     color: #2c3e50;
+    background: var(--modal-dialog-background, #ffffff);
+    border-radius: 8px;
   }
 
   .cookie-modal-header {
@@ -288,7 +298,7 @@
     }
 
     .cookie-modal {
-      padding: 0.5rem;
+      --modal-padding: 0.5rem;
     }
 
     .cookie-category-description {
@@ -298,8 +308,8 @@
   }
 
   body.dark-mode {
-    .cookie-modal-content {
-      background-color: var(--background-sections);
+    .cookie-modal {
+      --modal-dialog-background: var(--background-sections);
     }
 
     label {
