@@ -42,5 +42,9 @@
   },
   "emmet.includeLanguages": {
     "astro": "html"
+  },
+  "sonarlint.connectedMode.project": {
+    "connectionId": "ralph1985",
+    "projectKey": "ayuntamiento-de-belmontejo"
   }
 }
