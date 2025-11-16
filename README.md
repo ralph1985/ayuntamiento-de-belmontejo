@@ -176,10 +176,6 @@ Es necesario crear un archivo `.env` en la raíz del proyecto con las siguientes
 
 Los campos `contact.formSender` y `contact.formRecipient` (ver `src/data/contact-info.json`) se gestionan desde Decap CMS y controlan el remitente/destinatario usados por la API de Resend. Mientras no exista un remitente bajo el dominio municipal, utiliza `onboarding@resend.dev` (valor ya cargado en `formSender`).
 
-> **Tarea pendiente:** dar de alta un remitente oficial (`@belmontejo.es`) y actualizar `contact.formSender` en Decap cuando el dominio esté listo para evitar depender del remitente temporal.
-
-> **Tarea pendiente:** añadir medidas antiabuso (captcha, rate limiting y logging básico) en el formulario de contacto para evitar envíos masivos o automatizados.
-
 No compartas el archivo `.env` ni las credenciales generadas. Antes de habilitar el panel de administración en un entorno público, revisa que el despliegue esté protegido siguiendo las directrices de Vercel.
 
 ### Monitoreo de errores (Sentry)

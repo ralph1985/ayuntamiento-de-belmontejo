@@ -26,6 +26,8 @@
 ### Atención ciudadana y formularios
 
 - **Alta** Contacto y formularios: el formulario en `src/pages/contacto.astro` no tiene backend ni consentimiento explícito. Añadir casilla obligatoria de aceptación con enlace a la privacidad, protección antispam (hCaptcha/Turnstile) y validación server-side, envío vía API (email o proveedor con contrato de encargo) y una cláusula informativa corta bajo el botón (responsable, finalidad, derechos).
+- **Media** Remitente Resend: dar de alta un remitente oficial con dominio `@belmontejo.es` en Resend y actualizar `contact.formSender` desde Decap CMS para dejar de usar `onboarding@resend.dev`.
+- **Media** Antiabuso del formulario de contacto: añadir medidas específicas de captcha, rate limiting y logging básico para detectar automatización y abuso incluso tras añadir el backend.
 
 ### Seguridad y operaciones
 
