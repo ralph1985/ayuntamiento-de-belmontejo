@@ -115,7 +115,7 @@ const overlayClassName = [MODAL_OVERLAY_BASE_CLASS, overlayClass]
   .c-modal__overlay {
     position: absolute;
     inset: 0;
-    background: var(--modal-overlay-background, rgba(15, 23, 42, 0.6));
+    background: var(--modal-overlay-background, rgba(0, 0, 0, 0.6));
   }
 
   .c-modal__dialog {
@@ -127,7 +127,7 @@ const overlayClassName = [MODAL_OVERLAY_BASE_CLASS, overlayClass]
     overflow-y: auto;
     background: var(--modal-dialog-background, #ffffff);
     border-radius: var(--modal-dialog-radius, 1rem);
-    padding: var(--modal-dialog-padding, 1.5rem);
+    padding: var(--modal-dialog-padding, 0);
     box-shadow: var(--modal-dialog-shadow, 0 24px 48px rgba(15, 23, 42, 0.2));
   }
 
