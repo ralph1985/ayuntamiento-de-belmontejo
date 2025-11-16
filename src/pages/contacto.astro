@@ -190,6 +190,13 @@ const privacyContactEmail = emails[0]?.address ?? '';
             aria-live="polite"></span>
         </label>
         <Button type="submit">Enviar mensaje</Button>
+        <p
+          class="cs-form-status"
+          data-form-status
+          aria-live="polite"
+          role="status"
+        >
+        </p>
         <p class="cs-legal-notice">
           Responsable: {contactInfo.entity.name}. Finalidad: tramitar tu
           consulta y facilitarte una respuesta. Derechos: acceso, rectificación,
@@ -207,13 +214,6 @@ const privacyContactEmail = emails[0]?.address ?? '';
               </>
             )
           }
-        </p>
-        <p
-          class="cs-form-status"
-          data-form-status
-          aria-live="polite"
-          role="status"
-        >
         </p>
       </form>
       <div class="cs-right-section">
