@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import client from '@data/client.json';
+import contactInfo from '@js/contact';
 import Landing from '@components/sections/Landing.astro';
 import Button from '@components/ui/Button.astro';
 
@@ -8,11 +8,23 @@ import Button from '@components/ui/Button.astro';
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 import { getImage } from 'astro:assets';
 const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
+const contactPageTitle = `Contacto - ${contactInfo.entity.name}`;
+const contactPageDescription = `Ponte en contacto con el ${contactInfo.entity.name}. Información de contacto actualizada, direcciones y formulario para consultas ciudadanas.`;
+const phones = contactInfo.contact?.phones ?? [];
+const emails = contactInfo.contact?.emails ?? [];
+const offices = (contactInfo.offices ?? []).map(office => ({
+  ...office,
+  lines: [
+    office.street,
+    [office.locality, office.region].filter(Boolean).join(', '),
+    office.postalCode,
+  ].filter(Boolean),
+}));
 ---
 
 <BaseLayout
-  title="Contacto - Ayuntamiento de Belmontejo"
-  description="Ponte en contacto con el Ayuntamiento de Belmontejo. Información de contacto, dirección y formulario para consultas ciudadanas."
+  title={contactPageTitle}
+  description={contactPageDescription}
   preloadedImage={optimizedImage}
 >
   <!-- ============================================ -->
@@ -21,8 +33,8 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 
   <Landing title="Contacto" image={optimizedImage}>
     <p>
-      Ponte en contacto con el Ayuntamiento de Belmontejo para consultas,
-      sugerencias y trámites municipales
+      Ponte en contacto con el {contactInfo.entity.name} para consultas, sugerencias
+      y trámites municipales.
     </p>
   </Landing>
 
@@ -35,12 +47,13 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
       <form id="cs-form" name="Contact Form" method="post">
         <div class="cs-content">
           <span class="cs-topper">Contacto</span>
-          <h2 class="cs-title">Ponte en contacto con nosotros</h2>
+          <h2 class="cs-title">
+            Ponte en contacto con el {contactInfo.entity.name}
+          </h2>
           <p class="cs-text">
-            El Ayuntamiento de Belmontejo está aquí para atender tus consultas,
-            sugerencias y trámites administrativos. No dudes en contactarnos
-            para cualquier asunto relacionado con nuestro municipio. Estaremos
-            encantados de ayudarte.
+            El {contactInfo.entity.name} está aquí para atender tus consultas, sugerencias
+            y trámites administrativos. No dudes en contactarnos para cualquier asunto
+            relacionado con nuestro municipio. Estaremos encantados de ayudarte.
           </p>
         </div>
         <label>
@@ -93,27 +106,64 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
         <Button type="submit">Enviar mensaje</Button>
       </form>
       <div class="cs-right-section">
-        <!--Email-->
-        <span class="cs-header">Correo electrónico</span>
-        <a class="cs-link" href={`mailto:${client.email}`}>{client.email}</a>
-        <!--Phone-->
-        <span class="cs-header">Teléfono</span>
-        <a class="cs-link" href={`tel:${client.phoneForTel}`}
-          >{client.phoneForTel}</a
-        >
-        <!--Address-->
-        <span class="cs-header">Dirección</span>
-        <a class="cs-link" href={client.address.mapLink}>
-          {client.address.lineOne},
-          <br />
-          {client.address.lineTwo},
-          <br />
-          <span class="cs-block">
-            {client.address.city}
-            {client.address.state}
-            {client.address.zip}
-          </span>
-        </a>
+        {
+          emails.map(email => (
+            <>
+              <span class="cs-header">{email.label}</span>
+              <a class="cs-link" href={`mailto:${email.address}`}>
+                {email.address}
+              </a>
+            </>
+          ))
+        }
+        {
+          phones.map(phone => (
+            <>
+              <span class="cs-header">{phone.label}</span>
+              <a class="cs-link" href={`tel:${phone.href}`}>
+                {phone.display}
+              </a>
+            </>
+          ))
+        }
+        {
+          offices.map(office => (
+            <>
+              <span class="cs-header">{office.label}</span>
+              {office.mapsUrl ? (
+                <a class="cs-link" href={office.mapsUrl}>
+                  {office.lines.map((line, index) => {
+                    const isLastLine = index === office.lines.length - 1;
+
+                    return (
+                      <>
+                        <span class={isLastLine ? 'cs-block' : undefined}>
+                          {line}
+                        </span>
+                        {!isLastLine && <br />}
+                      </>
+                    );
+                  })}
+                </a>
+              ) : (
+                <span class="cs-link">
+                  {office.lines.map((line, index) => {
+                    const isLastLine = index === office.lines.length - 1;
+
+                    return (
+                      <>
+                        <span class={isLastLine ? 'cs-block' : undefined}>
+                          {line}
+                        </span>
+                        {!isLastLine && <br />}
+                      </>
+                    );
+                  })}
+                </span>
+              )}
+            </>
+          ))
+        }
 
         <!-- Background Image-->
         <picture class="cs-bg-picture">
