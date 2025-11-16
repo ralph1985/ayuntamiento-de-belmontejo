@@ -1,5 +1,6 @@
 ---
 import Button from '@components/ui/Button.astro';
+import Modal from '@components/ui/Modal.astro';
 import type { GalleryCta, GalleryHeading, GalleryImage } from '@types/content';
 
 interface Props {
@@ -21,6 +22,7 @@ const {
 } = Astro.props as Props;
 
 const sectionClass = [baseClass, customClass].filter(Boolean).join(' ');
+const modalId = `${id}-modal`;
 ---
 
 <section id={id} class={sectionClass}>
@@ -81,26 +83,19 @@ const sectionClass = [baseClass, customClass].filter(Boolean).join(' ');
     }
   </div>
 
-  <div class="cs-modal" data-gallery-modal hidden>
-    <div class="cs-modal-overlay" data-modal-close aria-hidden="true"></div>
-    <figure
-      class="cs-modal-dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Vista ampliada de la imagen del proyecto"
-    >
-      <button
-        type="button"
-        class="cs-modal-close"
-        aria-label="Cerrar imagen ampliada"
-        data-modal-close
-      >
-        &times;
-      </button>
-      <img data-modal-image alt="" src="" />
-      <figcaption class="cs-modal-caption" data-modal-caption></figcaption>
-    </figure>
-  </div>
+  <Modal
+    id={modalId}
+    ariaLabel="Vista ampliada de la imagen del proyecto"
+    class="c-image-gallery__modal"
+    dialogTag="figure"
+    dialogClass="c-image-gallery__dialog"
+    closeLabel="Cerrar imagen ampliada"
+    closeButtonClass="c-image-gallery__close"
+  >
+    <img data-modal-image alt="" src="" />
+    <figcaption class="c-image-gallery__caption" data-modal-caption>
+    </figcaption>
+  </Modal>
 </section>
 
 <style lang="less" is:global>
@@ -255,95 +250,82 @@ const sectionClass = [baseClass, customClass].filter(Boolean).join(' ');
         }
       }
 
-      .cs-modal {
-        .cs-modal-dialog {
-          background: var(--medium);
-          color: var(--bodyTextColorWhite, #f5f5f5);
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+      .c-image-gallery__modal {
+        --modal-dialog-background: var(--medium);
+        --modal-dialog-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        --modal-close-color: #fff;
+        --modal-close-hover-color: #f8fafc;
+      }
 
-        .cs-modal-caption {
-          color: var(--bodyTextColorWhite, #f5f5f5);
-        }
+      .c-image-gallery__dialog {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--bodyTextColorWhite, #f5f5f5);
+      }
 
-        .cs-modal-close {
-          background: rgba(255, 255, 255, 0.2);
-          color: #fff;
-        }
+      .c-image-gallery__caption {
+        color: var(--bodyTextColorWhite, #f5f5f5);
+      }
+
+      .c-image-gallery__close {
+        background: rgba(255, 255, 255, 0.2);
       }
     }
   }
 
-  .cs-modal {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: (24/16rem);
-    z-index: 1000;
+  .c-image-gallery__modal {
+    --modal-padding: (24/16rem);
+    --modal-overlay-background: rgba(0, 0, 0, 0.65);
+    --modal-dialog-background: #fff;
+    --modal-dialog-radius: (16/16rem);
+    --modal-dialog-padding: (24/16rem);
+    --modal-dialog-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 
-    &.is-open {
-      display: flex;
-    }
-
-    .cs-modal-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.65);
+    .c-modal__overlay {
       backdrop-filter: blur(2px);
     }
+  }
 
-    .cs-modal-dialog {
-      position: relative;
-      width: min(90vw, (900/16rem));
-      max-width: calc(100vw - 2rem);
-      max-height: min(90vh, (720/16rem));
-      margin: auto;
-      background: #fff;
-      border-radius: (16/16rem);
-      padding: (24/16rem);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: (12/16rem);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-      overflow: hidden;
-      box-sizing: border-box;
+  .c-image-gallery__dialog {
+    position: relative;
+    width: min(90vw, (900/16rem));
+    max-width: calc(100vw - 2rem);
+    max-height: min(90vh, (720/16rem));
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: (12/16rem);
+    overflow: hidden;
+    box-sizing: border-box;
 
-      img {
-        width: 100%;
-        height: auto;
-        max-height: calc(90vh - 20rem);
-        object-fit: contain;
-        display: block;
-      }
+    img {
+      width: 100%;
+      height: auto;
+      max-height: calc(90vh - 20rem);
+      object-fit: contain;
+      display: block;
     }
+  }
 
-    .cs-modal-close {
-      background: rgba(0, 0, 0, 0.75);
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      width: (32/16rem);
-      height: (32/16rem);
-      font-size: (24/16rem);
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      position: absolute;
-      top: (12/16rem);
-      right: (12/16rem);
-    }
+  .c-image-gallery__close {
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    width: (32/16rem);
+    height: (32/16rem);
+    font-size: (24/16rem);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    .cs-modal-caption {
-      font-size: (16/16rem);
-      color: #333;
-      text-align: left;
-    }
+  .c-image-gallery__caption {
+    font-size: (16/16rem);
+    color: #333;
+    text-align: left;
+    width: 100%;
   }
 </style>
 
