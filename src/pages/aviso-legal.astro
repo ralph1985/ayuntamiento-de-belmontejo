@@ -1,21 +1,36 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Landing from '@components/sections/Landing.astro';
-import client from '@data/client.json';
+import contactInfo, {
+  getPrimaryEmail,
+  getPrimaryOffice,
+  getPrimaryPhone,
+} from '@js/contact';
 import { getImage } from 'astro:assets';
 import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
 
 const optimizedImage = await getImage({ src: vistaAerea });
 
-const pageTitle = 'Aviso Legal - Ayuntamiento de Belmontejo';
-const description =
-  'Marco legal, condiciones de uso y responsabilidades del sitio web oficial del Ayuntamiento de Belmontejo.';
+const pageTitle = `Aviso Legal - ${contactInfo.entity.name}`;
+const description = `Marco legal, condiciones de uso y responsabilidades del sitio web oficial del ${contactInfo.entity.name}.`;
+const primaryEmail = getPrimaryEmail();
+const primaryPhone = getPrimaryPhone();
+const primaryOffice = getPrimaryOffice();
+const primaryOfficeLines = primaryOffice
+  ? [
+      primaryOffice.street,
+      [primaryOffice.locality, primaryOffice.region].filter(Boolean).join(', '),
+      primaryOffice.postalCode,
+    ].filter(Boolean)
+  : [];
 ---
 
 <BaseLayout title={pageTitle} description={description}>
   <Landing title="⚖️ Aviso Legal" image={optimizedImage}>
     <p class="subtitle">
-      Información jurídica esencial sobre el sitio web del {client.name}
+      Información jurídica esencial sobre el sitio web del {
+        contactInfo.entity.name
+      }
       <br />
       <strong>Última actualización:</strong>
       <span class="pending-data">[Pendiente de confirmación]</span>
@@ -31,23 +46,34 @@ const description =
             De acuerdo con lo previsto en la Ley 34/2002, de 11 de julio, de
             Servicios de la Sociedad de la Información y de Comercio Electrónico
             (LSSI-CE), se informa que este sitio web es titularidad del {
-              client.name
+              contactInfo.entity.name
             }.
           </p>
           <ul class="legal-list">
             <li>
               <strong>Domicilio:</strong>
-              {client.address.lineOne}, {client.address.lineTwo}
-              ({client.address.zip}, {client.address.city})
+              {primaryOfficeLines.join(', ')}
             </li>
-            <li>
-              <strong>Teléfono:</strong>
-              <a href={`tel:${client.phoneForTel}`}>{client.phoneForTel}</a>
-            </li>
-            <li>
-              <strong>Correo electrónico:</strong>
-              <a href={`mailto:${client.email}`}>{client.email}</a>
-            </li>
+            {
+              primaryPhone && (
+                <li>
+                  <strong>Teléfono:</strong>
+                  <a href={`tel:${primaryPhone.href}`}>
+                    {primaryPhone.display}
+                  </a>
+                </li>
+              )
+            }
+            {
+              primaryEmail && (
+                <li>
+                  <strong>Correo electrónico:</strong>
+                  <a href={`mailto:${primaryEmail.address}`}>
+                    {primaryEmail.address}
+                  </a>
+                </li>
+              )
+            }
             <li>
               <strong>CIF:</strong>
               <span class="pending-data"
@@ -77,7 +103,9 @@ const description =
           <h2>2. Condiciones de uso del sitio web</h2>
           <p>
             El acceso y navegación por este sitio web implica la aceptación de
-            las presentes condiciones generales de uso. El {client.name}
+            las presentes condiciones generales de uso. El {
+              contactInfo.entity.name
+            }
             facilita información y servicios municipales con el objetivo de mejorar
             la comunicación con la ciudadanía.
           </p>
@@ -105,7 +133,7 @@ const description =
           <p>
             Los contenidos, diseños, logotipos, fotografías, archivos de audio o
             vídeo y cualquier otro material presente en este sitio web son
-            titularidad del {client.name} o se utilizan con las correspondientes
+            titularidad del {contactInfo.entity.name} o se utilizan con las correspondientes
             licencias. Queda prohibida su reproducción, distribución o comunicación
             pública sin autorización expresa, salvo en los supuestos permitidos por
             la normativa de reutilización de la información del sector público.
@@ -119,10 +147,10 @@ const description =
         <section class="legal-section" id="responsabilidad">
           <h2>4. Responsabilidad y enlaces</h2>
           <p>
-            El {client.name} trabaja para que la información sea exacta y esté actualizada,
-            si bien no puede garantizar la inexistencia de errores u omisiones. En
-            caso de detectar alguna incidencia, puedes comunicarla a través de los
-            canales de contacto facilitados.
+            El {contactInfo.entity.name} trabaja para que la información sea exacta
+            y esté actualizada, si bien no puede garantizar la inexistencia de errores
+            u omisiones. En caso de detectar alguna incidencia, puedes comunicarla
+            a través de los canales de contacto facilitados.
           </p>
           <p>
             El sitio puede incluir enlaces a páginas externas sobre las que el
@@ -173,21 +201,34 @@ const description =
             aviso legal, puedes utilizar los siguientes canales oficiales:
           </p>
           <ul class="legal-list">
-            <li>
-              <strong>Correo electrónico:</strong>
-              <a href={`mailto:${client.email}`}>{client.email}</a>
-            </li>
-            <li>
-              <strong>Teléfono:</strong>
-              <a href={`tel:${client.phoneForTel}`}>{client.phoneForTel}</a>
-            </li>
-            <li>
-              <strong>Sede física:</strong>
-              {client.address.lineOne},
-              {client.address.lineTwo} ({client.address.zip}, {
-                client.address.city
-              })
-            </li>
+            {
+              primaryEmail && (
+                <li>
+                  <strong>Correo electrónico:</strong>
+                  <a href={`mailto:${primaryEmail.address}`}>
+                    {primaryEmail.address}
+                  </a>
+                </li>
+              )
+            }
+            {
+              primaryPhone && (
+                <li>
+                  <strong>Teléfono:</strong>
+                  <a href={`tel:${primaryPhone.href}`}>
+                    {primaryPhone.display}
+                  </a>
+                </li>
+              )
+            }
+            {
+              primaryOffice && (
+                <li>
+                  <strong>Sede física:</strong>
+                  {primaryOfficeLines.join(', ')}
+                </li>
+              )
+            }
             <li>
               <strong>Sede electrónica / registro:</strong>
               <span class="pending-data"

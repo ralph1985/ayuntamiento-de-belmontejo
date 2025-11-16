@@ -128,6 +128,138 @@ collections:
         }
       - { label: 'Respuesta', name: 'body', widget: 'markdown' }
 
+  - name: 'contact-info'
+    label: 'Datos de contacto'
+    files:
+      - label: 'Información general de contacto'
+        name: 'contact'
+        file: 'src/data/contact-info.json'
+        fields:
+          - label: 'Entidad'
+            name: 'entity'
+            widget: 'object'
+            fields:
+              - { label: 'Nombre', name: 'name', widget: 'string' }
+              - { label: 'Dominio', name: 'domain', widget: 'string' }
+          - label: 'Canales de contacto'
+            name: 'contact'
+            widget: 'object'
+            fields:
+              - label: 'Teléfonos'
+                name: 'phones'
+                widget: 'list'
+                summary: '{{fields.label}} — {{fields.display}}'
+                fields:
+                  - { label: 'ID', name: 'id', widget: 'string' }
+                  - { label: 'Etiqueta', name: 'label', widget: 'string' }
+                  - {
+                      label: 'Número mostrado',
+                      name: 'display',
+                      widget: 'string',
+                    }
+                  - {
+                      label: 'Número para enlace (tel)',
+                      name: 'href',
+                      widget: 'string',
+                    }
+                  - {
+                      label: '¿Es el principal?',
+                      name: 'isPrimary',
+                      widget: 'boolean',
+                      default: false,
+                    }
+                  - {
+                      label: 'Notas',
+                      name: 'notes',
+                      widget: 'text',
+                      required: false,
+                    }
+              - label: 'Correos electrónicos'
+                name: 'emails'
+                widget: 'list'
+                summary: '{{fields.label}} — {{fields.address}}'
+                fields:
+                  - { label: 'ID', name: 'id', widget: 'string' }
+                  - { label: 'Etiqueta', name: 'label', widget: 'string' }
+                  - {
+                      label: 'Correo electrónico',
+                      name: 'address',
+                      widget: 'string',
+                    }
+                  - {
+                      label: '¿Es el principal?',
+                      name: 'isPrimary',
+                      widget: 'boolean',
+                      default: false,
+                    }
+                  - {
+                      label: 'Notas',
+                      name: 'notes',
+                      widget: 'text',
+                      required: false,
+                    }
+          - label: 'Oficinas y direcciones'
+            name: 'offices'
+            widget: 'list'
+            summary: '{{fields.label}} — {{fields.locality}}'
+            fields:
+              - { label: 'ID', name: 'id', widget: 'string' }
+              - { label: 'Etiqueta', name: 'label', widget: 'string' }
+              - { label: 'Calle', name: 'street', widget: 'string' }
+              - { label: 'Localidad', name: 'locality', widget: 'string' }
+              - {
+                  label: 'Provincia / Región',
+                  name: 'region',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'Código postal',
+                  name: 'postalCode',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: 'Enlace a mapa',
+                  name: 'mapsUrl',
+                  widget: 'string',
+                  required: false,
+                }
+              - {
+                  label: '¿Es la sede principal?',
+                  name: 'isPrimary',
+                  widget: 'boolean',
+                  default: false,
+                }
+          - label: 'Redes sociales'
+            name: 'social'
+            widget: 'object'
+            fields:
+              - label: 'Facebook'
+                name: 'facebook'
+                widget: 'object'
+                fields:
+                  - { label: 'Nombre visible', name: 'label', widget: 'string' }
+                  - { label: 'URL', name: 'url', widget: 'string' }
+                  - {
+                      label: '¿Mostrar en la web?',
+                      name: 'isActive',
+                      widget: 'boolean',
+                      default: true,
+                    }
+              - label: 'Instagram'
+                name: 'instagram'
+                widget: 'object'
+                fields:
+                  - { label: 'Nombre visible', name: 'label', widget: 'string' }
+                  - { label: 'URL', name: 'url', widget: 'string' }
+                  - {
+                      label: '¿Mostrar en la web?',
+                      name: 'isActive',
+                      widget: 'boolean',
+                      default: true,
+                    }
+
   - name: 'footer-services' # Collection for managing footer services links
     label: 'Enlaces de Servicios' # Used in the admin dashboard UI
     files:

@@ -1,14 +1,27 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Landing from '@components/sections/Landing.astro';
-import client from '@data/client.json';
+import contactInfo, {
+  getPrimaryEmail,
+  getPrimaryOffice,
+  getPrimaryPhone,
+} from '@js/contact';
 import { getImage } from 'astro:assets';
 import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
 
-const pageTitle = 'Política de Privacidad - Ayuntamiento de Belmontejo';
-const description =
-  'Conoce cómo tratamos tus datos personales en el Ayuntamiento de Belmontejo, qué derechos te asisten y cómo ejercerlos conforme al RGPD y la LOPDGDD.';
+const pageTitle = `Política de Privacidad - ${contactInfo.entity.name}`;
+const description = `Conoce cómo tratamos tus datos personales en el ${contactInfo.entity.name}, qué derechos te asisten y cómo ejercerlos conforme al RGPD y la LOPDGDD.`;
 const optimizedImage = await getImage({ src: vistaAerea });
+const primaryPhone = getPrimaryPhone();
+const primaryEmail = getPrimaryEmail();
+const primaryOffice = getPrimaryOffice();
+const primaryOfficeLines = primaryOffice
+  ? [
+      primaryOffice.street,
+      [primaryOffice.locality, primaryOffice.region].filter(Boolean).join(', '),
+      primaryOffice.postalCode,
+    ].filter(Boolean)
+  : [];
 
 const processingActivities = [
   {
@@ -63,7 +76,7 @@ const retentionPolicies = [
 <BaseLayout title={pageTitle} description={description}>
   <Landing title="🔒 Política de Privacidad" image={optimizedImage}>
     <p class="subtitle">
-      Compromiso del {client.name} con la protección de los datos personales
+      Compromiso del {contactInfo.entity.name} con la protección de los datos personales
       <br />
       <strong>Última actualización:</strong> 8 de noviembre de 2025
     </p>
@@ -77,31 +90,46 @@ const retentionPolicies = [
           <article class="info-card">
             <h3>Entidad responsable</h3>
             <p>
-              {client.name}<br />
+              {contactInfo.entity.name}<br />
               CIF: P1603400A (Ayuntamiento de Belmontejo)<br />
-              {client.address.lineOne}<br />
-              {client.address.lineTwo} ({client.address.zip}) - {
-                client.address.city
-              }, Cuenca
+              {
+                primaryOfficeLines.map((line, index) => (
+                  <>
+                    {line}
+                    {index < primaryOfficeLines.length - 1 && <br />}
+                  </>
+                ))
+              }
             </p>
           </article>
           <article class="info-card">
             <h3>Contacto</h3>
             <ul>
-              <li>
-                Teléfono: <a href={`tel:${client.phoneForTel}`}
-                  >{client.phoneForTel}</a
-                >
-              </li>
-              <li>
-                Correo electrónico:
-                <a href={`mailto:${client.email}`}>{client.email}</a>
-              </li>
+              {
+                primaryPhone && (
+                  <li>
+                    Teléfono:
+                    <a href={`tel:${primaryPhone.href}`}>
+                      {primaryPhone.display}
+                    </a>
+                  </li>
+                )
+              }
+              {
+                primaryEmail && (
+                  <li>
+                    Correo electrónico:
+                    <a href={`mailto:${primaryEmail.address}`}>
+                      {primaryEmail.address}
+                    </a>
+                  </li>
+                )
+              }
               <li>
                 Sede electrónica / web:
-                <a href={client.domain} rel="noopener noreferrer"
-                  >{client.domain}</a
-                >
+                <a href={contactInfo.entity.domain} rel="noopener noreferrer">
+                  {contactInfo.entity.domain}
+                </a>
               </li>
             </ul>
           </article>
@@ -111,11 +139,14 @@ const retentionPolicies = [
       <div class="policy-section">
         <h2>2. Delegado/a de Protección de Datos (DPD)</h2>
         <p>
-          El Ayuntamiento de Belmontejo no se encuentra obligado a designar una
-          persona Delegada de Protección de Datos por sus dimensiones y volumen
-          de tratamientos. Aun así, todas las consultas o reclamaciones
-          relacionadas con privacidad pueden dirigirse a {client.email} o de forma
-          presencial en {client.address.lineOne}, {client.address.lineTwo}.
+          El {contactInfo.entity.name} no se encuentra obligado a designar una persona
+          Delegada de Protección de Datos por sus dimensiones y volumen de tratamientos.
+          Aun así, todas las consultas o reclamaciones relacionadas con privacidad
+          pueden dirigirse a {
+            primaryEmail?.address ??
+              'el correo electrónico indicado en esta página'
+          } o de forma presencial en
+          {primaryOfficeLines.join(', ')}.
         </p>
       </div>
 
@@ -212,10 +243,9 @@ const retentionPolicies = [
           <article class="right-card">
             <h3>Cómo ejercerlos</h3>
             <p>
-              Enviando una solicitud escrita al Ayuntamiento ({
-                client.address.lineOne
-              }, {client.address.zip}, {client.address.city}) o por correo
-              electrónico a {client.email}.
+              Enviando una solicitud escrita al {contactInfo.entity.name} (
+              {primaryOfficeLines.join(', ')} ) o por correo electrónico a
+              {primaryEmail?.address}.
             </p>
           </article>
           <article class="right-card">

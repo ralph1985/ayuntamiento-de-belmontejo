@@ -47,12 +47,8 @@
 
 ## Bug detectado
 
-- Canonical/OG con dominio duplicado. En `src/layouts/BaseLayout.astro` se usa `https://${client.domain}`, pero `src/data/client.json` ya trae `https://` y `/`. Resultado: URL mal formada.
-  - Ajustes sugeridos:
-    - O bien cambiar `client.domain` a solo host sin protocolo ni slash (por ejemplo, `ayuntamiento-de-belmontejo.vercel.app`) en `src/data/client.json:1`.
-    - O bien en `BaseLayout` usar directamente `client.domain` sin prefijar `https://` en:
-      - `src/layouts/BaseLayout.astro:35` (`<link rel="canonical" ...>`)
-      - `src/layouts/BaseLayout.astro:49` (`og:url`)
+- Canonical/OG con dominio duplicado. En `src/layouts/BaseLayout.astro` se usaba `https://${client.domain}`, pero el archivo de datos incluía el protocolo y la barra final. Resultado: URL mal formada.
+  - **Actualización:** la configuración vive ahora en `src/data/contact-info.json` y el layout utiliza directamente `contactInfo.entity.domain`, por lo que el problema queda resuelto.
 
 ## Sugerencias adicionales
 

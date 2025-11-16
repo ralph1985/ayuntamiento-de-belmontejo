@@ -1,0 +1,55 @@
+{
+  "entity": {
+    "name": "Ayuntamiento de Belmontejo",
+    "domain": "https://ayuntamiento-de-belmontejo.vercel.app"
+  },
+  "contact": {
+    "phones": [
+      {
+        "id": "centralita",
+        "label": "Teléfono de atención municipal",
+        "display": "969 296 279",
+        "href": "+34969296279",
+        "isPrimary": true
+      }
+    ],
+    "emails": [
+      {
+        "id": "general",
+        "label": "Correo electrónico general",
+        "address": "belmontejo@dipucuenca.es",
+        "isPrimary": true
+      },
+      {
+        "id": "alcaldia",
+        "label": "Contacto Alcaldía",
+        "address": "alcaldia@belmontejo.es",
+        "isPrimary": false
+      }
+    ]
+  },
+  "offices": [
+    {
+      "id": "casa-consistorial",
+      "label": "Casa Consistorial",
+      "street": "C/ Pósito, 5",
+      "locality": "Belmontejo",
+      "region": "Cuenca",
+      "postalCode": "16779",
+      "mapsUrl": "https://maps.app.goo.gl/6uVfjtU9YSU8ubnAA",
+      "isPrimary": true
+    }
+  ],
+  "social": {
+    "facebook": {
+      "label": "Facebook",
+      "url": "https://www.facebook.com/p/Ayuntamiento-Belmontejo-61550592996224/",
+      "isActive": true
+    },
+    "instagram": {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/aytobelmontejo/",
+      "isActive": true
+    }
+  }
+}

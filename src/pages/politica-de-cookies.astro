@@ -1,22 +1,37 @@
 ---
 import Landing from '../components/sections/Landing.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import client from '../data/client.json';
+import contactInfo, {
+  getPrimaryEmail,
+  getPrimaryOffice,
+  getPrimaryPhone,
+} from '@js/contact';
 import Button from '@components/ui/Button.astro';
 import { getImage } from 'astro:assets';
 import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
 
 const optimizedImage = await getImage({ src: vistaAerea });
 
-const pageTitle = 'Política de Cookies - Ayuntamiento de Belmontejo';
-const description =
-  'Información detallada sobre el uso de cookies en el sitio web del Ayuntamiento de Belmontejo y cómo gestionar sus preferencias.';
+const pageTitle = `Política de Cookies - ${contactInfo.entity.name}`;
+const description = `Información detallada sobre el uso de cookies en el sitio web del ${contactInfo.entity.name} y cómo gestionar sus preferencias.`;
+const primaryEmail = getPrimaryEmail();
+const primaryPhone = getPrimaryPhone();
+const primaryOffice = getPrimaryOffice();
+const primaryOfficeLines = primaryOffice
+  ? [
+      primaryOffice.street,
+      [primaryOffice.locality, primaryOffice.region].filter(Boolean).join(', '),
+      primaryOffice.postalCode,
+    ].filter(Boolean)
+  : [];
 ---
 
 <BaseLayout title={pageTitle} description={description}>
   <Landing title="🍪 Política de Cookies" image={optimizedImage}>
     <p class="subtitle">
-      Información sobre el uso de cookies en el sitio web del {client.name}
+      Información sobre el uso de cookies en el sitio web del {
+        contactInfo.entity.name
+      }
       <br />
       <strong>Última actualización:</strong> 25 de octubre de 2025
     </p>
@@ -37,8 +52,8 @@ const description =
         <section class="policy-section">
           <h2>¿Cómo utilizamos las cookies?</h2>
           <p>
-            En el sitio web del {client.name} utilizamos cookies para los siguientes
-            propósitos:
+            En el sitio web del {contactInfo.entity.name} utilizamos cookies para
+            los siguientes propósitos:
           </p>
           <ul>
             <li>Recordar sus preferencias de cookies</li>
@@ -234,21 +249,39 @@ const description =
             ejercer sus derechos, puede contactarnos:
           </p>
           <div class="contact-info">
-            <p>
-              <strong>📧 Email:</strong>
-              <a href="mailto:{client.email}">{client.email}</a>
-            </p>
-            <p>
-              <strong>📞 Teléfono:</strong>
-              <a href="tel:{client.phoneForTel}">{client.phoneForTel}</a>
-            </p>
-            <p>
-              <strong>📍 Dirección:</strong>
-              {client.address.lineOne}, {client.address.lineTwo}, {
-                client.address.city
-              }
-              {client.address.zip}
-            </p>
+            {
+              primaryEmail && (
+                <p>
+                  <strong>📧 Email:</strong>
+                  <a href={`mailto:${primaryEmail.address}`}>
+                    {primaryEmail.address}
+                  </a>
+                </p>
+              )
+            }
+            {
+              primaryPhone && (
+                <p>
+                  <strong>📞 Teléfono:</strong>
+                  <a href={`tel:${primaryPhone.href}`}>
+                    {primaryPhone.display}
+                  </a>
+                </p>
+              )
+            }
+            {
+              primaryOffice && (
+                <p>
+                  <strong>📍 Dirección:</strong>
+                  {primaryOfficeLines.map((line, index) => (
+                    <>
+                      {line}
+                      {index < primaryOfficeLines.length - 1 && ', '}
+                    </>
+                  ))}
+                </p>
+              )
+            }
           </div>
         </section>
       </div>
