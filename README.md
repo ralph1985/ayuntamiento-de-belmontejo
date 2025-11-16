@@ -173,6 +173,8 @@ Es necesario crear un archivo `.env` en la raíz del proyecto con las siguientes
 - `PUBLIC_ADMIN_MENU`: `true` o `false` para mostrar u ocultar el menú de administración en la navegación.
 - `OAUTH_GITHUB_CLIENT_ID` y `OAUTH_GITHUB_CLIENT_SECRET` (opcional): sobrescriben los valores ficticios usados por `scripts/run-e2e.js` durante los builds locales.
 - `RESEND_API_KEY`: clave privada de Resend con permisos para enviar correos.
+- `PUBLIC_RECAPTCHA_SITE_KEY`: clave pública de reCAPTCHA v3 usada por el formulario de contacto para generar el token anti-spam en el navegador.
+- `RECAPTCHA_SECRET_KEY`: clave privada asociada al sitio reCAPTCHA. El endpoint `/api/contacto.json` la usa para validar cada envío antes de reenviar el mensaje por Resend.
 
 Los campos `contact.formSender` y `contact.formRecipient` (ver `src/data/contact-info.json`) se gestionan desde Decap CMS y controlan el remitente/destinatario usados por la API de Resend. Mientras no exista un remitente bajo el dominio municipal, utiliza `onboarding@resend.dev` (valor ya cargado en `formSender`).
 

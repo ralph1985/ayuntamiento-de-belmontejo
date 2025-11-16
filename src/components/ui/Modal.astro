@@ -1,10 +1,6 @@
 ---
 import {
-  MODAL_BASE_CLASS,
-  MODAL_CLOSE_BASE_CLASS,
-  MODAL_DIALOG_BASE_CLASS,
   MODAL_OVERLAY_BASE_CLASS,
-  MODAL_OPEN_CLASS,
   buildModalClassList,
   buildModalCloseButtonClassList,
   buildModalDialogClassList,
@@ -15,6 +11,7 @@ interface Props {
   class?: string;
   dialogClass?: string;
   overlayClass?: string;
+  // eslint-disable-next-line no-undef
   dialogTag?: keyof HTMLElementTagNameMap | 'div';
   ariaLabel?: string;
   labelledBy?: string;

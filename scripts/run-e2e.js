@@ -13,6 +13,7 @@ const env = {
 };
 
 function fail(message) {
+  // eslint-disable-next-line no-console
   console.error(`[e2e] ${message}`);
   process.exit(1);
 }

@@ -10,6 +10,7 @@ import { getImage } from 'astro:assets';
 const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 const contactPageTitle = `Contacto - ${contactInfo.entity.name}`;
 const contactPageDescription = `Ponte en contacto con el ${contactInfo.entity.name}. Información de contacto actualizada, direcciones y formulario para consultas ciudadanas.`;
+const MESSAGE_MAX_LENGTH = 1000;
 const phones = contactInfo.contact?.phones ?? [];
 const emails = contactInfo.contact?.emails ?? [];
 const offices = (contactInfo.offices ?? []).map(office => ({
@@ -20,6 +21,7 @@ const offices = (contactInfo.offices ?? []).map(office => ({
     office.postalCode,
   ].filter(Boolean),
 }));
+const privacyContactEmail = emails[0]?.address ?? '';
 ---
 
 <BaseLayout
@@ -44,7 +46,13 @@ const offices = (contactInfo.offices ?? []).map(office => ({
 
   <section id="cs-contact">
     <div class="cs-container">
-      <form id="cs-form" name="Contact Form" method="post" novalidate>
+      <form
+        id="cs-form"
+        name="Contact Form"
+        method="post"
+        novalidate
+        data-message-max-length={MESSAGE_MAX_LENGTH}
+      >
         <div class="cs-content">
           <span class="cs-topper">Contacto</span>
           <h2 class="cs-title">
@@ -56,54 +64,138 @@ const offices = (contactInfo.offices ?? []).map(office => ({
             relacionado con nuestro municipio. Estaremos encantados de ayudarte.
           </p>
         </div>
-        <label>
-          Nombre
+        <label data-field="name">
+          <span class="cs-field-label">
+            Nombre
+            <span class="cs-required-indicator" aria-hidden="true">*</span>
+          </span>
           <input
             required
             type="text"
             id="name"
             name="name"
+            data-field-input="name"
             placeholder="Nombre completo"
           />
+          <span
+            class="cs-field-error"
+            data-field-error="name"
+            aria-live="polite"></span>
         </label>
-        <label>
-          Correo electrónico
+        <label data-field="email">
+          <span class="cs-field-label">Correo electrónico</span>
           <input
-            required
             type="email"
             id="email"
             name="email"
+            data-field-input="email"
             placeholder="tu@email.com"
           />
+          <span
+            class="cs-field-error"
+            data-field-error="email"
+            aria-live="polite"></span>
         </label>
-        <label>
-          Teléfono
+        <label data-field="phone">
+          <span class="cs-field-label">Teléfono</span>
           <input
-            required
             type="tel"
             id="phone"
             name="phone"
+            data-field-input="phone"
             placeholder="Número de teléfono"
           />
+          <span
+            class="cs-field-error"
+            data-field-error="phone"
+            aria-live="polite"></span>
         </label>
-        <label>
-          Asunto
+        <label data-field="subject">
+          <span class="cs-field-label">
+            Asunto
+            <span class="cs-required-indicator" aria-hidden="true">*</span>
+          </span>
           <input
+            required
             type="text"
-            id="find"
+            id="subject"
             name="subject"
+            data-field-input="subject"
             placeholder="Motivo de la consulta"
           />
+          <span
+            class="cs-field-error"
+            data-field-error="subject"
+            aria-live="polite"></span>
         </label>
-        <label class="cs-label-message">
-          Mensaje
+        <label class="cs-label-message" data-field="message">
+          <span class="cs-field-label">
+            Mensaje
+            <span class="cs-required-indicator" aria-hidden="true">*</span>
+          </span>
+          <span class="cs-field-hint">
+            Comparte los detalles esenciales de tu consulta (máx. {
+              MESSAGE_MAX_LENGTH
+            } caracteres)
+          </span>
           <textarea
             required
             name="message"
             id="message"
+            aria-describedby="message-counter"
+            maxlength={MESSAGE_MAX_LENGTH}
+            data-message-field
+            data-field-input="message"
             placeholder="Escribe tu mensaje aquí..."></textarea>
+          <span
+            id="message-counter"
+            class="cs-char-counter"
+            data-char-counter
+            aria-live="polite"
+          >
+            {MESSAGE_MAX_LENGTH} caracteres restantes
+          </span>
+          <span
+            class="cs-field-error"
+            data-field-error="message"
+            aria-live="polite"></span>
+        </label>
+        <label class="cs-checkbox" data-field="privacyConsent">
+          <input
+            type="checkbox"
+            id="privacy-consent"
+            name="privacyConsent"
+            required
+            data-field-input="privacyConsent"
+          />
+          <span>
+            He leído y acepto la
+            <a href="/politica-de-privacidad">Política de Privacidad</a>.
+          </span>
+          <span
+            class="cs-field-error"
+            data-field-error="privacyConsent"
+            aria-live="polite"></span>
         </label>
         <Button type="submit">Enviar mensaje</Button>
+        <p class="cs-legal-notice">
+          Responsable: {contactInfo.entity.name}. Finalidad: tramitar tu
+          consulta y facilitarte una respuesta. Derechos: acceso, rectificación,
+          supresión, oposición y demás previstos en la
+          <a href="/politica-de-privacidad">Política de Privacidad</a>
+          {
+            privacyContactEmail && (
+              <>
+                {' '}
+                o escribiendo a{' '}
+                <a href={`mailto:${privacyContactEmail}`}>
+                  {privacyContactEmail}
+                </a>
+                .
+              </>
+            )
+          }
+        </p>
         <p
           class="cs-form-status"
           data-form-status
@@ -195,6 +287,32 @@ const offices = (contactInfo.offices ?? []).map(office => ({
 
 <script>
   type FormStatus = 'idle' | 'pending' | 'success' | 'error';
+  type FormValues = {
+    name: string;
+    email: string;
+    phone: string;
+    subject: string;
+    message: string;
+    privacyConsent: boolean;
+  };
+  type FieldName = keyof FormValues;
+  type ValidationError = { field: FieldName; message: string };
+  /* eslint-disable no-unused-vars */
+  type Grecaptcha = {
+    ready: (callback: () => void) => void;
+    execute: (
+      siteKey: string,
+      options: {
+        action: string;
+      }
+    ) => Promise<string>;
+  };
+  type RecaptchaWindow = Window & { grecaptcha?: Grecaptcha };
+  /* eslint-enable no-unused-vars */
+  const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '';
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isRecaptchaConfigured = Boolean(RECAPTCHA_SITE_KEY);
+  let recaptchaReadyPromise: Promise<Grecaptcha> | null = null;
 
   const getStatusMessage = (variant: FormStatus): string => {
     switch (variant) {
@@ -219,7 +337,7 @@ const offices = (contactInfo.offices ?? []).map(office => ({
     element.textContent = customMessage ?? getStatusMessage(variant);
   };
 
-  const toJsonPayload = (form: HTMLFormElement) => {
+  const extractFormValues = (form: HTMLFormElement): FormValues => {
     const formData = new FormData(form);
     const getValue = (field: string) =>
       (formData.get(field)?.toString() ?? '').trim();
@@ -228,9 +346,231 @@ const offices = (contactInfo.offices ?? []).map(office => ({
       name: getValue('name'),
       email: getValue('email'),
       phone: getValue('phone'),
-      subject: getValue('subject') || 'Consulta desde la web',
+      subject: getValue('subject'),
       message: getValue('message'),
+      privacyConsent: formData.get('privacyConsent') === 'on',
     };
+  };
+
+  const validateFormValues = (
+    values: FormValues,
+    messageMaxLength: number
+  ): { success: true } | { success: false; errors: ValidationError[] } => {
+    const errors: ValidationError[] = [];
+
+    if (!values.name) {
+      errors.push({
+        field: 'name',
+        message: 'El nombre es obligatorio.',
+      });
+    }
+
+    const hasEmail = Boolean(values.email);
+    const hasPhone = Boolean(values.phone);
+
+    if (!hasEmail && !hasPhone) {
+      errors.push({
+        field: 'email',
+        message: 'Indica un correo o déjalo en blanco si prefieres teléfono.',
+      });
+      errors.push({
+        field: 'phone',
+        message: 'Indica un teléfono o deja el campo vacío si usas correo.',
+      });
+    }
+
+    if (hasEmail && !EMAIL_REGEX.test(values.email)) {
+      errors.push({
+        field: 'email',
+        message: 'Correo electrónico inválido.',
+      });
+    }
+
+    if (!values.subject) {
+      errors.push({
+        field: 'subject',
+        message: 'El asunto es obligatorio.',
+      });
+    }
+
+    if (!values.message) {
+      errors.push({
+        field: 'message',
+        message: 'Escribe tu mensaje.',
+      });
+    }
+
+    if (messageMaxLength > 0 && values.message.length > messageMaxLength) {
+      errors.push({
+        field: 'message',
+        message: `El mensaje no puede superar los ${messageMaxLength} caracteres.`,
+      });
+    }
+
+    if (!values.privacyConsent) {
+      errors.push({
+        field: 'privacyConsent',
+        message: 'Debes aceptar la política de privacidad para continuar.',
+      });
+    }
+
+    if (errors.length > 0) {
+      return { success: false, errors };
+    }
+
+    return { success: true };
+  };
+
+  const toJsonPayload = (values: FormValues, recaptchaToken: string) => ({
+    ...values,
+    recaptchaToken,
+  });
+
+  const mountCharacterCounter = (
+    field: HTMLTextAreaElement | null,
+    counter: HTMLElement | null,
+    messageMaxLength: number
+  ): (() => void) | null => {
+    if (!field || !counter || !messageMaxLength) return null;
+
+    const updateCounter = () => {
+      const remaining = Math.max(messageMaxLength - field.value.length, 0);
+      counter.textContent = `${remaining} caracteres restantes`;
+    };
+
+    field.addEventListener('input', updateCounter);
+    updateCounter();
+
+    return updateCounter;
+  };
+
+  const setFieldError = (
+    form: HTMLFormElement,
+    field: FieldName,
+    message?: string
+  ) => {
+    const errorElement = form.querySelector(
+      `[data-field-error="${field}"]`
+    ) as HTMLElement | null;
+    const fieldInput = form.querySelector(`[data-field-input="${field}"]`) as
+      | HTMLInputElement
+      | HTMLTextAreaElement
+      | null;
+
+    if (errorElement) {
+      errorElement.textContent = message ?? '';
+    }
+
+    if (fieldInput) {
+      if (message) {
+        fieldInput.classList.add('is-invalid');
+        fieldInput.setAttribute('aria-invalid', 'true');
+      } else {
+        fieldInput.classList.remove('is-invalid');
+        fieldInput.removeAttribute('aria-invalid');
+      }
+    }
+  };
+
+  const clearAllFieldErrors = (form: HTMLFormElement) => {
+    (
+      [
+        'name',
+        'email',
+        'phone',
+        'subject',
+        'message',
+        'privacyConsent',
+      ] as FieldName[]
+    ).forEach(field => setFieldError(form, field));
+  };
+
+  const ensureRecaptchaReady = (): Promise<Grecaptcha> => {
+    if (!isRecaptchaConfigured) {
+      return Promise.reject(
+        new Error(
+          'No se ha configurado reCAPTCHA. Contacta con el equipo técnico.'
+        )
+      );
+    }
+
+    if (recaptchaReadyPromise) {
+      return recaptchaReadyPromise;
+    }
+
+    recaptchaReadyPromise = new Promise((resolve, reject) => {
+      const start = Date.now();
+
+      const injectScript = () => {
+        if (document.querySelector('script[data-recaptcha-script="true"]')) {
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+        script.async = true;
+        script.defer = true;
+        script.dataset.recaptchaScript = 'true';
+        script.onerror = () => {
+          recaptchaReadyPromise = null;
+          reject(
+            new Error(
+              'No se pudo cargar el servicio reCAPTCHA. Recarga la página e inténtalo de nuevo.'
+            )
+          );
+        };
+        document.head.appendChild(script);
+      };
+
+      const waitForReady = () => {
+        const grecaptcha = (window as RecaptchaWindow).grecaptcha;
+
+        if (grecaptcha?.ready) {
+          grecaptcha.ready(() => resolve(grecaptcha));
+          return;
+        }
+
+        if (Date.now() - start > 10000) {
+          recaptchaReadyPromise = null;
+          reject(
+            new Error(
+              'No se pudo inicializar reCAPTCHA. Recarga la página e inténtalo de nuevo.'
+            )
+          );
+          return;
+        }
+
+        injectScript();
+        window.setTimeout(waitForReady, 200);
+      };
+
+      waitForReady();
+    });
+
+    return recaptchaReadyPromise;
+  };
+
+  const requestRecaptchaToken = async (): Promise<string> => {
+    const grecaptcha = await ensureRecaptchaReady();
+    let token: string;
+
+    try {
+      token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+        action: 'contact_form',
+      });
+    } catch {
+      throw new Error(
+        'No se pudo validar reCAPTCHA. Refresca la página e inténtalo de nuevo.'
+      );
+    }
+
+    if (!token) {
+      throw new Error(
+        'No se pudo validar reCAPTCHA. Refresca la página e inténtalo de nuevo.'
+      );
+    }
+
+    return token;
   };
 
   const mountContactForm = () => {
@@ -244,6 +584,18 @@ const offices = (contactInfo.offices ?? []).map(office => ({
     const statusElement = form.querySelector(
       '[data-form-status]'
     ) as HTMLElement | null;
+    const messageField = form.querySelector(
+      '[data-message-field]'
+    ) as HTMLTextAreaElement | null;
+    const charCounter = form.querySelector(
+      '[data-char-counter]'
+    ) as HTMLElement | null;
+    const messageMaxLength = Number(form.dataset.messageMaxLength ?? '0');
+    const resetCounter = mountCharacterCounter(
+      messageField,
+      charCounter,
+      messageMaxLength
+    );
 
     form.dataset.enhanced = 'true';
 
@@ -252,17 +604,34 @@ const offices = (contactInfo.offices ?? []).map(office => ({
 
       if (!submitButton) return;
 
+      clearAllFieldErrors(form);
       updateStatus(statusElement, 'pending');
       submitButton.disabled = true;
       submitButton.setAttribute('aria-busy', 'true');
 
       try {
+        const values = extractFormValues(form);
+        const validation = validateFormValues(values, messageMaxLength);
+        if (!validation.success) {
+          validation.errors.forEach(error =>
+            setFieldError(form, error.field, error.message)
+          );
+
+          const summaryMessage =
+            validation.errors.length === 1
+              ? validation.errors[0].message
+              : 'Corrige los campos marcados y vuelve a intentarlo.';
+          throw new Error(summaryMessage);
+        }
+
+        const recaptchaToken = await requestRecaptchaToken();
+
         const response = await fetch('/api/contacto.json', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(toJsonPayload(form)),
+          body: JSON.stringify(toJsonPayload(values, recaptchaToken)),
         });
 
         const result = await response.json().catch(() => ({}));
@@ -276,6 +645,8 @@ const offices = (contactInfo.offices ?? []).map(office => ({
 
         updateStatus(statusElement, 'success');
         form.reset();
+        resetCounter?.();
+        clearAllFieldErrors(form);
       } catch (error) {
         updateStatus(
           statusElement,

@@ -75,6 +75,34 @@
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
+
+        .cs-field-label {
+          display: block;
+          width: 100%;
+          font-weight: 700;
+          margin-bottom: (4/16rem);
+
+          .cs-required-indicator {
+            color: #c62828;
+            margin-left: (4/16rem);
+            font-weight: 700;
+          }
+        }
+
+        .cs-field-hint {
+          font-size: (14/16rem);
+          font-weight: 500;
+          color: #6b6a76;
+          margin-top: (4/16rem);
+        }
+
+        .cs-field-error {
+          font-size: (14/16rem);
+          font-weight: 600;
+          color: #c62828;
+          margin-top: (6/16rem);
+          min-height: (20/16rem);
+        }
       }
 
       .cs-label-message {
@@ -98,6 +126,58 @@
         &:hover {
           border: 1px solid var(--primary);
         }
+
+        &.is-invalid {
+          border: 2px solid #c62828;
+        }
+      }
+
+      .cs-checkbox {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: (12/16rem);
+        margin-bottom: (24/16rem);
+        font-weight: 500;
+        line-height: 1.5;
+
+        input[type="checkbox"] {
+          width: (20/16rem);
+          height: (20/16rem);
+          margin-top: (4/16rem);
+          accent-color: var(--primary);
+
+          &.is-invalid {
+            outline: 2px solid #c62828;
+            outline-offset: 1px;
+          }
+        }
+
+        span {
+          font-weight: 500;
+          color: var(--bodyTextColor);
+
+          a {
+            color: var(--primary);
+            text-decoration: underline;
+          }
+        }
+
+        .cs-field-error {
+          flex-basis: 100%;
+          margin-left: calc((20 / 16rem) + (12 / 16rem));
+        }
+      }
+
+      .cs-legal-notice {
+        font-size: (14/16rem);
+        color: #4f4e59;
+        line-height: 1.6;
+        margin: (12/16rem) 0 (20/16rem);
+
+        a {
+          color: var(--primary);
+          text-decoration: underline;
+        }
       }
 
       textarea {
@@ -109,6 +189,15 @@
       .c-button {
         width: 100%;
         border: none;
+      }
+
+      .cs-char-counter {
+        font-size: (14/16rem);
+        font-weight: 600;
+        color: #6b6a76;
+        margin-top: (8/16rem);
+        text-align: right;
+        align-self: flex-end;
       }
 
       .cs-form-status {

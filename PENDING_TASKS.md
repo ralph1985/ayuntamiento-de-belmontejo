@@ -7,6 +7,7 @@
 - SEO: `@astrojs/sitemap` activo y `robots.txt` bloquea `/admin`; Open Graph y `canonical` en el layout.
 - Sede electrónica: enlace en footer data (`src/data/footerServices.json`).
 - CMS: Decap CMS con OAuth y menú condicionado por `PUBLIC_ADMIN_MENU`. Robots bloquea `/admin`.
+- Contacto: formulario en `src/pages/contacto.astro` con backend `/api/contacto.json`, reCAPTCHA + Resend, validación server-side y casilla obligatoria de aceptación con cláusula informativa visible bajo el botón.
 
 ## Pendiente (organizado por tipo e importancia)
 
@@ -25,7 +26,6 @@
 
 ### Atención ciudadana y formularios
 
-- **Alta** Contacto y formularios: el formulario en `src/pages/contacto.astro` no tiene backend ni consentimiento explícito. Añadir casilla obligatoria de aceptación con enlace a la privacidad, protección antispam (hCaptcha/Turnstile) y validación server-side, envío vía API (email o proveedor con contrato de encargo) y una cláusula informativa corta bajo el botón (responsable, finalidad, derechos).
 - **Media** Remitente Resend: dar de alta un remitente oficial con dominio `@belmontejo.es` en Resend y actualizar `contact.formSender` desde Decap CMS para dejar de usar `onboarding@resend.dev`.
 - **Media** Antiabuso del formulario de contacto: añadir medidas específicas de captcha, rate limiting y logging básico para detectar automatización y abuso incluso tras añadir el backend.
 
