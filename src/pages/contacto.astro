@@ -44,7 +44,7 @@ const offices = (contactInfo.offices ?? []).map(office => ({
 
   <section id="cs-contact">
     <div class="cs-container">
-      <form id="cs-form" name="Contact Form" method="post">
+      <form id="cs-form" name="Contact Form" method="post" novalidate>
         <div class="cs-content">
           <span class="cs-topper">Contacto</span>
           <h2 class="cs-title">
@@ -99,11 +99,18 @@ const offices = (contactInfo.offices ?? []).map(office => ({
           Mensaje
           <textarea
             required
-            name="Message"
+            name="message"
             id="message"
             placeholder="Escribe tu mensaje aquí..."></textarea>
         </label>
         <Button type="submit">Enviar mensaje</Button>
+        <p
+          class="cs-form-status"
+          data-form-status
+          aria-live="polite"
+          role="status"
+        >
+        </p>
       </form>
       <div class="cs-right-section">
         {
@@ -185,6 +192,113 @@ const offices = (contactInfo.offices ?? []).map(office => ({
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  type FormStatus = 'idle' | 'pending' | 'success' | 'error';
+
+  const getStatusMessage = (variant: FormStatus): string => {
+    switch (variant) {
+      case 'pending':
+        return 'Enviando tu mensaje...';
+      case 'success':
+        return '¡Gracias! Hemos recibido tu mensaje y te responderemos pronto.';
+      case 'error':
+        return 'No se ha podido enviar el mensaje. Inténtalo de nuevo.';
+      default:
+        return '';
+    }
+  };
+
+  const updateStatus = (
+    element: HTMLElement | null,
+    variant: FormStatus,
+    customMessage?: string
+  ) => {
+    if (!element) return;
+    element.dataset.status = variant;
+    element.textContent = customMessage ?? getStatusMessage(variant);
+  };
+
+  const toJsonPayload = (form: HTMLFormElement) => {
+    const formData = new FormData(form);
+    const getValue = (field: string) =>
+      (formData.get(field)?.toString() ?? '').trim();
+
+    return {
+      name: getValue('name'),
+      email: getValue('email'),
+      phone: getValue('phone'),
+      subject: getValue('subject') || 'Consulta desde la web',
+      message: getValue('message'),
+    };
+  };
+
+  const mountContactForm = () => {
+    const form = document.getElementById('cs-form') as HTMLFormElement | null;
+
+    if (!form || form.dataset.enhanced === 'true') return;
+
+    const submitButton = form.querySelector(
+      'button[type="submit"]'
+    ) as HTMLButtonElement | null;
+    const statusElement = form.querySelector(
+      '[data-form-status]'
+    ) as HTMLElement | null;
+
+    form.dataset.enhanced = 'true';
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+
+      if (!submitButton) return;
+
+      updateStatus(statusElement, 'pending');
+      submitButton.disabled = true;
+      submitButton.setAttribute('aria-busy', 'true');
+
+      try {
+        const response = await fetch('/api/contacto.json', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(toJsonPayload(form)),
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || !result?.success) {
+          throw new Error(
+            result?.error ??
+              'No se pudo enviar el mensaje. Inténtalo más tarde.'
+          );
+        }
+
+        updateStatus(statusElement, 'success');
+        form.reset();
+      } catch (error) {
+        updateStatus(
+          statusElement,
+          'error',
+          error instanceof Error ? error.message : undefined
+        );
+      } finally {
+        submitButton.disabled = false;
+        submitButton.removeAttribute('aria-busy');
+      }
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mountContactForm, {
+      once: true,
+    });
+  } else {
+    mountContactForm();
+  }
+
+  document.addEventListener('astro:after-swap', mountContactForm);
+</script>
 
 <style lang="less">
   @import '../styles/pages/contacto.less';

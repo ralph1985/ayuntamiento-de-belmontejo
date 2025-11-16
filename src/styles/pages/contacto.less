@@ -110,6 +110,31 @@
         width: 100%;
         border: none;
       }
+
+      .cs-form-status {
+        margin-top: 1rem;
+        font-weight: 600;
+        font-size: 1rem;
+        display: none;
+
+        &[data-status="pending"],
+        &[data-status="success"],
+        &[data-status="error"] {
+          display: block;
+        }
+
+        &[data-status="pending"] {
+          color: var(--primary);
+        }
+
+        &[data-status="success"] {
+          color: #0c7c59;
+        }
+
+        &[data-status="error"] {
+          color: #c62828;
+        }
+      }
     }
 
     .cs-right-section {

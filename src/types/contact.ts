@@ -42,6 +42,8 @@ export interface ContactInfo {
   contact: {
     phones: PhoneChannel[];
     emails: EmailChannel[];
+    formSender?: string;
+    formRecipient?: string;
   };
   offices: OfficeLocation[];
   social: Record<string, SocialChannel>;
