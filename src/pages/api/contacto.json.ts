@@ -52,6 +52,37 @@ const stripControlCharacters = (
   return cleaned;
 };
 
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const rateLimitBuckets = new Map<string, number[]>();
+
+const getClientIp = (request: globalThis.Request): string => {
+  const forwardedFor = request.headers.get('x-forwarded-for');
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0]?.trim() ?? 'unknown';
+  }
+
+  return request.headers.get('x-real-ip') ?? 'unknown';
+};
+
+const isRateLimited = (ip: string): boolean => {
+  const now = Date.now();
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+  const timestamps = rateLimitBuckets.get(ip) ?? [];
+  const recentRequests = timestamps.filter(
+    timestamp => timestamp > windowStart
+  );
+
+  if (recentRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
+    rateLimitBuckets.set(ip, recentRequests);
+    return true;
+  }
+
+  recentRequests.push(now);
+  rateLimitBuckets.set(ip, recentRequests);
+  return false;
+};
+
 const sanitizeText = (
   value: string,
   maxLength: number,
@@ -249,6 +280,17 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonResponse(
       { success: false, error: 'No se pudo leer la solicitud' },
       400
+    );
+  }
+
+  const clientIp = getClientIp(request);
+  if (isRateLimited(clientIp)) {
+    return jsonResponse(
+      {
+        success: false,
+        error: 'Has realizado demasiadas solicitudes. Inténtalo más tarde.',
+      },
+      429
     );
   }
 
