@@ -28,8 +28,37 @@ const jsonResponse = (data: unknown, status = 200): globalThis.Response =>
     },
   });
 
-const sanitizeText = (value: string, maxLength: number): string => {
-  const trimmed = value.trim();
+const stripControlCharacters = (
+  value: string,
+  allowNewlines: boolean
+): string => {
+  let cleaned = '';
+
+  for (const char of value) {
+    const code = char.charCodeAt(0);
+    const isControl = code <= 0x1f || code === 0x7f;
+    const isLineFeed = char === '\n';
+
+    if (!isControl) {
+      cleaned += char;
+      continue;
+    }
+
+    if (allowNewlines && isLineFeed) {
+      cleaned += char;
+    }
+  }
+
+  return cleaned;
+};
+
+const sanitizeText = (
+  value: string,
+  maxLength: number,
+  { allowNewlines = false }: { allowNewlines?: boolean } = {}
+): string => {
+  const withoutControlChars = stripControlCharacters(value, allowNewlines);
+  const trimmed = withoutControlChars.trim();
   return trimmed.length > maxLength ? trimmed.slice(0, maxLength) : trimmed;
 };
 
@@ -72,7 +101,9 @@ const validatePayload = (
   const email = sanitizeText(data.email ?? '', 160);
   const phone = sanitizeText(data.phone ?? '', 60);
   const subject = sanitizeText(data.subject ?? '', 150);
-  const rawMessage = (data.message ?? '').trim();
+  const rawMessage = sanitizeText(data.message ?? '', MESSAGE_MAX_LENGTH, {
+    allowNewlines: true,
+  });
   const privacyConsent = Boolean(data.privacyConsent);
 
   if (!name) {

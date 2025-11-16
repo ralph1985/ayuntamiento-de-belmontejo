@@ -10,6 +10,10 @@ import { getImage } from 'astro:assets';
 const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 const contactPageTitle = `Contacto - ${contactInfo.entity.name}`;
 const contactPageDescription = `Ponte en contacto con el ${contactInfo.entity.name}. Información de contacto actualizada, direcciones y formulario para consultas ciudadanas.`;
+const NAME_MAX_LENGTH = 120;
+const EMAIL_MAX_LENGTH = 160;
+const PHONE_MAX_LENGTH = 60;
+const SUBJECT_MAX_LENGTH = 150;
 const MESSAGE_MAX_LENGTH = 1000;
 const phones = contactInfo.contact?.phones ?? [];
 const emails = contactInfo.contact?.emails ?? [];
@@ -51,6 +55,10 @@ const privacyContactEmail = emails[0]?.address ?? '';
         name="Contact Form"
         method="post"
         novalidate
+        data-name-max-length={NAME_MAX_LENGTH}
+        data-email-max-length={EMAIL_MAX_LENGTH}
+        data-phone-max-length={PHONE_MAX_LENGTH}
+        data-subject-max-length={SUBJECT_MAX_LENGTH}
         data-message-max-length={MESSAGE_MAX_LENGTH}
       >
         <div class="cs-content">
@@ -76,6 +84,7 @@ const privacyContactEmail = emails[0]?.address ?? '';
             name="name"
             data-field-input="name"
             placeholder="Nombre completo"
+            maxlength={NAME_MAX_LENGTH}
           />
           <span
             class="cs-field-error"
@@ -90,6 +99,7 @@ const privacyContactEmail = emails[0]?.address ?? '';
             name="email"
             data-field-input="email"
             placeholder="tu@email.com"
+            maxlength={EMAIL_MAX_LENGTH}
           />
           <span
             class="cs-field-error"
@@ -104,6 +114,7 @@ const privacyContactEmail = emails[0]?.address ?? '';
             name="phone"
             data-field-input="phone"
             placeholder="Número de teléfono"
+            maxlength={PHONE_MAX_LENGTH}
           />
           <span
             class="cs-field-error"
@@ -122,6 +133,7 @@ const privacyContactEmail = emails[0]?.address ?? '';
             name="subject"
             data-field-input="subject"
             placeholder="Motivo de la consulta"
+            maxlength={SUBJECT_MAX_LENGTH}
           />
           <span
             class="cs-field-error"
@@ -354,7 +366,13 @@ const privacyContactEmail = emails[0]?.address ?? '';
 
   const validateFormValues = (
     values: FormValues,
-    messageMaxLength: number
+    limits: {
+      name: number;
+      email: number;
+      phone: number;
+      subject: number;
+      message: number;
+    }
   ): { success: true } | { success: false; errors: ValidationError[] } => {
     const errors: ValidationError[] = [];
 
@@ -362,6 +380,13 @@ const privacyContactEmail = emails[0]?.address ?? '';
       errors.push({
         field: 'name',
         message: 'El nombre es obligatorio.',
+      });
+    }
+
+    if (limits.name > 0 && values.name.length > limits.name) {
+      errors.push({
+        field: 'name',
+        message: `El nombre no puede superar los ${limits.name} caracteres.`,
       });
     }
 
@@ -386,10 +411,24 @@ const privacyContactEmail = emails[0]?.address ?? '';
       });
     }
 
+    if (limits.email > 0 && values.email.length > limits.email) {
+      errors.push({
+        field: 'email',
+        message: `El correo electrónico no puede superar los ${limits.email} caracteres.`,
+      });
+    }
+
     if (!values.subject) {
       errors.push({
         field: 'subject',
         message: 'El asunto es obligatorio.',
+      });
+    }
+
+    if (limits.subject > 0 && values.subject.length > limits.subject) {
+      errors.push({
+        field: 'subject',
+        message: `El asunto no puede superar los ${limits.subject} caracteres.`,
       });
     }
 
@@ -400,10 +439,17 @@ const privacyContactEmail = emails[0]?.address ?? '';
       });
     }
 
-    if (messageMaxLength > 0 && values.message.length > messageMaxLength) {
+    if (limits.message > 0 && values.message.length > limits.message) {
       errors.push({
         field: 'message',
-        message: `El mensaje no puede superar los ${messageMaxLength} caracteres.`,
+        message: `El mensaje no puede superar los ${limits.message} caracteres.`,
+      });
+    }
+
+    if (limits.phone > 0 && values.phone.length > limits.phone) {
+      errors.push({
+        field: 'phone',
+        message: `El teléfono no puede superar los ${limits.phone} caracteres.`,
       });
     }
 
@@ -591,6 +637,13 @@ const privacyContactEmail = emails[0]?.address ?? '';
       '[data-char-counter]'
     ) as HTMLElement | null;
     const messageMaxLength = Number(form.dataset.messageMaxLength ?? '0');
+    const limits = {
+      name: Number(form.dataset.nameMaxLength ?? '0'),
+      email: Number(form.dataset.emailMaxLength ?? '0'),
+      phone: Number(form.dataset.phoneMaxLength ?? '0'),
+      subject: Number(form.dataset.subjectMaxLength ?? '0'),
+      message: messageMaxLength,
+    } as const;
     const resetCounter = mountCharacterCounter(
       messageField,
       charCounter,
@@ -611,7 +664,7 @@ const privacyContactEmail = emails[0]?.address ?? '';
 
       try {
         const values = extractFormValues(form);
-        const validation = validateFormValues(values, messageMaxLength);
+        const validation = validateFormValues(values, limits);
         if (!validation.success) {
           validation.errors.forEach(error =>
             setFieldError(form, error.field, error.message)
