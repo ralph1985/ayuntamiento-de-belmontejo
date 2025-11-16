@@ -1,26 +1,12 @@
+const modalUtils = globalThis.ModalUtils;
+
 const SELECTORS = {
   gallery: '.c-image-gallery',
-  modal: '[data-gallery-modal]',
+  modal: modalUtils?.SELECTORS?.root ?? '[data-modal-root]',
   trigger: '[data-modal-trigger]',
-  close: '[data-modal-close]',
+  close: modalUtils?.SELECTORS?.close ?? '[data-modal-close]',
   modalImage: '[data-modal-image]',
   modalCaption: '[data-modal-caption]',
-};
-
-const lockScroll = () => {
-  const { body } = document;
-  if (!body.dataset.modalPrevOverflow) {
-    body.dataset.modalPrevOverflow = body.style.overflow || '';
-  }
-  body.style.overflow = 'hidden';
-};
-
-const unlockScroll = () => {
-  const anyOpen = document.querySelector(`${SELECTORS.modal}.is-open`);
-  if (anyOpen) return;
-  const { body } = document;
-  body.style.overflow = body.dataset.modalPrevOverflow ?? '';
-  delete body.dataset.modalPrevOverflow;
 };
 
 const updateModalContent = (modal, src, alt) => {
@@ -53,18 +39,24 @@ const clearModalContent = modal => {
 
 const openModal = (modal, src, alt) => {
   updateModalContent(modal, src, alt);
-  modal.classList.add('is-open');
-  modal.removeAttribute('hidden');
-  modal.setAttribute('aria-hidden', 'false');
-  lockScroll();
+  if (modalUtils?.open) {
+    modalUtils.open(modal);
+  } else {
+    modal.classList.add('is-open');
+    modal.removeAttribute('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+  }
 };
 
 const closeModal = modal => {
-  modal.classList.remove('is-open');
-  modal.setAttribute('hidden', '');
-  modal.setAttribute('aria-hidden', 'true');
+  if (modalUtils?.close) {
+    modalUtils.close(modal);
+  } else {
+    modal.classList.remove('is-open');
+    modal.setAttribute('hidden', '');
+    modal.setAttribute('aria-hidden', 'true');
+  }
   clearModalContent(modal);
-  unlockScroll();
 };
 
 const bindModal = gallery => {
@@ -98,19 +90,22 @@ const bindModal = gallery => {
     closeEl.addEventListener('click', () => closeModal(modal));
   });
 
-  modal.addEventListener('click', event => {
-    if (event.target === modal) {
-      closeModal(modal);
-    }
-  });
-
   gallery.dataset.modalReady = 'true';
 };
 
 let escapeListenerBound = false;
 const handleKeyDown = event => {
   if (event.key !== 'Escape') return;
-  const openModalEl = document.querySelector(`${SELECTORS.modal}.is-open`);
+  let openModalEl = null;
+
+  if (modalUtils?.getOpenModals) {
+    openModalEl = modalUtils.getOpenModals()[0] ?? null;
+  }
+
+  if (!openModalEl) {
+    openModalEl = document.querySelector(`${SELECTORS.modal}.is-open`);
+  }
+
   if (openModalEl) {
     closeModal(openModalEl);
   }

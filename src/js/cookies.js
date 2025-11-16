@@ -37,11 +37,7 @@ const handleSavePreferences = () => {
   hideCookieBanner();
   setConsentAndReload(analyticsConsent);
 };
-const handleModalBackdropClick = event => {
-  if (event.target === event.currentTarget) {
-    hideCookieModal();
-  }
-};
+const modalUtils = globalThis.ModalUtils;
 const handleFloatingButtonClick = () => showCookieModal();
 const handlePolicyButtonClick = () => showCookieModal();
 
@@ -85,7 +81,14 @@ function initCookieModal() {
 
   bindEvent('close-cookie-modal', 'click', handleCloseModal);
   bindEvent('save-cookie-preferences', 'click', handleSavePreferences);
-  bindEvent(modal, 'click', handleModalBackdropClick);
+
+  const closeTriggers = modal.querySelectorAll(
+    modalUtils?.SELECTORS?.close ?? '[data-modal-close]'
+  );
+
+  closeTriggers.forEach(trigger => {
+    bindEvent(trigger, 'click', handleCloseModal);
+  });
 }
 
 function initFloatingCookieManager() {
@@ -167,13 +170,25 @@ function showCookieModal() {
   }
 
   syncAnalyticsCheckbox();
-  modal.style.display = 'flex';
+  if (modalUtils?.open) {
+    modalUtils.open(modal);
+  } else {
+    modal.classList.add('is-open');
+    modal.removeAttribute('hidden');
+    modal.setAttribute('aria-hidden', 'false');
+  }
 }
 
 function hideCookieModal() {
   const modal = document.getElementById('cookie-settings-modal');
   if (modal) {
-    modal.style.display = 'none';
+    if (modalUtils?.close) {
+      modalUtils.close(modal);
+    } else {
+      modal.classList.remove('is-open');
+      modal.setAttribute('hidden', '');
+      modal.setAttribute('aria-hidden', 'true');
+    }
   }
 }
 
