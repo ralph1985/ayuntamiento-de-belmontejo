@@ -28,6 +28,7 @@
 
 - **Media** Remitente Resend: dar de alta un remitente oficial con dominio `@belmontejo.es` en Resend y actualizar `contact.formSender` desde Decap CMS para dejar de usar `onboarding@resend.dev`.
 - **Media** Antiabuso del formulario de contacto: añadir medidas específicas de captcha, rate limiting y logging básico para detectar automatización y abuso incluso tras añadir el backend.
+- **Media** reCAPTCHA: cuando se confirme el dominio definitivo, añadirlo a los dominios permitidos en Google reCAPTCHA y actualizar las claves/configuración si es necesario para evitar bloqueos.
 
 ### Seguridad y operaciones
 
