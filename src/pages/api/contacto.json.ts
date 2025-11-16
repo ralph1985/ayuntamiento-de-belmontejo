@@ -19,12 +19,17 @@ type ContactFormPayload = {
   privacyConsent?: boolean;
 };
 
-const jsonResponse = (data: unknown, status = 200): globalThis.Response =>
+const jsonResponse = (
+  data: unknown,
+  status = 200,
+  headers: Record<string, string> = {}
+): globalThis.Response =>
   new globalThis.Response(JSON.stringify(data), {
     status,
     headers: {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-store',
+      ...headers,
     },
   });
 
@@ -52,7 +57,12 @@ const stripControlCharacters = (
   return cleaned;
 };
 
-const RATE_LIMIT_WINDOW_MS = 60_000;
+// Nota: el almacenamiento en memoria hace que el contador se restablezca en cada
+// arranque de proceso (o instancia serverless), por lo que el límite es por
+// instancia y no compartido. Depende de `x-forwarded-for`/`x-real-ip` para
+// identificar la IP del cliente y no usa cookies (evita manipulación del lado del
+// cliente).
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hora
 const RATE_LIMIT_MAX_REQUESTS = 5;
 const rateLimitBuckets = new Map<string, number[]>();
 
@@ -65,23 +75,50 @@ const getClientIp = (request: globalThis.Request): string => {
   return request.headers.get('x-real-ip') ?? 'unknown';
 };
 
-const isRateLimited = (ip: string): boolean => {
+type RateLimitResult = {
+  limited: boolean;
+  remaining: number;
+  resetAt: number;
+};
+
+const applyRateLimit = (ip: string): RateLimitResult => {
   const now = Date.now();
   const windowStart = now - RATE_LIMIT_WINDOW_MS;
   const timestamps = rateLimitBuckets.get(ip) ?? [];
   const recentRequests = timestamps.filter(
     timestamp => timestamp > windowStart
   );
+  const resetAt =
+    (recentRequests.length ? Math.min(...recentRequests) : now) +
+    RATE_LIMIT_WINDOW_MS;
 
   if (recentRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
     rateLimitBuckets.set(ip, recentRequests);
-    return true;
+    return {
+      limited: true,
+      remaining: 0,
+      resetAt,
+    };
   }
 
   recentRequests.push(now);
   rateLimitBuckets.set(ip, recentRequests);
-  return false;
+  const remaining = RATE_LIMIT_MAX_REQUESTS - recentRequests.length;
+
+  return {
+    limited: false,
+    remaining,
+    resetAt,
+  };
 };
+
+const toRateLimitHeaders = (
+  result: RateLimitResult
+): Record<string, string> => ({
+  'X-RateLimit-Limit': RATE_LIMIT_MAX_REQUESTS.toString(),
+  'X-RateLimit-Remaining': Math.max(result.remaining, 0).toString(),
+  'X-RateLimit-Reset': Math.ceil(result.resetAt / 1000).toString(),
+});
 
 const sanitizeText = (
   value: string,
@@ -284,13 +321,17 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const clientIp = getClientIp(request);
-  if (isRateLimited(clientIp)) {
+  const rateLimit = applyRateLimit(clientIp);
+  const rateLimitHeaders = toRateLimitHeaders(rateLimit);
+
+  if (rateLimit.limited) {
     return jsonResponse(
       {
         success: false,
         error: 'Has realizado demasiadas solicitudes. Inténtalo más tarde.',
       },
-      429
+      429,
+      rateLimitHeaders
     );
   }
 
@@ -298,13 +339,18 @@ export const POST: APIRoute = async ({ request }) => {
   if (!recaptchaValidation.success) {
     return jsonResponse(
       { success: false, error: recaptchaValidation.error },
-      400
+      400,
+      rateLimitHeaders
     );
   }
 
   const validation = validatePayload(data);
   if (!validation.success) {
-    return jsonResponse({ success: false, error: validation.error }, 400);
+    return jsonResponse(
+      { success: false, error: validation.error },
+      400,
+      rateLimitHeaders
+    );
   }
 
   const { payload } = validation;
@@ -335,10 +381,14 @@ export const POST: APIRoute = async ({ request }) => {
       const message =
         errorBody?.message ??
         'No se pudo enviar el correo. Inténtalo de nuevo más tarde.';
-      return jsonResponse({ success: false, error: message }, 502);
+      return jsonResponse(
+        { success: false, error: message },
+        502,
+        rateLimitHeaders
+      );
     }
 
-    return jsonResponse({ success: true });
+    return jsonResponse({ success: true }, 200, rateLimitHeaders);
   } catch (error) {
     return jsonResponse(
       {
@@ -347,7 +397,8 @@ export const POST: APIRoute = async ({ request }) => {
         details:
           process.env.NODE_ENV === 'development' ? `${error}` : undefined,
       },
-      500
+      500,
+      rateLimitHeaders
     );
   }
 };
