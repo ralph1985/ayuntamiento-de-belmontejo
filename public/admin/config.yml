@@ -128,11 +128,11 @@ collections:
         }
       - { label: 'Respuesta', name: 'body', widget: 'markdown' }
 
-  - name: 'contact-info'
-    label: 'Datos de contacto'
+  - name: 'site-data'
+    label: 'Contenido fijo'
     files:
-      - label: 'Información general de contacto'
-        name: 'contact'
+      - label: 'Datos de contacto'
+        name: 'contact-info'
         file: 'src/data/contact-info.json'
         fields:
           - label: 'Entidad'
@@ -259,12 +259,8 @@ collections:
                       widget: 'boolean',
                       default: true,
                     }
-
-  - name: 'footer-services' # Collection for managing footer services links
-    label: 'Enlaces de Servicios' # Used in the admin dashboard UI
-    files:
-      - label: 'Configuración de Enlaces de Servicios'
-        name: 'services'
+      - label: 'Enlaces de servicios'
+        name: 'footer-services'
         file: 'src/data/footerServices.json'
         fields:
           - label: 'Enlaces de Servicios'
