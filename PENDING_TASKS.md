@@ -8,6 +8,8 @@
 - Sede electrónica: enlace en footer data (`src/data/footerServices.json`).
 - CMS: Decap CMS con OAuth y menú condicionado por `PUBLIC_ADMIN_MENU`. Robots bloquea `/admin`.
 - Contacto: formulario en `src/pages/contacto.astro` con backend `/api/contacto.json`, reCAPTCHA + Resend, validación server-side y casilla obligatoria de aceptación con cláusula informativa visible bajo el botón.
+- Canónicos/OG: el layout base normaliza la URL a partir del dominio definido en `contact-info.json`, evitando duplicidades de protocolo o barra final.
+- Datos estructurados: `BaseLayout` emite `GovernmentOrganization` y las plantillas de noticias/bandos generan `NewsArticle` con URLs normalizadas.
 
 ## Pendiente (organizado por tipo e importancia)
 
@@ -63,10 +65,8 @@
 
 ### Propuesta de siguientes pasos (accionables)
 
-1. Crear páginas legales: `src/pages/aviso-legal.astro`, `src/pages/politica-de-privacidad.astro`, `src/pages/accesibilidad.astro` con contenido base conforme a normativa.
-2. Corregir el bug del dominio en `BaseLayout`/`client.json` (ver sección “Bug detectado”).
-3. Actualizar `src/components/layout/Footer.astro` para incluir enlaces a Aviso Legal, Privacidad, Accesibilidad, Transparencia, Perfil del contratante y “Gestionar cookies”.
-4. Añadir API para formulario de contacto con consentimiento, antispam y almacenamiento/entrega (email). Añadir casilla de aceptación y cláusula informativa.
-5. Añadir cabeceras de seguridad vía middleware de Astro o `vercel.json`.
-6. Revisar `robots.txt`/sitemap para que reflejen el dominio final.
-7. Incorporar JSON‑LD para organización y artículos.
+1. Publicar la página de Accesibilidad y completar los datos oficiales del Aviso Legal (titular, CIF, DIR3, horario, DPD, fecha de actualización).
+2. Actualizar `src/components/layout/Footer.astro` para incluir enlaces a Aviso Legal, Privacidad, Accesibilidad, Transparencia, Perfil del contratante y “Gestionar cookies”.
+3. Añadir cabeceras de seguridad vía middleware de Astro o `vercel.json`.
+4. Revisar `robots.txt`/sitemap para que reflejen el dominio final.
+5. Validar los JSON‑LD (`GovernmentOrganization`, `NewsArticle`) en el dominio definitivo cuando se confirme la URL pública.
