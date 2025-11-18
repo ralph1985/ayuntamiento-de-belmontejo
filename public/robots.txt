@@ -38,4 +38,4 @@ Sitemap: https://ayuntamiento-de-belmontejo.vercel.app/sitemap-index.xml
 
 # Información adicional del sitio
 # Sitio web oficial del Ayuntamiento de Belmontejo (Cuenca)
-# Contacto: belmontejo@dipucuenca.es
+# Contacto: alcaldia@belmontejo.es

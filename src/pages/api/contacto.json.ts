@@ -4,7 +4,7 @@ import contactInfo from '@js/contact';
 const RESEND_API_KEY = import.meta.env.RESEND_API_KEY;
 const RECAPTCHA_SECRET_KEY = import.meta.env.RECAPTCHA_SECRET_KEY;
 const MESSAGE_MAX_LENGTH = 1000;
-const DEFAULT_CONTACT_FORM_SENDER = 'onboarding@resend.dev' as const;
+const DEFAULT_CONTACT_FORM_SENDER = 'alcaldia@belmontejo.es' as const;
 const CONTACT_FORM_SENDER =
   contactInfo.contact?.formSender ?? DEFAULT_CONTACT_FORM_SENDER;
 const CONTACT_FORM_RECIPIENT = contactInfo.contact?.formRecipient;
