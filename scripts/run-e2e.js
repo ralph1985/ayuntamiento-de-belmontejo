@@ -1,11 +1,13 @@
 import { spawnSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { e2eGroups } from './e2e-groups.js';
 
 const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 const npxCommand = process.platform === 'win32' ? 'npx.cmd' : 'npx';
-const defaultFixtures = {
-  bandos: 'tests/fixtures/bandos',
-};
+const defaultFixtures = [
+  { envVar: 'BANDOS_CONTENT_BASE', path: 'tests/fixtures/bandos' },
+  { envVar: 'NOTICIAS_CONTENT_BASE', path: 'tests/fixtures/noticias' },
+];
 const env = {
   ...process.env,
   OAUTH_GITHUB_CLIENT_ID:
@@ -71,7 +73,6 @@ function parseCliArgs(rawArgs) {
   const doubleDashIndex = args.indexOf('--');
   let manualSpecs = [];
   let cliArgs = args;
-  let bandosFixture;
 
   if (doubleDashIndex !== -1) {
     manualSpecs = args.slice(doubleDashIndex + 1);
@@ -110,11 +111,10 @@ function parseCliArgs(rawArgs) {
     forwardedArgs,
     groupNames,
     manualSpecs,
-    bandosFixture,
   };
 }
 
-const { forwardedArgs, groupNames, manualSpecs, bandosFixture } = parseCliArgs(
+const { forwardedArgs, groupNames, manualSpecs } = parseCliArgs(
   process.argv.slice(2)
 );
 
@@ -124,18 +124,10 @@ if (specArgs.length === 0 && groupNames.length > 0) {
   specArgs = collectGroupSpecs(groupNames);
 }
 
-const argsText = [...groupNames, ...specArgs, ...manualSpecs, ...forwardedArgs]
-  .filter(Boolean)
-  .join(' ');
-const targetsBandos =
-  /bandos/i.test(argsText) ||
-  specArgs.some(spec =>
-    /pages\.(desktop|mobile)\.visual\.spec\.ts$/.test(spec)
-  ) ||
-  specArgs.some(spec => /navigation\.flow\.spec\.ts$/.test(spec));
-
-if (targetsBandos) {
-  env.BANDOS_CONTENT_BASE = bandosFixture ?? defaultFixtures.bandos;
+for (const { envVar, path } of defaultFixtures) {
+  if (!env[envVar] && existsSync(path)) {
+    env[envVar] = path;
+  }
 }
 
 const buildResult = spawnSync(npmCommand, ['run', 'build'], {

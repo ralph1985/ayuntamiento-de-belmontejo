@@ -8,7 +8,7 @@ import { glob } from 'astro/loaders';
 const newsCollection = defineCollection({
   loader: glob({
     pattern: '**/[^_]*.{md,mdx}',
-    base: './src/content/noticias',
+    base: process.env.NOTICIAS_CONTENT_BASE ?? './src/content/noticias',
   }),
   schema: ({ image }) =>
     z.object({
