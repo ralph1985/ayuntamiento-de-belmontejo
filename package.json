@@ -39,7 +39,7 @@
     "astro-icon": "1.1.5",
     "autoprefixer": "10.4.21",
     "cors": "2.8.5",
-    "dotenv": "10.0.0",
+    "dotenv": "17.2.3",
     "less": "4.4.1",
     "simple-oauth2": "5.1.0"
   },
