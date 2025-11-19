@@ -23,6 +23,7 @@
     "test:e2e:visual:update": "node scripts/run-e2e.js --update-snapshots=all --group visual:all",
     "test:e2e:visual:last": "node scripts/run-e2e.js --last-failed --group visual:all",
     "test:e2e:visual:last:update": "node scripts/run-e2e.js --last-failed --update-snapshots=all --group visual:all",
+    "test:e2e:visual:bandos": "node scripts/run-e2e.js --group visual:pages --grep \"Página /bandos\"",
     "test:e2e:navigation": "node scripts/run-e2e.js --group flows:navigation",
     "sonar:scan": "dotenv -e .env -- sonar-scanner",
     "version:suggest": "node scripts/suggest-version-bump.js"
