@@ -22,10 +22,13 @@ const newsCollection = defineCollection({
     }),
 });
 
+const bandosCollectionBase =
+  process.env.BANDOS_CONTENT_BASE ?? './src/content/bandos';
+
 const bandosCollection = defineCollection({
   loader: glob({
     pattern: '**/[^_]*.{md,mdx}',
-    base: './src/content/bandos',
+    base: bandosCollectionBase,
   }),
   schema: ({ image }) =>
     z.object({
