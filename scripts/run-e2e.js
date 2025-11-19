@@ -7,6 +7,7 @@ const npxCommand = process.platform === 'win32' ? 'npx.cmd' : 'npx';
 const defaultFixtures = [
   { envVar: 'BANDOS_CONTENT_BASE', path: 'tests/fixtures/bandos' },
   { envVar: 'NOTICIAS_CONTENT_BASE', path: 'tests/fixtures/noticias' },
+  { envVar: 'FAQS_CONTENT_BASE', path: 'tests/fixtures/faqs' },
 ];
 const env = {
   ...process.env,

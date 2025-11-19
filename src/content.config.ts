@@ -48,7 +48,7 @@ const bandosCollection = defineCollection({
 const faqCollection = defineCollection({
   loader: glob({
     pattern: '**/[^_]*.{md,mdx}',
-    base: './src/content/faqs',
+    base: process.env.FAQS_CONTENT_BASE ?? './src/content/faqs',
   }),
   schema: () =>
     z.object({
