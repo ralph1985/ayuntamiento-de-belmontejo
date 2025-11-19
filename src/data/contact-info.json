@@ -15,19 +15,13 @@
     ],
     "emails": [
       {
-        "id": "general",
-        "label": "Correo electrónico general",
-        "address": "belmontejo@dipucuenca.es",
-        "isPrimary": true
-      },
-      {
         "id": "alcaldia",
         "label": "Contacto Alcaldía",
         "address": "alcaldia@belmontejo.es",
-        "isPrimary": false
+        "isPrimary": true
       }
     ],
-    "formSender": "onboarding@resend.dev",
+    "formSender": "alcaldia@belmontejo.es",
     "formRecipient": "rafaelgarcia1985@hotmail.com"
   },
   "offices": [
