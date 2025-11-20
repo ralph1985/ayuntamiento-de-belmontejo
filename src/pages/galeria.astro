@@ -12,15 +12,20 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
-  title="Proyecto 1 - Ayuntamiento de Belmontejo"
-  description="Meta description for the page"
+  title="Galería de fotos - Ayuntamiento de Belmontejo"
+  description="Explora la colección de imágenes del municipio y descubre sus rincones."
   preloadedImage={optimizedImage}
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing title="Proyecto 1" image={optimizedImage} />
+  <Landing title="Galería de fotos" image={optimizedImage}>
+    <p>
+      Descubre los paisajes, monumentos y momentos que hacen único a Belmontejo.
+      Navega por la galería para ver nuestras fotografías destacadas.
+    </p>
+  </Landing>
 
   <!-- ============================================ -->
   <!--                   Gallery                    -->
@@ -35,5 +40,5 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 </BaseLayout>
 
 <style lang="less">
-  @import '../../styles/pages/proyectos.less';
+  @import '../styles/pages/galeria.less';
 </style>
