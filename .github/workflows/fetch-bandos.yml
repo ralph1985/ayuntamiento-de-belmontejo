@@ -1,0 +1,48 @@
+name: Fetch bandos and open PR
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fetch-bandos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch latest bandos
+        run: npm run fetch-bandos
+
+      - name: Open pull request with changes
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: chore/fetch-bandos
+          base: main
+          title: 'chore: actualizar bandos'
+          commit-message: 'chore: actualizar bandos'
+          body: |
+            ## Actualizacion automatica de bandos
+
+            - Script ejecutado: `npm run fetch-bandos`
+            - Formateo aplicado via `npm run format:write`
+            - Base: `main`
+
+            _Si los cambios son correctos, aprueba y haz merge de esta PR._
+          delete-branch: true
