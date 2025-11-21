@@ -6,7 +6,7 @@ date: 2025-10-10T15:12:32.000Z
 category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1429109'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1429109'
-isFeatured: true
+isFeatured: false
 ---
 
 Por favor, respeten la leña que hay en las eras privadas.
