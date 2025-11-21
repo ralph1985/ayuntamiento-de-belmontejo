@@ -31,6 +31,9 @@ jobs:
 
       - name: Open pull request with changes
         uses: peter-evans/create-pull-request@v7
+        env:
+          HUSKY: 0
+          SKIP_VERSION_CHECK: 1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: chore/fetch-bandos
