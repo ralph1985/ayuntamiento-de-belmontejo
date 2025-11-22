@@ -42,7 +42,7 @@ export const GET: APIRoute = async () => {
   const body = JSON.stringify(searchData);
   const etag = createHash('sha1').update(body).digest('hex');
 
-  return new Response(body, {
+  return new globalThis.Response(body, {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
