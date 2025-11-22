@@ -37,7 +37,7 @@
     "astro": "5.16.0",
     "astro-decap-cms-oauth": "0.5.1",
     "astro-icon": "1.1.5",
-    "autoprefixer": "10.4.21",
+    "autoprefixer": "10.4.22",
     "cors": "2.8.5",
     "dotenv": "17.2.3",
     "less": "4.4.1",
