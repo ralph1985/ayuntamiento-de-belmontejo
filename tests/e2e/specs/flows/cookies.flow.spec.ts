@@ -168,7 +168,9 @@ test.describe('Gestión de cookies', () => {
     const analyticsCheckbox = modal.locator('#analytics-cookies');
     await expect(analyticsCheckbox).not.toBeChecked();
 
-    await page.getByRole('button', { name: '×', exact: true }).click();
+    await page
+      .getByRole('button', { name: /Cerrar configuración de cookies/i })
+      .click();
     await expect(modal).toBeHidden();
   });
 
@@ -187,7 +189,9 @@ test.describe('Gestión de cookies', () => {
     const modal = page.locator('#cookie-settings-modal');
     await expect(modal).toBeVisible();
 
-    await page.getByRole('button', { name: '×', exact: true }).click();
+    await page
+      .getByRole('button', { name: /Cerrar configuración de cookies/i })
+      .click();
     await expect(modal).toBeHidden();
 
     await banner
@@ -195,7 +199,9 @@ test.describe('Gestión de cookies', () => {
       .click();
     await expect(modal).toBeVisible();
 
-    await modal.click({ position: { x: 5, y: 5 } });
+    const overlay = modal.locator('.c-modal__overlay');
+
+    await overlay.dispatchEvent('click');
     await expect(modal).toBeHidden();
   });
 });
