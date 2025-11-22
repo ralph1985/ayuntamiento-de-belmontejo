@@ -5,7 +5,12 @@
  * Suggests a semantic version bump based on recent commits and optionally updates package.json.
  */
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import {
+  createReadStream,
+  createWriteStream,
+  readFileSync,
+  writeFileSync,
+} from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import readline from 'node:readline';
 import path from 'node:path';
@@ -15,6 +20,7 @@ const TARGET_BRANCH = process.argv[3] || '';
 const TARGET_SHA = process.argv[4] || '';
 
 const PACKAGE_JSON_PATH = path.resolve('package.json');
+let interactiveIO = null;
 
 function spawnGit(args, options = {}) {
   return spawnSync('git', args, { encoding: 'utf8', ...options });
@@ -202,15 +208,39 @@ function incrementVersion(version, level) {
   }
 }
 
-function ensureInteractive() {
-  return process.stdin.isTTY && process.stdout.isTTY;
+function resolveInteractiveIO() {
+  if (interactiveIO) {
+    return interactiveIO;
+  }
+
+  if (process.stdin.isTTY && process.stdout.isTTY) {
+    interactiveIO = { input: process.stdin, output: process.stdout };
+    return interactiveIO;
+  }
+
+  try {
+    const input = createReadStream('/dev/tty');
+    const output = createWriteStream('/dev/tty');
+    interactiveIO = { input, output, needsClose: true };
+    return interactiveIO;
+  } catch {
+    interactiveIO = null;
+    return null;
+  }
 }
 
-function prompt(question) {
+function closeInteractiveIO() {
+  if (interactiveIO?.needsClose) {
+    interactiveIO.input.destroy();
+    interactiveIO.output.end();
+  }
+}
+
+function prompt(question, io) {
   return new Promise(resolve => {
     const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
+      input: io.input,
+      output: io.output,
     });
     rl.question(question, answer => {
       rl.close();
@@ -219,13 +249,14 @@ function prompt(question) {
   });
 }
 
-async function promptYes(question) {
-  const answer = await prompt(question);
+async function promptYes(question, io) {
+  const answer = await prompt(question, io);
   return answer === 'y' || answer === 'yes';
 }
 
 async function main() {
-  if (!ensureInteractive()) {
+  const io = resolveInteractiveIO();
+  if (!io) {
     console.error(
       '⚠️  Cannot suggest version bump in a non-interactive shell.'
     );
@@ -292,7 +323,8 @@ async function main() {
   console.log('');
 
   const shouldApply = await promptYes(
-    'Apply this version to package.json? [y/N] '
+    'Apply this version to package.json? [y/N] ',
+    io
   );
   if (!shouldApply) {
     console.log(
@@ -314,7 +346,8 @@ async function main() {
   console.log(`✅ package.json updated to version ${nextVersion}.`);
 
   const wantsCommit = await promptYes(
-    'Create commit with this version now? [y/N] '
+    'Create commit with this version now? [y/N] ',
+    io
   );
   if (!wantsCommit) {
     console.log(
@@ -368,9 +401,11 @@ async function main() {
 
 main()
   .then(exitCode => {
+    closeInteractiveIO();
     process.exit(typeof exitCode === 'number' ? exitCode : 0);
   })
   .catch(error => {
+    closeInteractiveIO();
     console.error(`❌ Unexpected error: ${error.message}`);
     process.exit(1);
   });
