@@ -3,7 +3,7 @@ title: Un documental rodado parcialmente en Las Majadas se proyecta en los cines
 description: Iberia, naturaleza infinita, nominada a los Premios Goya, incluye secuencias filmadas en nuestro municipio y destaca espacios naturales como el Parque Natural de la Serranía de Cuenca.
 author: Redacción
 date: 2025-10-27T00:00:00.000Z
-image: ../../assets/images/noticias/imagen-de-prueba-3.jpg
+image: src/assets/images/noticias/imagen-de-prueba-3.jpg
 imageAlt: Paisajes naturales de Las Majadas donde se rodó el documental Iberia, naturaleza infinita
 isFeatured: true
 ---
