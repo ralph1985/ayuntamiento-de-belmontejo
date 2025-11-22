@@ -283,9 +283,9 @@ export function escapeYaml(str) {
   return str
     .replaceAll('\\', '\\\\')
     .replaceAll("'", "''") // Escape single quotes for YAML
-    .replaceAll('\n', '\\n')
-    .replaceAll('\r', '\\r')
-    .replaceAll('\t', '\\t');
+    .replaceAll('\n', String.raw`\n`)
+    .replaceAll('\r', String.raw`\r`)
+    .replaceAll('\t', String.raw`\t`);
 }
 
 const isCliInvocation =
