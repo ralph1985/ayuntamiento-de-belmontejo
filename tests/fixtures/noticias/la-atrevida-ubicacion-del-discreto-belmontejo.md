@@ -3,7 +3,7 @@ title: La atrevida ubicación del discreto Belmontejo
 description: Reportaje que describe la localización del municipio, en un margen de la carretera principal, junto al trasvase Tajo-Segura, y hace una reflexión sobre la población que emigró, fincas abandonadas, y el reto de su desarrollo.
 author: Redacción
 date: 2024-10-20T14:00:00.000Z
-image: src/assets/images/noticias/imagen-de-prueba-1.jpg
+image: ../../src/assets/images/noticias/imagen-de-prueba-1.jpg
 imageAlt: Vista panorámica de Belmontejo
 isFeatured: false
 ---

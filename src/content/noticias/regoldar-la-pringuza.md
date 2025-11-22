@@ -3,7 +3,7 @@ title: Regoldar la pringuza - Los dichos perdidos de la jerga manchega que Belmo
 description: Iniciativa de la Asociación "El Kambio" con financiación europea en la que Belmontejo participa para recuperar y visibilizar expresiones y dichos propios de la habla manchega, fomentando identidad local y generacional.
 author: Redacción
 date: 2024-09-15T11:00:00.000Z
-image: src/assets/images/noticias/imagen-de-prueba-3.jpg
+image: ../../assets/images/noticias/imagen-de-prueba-3.jpg
 imageAlt: Paisaje típico manchego
 isFeatured: false
 ---

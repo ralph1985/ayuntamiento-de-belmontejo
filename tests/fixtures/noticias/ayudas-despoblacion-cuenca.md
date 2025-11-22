@@ -3,7 +3,7 @@ title: 700.000 euros para luchar contra la despoblación en Cuenca - Autónomos 
 description: La provincia de Cuenca recibe ayudas significativas para combatir la despoblación, beneficiando también a municipios pequeños como Belmontejo. Una oportunidad para el desarrollo rural y el emprendimiento local.
 author: Redacción
 date: 2025-06-20T09:00:00.000Z
-image: src/assets/images/noticias/imagen-de-prueba-1.jpg
+image: ../../src/assets/images/noticias/imagen-de-prueba-1.jpg
 imageAlt: Desarrollo rural en la provincia de Cuenca
 isFeatured: false
 ---
