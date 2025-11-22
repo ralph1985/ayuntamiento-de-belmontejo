@@ -51,6 +51,7 @@ if [ "${SKIP_VERSION_CHECK}" != "1" ]; then
     else
       echo "❌ Version check failed: remember to bump \"version\" in $VERSION_FILE before pushing."
     fi
+    echo "   Tip: you can run \"npm run version:suggest\" to attempt an automatic version bump."
     if command -v node >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/suggest-version-bump.js" ]; then
       if node "$REPO_ROOT/scripts/suggest-version-bump.js" "$REMOTE_NAME" "$TARGET_BRANCH" "$TARGET_SHA"; then
         echo "   Version updated automatically. Review the changes (a commit may have been created) and retry your push."
@@ -71,6 +72,7 @@ if [ "${SKIP_VERSION_CHECK}" != "1" ]; then
 
   if ! printf "%s" "$VERSION_DIFF" | grep -q '^[+-][[:space:]]*"version"[[:space:]]*:'; then
     echo "❌ Found changes in $VERSION_FILE but no \"version\" bump detected."
+    echo "   Tip: you can run \"npm run version:suggest\" to attempt an automatic version bump."
     if command -v node >/dev/null 2>&1 && [ -f "$REPO_ROOT/scripts/suggest-version-bump.js" ]; then
       if node "$REPO_ROOT/scripts/suggest-version-bump.js" "$REMOTE_NAME" "$TARGET_BRANCH" "$TARGET_SHA"; then
         echo "   Version updated automatically. Review the changes (a commit may have been created) and retry your push."
