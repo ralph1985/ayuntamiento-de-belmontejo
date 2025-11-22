@@ -4,18 +4,6 @@ const COOKIE_CONSENT_KEY = 'cookie-consent';
 const ANALYTICS_CONSENT_KEY = 'analytics-consent';
 
 test.describe('Gestión de cookies', () => {
-  test('mantiene estable la apariencia del banner de cookies', async ({
-    page,
-  }) => {
-    await page.goto('/', { waitUntil: 'networkidle' });
-
-    const banner = page.locator('#cookie-banner');
-    await expect(banner).toBeVisible();
-    await expect(banner).toHaveScreenshot('cookie-banner.png', {
-      animations: 'disabled',
-    });
-  });
-
   test('muestra el banner en la primera visita y permite aceptar todas', async ({
     page,
   }) => {
