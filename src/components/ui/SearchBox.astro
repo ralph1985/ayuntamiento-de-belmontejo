@@ -80,11 +80,13 @@
     localStorage.removeItem('searchState');
   }
 
+  const searchDataUrl = `/search-data.json?v=${import.meta.env.PUBLIC_APP_VERSION ?? 'dev'}`;
+
   async function loadSearchData() {
     if (isDataLoaded) return;
 
     try {
-      const response = await fetch('/api/search-data.json');
+      const response = await fetch(searchDataUrl);
       if (!response.ok) throw new Error('Error al cargar datos de búsqueda');
 
       searchData = await response.json();

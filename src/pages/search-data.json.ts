@@ -1,12 +1,14 @@
 import type { APIRoute } from 'astro';
+import { createHash } from 'node:crypto';
 import { getCollection } from 'astro:content';
 
+// Generate search index at build time so it can be served as a static asset.
+export const prerender = true;
+
 export const GET: APIRoute = async () => {
-  // Obtener todas las noticias
   const noticias = await getCollection('noticias');
   const bandos = await getCollection('bandos');
 
-  // Formatear los datos para la búsqueda
   const searchData = [
     ...noticias.map(noticia => ({
       id: noticia.id,
@@ -33,17 +35,19 @@ export const GET: APIRoute = async () => {
     })),
   ];
 
-  // Ordenar por fecha (más recientes primero)
   searchData.sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
-  // eslint-disable-next-line no-undef
-  return new Response(JSON.stringify(searchData), {
+  const body = JSON.stringify(searchData);
+  const etag = createHash('sha1').update(body).digest('hex');
+
+  return new Response(body, {
     status: 200,
     headers: {
       'Content-Type': 'application/json',
-      'Cache-Control': 'public, max-age=3600', // Cache por 1 hora
+      'Cache-Control': 'public, max-age=31536000, immutable',
+      ETag: `"${etag}"`,
     },
   });
 };
