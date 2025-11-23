@@ -7,7 +7,7 @@ import {
 test.describe('FAQ accordion interactions', () => {
   test('permite abrir y cerrar preguntas en la home', async ({ page }) => {
     await acceptCookiesBeforeNavigation(page);
-    await page.goto('/', { waitUntil: 'networkidle' });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     await stabilizeVisualFlakes(page, '/');
 
     const faqGroup = page.locator('#faq-1741 .cs-faq-group');

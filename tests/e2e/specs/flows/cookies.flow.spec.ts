@@ -7,7 +7,7 @@ test.describe('Gestión de cookies', () => {
   test('muestra el banner en la primera visita y permite aceptar todas', async ({
     page,
   }) => {
-    await page.goto('/', { waitUntil: 'networkidle' });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const banner = page.locator('#cookie-banner');
     await expect(banner).toBeVisible();
@@ -28,12 +28,9 @@ test.describe('Gestión de cookies', () => {
     const getLocalStorageValue = (storageKey: string) =>
       page.evaluate(key => localStorage.getItem(key), storageKey);
 
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle' }),
-      banner
-        .getByRole('button', { name: 'Aceptar todas', exact: true })
-        .click(),
-    ]);
+    await banner
+      .getByRole('button', { name: 'Aceptar todas', exact: true })
+      .click();
 
     await expect(page).toHaveURL(/\/$/);
 
@@ -53,7 +50,7 @@ test.describe('Gestión de cookies', () => {
   test('permite cambiar preferencias desde la Política de Cookies', async ({
     page,
   }) => {
-    await page.goto('/politica-de-cookies', { waitUntil: 'networkidle' });
+    await page.goto('/politica-de-cookies', { waitUntil: 'domcontentloaded' });
 
     const getLocalStorageValue = (storageKey: string) =>
       page.evaluate(key => localStorage.getItem(key), storageKey);
@@ -61,12 +58,9 @@ test.describe('Gestión de cookies', () => {
     const banner = page.locator('#cookie-banner');
     await expect(banner).toBeVisible();
 
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle' }),
-      banner
-        .getByRole('button', { name: 'Solo necesarias', exact: true })
-        .click(),
-    ]);
+    await banner
+      .getByRole('button', { name: 'Solo necesarias', exact: true })
+      .click();
 
     await expect(page).toHaveURL(/\/politica-de-cookies\/?$/);
 
@@ -94,12 +88,9 @@ test.describe('Gestión de cookies', () => {
     await expect(analyticsCheckbox).not.toBeChecked();
     await analyticsCheckbox.check();
 
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle' }),
-      modal
-        .getByRole('button', { name: 'Guardar preferencias', exact: true })
-        .click(),
-    ]);
+    await modal
+      .getByRole('button', { name: 'Guardar preferencias', exact: true })
+      .click();
 
     await expect(page).toHaveURL(/\/politica-de-cookies\/?$/);
 
@@ -117,7 +108,7 @@ test.describe('Gestión de cookies', () => {
   test('mantiene operativo el botón de configuración tras navegar sin recargar', async ({
     page,
   }) => {
-    await page.goto('/', { waitUntil: 'networkidle' });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const getLocalStorageValue = (storageKey: string) =>
       page.evaluate(key => localStorage.getItem(key), storageKey);
@@ -125,12 +116,9 @@ test.describe('Gestión de cookies', () => {
     const banner = page.locator('#cookie-banner');
     await expect(banner).toBeVisible();
 
-    await Promise.all([
-      page.waitForNavigation({ waitUntil: 'networkidle' }),
-      banner
-        .getByRole('button', { name: 'Solo necesarias', exact: true })
-        .click(),
-    ]);
+    await banner
+      .getByRole('button', { name: 'Solo necesarias', exact: true })
+      .click();
 
     await expect(page).toHaveURL(/\/$/);
     await expect(page.locator('#cookie-banner')).toBeHidden();
@@ -165,7 +153,7 @@ test.describe('Gestión de cookies', () => {
   test('cierra la ventana modal desde el botón y haciendo clic fuera', async ({
     page,
   }) => {
-    await page.goto('/', { waitUntil: 'networkidle' });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const banner = page.locator('#cookie-banner');
     await expect(banner).toBeVisible();

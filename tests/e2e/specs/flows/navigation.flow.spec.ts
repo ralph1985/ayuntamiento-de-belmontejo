@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { acceptCookiesBeforeNavigation } from '../../support/browser-helpers';
 
 type NavigationScenario = {
   label: string;
@@ -57,11 +58,15 @@ const navigationScenarios: NavigationScenario[] = [
   },
 ];
 
+test.beforeEach(async ({ page }) => {
+  await acceptCookiesBeforeNavigation(page);
+});
+
 test.describe('Navegación principal', () => {
   for (const scenario of navigationScenarios) {
     test(`permite acceder a ${scenario.label}`, async ({ page }) => {
       const startPath = scenario.startPath ?? '/';
-      await page.goto(startPath);
+      await page.goto(startPath, { waitUntil: 'domcontentloaded' });
 
       const navigation = page.locator('#cs-navigation').getByRole('navigation');
 
@@ -84,8 +89,6 @@ test.describe('Navegación principal', () => {
           .click();
       }
 
-      await page.waitForLoadState('networkidle');
-
       await expect(page).toHaveURL(
         new RegExp(`${escapeRegex(scenario.expectedPath)}\\/?$`)
       );
@@ -98,7 +101,7 @@ test.describe('Navegación principal', () => {
 
 test.describe('Navegación interna de contenido', () => {
   test('el héroe enlaza con Sobre el pueblo y Contacto', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const hero = page.locator('#hero');
 
@@ -110,7 +113,7 @@ test.describe('Navegación interna de contenido', () => {
       page.getByRole('heading', { level: 1, name: /Sobre Belmontejo/i })
     ).toBeVisible();
 
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
     await Promise.all([
       page.waitForURL(/\/contacto\/?$/),
       hero.getByRole('link', { name: 'Contactar' }).click(),
@@ -121,7 +124,7 @@ test.describe('Navegación interna de contenido', () => {
   });
 
   test('una noticia se puede abrir desde el listado', async ({ page }) => {
-    await page.goto('/noticias');
+    await page.goto('/noticias', { waitUntil: 'domcontentloaded' });
 
     const firstArticle = page.locator('article.recent-articles').first();
     const articleTitle = (
@@ -151,7 +154,7 @@ test.describe('Navegación interna de contenido', () => {
   });
 
   test('un bando se puede abrir desde el listado', async ({ page }) => {
-    await page.goto('/bandos');
+    await page.goto('/bandos', { waitUntil: 'domcontentloaded' });
 
     const firstBando = page.locator('article.recent-articles').first();
     const bandoTitle = (
@@ -183,7 +186,7 @@ test.describe('Navegación interna de contenido', () => {
   test('el pie incluye acceso a la Política de Privacidad', async ({
     page,
   }) => {
-    await page.goto('/');
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const footer = page.getByRole('contentinfo');
     await Promise.all([
