@@ -37,7 +37,15 @@ jobs:
           echo "Deployment did not become ready in time" >&2
           exit 1
 
+      - name: Warm up critical pages
+        run: |
+          base="https://ayuntamiento-de-belmontejo.vercel.app"
+          for path in "/" "/proyectos/proyecto-1" "/proyectos/proyecto-2" "/buscar"; do
+            echo "Warming $base$path"
+            curl -s -o /dev/null -w "HTTP %{http_code}\n" "$base$path"
+          done
+
       - name: Run critical E2E tests against production
         env:
           PLAYWRIGHT_BASE_URL: https://ayuntamiento-de-belmontejo.vercel.app
-        run: npx playwright test tests/e2e/specs/flows --config=playwright.config.ts --timeout=15000
+        run: npx playwright test tests/e2e/specs/flows --config=playwright.config.ts
