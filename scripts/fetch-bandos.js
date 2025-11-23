@@ -183,7 +183,7 @@ export function generateContent(item) {
   });
 
   // Remove remaining HTML tags
-  content = content.replaceAll(/<[^>]+>/g, '');
+  content = stripHtmlTags(content);
 
   // Decode HTML entities (e.g. &nbsp;)
   content = decodeHtmlEntities(content);
@@ -192,7 +192,7 @@ export function generateContent(item) {
   content = content
     .replaceAll(/\n\s*\n\s*\n/g, '\n\n') // Remove multiple blank lines
     .replaceAll(/\n[ \t]+/g, '\n') // Remove lines with only spaces/tabs
-    .replaceAll(/[ \t]+\n/g, '\n') // Remove trailing spaces on lines
+    .replaceAll(/[ \t]+$/gm, '') // Remove trailing spaces on lines without backtracking risk
     .replaceAll(/[ \t]+/g, ' ') // Replace multiple spaces with single space
     .trim();
 
@@ -250,9 +250,42 @@ export function decodeHtmlEntities(text) {
 export function cleanHTML(html) {
   if (!html) return '';
 
-  const withoutTags = html.replaceAll(/<[^>]+>/g, ' ');
+  const withoutTags = stripHtmlTags(html, ' ');
 
   return decodeHtmlEntities(withoutTags).replaceAll(/\s+/g, ' ').trim();
+}
+
+export function stripHtmlTags(value, replacement = '') {
+  if (!value) return '';
+
+  let result = '';
+  let insideTag = false;
+
+  for (const element of value) {
+    const char = element;
+
+    if (char === '<') {
+      insideTag = true;
+      if (
+        replacement &&
+        (result.length === 0 || result[result.length - 1] !== replacement)
+      ) {
+        result += replacement;
+      }
+      continue;
+    }
+
+    if (char === '>') {
+      insideTag = false;
+      continue;
+    }
+
+    if (!insideTag) {
+      result += char;
+    }
+  }
+
+  return result;
 }
 
 export async function runFormatter() {
