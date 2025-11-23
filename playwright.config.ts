@@ -17,7 +17,7 @@ export default defineConfig({
   fullyParallel: true,
   snapshotPathTemplate:
     '{testDir}/__screenshots__/{projectName}/{testFilePath}/{arg}{ext}',
-  timeout: 5 * 1000,
+  timeout: 10 * 1000,
   expect: {
     timeout: 10 * 1000,
   },
@@ -26,7 +26,7 @@ export default defineConfig({
     baseURL,
     trace: 'on-first-retry',
   },
-  workers: 10,
+  workers: 3,
   projects: [
     {
       name: 'chromium',
