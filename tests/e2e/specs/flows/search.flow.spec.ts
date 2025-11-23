@@ -5,7 +5,7 @@ const escapeRegex = (value: string) =>
 
 test.describe('Buscador municipal', () => {
   test('permite buscar, navegar y conservar resultados', async ({ page }) => {
-    await page.goto('/buscar', { waitUntil: 'domcontentloaded' });
+    await page.goto('/buscar', { waitUntil: 'networkidle' });
 
     const searchInput = page.getByPlaceholder('Buscar en noticias y bandos...');
     await searchInput.click();
