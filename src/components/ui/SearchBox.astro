@@ -51,6 +51,7 @@
 
   let searchData: SearchItem[] = [];
   let isDataLoaded = false;
+  let lastTrackedQuery: string | null = null;
 
   function saveSearchState(query: string, results: SearchItem[]) {
     const state = { query, results, timestamp: Date.now() };
@@ -94,6 +95,25 @@
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('Error loading search data:', error);
+    }
+  }
+
+  function trackSearchEvent(query: string, resultsCount: number) {
+    const sanitizedQuery = query.trim();
+    if (!sanitizedQuery || sanitizedQuery === lastTrackedQuery) return;
+
+    lastTrackedQuery = sanitizedQuery;
+
+    if (typeof window === 'undefined') return;
+
+    const gtag = (window as typeof window & { gtag?: (...args: any[]) => void })
+      .gtag;
+    if (typeof gtag === 'function') {
+      gtag('event', 'search', {
+        search_term: sanitizedQuery,
+        results_count: resultsCount,
+        source: 'buscar_page',
+      });
     }
   }
 
@@ -223,6 +243,7 @@
       });
 
       displaySearchResults(results, query);
+      trackSearchEvent(query, results.length);
     }
 
     function initializeSearch() {
