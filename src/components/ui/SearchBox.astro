@@ -106,6 +106,7 @@
 
     if (typeof window === 'undefined') return;
 
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
     const gtag = (window as typeof window & { gtag?: (...args: any[]) => void })
       .gtag;
     if (typeof gtag === 'function') {
