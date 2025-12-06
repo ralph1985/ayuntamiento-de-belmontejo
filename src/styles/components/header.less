@@ -12,7 +12,15 @@
     background-color: var(--background-main);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     position: fixed;
+    top: 0;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    will-change: transform;
     z-index: 10000;
+
+    &.cs-hidden {
+      transform: translateY(-100%);
+    }
 
     &:before {
       content: "";

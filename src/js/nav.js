@@ -14,10 +14,58 @@ document.addEventListener('astro:page-load', () => {
   const CSbody = document.querySelector('body');
   const CSnavbarMenu = document.getElementById('cs-navigation');
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileHeaderMediaQuery = globalThis.matchMedia(
+    '(max-width: 74.6875rem)'
+  );
+  const SCROLL_HIDE_THRESHOLD = 120;
+  let lastScrollY = globalThis.scrollY;
+  let lastVisibleScrollY = globalThis.scrollY;
+
+  const handleScrollDirection = () => {
+    if (!mobileHeaderMediaQuery.matches || !CSnavbarMenu) {
+      lastScrollY = globalThis.scrollY;
+      return;
+    }
+
+    if (CSnavbarMenu.classList.contains('cs-active')) {
+      CSnavbarMenu.classList.remove('cs-hidden');
+      lastScrollY = globalThis.scrollY;
+      lastVisibleScrollY = globalThis.scrollY;
+      return;
+    }
+
+    const currentScrollY = globalThis.scrollY;
+    const scrollingDown = currentScrollY > lastScrollY;
+    const scrollingUp = currentScrollY < lastScrollY;
+
+    if (
+      scrollingDown &&
+      currentScrollY - lastVisibleScrollY > SCROLL_HIDE_THRESHOLD
+    ) {
+      CSnavbarMenu.classList.add('cs-hidden');
+    } else if (scrollingUp) {
+      CSnavbarMenu.classList.remove('cs-hidden');
+      lastVisibleScrollY = currentScrollY;
+    }
+
+    lastScrollY = currentScrollY;
+  };
+
+  // Reset header visibility when resizing out of mobile
+  mobileHeaderMediaQuery.addEventListener('change', event => {
+    if (!event.matches && CSnavbarMenu) {
+      CSnavbarMenu.classList.remove('cs-hidden');
+    }
+  });
+
+  globalThis.addEventListener('scroll', handleScrollDirection, {
+    passive: true,
+  });
 
   function toggleMenu() {
     mobileMenuToggle.classList.toggle('cs-active');
     CSnavbarMenu.classList.toggle('cs-active');
+    CSnavbarMenu.classList.remove('cs-hidden');
     CSbody.classList.toggle('cs-open');
   }
 
