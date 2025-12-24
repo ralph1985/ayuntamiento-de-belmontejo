@@ -43,7 +43,7 @@ export default defineConfig({
         'https://ayuntamiento-de-belmontejo.vercel.app/sobre-el-pueblo/',
         'https://ayuntamiento-de-belmontejo.vercel.app/noticias/',
         'https://ayuntamiento-de-belmontejo.vercel.app/bandos/',
-        'https://ayuntamiento-de-belmontejo.vercel.app/proyectos/',
+        'https://ayuntamiento-de-belmontejo.vercel.app/galeria/',
       ],
       serialize(item) {
         // Configurar prioridades y frecuencias según el tipo de página
@@ -74,7 +74,7 @@ export default defineConfig({
         ) {
           item.changefreq = 'monthly';
           item.priority = 0.7;
-        } else if (item.url.includes('/proyectos/')) {
+        } else if (item.url.includes('/galeria/')) {
           item.changefreq = 'monthly';
           item.priority = 0.6;
         } else {
