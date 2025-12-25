@@ -29,3 +29,11 @@ The repo follows Conventional Commits (`feat:`, `fix:`, `test:`). Write present-
 ## Security & Configuration Notes
 
 Store secrets in `.env` (see `README.md` for required keys). Do not commit `.env` or Playwright artifacts containing credentials. Local scripts fall back to mock OAuth secrets, but production requires valid `GITHUB_CLIENT_ID`/`GITHUB_CLIENT_SECRET` variables on Vercel. Review CMS admin exposure before enabling `PUBLIC_ADMIN_MENU=true`.
+
+## Gestión de tareas y horas
+
+- Al empezar, identifica el proyecto y usa ese nombre en `project`.
+- Busca si ya existe una tarea "En curso" para ese trabajo; si existe, registra horas y notas ahí.
+- Si no existe, crea una nueva con `npm run task:add` en el monorepo (o edita a mano manteniendo `dd/mm/aaaa`, id incremental y mínimos: `status`, `startDate`, `hours`, `project`).
+- Registra siempre la actividad en `../../data/projects-tasks.json` del monorepo (estado, fechas, horas, notas, proyecto).
+- Proyecto de referencia para este repo: `Ayuntamiento de Belmontejo`.
