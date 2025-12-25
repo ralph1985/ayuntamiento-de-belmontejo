@@ -6,7 +6,7 @@ date: 2025-11-17T09:30:00.000Z
 category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1447648'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1447648'
-isFeatured: true
+isFeatured: false
 ---
 
 El próximo **martes, 18 de noviembre** el Ayuntamiento de Belmontejo permanecerá cerrado al público.
