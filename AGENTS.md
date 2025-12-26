@@ -17,6 +17,7 @@ The Astro site lives in `src/`. Place routed pages in `src/pages`, reusable UI i
 ## Coding Style & Naming Conventions
 
 Prefer TypeScript modules and Astro components. Keep files and exports in PascalCase for components (`MunicipalNoticeCard.astro`) and kebab-case for routes (`bandos.astro`). Prettier controls formatting—2-space indentation, trailing commas, semicolons. ESLint enforces `prefer-const`, bans `var`, flags unused variables (prefix intentional unused args with `_`). Accessibility rules from `eslint-plugin-jsx-a11y` must pass before review.
+When adding dependencies, pin versions exactly and avoid caret ranges (no `^`).
 
 ## Testing Guidelines
 
