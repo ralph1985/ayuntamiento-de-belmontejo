@@ -41,7 +41,7 @@
     "@sentry/astro": "10.30.0",
     "@types/simple-oauth2": "5.0.7",
     "@vercel/node": "2.15.10",
-    "astro": "5.16.0",
+    "astro": "5.16.6",
     "astro-decap-cms-oauth": "0.5.1",
     "astro-icon": "1.1.5",
     "autoprefixer": "10.4.22",
