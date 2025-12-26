@@ -40,7 +40,7 @@
     "@project-manager/pm-weather": "https://raw.githubusercontent.com/ralph1985/project-manager/main/artifacts/project-manager-pm-weather-0.2.0.tgz",
     "@sentry/astro": "10.30.0",
     "@types/simple-oauth2": "5.0.7",
-    "@vercel/node": "2.15.10",
+    "@vercel/node": "5.5.16",
     "astro": "5.16.0",
     "astro-decap-cms-oauth": "0.5.1",
     "astro-icon": "1.1.5",
