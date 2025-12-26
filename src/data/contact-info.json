@@ -32,6 +32,10 @@
       "locality": "Belmontejo",
       "region": "Cuenca",
       "postalCode": "16779",
+      "coordinates": {
+        "latitude": 39.82196387154136,
+        "longitude": -2.3477586732267373
+      },
       "mapsUrl": "https://maps.app.goo.gl/6uVfjtU9YSU8ubnAA",
       "isPrimary": true
     }

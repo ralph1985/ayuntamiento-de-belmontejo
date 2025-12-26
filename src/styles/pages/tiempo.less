@@ -1,0 +1,28 @@
+@media only screen and (min-width: 0em) {
+  #weather-page {
+    padding: var(--sectionPadding);
+    background: linear-gradient(
+      180deg,
+      var(--background-main) 0%,
+      var(--background-sections) 60%,
+      var(--background-main) 100%
+    );
+
+    .cs-container {
+      width: 100%;
+      max-width: 80rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  }
+}
+
+@media only screen and (min-width: 64em) {
+  #weather-page {
+    .cs-container {
+      gap: 2.5rem;
+    }
+  }
+}

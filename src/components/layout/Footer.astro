@@ -20,6 +20,7 @@ const version = packageJson.version;
 const primaryOffice = getPrimaryOffice();
 const primaryPhone = getPrimaryPhone();
 const primaryEmail = getPrimaryEmail();
+const weatherCoordinates = primaryOffice?.coordinates;
 const socialEntries = getActiveSocialEntries();
 const officeLocationLines = primaryOffice
   ? [
@@ -202,6 +203,24 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
                 </li>
               );
             })
+          }
+        </ul>
+        <ul>
+          <li>
+            <h2>El tiempo</h2>
+          </li>
+          {
+            weatherCoordinates ? (
+              <li class="weather-item weather-item--footer">
+                <pm-weather
+                  variant="compact"
+                  locale="es-ES"
+                  latitude={weatherCoordinates.latitude}
+                  longitude={weatherCoordinates.longitude}
+                  link-url="/tiempo"
+                />
+              </li>
+            ) : null
           }
         </ul>
       </div>

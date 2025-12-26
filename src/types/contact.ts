@@ -27,6 +27,10 @@ export interface OfficeLocation {
   locality: string;
   region?: string;
   postalCode?: string;
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+  };
   mapsUrl?: string;
   isPrimary?: boolean;
 }
