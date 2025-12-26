@@ -14,7 +14,6 @@ import CookieConsent from '@components/integrations/CookieConsent.astro';
 import FloatingCookieManager from '@components/integrations/FloatingCookieManager.astro';
 import '@styles/root.less';
 import '@styles/dark.less';
-import weatherComponentScript from '@js/pm-weather-loader.ts?url';
 
 // Define a type for images from the content collection
 type ContentImage = {
@@ -161,7 +160,9 @@ const organizationSchema = {
     <script src="@js/modalUtils.js"></script>
     <script src="@js/nav.js"></script>
     <script src="@js/cookies.js"></script>
-    <script type="module" src={weatherComponentScript}></script>
+    <script>
+      import '@project-manager/pm-weather';
+    </script>
 
     <!-- Google Analytics -->
     <GoogleAnalytics />
