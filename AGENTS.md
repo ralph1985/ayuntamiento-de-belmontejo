@@ -25,7 +25,7 @@ End-to-end specs live under `tests/e2e`. Tests should mirror navigation flows an
 
 ## Commit & Pull Request Guidelines
 
-The repo follows Conventional Commits (`feat:`, `fix:`, `test:`). Write present-tense summaries and scope prefixes when relevant (e.g., `feat(home): add hero banner`). For pull requests, include: purpose summary, linked Jira/GitHub issue, test evidence (`npm run lint`, `npm run test:e2e` output), and screenshots or snapshot diffs for UI work. Flag environment or CMS schema changes explicitly so reviewers can coordinate deployments.
+The repo follows Conventional Commits (`feat:`, `fix:`, `test:`). Write present-tense summaries and scope prefixes when relevant (e.g., `feat(home): add hero banner`). Commit messages must be in English. For pull requests, include: purpose summary, linked Jira/GitHub issue, test evidence (`npm run lint`, `npm run test:e2e` output), and screenshots or snapshot diffs for UI work. Flag environment or CMS schema changes explicitly so reviewers can coordinate deployments.
 
 ## Security & Configuration Notes
 
