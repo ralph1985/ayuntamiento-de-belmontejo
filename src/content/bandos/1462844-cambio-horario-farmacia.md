@@ -6,7 +6,7 @@ date: 2025-12-04T15:07:14.000Z
 category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1462844'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1462844'
-isFeatured: true
+isFeatured: false
 ---
 
 Cambio horario farmacia
