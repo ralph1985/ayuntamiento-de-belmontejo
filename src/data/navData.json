@@ -20,16 +20,16 @@
     "children": []
   },
   {
-    "key": "Proyectos",
-    "url": "/proyectos/",
+    "key": "Galería de fotos",
+    "url": "/galeria/",
     "children": [
       {
-        "key": "Proyecto 1",
-        "url": "/proyectos/proyecto-1/"
+        "key": "Álbum 1",
+        "url": "/galeria/album-1/"
       },
       {
-        "key": "Proyecto 2",
-        "url": "/proyectos/proyecto-2/"
+        "key": "Álbum 2",
+        "url": "/galeria/album-2/"
       }
     ]
   },
