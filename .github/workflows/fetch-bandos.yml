@@ -48,7 +48,7 @@ jobs:
             ## Actualizacion automatica de bandos
 
             - Script ejecutado: `pnpm run fetch-bandos`
-            - Formateo aplicado via `pnpm run format:write`
+            - Formateo aplicado solo a los bandos generados
             - Base: `main`
 
             _Si los cambios son correctos, aprueba y haz merge de esta PR._

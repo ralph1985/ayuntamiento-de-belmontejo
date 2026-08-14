@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* global AbortSignal */
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFile } from 'node:child_process';
@@ -14,7 +15,9 @@ export async function fetchBandos() {
 
   try {
     console.log('Fetching RSS from:', RSS_URL);
-    const response = await fetch(RSS_URL);
+    const response = await fetch(RSS_URL, {
+      signal: AbortSignal.timeout(30_000),
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -26,6 +29,9 @@ export async function fetchBandos() {
     const items = parseRSSItems(xmlText);
 
     console.log(`Found ${items.length} bandos`);
+    if (items.length === 0) {
+      throw new Error('The RSS feed did not contain any bando items');
+    }
 
     // Create content directory if it doesn't exist
     const contentDir = path.join(__dirname, '..', 'src', 'content', 'bandos');
@@ -33,29 +39,52 @@ export async function fetchBandos() {
       fs.mkdirSync(contentDir, { recursive: true });
     }
 
+    const result = {
+      created: 0,
+      updated: 0,
+      unchanged: 0,
+    };
+
     // Generate markdown files for each bando
     for (const item of items) {
       const filename = generateFilename(item.title, item.guid);
       const filePath = path.join(contentDir, `${filename}.md`);
+      const markdownContent = createBandoMarkdown(item);
+      const previousContent = fs.existsSync(filePath)
+        ? fs.readFileSync(filePath, 'utf8')
+        : undefined;
 
-      const frontmatter = generateFrontmatter(item);
-      const content = generateContent(item);
-
-      // Format with proper line endings (LF) and consistent spacing
-      const markdownContent = `---\n${frontmatter}\n---\n\n${content}\n`;
+      if (previousContent === markdownContent) {
+        result.unchanged += 1;
+        continue;
+      }
 
       fs.writeFileSync(filePath, markdownContent, 'utf8');
-      console.log(`Created: ${filename}.md`);
+      result[previousContent === undefined ? 'created' : 'updated'] += 1;
+      console.log(
+        `${previousContent === undefined ? 'Created' : 'Updated'}: ${filename}.md`
+      );
     }
 
-    // Normalize formatting after generating bandos
-    await runFormatter();
+    if (result.created > 0 || result.updated > 0) {
+      await runFormatter(contentDir);
+    }
 
-    console.log('RSS import completed successfully!');
+    console.log(
+      `RSS import completed successfully: ${result.created} created, ${result.updated} updated, ${result.unchanged} unchanged.`
+    );
+    return result;
   } catch (error) {
     console.error('Error fetching bandos:', error);
     process.exit(1);
   }
+}
+
+export function createBandoMarkdown(item) {
+  const frontmatter = generateFrontmatter(item);
+  const content = generateContent(item);
+
+  return `---\n${frontmatter}\n---\n\n${content}\n`;
 }
 
 export function parseRSSItems(xmlText) {
@@ -288,15 +317,15 @@ export function stripHtmlTags(value, replacement = '') {
   return result;
 }
 
-export async function runFormatter() {
+export async function runFormatter(contentDir) {
   const projectRoot = path.join(__dirname, '..');
 
-  console.log('Running formatter (pnpm run format:write)...');
+  console.log('Running formatter for generated bandos...');
 
   try {
     const { stdout, stderr } = await execFileAsync(
       'pnpm',
-      ['run', 'format:write'],
+      ['exec', 'prettier', '--write', path.relative(projectRoot, contentDir)],
       {
         cwd: projectRoot,
       }

@@ -133,9 +133,16 @@ El comando `pnpm run fetch-bandos` consume el RSS municipal (`https://www.bandom
 - Normaliza los nombres de archivo con slug e ID.
 - Limpia el contenido HTML/CDATA y lo transforma en Markdown legible.
 - Marca bandos recientes o con palabras clave como `isFeatured`.
-- Ejecuta Prettier para asegurar el formato consistente.
+- Evita reescribir archivos sin cambios y formatea solo los bandos generados.
 
-Ejecuta este comando antes de subir contenido nuevo para mantener la web sincronizada con el feed oficial.
+El flujo de GitHub Actions puede ejecutarse manualmente desde la pestaña Actions y abre o actualiza una PR revisable contra `main`. La sincronización periódica se realiza mediante `scripts/sync-bandos-cron.sh`: descarga el RSS, valida el contenido con unitarios y build y publica en `main` solo si hay cambios. Nunca instala dependencias ni continúa si el árbol de trabajo no está limpio. En el servidor autorizado, programa una ejecución diaria con cron, por ejemplo:
+
+```cron
+PATH=/home/rafa/.nvm/versions/node/v22.23.1/bin:/usr/local/bin:/usr/bin:/bin
+23 7 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/sync-bandos-cron.sh >> /tmp/ayuntamiento-belmontejo-bandos.log 2>&1
+```
+
+La hora se interpreta en la zona horaria del servidor. Para comprobar el proceso sin publicar cambios, usa `SYNC_BANDOS_DRY_RUN=1 scripts/sync-bandos-cron.sh`.
 
 ## Calidad y estilo del código
 

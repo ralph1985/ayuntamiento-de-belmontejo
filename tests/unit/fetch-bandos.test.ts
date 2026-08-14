@@ -1,5 +1,6 @@
 import {
   cleanHTML,
+  createBandoMarkdown,
   decodeHtmlEntities,
   escapeYaml,
   generateContent,
@@ -107,6 +108,23 @@ describe('generateFrontmatter', () => {
     expect(frontmatter).toContain("category: 'Anuncios'");
     expect(frontmatter).toContain("guid: 'https://example.com/?id=321'");
     expect(frontmatter).toContain('isFeatured: true');
+  });
+});
+
+describe('createBandoMarkdown', () => {
+  it('creates a complete Markdown document with a final newline', () => {
+    const markdown = createBandoMarkdown({
+      title: 'Aviso municipal',
+      description: '<p>Información actualizada</p>',
+      category: 'Info General',
+      pubDate: 'Tue, 01 Oct 2024 10:00:00 GMT',
+      guid: 'https://example.com/?id=123',
+      link: 'https://example.com/123',
+    });
+
+    expect(markdown).toContain("title: 'Aviso municipal'");
+    expect(markdown).toContain('---\n\nInformación actualizada\n');
+    expect(markdown.endsWith('\n')).toBe(true);
   });
 });
 
