@@ -1,7 +1,7 @@
 {
   "name": "ayuntamiento-de-belmontejo",
   "type": "module",
-  "version": "0.22.2",
+  "version": "0.22.3",
   "license": "MIT",
   "config": {
     "commitizen": {
@@ -35,19 +35,17 @@
     "version:suggest": "node scripts/suggest-version-bump.js"
   },
   "dependencies": {
-    "@astrojs/sitemap": "3.6.0",
-    "@astrojs/vercel": "8.2.11",
+    "@astrojs/sitemap": "3.7.3",
+    "@astrojs/vercel": "10.0.8",
     "@project-manager/pm-weather": "https://raw.githubusercontent.com/ralph1985/project-manager/main/artifacts/project-manager-pm-weather-0.2.0.tgz",
-    "@sentry/astro": "10.30.0",
+    "@sentry/astro": "10.70.0",
     "@types/simple-oauth2": "5.0.7",
-    "@vercel/node": "2.15.10",
-    "astro": "5.16.0",
-    "astro-decap-cms-oauth": "0.5.1",
-    "astro-icon": "1.1.5",
+    "astro": "6.4.8",
+    "astro-decap-cms-oauth": "0.5.2",
     "autoprefixer": "10.4.22",
     "cors": "2.8.5",
     "dotenv": "17.2.3",
-    "less": "4.4.1",
+    "less": "4.9.0",
     "simple-oauth2": "5.1.0"
   },
   "devDependencies": {
@@ -57,8 +55,8 @@
     "@types/cors": "2.8.19",
     "@typescript-eslint/eslint-plugin": "8.47.0",
     "@typescript-eslint/parser": "8.47.0",
-    "@vitest/coverage-v8": "4.0.7",
-    "commitizen": "4.3.1",
+    "@vitest/coverage-v8": "4.1.10",
+    "commitizen": "4.3.2",
     "cz-conventional-changelog": "3.0.1",
     "dotenv-cli": "11.0.0",
     "eslint": "9.38.0",
@@ -67,8 +65,8 @@
     "husky": "9.1.7",
     "prettier": "3.6.2",
     "prettier-plugin-astro": "0.14.1",
-    "sonarqube-scanner": "4.3.2",
-    "vitest": "4.0.7"
+    "sonarqube-scanner": "5.0.0",
+    "vitest": "4.1.10"
   },
   "overrides": {
     "esbuild": "0.25.12",

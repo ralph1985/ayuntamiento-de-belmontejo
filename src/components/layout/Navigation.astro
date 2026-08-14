@@ -1,6 +1,5 @@
 ---
 import navData from '@data/navData.json';
-import { Icon } from 'astro-icon/components';
 import {
   filterNavigationEntries,
   isActiveNavigationLink,
@@ -55,7 +54,9 @@ const isActiveLink = (url: string | undefined) =>
                 ]}
               >
                 {entry.key}
-                <Icon name="mdi--caret" class="cs-drop-icon" />
+                <span class="cs-drop-icon" aria-hidden="true">
+                  ▾
+                </span>
               </button>
             ) : (
               // If entry does not have children in navData.json, create an anchor

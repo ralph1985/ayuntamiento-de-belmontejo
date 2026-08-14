@@ -2,8 +2,7 @@ import 'dotenv/config';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import sentry from '@sentry/astro';
-import icon from 'astro-icon';
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel';
 import pkg from './package.json' assert { type: 'json' };
 
 import decapCmsOauth from 'astro-decap-cms-oauth';
@@ -25,7 +24,6 @@ export default defineConfig({
   },
   adapter: vercel(),
   integrations: [
-    icon(),
     sentry({
       enabled: {
         client: hasClientSentryDsn,
