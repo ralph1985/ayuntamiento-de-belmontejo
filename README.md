@@ -90,25 +90,21 @@ Si ya tenías el repositorio clonado antes de activar LFS, ejecuta igualmente `g
 
 ## Scripts Disponibles
 
-| Script                                 | Descripción                                                                                                              |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `pnpm run dev` / `pnpm run start`      | Inicia el servidor de desarrollo con recarga en caliente.                                                                |
-| `pnpm run build`                       | Genera la versión optimizada en `dist/`.                                                                                 |
-| `pnpm run preview`                     | Alias de `astro dev`. Para revisar la build estática ejecuta `pnpm run build && pnpm exec astro preview`.                |
-| `pnpm run fetch-bandos`                | Descarga el feed RSS municipal y crea/actualiza Markdown en `src/content/bandos/`, formateando con Prettier al terminar. |
-| `pnpm run lint`                        | Ejecuta ESLint con las reglas de Astro, TypeScript y accesibilidad.                                                      |
-| `pnpm run lint:fix`                    | Igual que `lint` pero aplica autocorrecciones posibles.                                                                  |
-| `pnpm run format`                      | Verifica el formato con Prettier.                                                                                        |
-| `pnpm run format:write`                | Aplica el formato de Prettier sobre todo el proyecto.                                                                    |
-| `pnpm run test:unit`                   | Lanza las pruebas unitarias de Vitest.                                                                                   |
-| `pnpm run test:unit:coverage`          | Ejecuta Vitest y genera cobertura en `coverage/unit/`.                                                                   |
-| `pnpm run test:e2e`                    | Construye el sitio y ejecuta Playwright mediante `scripts/run-e2e.js`.                                                   |
-| `pnpm run test:e2e:visual`             | Ejecuta todos los escenarios visuales (páginas y buscador, desktop y mobile).                                            |
-| `pnpm run test:e2e:visual:update`      | Ejecuta todos los escenarios visuales actualizando sus snapshots.                                                        |
-| `pnpm run test:e2e:visual:last`        | Repite únicamente los escenarios visuales (páginas/buscador) que fallaron en la última ejecución.                        |
-| `pnpm run test:e2e:visual:last:update` | Repite los escenarios visuales fallidos y actualiza sus snapshots.                                                       |
-| `pnpm run test:e2e:navigation`         | Suite ligera centrada en flujos de navegación.                                                                           |
-| `pnpm run sonar:scan`                  | Ejecuta el análisis de SonarQube/SonarCloud empleando `sonar-project.properties` y las variables definidas en `.env`.    |
+| Script                            | Descripción                                                                                                              |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm run dev` / `pnpm run start` | Inicia el servidor de desarrollo con recarga en caliente.                                                                |
+| `pnpm run build`                  | Genera la versión optimizada en `dist/`.                                                                                 |
+| `pnpm run preview`                | Alias de `astro dev`. Para revisar la build estática ejecuta `pnpm run build && pnpm exec astro preview`.                |
+| `pnpm run fetch-bandos`           | Descarga el feed RSS municipal y crea/actualiza Markdown en `src/content/bandos/`, formateando con Prettier al terminar. |
+| `pnpm run lint`                   | Ejecuta ESLint con las reglas de Astro, TypeScript y accesibilidad.                                                      |
+| `pnpm run lint:fix`               | Igual que `lint` pero aplica autocorrecciones posibles.                                                                  |
+| `pnpm run format`                 | Verifica el formato con Prettier.                                                                                        |
+| `pnpm run format:write`           | Aplica el formato de Prettier sobre todo el proyecto.                                                                    |
+| `pnpm run test:unit`              | Lanza las pruebas unitarias de Vitest.                                                                                   |
+| `pnpm run test:unit:coverage`     | Ejecuta Vitest y genera cobertura en `coverage/unit/`.                                                                   |
+| `pnpm run test:e2e`               | Construye el sitio y ejecuta Playwright mediante `scripts/run-e2e.js`.                                                   |
+| `pnpm run test:e2e:navigation`    | Suite ligera centrada en flujos de navegación.                                                                           |
+| `pnpm run sonar:scan`             | Ejecuta el análisis de SonarQube/SonarCloud empleando `sonar-project.properties` y las variables definidas en `.env`.    |
 
 ## Pruebas
 
@@ -121,8 +117,8 @@ Si ya tenías el repositorio clonado antes de activar LFS, ejecuta igualmente `g
 
 - `scripts/run-e2e.js` se asegura de construir el sitio antes de lanzar Playwright y aporta valores ficticios para `OAUTH_GITHUB_CLIENT_ID` y `OAUTH_GITHUB_CLIENT_SECRET` si no están definidos.
 - Todas las banderas y argumentos tras `pnpm run test:e2e -- ...` se transfieren a `pnpm exec playwright test` (por ejemplo, `--update-snapshots`, `--project=chromium`).
-- Puedes limitar la ejecución a subconjuntos definidos en `scripts/e2e-groups.js` con `pnpm run test:e2e -- --group <nombre>` (por ejemplo, `visual:all`, `flows:navigation`).
-- Los snapshots visuales viven en `tests/e2e/__screenshots__/`. Actualízalos solo cuando la diferencia sea intencionada (`pnpm run test:e2e -- --update-snapshots` o los atajos `test:e2e:visual:*`).
+- Puedes limitar la ejecución a subconjuntos definidos en `scripts/e2e-groups.js` con `pnpm run test:e2e -- --group <nombre>` (por ejemplo, `flows:navigation`).
+- Las specs y snapshots visuales se conservan en `tests/e2e/specs/visual/` y `tests/e2e/__screenshots__/`, pero están desactivados hasta que se revisen y regeneren sus bases de referencia.
 - El servidor que utiliza Playwright se levanta con `pnpm run preview -- --host 127.0.0.1 --port 4173`.
 
 ### Artefactos generados

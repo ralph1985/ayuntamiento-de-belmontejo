@@ -12,7 +12,7 @@ The Astro site lives in `src/`. Place routed pages in `src/pages`, reusable UI i
 - `pnpm run fetch-bandos`: Pull the latest bandos before committing related content.
 - `pnpm run lint` / `pnpm run lint:fix`: Run ESLint (Astro + TypeScript rules) and optionally autofix violations.
 - `pnpm run format` / `pnpm run format:write`: Verify or apply Prettier formatting.
-- `pnpm run test:e2e`: Build the site and execute Playwright visual regression tests (run `pnpm exec playwright install` once per machine).
+- `pnpm run test:e2e`: Build the site and execute the active Playwright functional flows (run `pnpm exec playwright install` once per machine).
 
 ## Coding Style & Naming Conventions
 
@@ -21,7 +21,7 @@ When adding dependencies, pin versions exactly and avoid caret ranges (no `^`).
 
 ## Testing Guidelines
 
-End-to-end specs live under `tests/e2e`. Tests should mirror navigation flows and verify key UI states via screenshots. Update snapshots only when a visual change is intentional: `pnpm run test:e2e -- --update-snapshots`. Commit updated artifacts in `tests/e2e/__screenshots__/` together with the code change. Target full green Playwright runs before opening a PR.
+End-to-end specs live under `tests/e2e`. The active suite covers functional flows; visual regression specs and snapshots are retained but ignored until they are intentionally re-enabled with refreshed baselines. Target full green Playwright runs before opening a PR.
 
 ## Commit & Pull Request Guidelines
 

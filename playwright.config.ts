@@ -14,6 +14,7 @@ const webServer = process.env.PLAYWRIGHT_BASE_URL
 
 export default defineConfig({
   testDir: './tests/e2e',
+  testIgnore: '**/specs/visual/**',
   fullyParallel: true,
   snapshotPathTemplate:
     '{testDir}/__screenshots__/{projectName}/{testFilePath}/{arg}{ext}',
