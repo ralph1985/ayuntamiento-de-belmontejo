@@ -11,16 +11,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.25.0
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Wait for production deployment
         run: |
@@ -48,4 +54,4 @@ jobs:
       - name: Run critical E2E tests against production
         env:
           PLAYWRIGHT_BASE_URL: https://ayuntamiento-de-belmontejo.vercel.app
-        run: npx playwright test tests/e2e/specs/flows --config=playwright.config.ts
+        run: pnpm exec playwright test tests/e2e/specs/flows --config=playwright.config.ts

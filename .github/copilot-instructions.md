@@ -34,15 +34,15 @@ This is an Astro-based municipal website for Belmontejo town hall, featuring aut
 ### Content Development
 
 ```bash
-npm run fetch-bandos  # Sync official announcements from RSS
-npm run dev           # Local development with HMR
+pnpm run fetch-bandos  # Sync official announcements from RSS
+pnpm run dev           # Local development with HMR
 ```
 
 ### Code Quality
 
 ```bash
-npm run lint          # ESLint for .js/.ts/.astro files
-npm run format:write  # Prettier formatting
+pnpm run lint          # ESLint for .js/.ts/.astro files
+pnpm run format:write  # Prettier formatting
 ```
 
 ### Deployment

@@ -15,16 +15,22 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.25.0
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '20'
+          cache: pnpm
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Run unit tests with coverage
-        run: npm run test:unit:coverage
+        run: pnpm run test:unit:coverage
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@49e6cd3b187936a73b8280d59ffd9da69df63ec9

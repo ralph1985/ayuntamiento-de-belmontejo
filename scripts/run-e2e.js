@@ -2,8 +2,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { e2eGroups } from './e2e-groups.js';
 
-const npmCommand = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-const npxCommand = process.platform === 'win32' ? 'npx.cmd' : 'npx';
+const pnpmCommand = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
 const defaultFixtures = [
   { envVar: 'BANDOS_CONTENT_BASE', path: 'tests/fixtures/bandos' },
   { envVar: 'NOTICIAS_CONTENT_BASE', path: 'tests/fixtures/noticias' },
@@ -131,7 +130,7 @@ for (const { envVar, path } of defaultFixtures) {
   }
 }
 
-const buildResult = spawnSync(npmCommand, ['run', 'build'], {
+const buildResult = spawnSync(pnpmCommand, ['run', 'build'], {
   env,
   stdio: 'inherit',
 });
@@ -140,12 +139,12 @@ if (buildResult.status !== 0) {
   process.exit(buildResult.status ?? 1);
 }
 
-const playwrightArgs = ['playwright', 'test', ...forwardedArgs];
+const playwrightArgs = ['exec', 'playwright', 'test', ...forwardedArgs];
 if (specArgs.length > 0) {
   playwrightArgs.push('--', ...specArgs);
 }
 
-const testResult = spawnSync(npxCommand, playwrightArgs, {
+const testResult = spawnSync(pnpmCommand, playwrightArgs, {
   env,
   stdio: 'inherit',
 });

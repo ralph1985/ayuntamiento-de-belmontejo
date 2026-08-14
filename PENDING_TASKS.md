@@ -48,7 +48,8 @@
 - **Alta** Tests unitarios: ampliar la cobertura de componentes críticos (cards de bandos, layout, formularios) con Vitest y testing-library para asegurar estados de carga, errores y accesibilidad básica.
 - **Alta** Tests de integración: definir una suite que cubra flujos completos (p. ej., creación/edición de bandos vía CMS mock + render en frontend) y servicios como `fetch-bandos.js`, de modo que validemos la integración entre scripts, contenido y UI más allá de los e2e visuales.
 - **Alta** Revisar tipados TypeScript: auditar componentes, scripts y configuración para asegurar tipados estrictos (comprobar/activar `strict` en `tsconfig`, añadir tipos en layouts, scripts y endpoints y documentar las convenciones en el repo).
-- **Media** Dependencias npm: crear una rutina trimestral para revisar qué paquetes pueden actualizarse (todas las versiones están fijadas). Documentar en `PENDING_TASKS.md` o un changelog interno qué versión tenía cada paquete y cuál se sube, y apoyarse en Codex/Dependabot para automatizar PRs.
+- **Media** Dependencias pnpm: crear una rutina trimestral para revisar qué paquetes pueden actualizarse (todas las versiones están fijadas). Documentar en `PENDING_TASKS.md` o un changelog interno qué versión tenía cada paquete y cuál se sube, y apoyarse en Codex/Dependabot para automatizar PRs.
+- **Alta** Actualización de seguridad retenida: subir `astro` a `>=7.1.0` y `@astrojs/vercel` a `>=11.0.3` cuando las versiones hayan superado la cuarentena de siete días de pnpm; no añadir excepciones a `minimumReleaseAge`.
 
 ## Bug detectado
 

@@ -291,11 +291,11 @@ export function stripHtmlTags(value, replacement = '') {
 export async function runFormatter() {
   const projectRoot = path.join(__dirname, '..');
 
-  console.log('Running formatter (npm run format:write)...');
+  console.log('Running formatter (pnpm run format:write)...');
 
   try {
     const { stdout, stderr } = await execFileAsync(
-      'npm',
+      'pnpm',
       ['run', 'format:write'],
       {
         cwd: projectRoot,

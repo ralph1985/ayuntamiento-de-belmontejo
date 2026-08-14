@@ -38,8 +38,8 @@ El proyecto sigue la convención de Astro y añade algunos directorios auxiliare
 ### Requisitos
 
 - Node.js 22 (ver `.nvmrc`).
-- npm (se recomienda la versión incluida con Node 22).
-- Playwright instalado localmente (`npx playwright install`) para ejecutar las pruebas end-to-end.
+- pnpm 10.25.0, habilitado con `corepack enable`.
+- Playwright instalado localmente (`pnpm exec playwright install`) para ejecutar las pruebas end-to-end.
 
 ### Pasos iniciales
 
@@ -52,23 +52,23 @@ El proyecto sigue la convención de Astro y añade algunos directorios auxiliare
 2. **Instalar dependencias**
 
    ```bash
-   npm install
+   pnpm install --frozen-lockfile
    ```
 
-   Este paso habilita los hooks de Husky definidos en `.husky/`.
+   La instalación no ejecuta scripts de dependencias: esta protección está activa en `.npmrc`.
 
 3. **Ejecutar el servidor de desarrollo**
 
    ```bash
-   npm run dev
+   pnpm run dev
    # o
-   npm run start
+   pnpm run start
    ```
 
 4. **Generar la build de producción**
 
    ```bash
-   npm run build
+   pnpm run build
    ```
 
 ### Git LFS para capturas de Playwright
@@ -90,40 +90,40 @@ Si ya tenías el repositorio clonado antes de activar LFS, ejecuta igualmente `g
 
 ## Scripts Disponibles
 
-| Script                                | Descripción                                                                                                              |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `npm run dev` / `npm run start`       | Inicia el servidor de desarrollo con recarga en caliente.                                                                |
-| `npm run build`                       | Genera la versión optimizada en `dist/`.                                                                                 |
-| `npm run preview`                     | Alias de `astro dev`. Para revisar la build estática ejecuta `npm run build && npx astro preview`.                       |
-| `npm run fetch-bandos`                | Descarga el feed RSS municipal y crea/actualiza Markdown en `src/content/bandos/`, formateando con Prettier al terminar. |
-| `npm run lint`                        | Ejecuta ESLint con las reglas de Astro, TypeScript y accesibilidad.                                                      |
-| `npm run lint:fix`                    | Igual que `lint` pero aplica autocorrecciones posibles.                                                                  |
-| `npm run format`                      | Verifica el formato con Prettier.                                                                                        |
-| `npm run format:write`                | Aplica el formato de Prettier sobre todo el proyecto.                                                                    |
-| `npm run test:unit`                   | Lanza las pruebas unitarias de Vitest.                                                                                   |
-| `npm run test:unit:coverage`          | Ejecuta Vitest y genera cobertura en `coverage/unit/`.                                                                   |
-| `npm run test:e2e`                    | Construye el sitio y ejecuta Playwright mediante `scripts/run-e2e.js`.                                                   |
-| `npm run test:e2e:visual`             | Ejecuta todos los escenarios visuales (páginas y buscador, desktop y mobile).                                            |
-| `npm run test:e2e:visual:update`      | Ejecuta todos los escenarios visuales actualizando sus snapshots.                                                        |
-| `npm run test:e2e:visual:last`        | Repite únicamente los escenarios visuales (páginas/buscador) que fallaron en la última ejecución.                        |
-| `npm run test:e2e:visual:last:update` | Repite los escenarios visuales fallidos y actualiza sus snapshots.                                                       |
-| `npm run test:e2e:navigation`         | Suite ligera centrada en flujos de navegación.                                                                           |
-| `npm run sonar:scan`                  | Ejecuta el análisis de SonarQube/SonarCloud empleando `sonar-project.properties` y las variables definidas en `.env`.    |
+| Script                                 | Descripción                                                                                                              |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm run dev` / `pnpm run start`      | Inicia el servidor de desarrollo con recarga en caliente.                                                                |
+| `pnpm run build`                       | Genera la versión optimizada en `dist/`.                                                                                 |
+| `pnpm run preview`                     | Alias de `astro dev`. Para revisar la build estática ejecuta `pnpm run build && pnpm exec astro preview`.                |
+| `pnpm run fetch-bandos`                | Descarga el feed RSS municipal y crea/actualiza Markdown en `src/content/bandos/`, formateando con Prettier al terminar. |
+| `pnpm run lint`                        | Ejecuta ESLint con las reglas de Astro, TypeScript y accesibilidad.                                                      |
+| `pnpm run lint:fix`                    | Igual que `lint` pero aplica autocorrecciones posibles.                                                                  |
+| `pnpm run format`                      | Verifica el formato con Prettier.                                                                                        |
+| `pnpm run format:write`                | Aplica el formato de Prettier sobre todo el proyecto.                                                                    |
+| `pnpm run test:unit`                   | Lanza las pruebas unitarias de Vitest.                                                                                   |
+| `pnpm run test:unit:coverage`          | Ejecuta Vitest y genera cobertura en `coverage/unit/`.                                                                   |
+| `pnpm run test:e2e`                    | Construye el sitio y ejecuta Playwright mediante `scripts/run-e2e.js`.                                                   |
+| `pnpm run test:e2e:visual`             | Ejecuta todos los escenarios visuales (páginas y buscador, desktop y mobile).                                            |
+| `pnpm run test:e2e:visual:update`      | Ejecuta todos los escenarios visuales actualizando sus snapshots.                                                        |
+| `pnpm run test:e2e:visual:last`        | Repite únicamente los escenarios visuales (páginas/buscador) que fallaron en la última ejecución.                        |
+| `pnpm run test:e2e:visual:last:update` | Repite los escenarios visuales fallidos y actualiza sus snapshots.                                                       |
+| `pnpm run test:e2e:navigation`         | Suite ligera centrada en flujos de navegación.                                                                           |
+| `pnpm run sonar:scan`                  | Ejecuta el análisis de SonarQube/SonarCloud empleando `sonar-project.properties` y las variables definidas en `.env`.    |
 
 ## Pruebas
 
 ### Unitarias (Vitest)
 
-- Ejecuta `npm run test:unit` para validar los helpers de la interfaz.
-- `npm run test:unit:coverage` genera métricas en `coverage/unit/` y en `coverage/unit/lcov.info` para Sonar.
+- Ejecuta `pnpm run test:unit` para validar los helpers de la interfaz.
+- `pnpm run test:unit:coverage` genera métricas en `coverage/unit/` y en `coverage/unit/lcov.info` para Sonar.
 
 ### End-to-End (Playwright)
 
 - `scripts/run-e2e.js` se asegura de construir el sitio antes de lanzar Playwright y aporta valores ficticios para `OAUTH_GITHUB_CLIENT_ID` y `OAUTH_GITHUB_CLIENT_SECRET` si no están definidos.
-- Todas las banderas y argumentos tras `npm run test:e2e -- ...` se transfieren a `npx playwright test` (por ejemplo, `--update-snapshots`, `--project=chromium`).
-- Puedes limitar la ejecución a subconjuntos definidos en `scripts/e2e-groups.js` con `npm run test:e2e -- --group <nombre>` (por ejemplo, `visual:all`, `flows:navigation`).
-- Los snapshots visuales viven en `tests/e2e/__screenshots__/`. Actualízalos solo cuando la diferencia sea intencionada (`npm run test:e2e -- --update-snapshots` o los atajos `test:e2e:visual:*`).
-- El servidor que utiliza Playwright se levanta con `npm run preview -- --host 127.0.0.1 --port 4173`.
+- Todas las banderas y argumentos tras `pnpm run test:e2e -- ...` se transfieren a `pnpm exec playwright test` (por ejemplo, `--update-snapshots`, `--project=chromium`).
+- Puedes limitar la ejecución a subconjuntos definidos en `scripts/e2e-groups.js` con `pnpm run test:e2e -- --group <nombre>` (por ejemplo, `visual:all`, `flows:navigation`).
+- Los snapshots visuales viven en `tests/e2e/__screenshots__/`. Actualízalos solo cuando la diferencia sea intencionada (`pnpm run test:e2e -- --update-snapshots` o los atajos `test:e2e:visual:*`).
+- El servidor que utiliza Playwright se levanta con `pnpm run preview -- --host 127.0.0.1 --port 4173`.
 
 ### Artefactos generados
 
@@ -132,7 +132,7 @@ Si ya tenías el repositorio clonado antes de activar LFS, ejecuta igualmente `g
 
 ## Automatización de bandos
 
-El comando `npm run fetch-bandos` consume el RSS municipal (`https://www.bandomovil.com/rss.php?codigo=belmontejo`) y genera entradas en `src/content/bandos/`. El script:
+El comando `pnpm run fetch-bandos` consume el RSS municipal (`https://www.bandomovil.com/rss.php?codigo=belmontejo`) y genera entradas en `src/content/bandos/`. El script:
 
 - Normaliza los nombres de archivo con slug e ID.
 - Limpia el contenido HTML/CDATA y lo transforma en Markdown legible.
@@ -143,15 +143,21 @@ Ejecuta este comando antes de subir contenido nuevo para mantener la web sincron
 
 ## Calidad y estilo del código
 
-- `npm run lint`, `npm run lint:fix`, `npm run format` y `npm run format:write` ayudan a asegurar el estilo (ESLint + Prettier).
-- El hook `pre-push` de Husky ejecuta automáticamente `lint`, `format`, `test:unit` y `test:e2e`. Si alguno falla, el push se cancela; corrige los problemas y vuelve a intentarlo.
+- `pnpm run lint`, `pnpm run lint:fix`, `pnpm run format` y `pnpm run format:write` ayudan a asegurar el estilo (ESLint + Prettier).
+- No se instalan ni ejecutan hooks o scripts de ciclo de vida automáticamente. Ejecuta las comprobaciones de forma explícita antes de publicar cambios.
+
+## Seguridad de dependencias
+
+- `.npmrc` desactiva los scripts de ciclo de vida durante `pnpm install`, incluidos `preinstall`, `install`, `postinstall` y `prepare`.
+- `pnpm-workspace.yaml` impone una edad mínima de publicación de 10.080 minutos (7 días), sin excepciones: una versión recién publicada no puede instalarse.
+- Usa siempre `pnpm install --frozen-lockfile` en entornos reproducibles. Cualquier dependencia nueva requiere revisión explícita y una versión exacta.
 
 ## Análisis estático
 
 Para ejecutar SonarQube/SonarCloud en local utiliza:
 
 ```bash
-npm run sonar:scan
+pnpm run sonar:scan
 ```
 
 Asegúrate de que el archivo `sonar-project.properties` contiene los identificadores correctos y de definir `SONAR_TOKEN` (u otras credenciales requeridas) en tu `.env`.

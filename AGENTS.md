@@ -6,13 +6,13 @@ The Astro site lives in `src/`. Place routed pages in `src/pages`, reusable UI i
 
 ## Build, Test, and Development Commands
 
-- `npm run dev` / `npm run start`: Launch the Astro dev server with hot reload.
-- `npm run build`: Produce the optimized static build used by Vercel.
-- `npm run preview`: Serve the last build locally for pre-deploy smoke checks.
-- `npm run fetch-bandos`: Pull the latest bandos before committing related content.
-- `npm run lint` / `npm run lint:fix`: Run ESLint (Astro + TypeScript rules) and optionally autofix violations.
-- `npm run format` / `npm run format:write`: Verify or apply Prettier formatting.
-- `npm run test:e2e`: Build the site and execute Playwright visual regression tests (run `npx playwright install` once per machine).
+- `pnpm run dev` / `pnpm run start`: Launch the Astro dev server with hot reload.
+- `pnpm run build`: Produce the optimized static build used by Vercel.
+- `pnpm run preview`: Serve the last build locally for pre-deploy smoke checks.
+- `pnpm run fetch-bandos`: Pull the latest bandos before committing related content.
+- `pnpm run lint` / `pnpm run lint:fix`: Run ESLint (Astro + TypeScript rules) and optionally autofix violations.
+- `pnpm run format` / `pnpm run format:write`: Verify or apply Prettier formatting.
+- `pnpm run test:e2e`: Build the site and execute Playwright visual regression tests (run `pnpm exec playwright install` once per machine).
 
 ## Coding Style & Naming Conventions
 
@@ -21,11 +21,11 @@ When adding dependencies, pin versions exactly and avoid caret ranges (no `^`).
 
 ## Testing Guidelines
 
-End-to-end specs live under `tests/e2e`. Tests should mirror navigation flows and verify key UI states via screenshots. Update snapshots only when a visual change is intentional: `npm run test:e2e -- --update-snapshots`. Commit updated artifacts in `tests/e2e/__screenshots__/` together with the code change. Target full green Playwright runs before opening a PR.
+End-to-end specs live under `tests/e2e`. Tests should mirror navigation flows and verify key UI states via screenshots. Update snapshots only when a visual change is intentional: `pnpm run test:e2e -- --update-snapshots`. Commit updated artifacts in `tests/e2e/__screenshots__/` together with the code change. Target full green Playwright runs before opening a PR.
 
 ## Commit & Pull Request Guidelines
 
-The repo follows Conventional Commits (`feat:`, `fix:`, `test:`). Write present-tense summaries and scope prefixes when relevant (e.g., `feat(home): add hero banner`). Commit messages must be in English. For pull requests, include: purpose summary, linked Jira/GitHub issue, test evidence (`npm run lint`, `npm run test:e2e` output), and screenshots or snapshot diffs for UI work. Flag environment or CMS schema changes explicitly so reviewers can coordinate deployments.
+The repo follows Conventional Commits (`feat:`, `fix:`, `test:`). Write present-tense summaries and scope prefixes when relevant (e.g., `feat(home): add hero banner`). Commit messages must be in English. For pull requests, include: purpose summary, linked Jira/GitHub issue, test evidence (`pnpm run lint`, `pnpm run test:e2e` output), and screenshots or snapshot diffs for UI work. Flag environment or CMS schema changes explicitly so reviewers can coordinate deployments.
 
 ## Security & Configuration Notes
 
