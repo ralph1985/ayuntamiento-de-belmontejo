@@ -6,7 +6,7 @@ date: 2025-12-03T17:51:44.000Z
 category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1462015'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1462015'
-isFeatured: true
+isFeatured: false
 ---
 
 LA TRABAJADORA SOCIAL INFORMA:
