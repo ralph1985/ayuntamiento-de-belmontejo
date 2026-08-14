@@ -17,6 +17,7 @@ The Astro site lives in `src/`. Place routed pages in `src/pages`, reusable UI i
 ## Coding Style & Naming Conventions
 
 Prefer TypeScript modules and Astro components. Keep files and exports in PascalCase for components (`MunicipalNoticeCard.astro`) and kebab-case for routes (`bandos.astro`). Prettier controls formatting—2-space indentation, trailing commas, semicolons. ESLint enforces `prefer-const`, bans `var`, flags unused variables (prefix intentional unused args with `_`). Accessibility rules from `eslint-plugin-jsx-a11y` must pass before review.
+When adding dependencies, pin versions exactly and avoid caret ranges (no `^`).
 
 ## Testing Guidelines
 
@@ -24,7 +25,7 @@ End-to-end specs live under `tests/e2e`. Tests should mirror navigation flows an
 
 ## Commit & Pull Request Guidelines
 
-The repo follows Conventional Commits (`feat:`, `fix:`, `test:`). Write present-tense summaries and scope prefixes when relevant (e.g., `feat(home): add hero banner`). For pull requests, include: purpose summary, linked Jira/GitHub issue, test evidence (`npm run lint`, `npm run test:e2e` output), and screenshots or snapshot diffs for UI work. Flag environment or CMS schema changes explicitly so reviewers can coordinate deployments.
+The repo follows Conventional Commits (`feat:`, `fix:`, `test:`). Write present-tense summaries and scope prefixes when relevant (e.g., `feat(home): add hero banner`). Commit messages must be in English. For pull requests, include: purpose summary, linked Jira/GitHub issue, test evidence (`npm run lint`, `npm run test:e2e` output), and screenshots or snapshot diffs for UI work. Flag environment or CMS schema changes explicitly so reviewers can coordinate deployments.
 
 ## Security & Configuration Notes
 
@@ -32,8 +33,9 @@ Store secrets in `.env` (see `README.md` for required keys). Do not commit `.env
 
 ## Gestión de tareas y horas
 
-- Al empezar, identifica el proyecto y usa ese nombre en `project`.
-- Busca si ya existe una tarea "En curso" para ese trabajo; si existe, registra horas y notas ahí.
-- Si no existe, crea una nueva con `npm run task:add` en el monorepo (o edita a mano manteniendo `dd/mm/aaaa`, id incremental y mínimos: `status`, `startDate`, `hours`, `project`).
-- Registra siempre la actividad en `../../data/projects-tasks.json` del monorepo (estado, fechas, horas, notas, proyecto).
+- Al empezar, identifica el `projectId` en `../../dashboard/data/projects.json`.
+- Busca si ya existe una tarea "En curso" en `../../dashboard/data/projects-tasks.json` para ese `projectId`.
+- Si existe, registra el tiempo en `../../dashboard/data/task-entries.json` con `taskId`, `date` (`dd/mm/aaaa`), `hours` y `note`; añade siempre una nota en `../../dashboard/data/task-notes.json`.
+- Si no existe, crea una nueva tarea (recomendado: `node ../../dashboard/scripts/add-task.js` desde el monorepo) o edita a mano en `projects-tasks.json` con `id` incremental, `title`, `projectId`, `phase`, `status`, `ownerId`, `startDate`, `endDate`, y luego añade la entrada de horas en `task-entries.json`.
+- El `ownerId` debe existir en `../../dashboard/data/people.json`.
 - Proyecto de referencia para este repo: `Ayuntamiento de Belmontejo`.
