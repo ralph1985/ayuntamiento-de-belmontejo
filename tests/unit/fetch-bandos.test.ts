@@ -8,6 +8,7 @@ import {
   generateFrontmatter,
   parseRSSItems,
 } from '../../scripts/fetch-bandos.js';
+import { buildNotificationText } from '../../scripts/notify-bando-sync.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('parseRSSItems', () => {
@@ -155,5 +156,21 @@ describe('escapeYaml', () => {
     expect(escaped).toBe(
       String.raw`Texto con ''comillas'' \\ y saltos\nnuevos`
     );
+  });
+});
+
+describe('buildNotificationText', () => {
+  it('lists the published bando files and the commit', () => {
+    const text = buildNotificationText({
+      commit: 'abc123',
+      files: [
+        'src/content/bandos/1-primer-aviso.md',
+        'src/content/bandos/2-segundo-aviso.md',
+      ],
+    });
+
+    expect(text).toContain('Se han publicado 2 bandos nuevos');
+    expect(text).toContain('Commit: abc123');
+    expect(text).toContain('- src/content/bandos/1-primer-aviso.md');
   });
 });

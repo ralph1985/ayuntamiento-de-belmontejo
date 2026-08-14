@@ -135,7 +135,7 @@ El comando `pnpm run fetch-bandos` consume el RSS municipal (`https://www.bandom
 - Marca bandos recientes o con palabras clave como `isFeatured`.
 - Evita reescribir archivos sin cambios y formatea solo los bandos generados.
 
-El flujo de GitHub Actions puede ejecutarse manualmente desde la pestaña Actions y abre o actualiza una PR revisable contra `main`. La sincronización periódica se realiza mediante `scripts/sync-bandos-cron.sh`: descarga el RSS, valida el contenido con unitarios y build y publica en `main` solo si hay cambios. Nunca instala dependencias ni continúa si el árbol de trabajo no está limpio. En el servidor autorizado, programa una ejecución diaria con cron, por ejemplo:
+El flujo de GitHub Actions puede ejecutarse manualmente desde la pestaña Actions y abre o actualiza una PR revisable contra `main`. La sincronización periódica se realiza mediante `scripts/sync-bandos-cron.sh`: descarga el RSS, valida el contenido con unitarios y build y publica en `main` solo si hay cambios. Nunca instala dependencias ni continúa si el árbol de trabajo no está limpio. Tras un `push` correcto, envía un aviso SMTP con los archivos publicados a `BANDOS_NOTIFY_TO`. Configura `BANDOS_SMTP_HOST`, `BANDOS_SMTP_PORT`, `BANDOS_SMTP_SECURE`, `BANDOS_SMTP_USER`, `BANDOS_SMTP_PASSWORD`, `BANDOS_NOTIFY_FROM` y `BANDOS_NOTIFY_TO` en el archivo local `.env`; no se versionan credenciales. En el servidor autorizado, programa una ejecución diaria con cron, por ejemplo:
 
 ```cron
 PATH=/home/rafa/.nvm/versions/node/v22.23.1/bin:/usr/local/bin:/usr/bin:/bin

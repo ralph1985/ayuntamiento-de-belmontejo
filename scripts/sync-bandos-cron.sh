@@ -5,9 +5,10 @@ set -Eeuo pipefail
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 LOCK_FILE="${TMPDIR:-/tmp}/ayuntamiento-belmontejo-bandos.lock"
 PNPM_BIN="${PNPM_BIN:-$(command -v pnpm || true)}"
+NODE_BIN="${NODE_BIN:-$(command -v node || true)}"
 
-if [[ -z "$PNPM_BIN" ]]; then
-  echo 'pnpm is not available; refusing to install it automatically.' >&2
+if [[ -z "$PNPM_BIN" || -z "$NODE_BIN" ]]; then
+  echo 'pnpm or Node.js is not available; refusing to install either automatically.' >&2
   exit 1
 fi
 
@@ -53,4 +54,6 @@ fi
 
 /usr/bin/git add -- src/content/bandos
 /usr/bin/git commit -m 'chore(bandos): sync municipal notices'
+commit_sha=$(/usr/bin/git rev-parse HEAD)
 /usr/bin/git push origin main
+"$NODE_BIN" scripts/notify-bando-sync.js "$commit_sha"
