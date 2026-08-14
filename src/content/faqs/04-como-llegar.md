@@ -3,4 +3,4 @@ question: '¿Cómo se puede llegar al municipio?'
 order: 4
 ---
 
-Se puede acceder en coche por la carretera principal que atraviesa la zona, principalmente mediante la vía N-420. Si vienes en transporte público, conviene verificar horarios de autobuses desde Cuenca u otras localidades cercanas.
+Por carretera, el acceso se realiza por la N-420. Para viajar en transporte público, consulta los horarios de autobús desde Cuenca u otras localidades cercanas.

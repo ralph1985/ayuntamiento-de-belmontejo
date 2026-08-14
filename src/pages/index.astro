@@ -7,19 +7,17 @@ import HomeHero from '@components/sections/HomeHero.astro';
 import VillageStory from '@components/sections/VillageStory.astro';
 import HomeUpdates from '@components/sections/HomeUpdates.astro';
 import HomeCommunity from '@components/sections/HomeCommunity.astro';
-import { testimonials } from '@data/testimonials';
 import { homeServices } from '@data/homeServices';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 import { getImage } from 'astro:assets';
 const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
-const featuredTestimonials = testimonials.slice(0, 2);
 ---
 
 <BaseLayout
   title="Ayuntamiento de Belmontejo"
-  description="Belmontejo, municipio en el corazón de la Manchuela conquense. Un pueblo pequeño con alma grande, lleno de historia, tradición y vida rural en la provincia de Cuenca."
+  description="Información municipal, bandos, noticias y patrimonio de Belmontejo, en la provincia de Cuenca."
   preloadedImage={optimizedImage}
 >
   <HomeHero />
@@ -38,7 +36,7 @@ const featuredTestimonials = testimonials.slice(0, 2);
   <FAQ />
 
   <HomeUpdates />
-  <HomeCommunity testimonials={featuredTestimonials} />
+  <HomeCommunity />
 
   <CTA />
 </BaseLayout>

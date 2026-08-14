@@ -104,7 +104,7 @@ test.describe('Navegación interna de contenido', () => {
       page.waitForURL(/\/sobre-el-pueblo\/?$/, {
         waitUntil: 'domcontentloaded',
       }),
-      hero.getByRole('link', { name: 'Descubre más' }).click(),
+      hero.getByRole('link', { name: 'Conoce el pueblo' }).click(),
     ]);
     await expect(
       page.getByRole('heading', { level: 1, name: /Sobre Belmontejo/i })
