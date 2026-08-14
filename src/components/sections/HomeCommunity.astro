@@ -1,0 +1,61 @@
+---
+import SocialMediaLinks from '@components/layout/SocialMediaLinks.astro';
+import TestimonialCard from '@components/testimonials/TestimonialCard.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Button from '@components/ui/Button.astro';
+import type { Testimonial } from '@data/testimonials';
+
+interface Props {
+  testimonials: Testimonial[];
+}
+const { testimonials } = Astro.props as Props;
+---
+
+<section class="home-community">
+  <div class="home-community__inner">
+    <div class="home-community__intro">
+      <SectionHeading
+        eyebrow="Comunidad"
+        title="Una localidad conectada"
+        description="Sigue la actualidad y escucha las voces de quienes hacen de Belmontejo su lugar."
+      />
+      <SocialMediaLinks className="homepage-social" />
+    </div>
+    <div>
+      <ul class="home-community__testimonials">
+        {
+          testimonials.map(testimonial => (
+            <TestimonialCard testimonial={testimonial} variant="home" />
+          ))
+        }
+      </ul>
+      <Button href="/testimonios/" variant="secondary">Más testimonios</Button>
+    </div>
+  </div>
+</section>
+
+<style lang="less">
+  .home-community {
+    background: var(--background-main);
+    padding: clamp(4rem, 9vw, 8rem) 1rem;
+  }
+  .home-community__inner {
+    width: min(100%, 75rem);
+    margin: auto;
+    display: grid;
+    gap: 3rem;
+  }
+  .home-community__testimonials {
+    display: grid;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+  }
+  @media (min-width: 64rem) {
+    .home-community__inner {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 5rem;
+    }
+  }
+</style>

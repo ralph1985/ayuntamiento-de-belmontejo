@@ -16,10 +16,10 @@ const {
 const sectionClass = ['services', customClass].filter(Boolean).join(' ');
 ---
 
-<section id={id} class={sectionClass}>
+<section id={id} class={sectionClass} aria-label="Conoce Belmontejo">
   {
     items.map(item => (
-      <div class="card">
+      <article class="card">
         <picture>
           <img
             aria-hidden="true"
@@ -32,7 +32,7 @@ const sectionClass = ['services', customClass].filter(Boolean).join(' ');
         </picture>
         <h2>{item.title}</h2>
         <p>{item.description}</p>
-      </div>
+      </article>
     ))
   }
 </section>
@@ -40,24 +40,20 @@ const sectionClass = ['services', customClass].filter(Boolean).join(' ');
 <style lang="less" is:global>
   @media only screen and (min-width: 0em) {
     .services {
-      width: 90%;
-      max-width: (1320/16em);
-      margin: auto;
-      margin-top: (-167/16em);
-      margin-bottom: (50/16em);
-      padding: (50/16em) (20/16em);
-      background: #fff;
-      box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);
-      border-top: (6/16em) solid var(--primary);
-      border-radius: (5/16em);
+      width: min(100% - 2rem, 75rem);
+      margin: clamp(2.5rem, 5vw, 4rem) auto;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      background: var(--background-sections);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
       position: relative;
       z-index: 100;
 
       .card {
         width: 100%;
-        max-width: (357/16em);
+        max-width: 22rem;
         margin: auto;
-        margin-bottom: (50/16em);
+        margin-bottom: 2.5rem;
         display: block;
 
         &:last-of-type {
@@ -65,34 +61,34 @@ const sectionClass = ['services', customClass].filter(Boolean).join(' ');
         }
 
         picture {
-          width: (88/16em);
-          height: (88/16em);
+          width: 3.5rem;
+          height: 3.5rem;
           margin: auto;
-          margin-bottom: (23/16em);
-          background: var(--primary);
-          border-radius: 50%;
+          margin-bottom: 1.25rem;
+          background: var(--secondary);
+          border-radius: 0.75rem;
           display: flex;
           justify-content: center;
           align-items: center;
 
           img {
-            width: (48/16em);
-            height: (48/16em);
+            width: 2rem;
+            height: 2rem;
           }
         }
 
         h2 {
-          font-size: (32/16em);
+          font-size: 1.25rem;
           font-weight: 700;
-          line-height: 27/20em;
-          text-align: center;
-          margin-bottom: 13/20em;
-          color: #1a1a1a;
+          line-height: 1.2;
+          text-align: left;
+          margin-bottom: 0.75rem;
+          color: var(--text-primary);
         }
 
         p {
-          line-height: 24/18em;
-          text-align: center;
+          line-height: 1.6;
+          text-align: left;
           width: 100%;
           opacity: 0.7;
         }
@@ -102,14 +98,12 @@ const sectionClass = ['services', customClass].filter(Boolean).join(' ');
 
   @media only screen and (min-width: 768px) {
     .services {
-      font-size: ~'min(1.8vw, 1em)';
-      width: 98%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
 
       .card {
-        max-width: (325/16em);
+        max-width: none;
         margin: 0;
       }
     }
@@ -117,10 +111,10 @@ const sectionClass = ['services', customClass].filter(Boolean).join(' ');
 
   @media only screen and (min-width: 1300px) {
     .services {
-      padding: (50/16em) (80/16em);
+      padding: 3.5rem 4rem;
 
       .card {
-        max-width: (357/16em);
+        max-width: none;
       }
     }
   }

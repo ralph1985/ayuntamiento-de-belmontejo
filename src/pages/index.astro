@@ -1,16 +1,14 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import FeaturedContent from '@components/sections/FeaturedContent.astro';
 import CTA from '@components/sections/CTA.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import IconBulletList from '@components/sections/IconBulletList.astro';
-import ImageGallery from '@components/sections/ImageGallery.astro';
-import SocialMediaLinks from '@components/layout/SocialMediaLinks.astro';
-import Button from '@components/ui/Button.astro';
-import TestimonialCard from '@components/testimonials/TestimonialCard.astro';
+import HomeHero from '@components/sections/HomeHero.astro';
+import VillageStory from '@components/sections/VillageStory.astro';
+import HomeUpdates from '@components/sections/HomeUpdates.astro';
+import HomeCommunity from '@components/sections/HomeCommunity.astro';
 import { testimonials } from '@data/testimonials';
 import { homeServices } from '@data/homeServices';
-import { portfolioGallery } from '@data/galleryImages';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -24,55 +22,7 @@ const featuredTestimonials = testimonials.slice(0, 2);
   description="Belmontejo, municipio en el corazón de la Manchuela conquense. Un pueblo pequeño con alma grande, lleno de historia, tradición y vida rural en la provincia de Cuenca."
   preloadedImage={optimizedImage}
 >
-  <!-- ============================================ -->
-  <!--                    Hero                      -->
-  <!-- ============================================ -->
-
-  <section id="hero">
-    <div class="cs-container">
-      <div class="cs-flex-group">
-        <span class="cs-topper">Bienvenidos a Belmontejo</span>
-        <h1 class="cs-title">Belmontejo, esencia de la Mancha conquense</h1>
-        <p class="cs-text">
-          Entre los campos dorados de Cuenca se alza Belmontejo, un pequeño
-          municipio lleno de historia, tradición y vida rural. Con sus calles
-          tranquilas, sus fuentes y la iglesia de Nuestra Señora de la Asunción
-          dominando el horizonte, el pueblo conserva intacta la autenticidad
-          manchega que ha perdurado durante siglos.
-        </p>
-        <p class="cs-text">
-          Belmontejo invita a disfrutar del silencio, del paisaje y de la
-          hospitalidad de su gente. Es un lugar donde el tiempo parece
-          detenerse, donde las raíces siguen vivas y donde cada rincón cuenta
-          una historia.
-        </p>
-        <Button href="/sobre-el-pueblo">Descubre más</Button>
-        <Button href="/contacto" variant="ghost">Contactar</Button>
-      </div>
-    </div>
-
-    <!-- Background Image -->
-    <!-- We can't use Astro <Picture /> as it does not support multiple sources -->
-    <picture class="cs-picture">
-      <source
-        media="(max-width: 600px)"
-        srcset="/assets/images/vista_aerea.webp"
-      />
-      <source
-        media="(min-width: 601px)"
-        srcset="/assets/images/vista_aerea.png"
-      />
-      <img
-        aria-hidden="true"
-        decoding="async"
-        src={optimizedImage.src}
-        alt="new home"
-        width="2500"
-        height="1667"
-        loading="eager"
-      />
-    </picture>
-  </section>
+  <HomeHero />
 
   <!-- ============================================ -->
   <!--                  Services                    -->
@@ -80,249 +30,15 @@ const featuredTestimonials = testimonials.slice(0, 2);
 
   <IconBulletList id="services" items={homeServices} />
 
-  <!-- ============================================ -->
-  <!--                 Side By Side                 -->
-  <!-- ============================================ -->
-
-  <section id="sbs">
-    <div class="cs-container">
-      <!-- Left Image Section -->
-      <div class="cs-left">
-        <picture class="cs-picture cs-picture1">
-          <source
-            media="(max-width: 600px)"
-            srcset="/assets/images/imagen-de-prueba-2-m.jpg"
-          />
-          <source
-            media="(min-width: 601px)"
-            srcset="/assets/images/imagen-de-prueba-2.jpg"
-          />
-          <img
-            aria-hidden="true"
-            decoding="async"
-            src="/assets/images/imagen-de-prueba-2.jpg"
-            alt="imagen-de-prueba-2.jpg"
-            loading="lazy"
-            width="400"
-            height="563"
-          />
-        </picture>
-        <picture class="cs-picture cs-picture2">
-          <source
-            media="(max-width: 600px)"
-            srcset="/assets/images/imagen-de-prueba-4-m.jpg"
-          />
-          <source
-            media="(min-width: 601px)"
-            srcset="/assets/images/imagen-de-prueba-4.jpg"
-          />
-          <img
-            aria-hidden="true"
-            decoding="async"
-            src="/assets/images/imagen-de-prueba-4.jpg"
-            alt="house"
-            loading="lazy"
-            width="400"
-            height="563"
-          />
-        </picture>
-      </div>
-      <!-- Right Content Section-->
-      <div class="cs-right">
-        <span class="cs-topper">Nuestro Pueblo</span>
-        <h2 class="cs-title">Un refugio de calma y belleza</h2>
-        <p class="cs-text">
-          Aquí, en el corazón de la Manchuela conquense, el visitante encuentra
-          un refugio de calma y de belleza sencilla: caminos para pasear, campos
-          que cambian de color con las estaciones y un patrimonio que refleja el
-          carácter de la tierra.
-        </p>
-        <p class="cs-text">
-          Belmontejo te da la bienvenida. Un pueblo pequeño, con alma grande.
-        </p>
-        <div class="cs-flex-group">
-          <p class="cs-flex-p">
-            "En Belmontejo, el tiempo parece detenerse, donde las raíces siguen
-            vivas y donde cada rincón cuenta una historia."
-          </p>
-          <span class="cs-name">Municipio de Belmontejo</span>
-          <span class="cs-job">Cuenca, Castilla-La Mancha</span>
-          <img
-            class="cs-quote-icon"
-            loading="lazy"
-            decoding="async"
-            src="/assets/images/graphics/quote-white.svg"
-            alt="quote"
-            width="136"
-            height="77"
-          />
-        </div>
-        <Button href="/sobre-el-pueblo"> Conoce más sobre nosotros </Button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================ -->
-  <!--            Extra Content To Rank             -->
-  <!-- ============================================ -->
-
-  <section id="sbs-r">
-    <div class="cs-container">
-      <!-- Left Image Section -->
-      <div class="cs-left">
-        <picture class="cs-picture cs-picture1">
-          <source
-            media="(max-width: 600px)"
-            srcset="/assets/images/imagen-de-prueba-4-m.jpg"
-          />
-          <source
-            media="(min-width: 601px)"
-            srcset="/assets/images/imagen-de-prueba-4.jpg"
-          />
-          <img
-            aria-hidden="true"
-            decoding="async"
-            src="/assets/images/imagen-de-prueba-4.jpg"
-            alt="house"
-            loading="lazy"
-            width="400"
-            height="560"
-          />
-        </picture>
-        <picture class="cs-picture cs-picture2">
-          <source
-            media="(max-width: 600px)"
-            srcset="/assets/images/imagen-de-prueba-2-m.jpg"
-          />
-          <source
-            media="(min-width: 601px)"
-            srcset="/assets/images/imagen-de-prueba-2.jpg"
-          />
-          <img
-            aria-hidden="true"
-            decoding="async"
-            src="/assets/images/imagen-de-prueba-2.jpg"
-            alt="imagen-de-prueba-2.jpg"
-            loading="lazy"
-            width="400"
-            height="560"
-          />
-        </picture>
-      </div>
-      <!-- Right Content Section-->
-      <div class="cs-right">
-        <span class="cs-topper">Nuestros Rincones</span>
-        <h2 class="cs-title">Iglesia de Nuestra Señora de la Asunción</h2>
-        <p class="cs-text">
-          Ubicada en el punto más alto del núcleo urbano, la iglesia parroquial
-          es un elemento arquitectónico relevante que domina el paisaje de
-          Belmontejo. Sus torres se alzan como guardianes silenciosos de la
-          historia y las tradiciones del pueblo.
-        </p>
-        <p class="cs-text">
-          Las fuentes del pueblo, conocidas como "fuente de arriba" y "fuente de
-          abajo", forman parte del patrimonio hidráulico tradicional y del
-          paisaje urbano local. Desde el centro del pueblo, las calles salen en
-          forma de estrella, mostrando un trazado histórico que refleja la
-          evolución natural del municipio a través de los siglos.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================ -->
-  <!--                   Gallery                    -->
-  <!-- ============================================ -->
-
-  <ImageGallery
-    id="gallery"
-    heading={{
-      topper: 'Nuestros Paisajes',
-      title: 'Los campos y rincones de Belmontejo',
-    }}
-    rows={portfolioGallery}
-    cta={{
-      href: '/proyectos',
-      label: 'Ver todos los proyectos',
-    }}
-  />
+  <VillageStory />
 
   <!-- ============================================ -->
   <!--                    FAQ                       -->
   <!-- ============================================ -->
   <FAQ />
 
-  <!-- ============================================ -->
-  <!--                   Reviews                    -->
-  <!-- ============================================ -->
-
-  <section id="reviews">
-    <div class="cs-container">
-      <span class="cs-topper">Testimonios</span>
-      <h2 class="cs-title">Lo que dicen de Belmontejo</h2>
-      <p class="cs-text">
-        Las voces de quienes han visitado nuestro pueblo y de quienes forman
-        parte de nuestra comunidad. Belmontejo deja huella en todos los que
-        descubren la calidez de la vida rural manchega y la belleza de los
-        paisajes que nos rodean.
-      </p>
-      <ul class="cs-card-group">
-        {
-          featuredTestimonials.map(testimonial => (
-            <TestimonialCard testimonial={testimonial} variant="home" />
-          ))
-        }
-      </ul>
-      <Button aria-label="read more reviews" href="/testimonios">
-        Más testimonios
-      </Button>
-    </div>
-  </section>
-
-  <!-- ============================================ -->
-  <!--              Contenido Destacado             -->
-  <!-- ============================================ -->
-
-  <section id="featured-content">
-    <div class="cs-container">
-      <div class="cs-content">
-        <span class="cs-topper">Lo más relevante</span>
-        <h2 class="cs-title">Contenido Destacado</h2>
-        <p class="cs-text">
-          Mantente al día con las noticias más importantes y los bandos
-          oficiales de nuestro municipio.
-        </p>
-      </div>
-      <div class="featured-content-wrapper">
-        <FeaturedContent type="both" limit={6} />
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================ -->
-  <!--               Redes Sociales                 -->
-  <!-- ============================================ -->
-
-  <section id="social-media" class="social-media-section">
-    <div class="cs-container">
-      <div class="cs-content">
-        <span class="cs-topper">Conecta con nosotros</span>
-        <h2 class="cs-title">Síguenos en Redes Sociales</h2>
-        <p class="cs-text">
-          Mantente informado de todas las novedades, eventos y noticias de
-          nuestro municipio. Síguenos en nuestras redes sociales para estar al
-          día.
-        </p>
-      </div>
-      <div class="social-links-wrapper">
-        <SocialMediaLinks className="homepage-social" />
-      </div>
-    </div>
-  </section>
+  <HomeUpdates />
+  <HomeCommunity testimonials={featuredTestimonials} />
 
   <CTA />
 </BaseLayout>
-
-<style lang="less">
-  @import '../styles/pages/index.less';
-</style>

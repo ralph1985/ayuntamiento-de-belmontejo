@@ -2,8 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/sections/CTA.astro';
 import Landing from '@components/sections/Landing.astro';
-import ImageGallery from '@components/sections/ImageGallery.astro';
-import { portfolioGallery } from '@data/galleryImages';
+import ProjectPending from '@components/sections/ProjectPending.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -13,28 +12,23 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 
 <BaseLayout
   title="Proyectos - Ayuntamiento de Belmontejo"
-  description="Meta description for the page"
+  description="Consulta los proyectos e iniciativas del Ayuntamiento de Belmontejo para mejorar el municipio."
   preloadedImage={optimizedImage}
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing title="All projects" image={optimizedImage}>
+  <Landing title="Proyectos" image={optimizedImage}>
     <p>
       Descubre los proyectos e iniciativas del Ayuntamiento de Belmontejo para
       el desarrollo del municipio
     </p>
   </Landing>
 
-  <!-- ============================================ -->
-  <!--                   Gallery                    -->
-  <!-- ============================================ -->
-
-  <ImageGallery
-    id="gallery"
-    rows={portfolioGallery}
-    cta={{ href: '/contacto', label: 'Contactar' }}
+  <ProjectPending
+    title="Iniciativas municipales"
+    description="Publicaremos aquí la información y los avances de los proyectos del Ayuntamiento cuando estén disponibles."
   />
   <CTA />
 </BaseLayout>

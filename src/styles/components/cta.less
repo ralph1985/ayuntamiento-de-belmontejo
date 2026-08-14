@@ -1,16 +1,16 @@
 /* Mobile */
 @media only screen and (min-width: 0em) {
   #cta {
-    padding: (50/16rem) 0;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    margin-top: 0;
+    padding: clamp(4rem, 8vw, 7rem) 1rem;
     position: relative;
 
     &:before {
       content: "";
       width: 100%;
       height: 100%;
-      background: var(--text-primary);
-      opacity: 0.7;
+      background: #17303a;
+      opacity: 0.88;
       display: block;
       position: absolute;
       top: 0;
@@ -23,11 +23,11 @@
     }
 
     .title {
-      font-size: ~"min(9vw, 3rem)";
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
       font-weight: 900;
-      line-height: 58/48;
+      line-height: 1.05;
       text-align: center;
-      margin-bottom: (36/16rem);
+      margin-bottom: 1rem;
       color: var(--text-white);
       position: relative;
     }
@@ -37,7 +37,7 @@
       width: 96%;
       max-width: (598/16rem);
       margin: auto;
-      margin-bottom: (36/16rem);
+      margin-bottom: 2rem;
       color: var(--text-white);
       opacity: 1;
     }
@@ -47,39 +47,29 @@
 /* Small Desktop */
 @media only screen and (min-width: 64em) {
   #cta {
-    padding: (168/16rem) 0;
+    padding: clamp(5rem, 10vw, 9rem) 1rem;
   }
 }
 
 /* Large Desktop */
 @media only screen and (min-width: 1300px) {
   #cta {
-    margin-top: (100/16rem);
+    margin-top: 0;
     position: relative;
 
     &:before {
-      display: none;
+      display: block;
+      background: #17303a;
+      opacity: 0.88;
     }
 
     &:after {
       content: "";
-      width: 100%; /* a fixed width causes overflow on desktop */
-      height: (1108/16rem);
-      background: url("/assets/svgs/cta-squares.svg");
-      background-position: center;
-      background-size: contain;
-      background-repeat: no-repeat;
-      opacity: 1;
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      z-index: -3;
-      transform: translateX(-50%);
+      display: none;
     }
 
     .container {
-      width: 90.0625%;
+      width: min(100%, 42rem);
       margin: auto;
     }
   }

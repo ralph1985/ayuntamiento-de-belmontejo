@@ -9,26 +9,26 @@
   // Website colors - Paleta Belmontejo (Modo Claro)
   :root {
     /* Fondos */
-    --background-main: #faf9f7; /* Blanco cálido */
-    --background-sections: #f0e9e1; /* Beige claro (piedra/caliza) */
+    --background-main: #f7f8f5;
+    --background-sections: #e8eee3;
 
     /* Textos */
-    --text-primary: #2e2e2e; /* Gris oscuro (alto contraste) */
-    --text-secondary: #6e6e6e; /* Gris medio (subtítulos) */
-    --text-white: #f5f1e9; /* Marfil suave para textos sobre fondos oscuros */
+    --text-primary: #17303a;
+    --text-secondary: #4d6267;
+    --text-white: #f7f8f5;
 
     /* Colores principales */
-    --primary: #285c8d; /* Azul Cuenca (principal) */
-    --primaryLight: #5e8cc0; /* Azul Cuenca claro (versión más luminosa) */
-    --secondary: #6a7e49; /* Verde olivo (secundario) */
-    --secondaryLight: #a6b381; /* Verde olivo suave */
+    --primary: #1c5b73;
+    --primaryLight: #4b8296;
+    --secondary: #537149;
+    --secondaryLight: #9bae8a;
 
     /* Colores de acento */
-    --accent: #b35030; /* Rojo teja (llamadas a la acción) */
-    --accentLight: #e27a58; /* Teja claro */
+    --accent: #b85536;
+    --accentLight: #da7d5d;
 
     /* Bordes y líneas */
-    --border-color: #ddd6ce; /* Gris claro cálido */
+    --border-color: #cbd6cb;
 
     /* Variables de compatibilidad (mapeo con nombres antiguos) */
     --headerColor: var(--text-primary);
@@ -38,11 +38,11 @@
     /* 13px - 16px */
     --topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
     /* 31px - 49px */
-    --headerFontSize: clamp(1.9375rem, 3.9vw, 3.0625rem);
+    --headerFontSize: clamp(2rem, 4vw, 3.25rem);
     --bodyFontSize: 1rem;
 
     /* 60px - 100px top and bottom */
-    --sectionPadding: clamp(3.75rem, 7.82vw, 6.25rem) 1rem;
+    --sectionPadding: clamp(4rem, 8vw, 7rem) 1rem;
   }
 
   // Text styles - can be replaced using CodeStitch's "Content Flair" Stitches
@@ -134,7 +134,9 @@
 
   body {
     background-color: var(--background-main);
-    transition: background-color 0.3s;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
   }
 
   .container {
@@ -151,6 +153,11 @@
   h6 {
     margin: 0;
     color: var(--headerColor);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
   }
 
   p,
@@ -175,11 +182,17 @@
 
   // Hidden Screen reader skip nav button
   .skip {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1111111;
+    background: var(--primary);
+    color: var(--text-white);
+    left: 1rem;
+    padding: 0.75rem 1rem;
+    position: fixed;
+    top: -5rem;
+    z-index: 10001;
+
+    &:focus {
+      top: 1rem;
+    }
   }
 }
 

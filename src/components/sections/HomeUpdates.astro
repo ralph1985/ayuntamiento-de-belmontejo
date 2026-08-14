@@ -1,0 +1,33 @@
+---
+import FeaturedContent from '@components/sections/FeaturedContent.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Button from '@components/ui/Button.astro';
+---
+
+<section class="home-updates">
+  <div class="home-updates__inner">
+    <SectionHeading
+      eyebrow="Actualidad municipal"
+      title="Lo importante, a la vista"
+      description="Consulta los últimos comunicados oficiales y las noticias del municipio."
+    />
+    <FeaturedContent type="both" limit={6} />
+    <div class="home-updates__actions">
+      <Button href="/noticias/" variant="secondary">Todas las noticias</Button>
+    </div>
+  </div>
+</section>
+
+<style lang="less">
+  .home-updates {
+    background: var(--background-sections);
+    padding: clamp(4rem, 9vw, 8rem) 1rem;
+  }
+  .home-updates__inner {
+    width: min(100%, 75rem);
+    margin: auto;
+  }
+  .home-updates__actions {
+    margin-top: 2rem;
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+import Button from '@components/ui/Button.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+---
+
+<section class="village-story">
+  <div class="village-story__inner">
+    <div class="village-story__media">
+      <img
+        src="/assets/images/vista_aerea.jpg"
+        alt="Vista aérea de Belmontejo y su entorno agrícola"
+        width="1920"
+        height="1080"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="village-story__content">
+      <SectionHeading
+        eyebrow="El pueblo"
+        title="Un lugar para vivir y descubrir"
+        description="Belmontejo conserva el ritmo de la vida rural y una comunidad conectada con su historia, su paisaje y sus tradiciones."
+      />
+      <p>
+        Desde sus fuentes y sus calles hasta la iglesia de Nuestra Señora de la
+        Asunción, cada recorrido forma parte de una identidad compartida.
+      </p>
+      <Button href="/sobre-el-pueblo/" variant="secondary"
+        >Sobre Belmontejo</Button
+      >
+    </div>
+  </div>
+</section>
+
+<style lang="less">
+  .village-story {
+    background: var(--background-main);
+    padding: clamp(4rem, 9vw, 8rem) 1rem;
+  }
+  .village-story__inner {
+    width: min(100%, 75rem);
+    margin: auto;
+    display: grid;
+    gap: clamp(2.5rem, 7vw, 6rem);
+    align-items: center;
+  }
+  .village-story__media {
+    min-height: 25rem;
+    position: relative;
+  }
+  .village-story__media img {
+    border-radius: 1rem;
+    object-fit: cover;
+    position: absolute;
+  }
+  .village-story__media img {
+    width: 100%;
+    height: 100%;
+    inset: 0;
+  }
+  .village-story__content > p {
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin: -1.5rem 0 2rem;
+    max-width: 38rem;
+  }
+  @media (min-width: 48rem) {
+    .village-story__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    }
+  }
+</style>

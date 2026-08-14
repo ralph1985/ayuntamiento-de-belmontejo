@@ -25,6 +25,9 @@ export default defineConfig({
   use: {
     baseURL,
     trace: 'on-first-retry',
+    ...(process.env.PLAYWRIGHT_CHANNEL
+      ? { channel: process.env.PLAYWRIGHT_CHANNEL }
+      : {}),
   },
   workers: 3,
   projects: [
