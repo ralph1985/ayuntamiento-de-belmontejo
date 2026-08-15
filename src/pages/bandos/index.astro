@@ -5,10 +5,10 @@
 
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/sections/CTA.astro';
+import ContentArchive from '@components/sections/ContentArchive.astro';
 import { getCollection } from 'astro:content';
 import { getImage } from 'astro:assets';
 
-import BandosRecentArticlesWithSidebar from '@layouts/BandosRecentArticlesWithSidebar.astro';
 import BandoMovilApp from '@components/sections/BandoMovilApp.astro';
 
 const posts = await getCollection('bandos');
@@ -37,8 +37,17 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
     </div>
   </section>
 
-  <!-- Use the BandosRecentArticlesWithSidebar layout to display the recent bandos in a custom sidebar layout-->
-  <BandosRecentArticlesWithSidebar posts={posts} />
+  <ContentArchive
+    posts={posts}
+    kind="bandos"
+    heading="Avisos publicados"
+    searchLabel="Buscar en los bandos"
+    searchPlaceholder="Título, contenido o categoría"
+    resultSingular="bando publicado"
+    resultPlural="bandos publicados"
+    emptyMessage="No hay bandos publicados."
+    linkLabel="Leer bando"
+  />
   <BandoMovilApp />
   <CTA />
 </BaseLayout>

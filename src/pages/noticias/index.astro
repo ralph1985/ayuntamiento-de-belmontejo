@@ -5,14 +5,11 @@
 
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/sections/CTA.astro';
+import ContentArchive from '@components/sections/ContentArchive.astro';
 import { getCollection } from 'astro:content';
 import { getImage } from 'astro:assets';
-import '@styles/sidebar.less';
 
 import Landing from '@components/sections/Landing.astro';
-
-// import NewsRecentArticles from '@layouts/NewsRecentArticles.astro';
-import NewsRecentArticlesWithSidebar from '@layouts/NewsRecentArticlesWithSidebar.astro';
 
 const posts = await getCollection('noticias');
 posts.sort(
@@ -33,10 +30,16 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
     <p>Noticias y avisos del Ayuntamiento de Belmontejo.</p>
   </Landing>
 
-  <!-- Use the NewsRecentArticles layout to display the recent articles in a standard grid -->
-  <!-- <NewsRecentArticles posts={posts} /> -->
-
-  <!-- Use the NewsRecentArticlesWithSidebar layout to display the recent articles in a custom sidebar layout-->
-  <NewsRecentArticlesWithSidebar posts={posts} />
+  <ContentArchive
+    posts={posts}
+    kind="news"
+    heading="Noticias publicadas"
+    searchLabel="Buscar en las noticias"
+    searchPlaceholder="Título, contenido o autor"
+    resultSingular="noticia publicada"
+    resultPlural="noticias publicadas"
+    emptyMessage="No hay noticias publicadas."
+    linkLabel="Continuar leyendo"
+  />
   <CTA />
 </BaseLayout>

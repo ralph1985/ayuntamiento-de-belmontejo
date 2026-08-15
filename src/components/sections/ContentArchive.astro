@@ -1,0 +1,432 @@
+---
+import RecentArticleCard from '@components/ui/RecentArticleCard.astro';
+import type { ImageMetadata } from 'astro';
+
+type ArchiveKind = 'news' | 'bandos';
+
+type ArchivePost = {
+  id: string;
+  data: {
+    title: string;
+    description: string;
+    author: string;
+    date: string | number | Date;
+    image?: ImageMetadata;
+    imageAlt?: string;
+    category?: string;
+    link?: string;
+  };
+};
+
+interface Props {
+  posts: ArchivePost[];
+  kind: ArchiveKind;
+  heading: string;
+  searchLabel: string;
+  searchPlaceholder: string;
+  resultSingular: string;
+  resultPlural: string;
+  emptyMessage: string;
+  linkLabel: string;
+}
+
+const {
+  posts,
+  kind,
+  heading,
+  searchLabel,
+  searchPlaceholder,
+  resultSingular,
+  resultPlural,
+  emptyMessage,
+  linkLabel,
+} = Astro.props as Props;
+
+const categories = [
+  ...new Set(posts.map(post => post.data.category).filter(Boolean)),
+].sort((a, b) => a.localeCompare(b, 'es'));
+const totalPosts = posts.length;
+const isBandos = kind === 'bandos';
+---
+
+<section class="archive-list" aria-labelledby={`${kind}-archive-title`}>
+  <div class="archive-list__header">
+    <div>
+      <h2 id={`${kind}-archive-title`}>{heading}</h2>
+      <p class="archive-list__summary" data-results-summary aria-live="polite">
+        {
+          totalPosts === 1
+            ? `1 ${resultSingular}`
+            : `${totalPosts} ${resultPlural}`
+        }
+      </p>
+    </div>
+  </div>
+
+  <form
+    class:list={{
+      'archive-filters': true,
+      'bandos-filters': isBandos,
+    }}
+    data-archive-filters
+    data-result-singular={resultSingular}
+    data-result-plural={resultPlural}
+    role="search"
+  >
+    <div class="archive-filters__field archive-filters__field--search">
+      <label for={`${kind}-search`}>{searchLabel}</label>
+      <input
+        id={`${kind}-search`}
+        name="q"
+        type="search"
+        placeholder={searchPlaceholder}
+        autocomplete="off"
+        data-archive-search
+      />
+    </div>
+
+    {
+      categories.length > 1 && (
+        <div class="archive-filters__field">
+          <label for={`${kind}-category`}>Filtrar por categoría</label>
+          <select
+            id={`${kind}-category`}
+            name="categoria"
+            data-archive-category
+          >
+            <option value="">Todas las categorías</option>
+            {categories.map(category => (
+              <option value={category}>{category}</option>
+            ))}
+          </select>
+        </div>
+      )
+    }
+
+    <button
+      type="button"
+      class:list={{
+        'archive-filters__clear': true,
+        'bandos-filters__clear': isBandos,
+      }}
+      data-archive-clear
+    >
+      Limpiar filtros
+    </button>
+  </form>
+
+  {
+    posts.length > 0 ? (
+      <div class="archive-results" data-archive-results>
+        {posts.map(post => (
+          <div
+            class="archive-result"
+            data-archive-result
+            data-bandos-result={isBandos ? true : undefined}
+            data-category={post.data.category}
+            data-search-text={`${post.data.title} ${post.data.description} ${post.data.author} ${post.data.category ?? ''}`}
+          >
+            <RecentArticleCard
+              title={post.data.title}
+              description={post.data.description}
+              author={post.data.author}
+              date={post.data.date}
+              image={post.data.image}
+              imageAlt={post.data.imageAlt ?? post.data.title}
+              category={isBandos ? post.data.category : undefined}
+              primaryLink={{
+                href: `/${kind === 'news' ? 'noticias' : 'bandos'}/${post.id}`,
+                label: linkLabel,
+              }}
+              secondaryLink={
+                isBandos && post.data.link
+                  ? {
+                      href: post.data.link,
+                      label: 'Ver original',
+                      external: true,
+                    }
+                  : undefined
+              }
+              variant={kind}
+            />
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p class="archive-empty">{emptyMessage}</p>
+    )
+  }
+
+  {
+    posts.length > 0 && (
+      <button type="button" class="archive-more" data-archive-more>
+        Ver más
+      </button>
+    )
+  }
+
+  <p
+    class="archive-empty"
+    data-archive-empty
+    data-bandos-empty={isBandos ? true : undefined}
+    hidden
+  >
+    No hay resultados que coincidan con estos filtros.
+  </p>
+</section>
+
+<script>
+  const initializeArchive = () => {
+    const root = document.querySelector('[data-archive-filters]');
+    const results = document.querySelector('[data-archive-results]');
+
+    if (!root || !results || root.dataset.initialized) return;
+
+    root.dataset.initialized = 'true';
+    const search = root.querySelector('[data-archive-search]');
+    const category = root.querySelector('[data-archive-category]');
+    const clear = root.querySelector('[data-archive-clear]');
+    const more = document.querySelector('[data-archive-more]');
+    const summary = document.querySelector('[data-results-summary]');
+    const empty = document.querySelector('[data-archive-empty]');
+    const resultSingular =
+      root.dataset.resultSingular ?? 'resultado encontrado';
+    const resultPlural = root.dataset.resultPlural ?? 'resultados encontrados';
+    const items = [...results.querySelectorAll('[data-archive-result]')];
+    const pageSize = 8;
+    let visibleLimit = pageSize;
+    const params = new URLSearchParams(globalThis.location.search);
+
+    const normalize = value =>
+      value
+        .toLocaleLowerCase('es')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+
+    const updateUrl = (query, selectedCategory) => {
+      const nextUrl = new URL(globalThis.location.href);
+      if (query) nextUrl.searchParams.set('q', query);
+      else nextUrl.searchParams.delete('q');
+      if (selectedCategory) {
+        nextUrl.searchParams.set('categoria', selectedCategory);
+      } else {
+        nextUrl.searchParams.delete('categoria');
+      }
+      globalThis.history.replaceState({}, '', nextUrl);
+    };
+
+    const render = ({ updateHistory = true } = {}) => {
+      const query = search?.value.trim() ?? '';
+      const selectedCategory = category?.value ?? '';
+      const normalizedQuery = normalize(query);
+      const matchingItems = items.filter(item => {
+        const matchesQuery = normalize(item.dataset.searchText ?? '').includes(
+          normalizedQuery
+        );
+        const matchesCategory =
+          !selectedCategory || item.dataset.category === selectedCategory;
+        return matchesQuery && matchesCategory;
+      });
+
+      matchingItems.forEach((item, index) => {
+        item.hidden = index >= visibleLimit;
+      });
+      items
+        .filter(item => !matchingItems.includes(item))
+        .forEach(item => {
+          item.hidden = true;
+        });
+
+      const visibleCount = Math.min(visibleLimit, matchingItems.length);
+      if (summary) {
+        summary.textContent =
+          visibleCount < matchingItems.length
+            ? `Mostrando ${visibleCount} de ${matchingItems.length} ${resultPlural}`
+            : `${matchingItems.length} ${
+                matchingItems.length === 1 ? resultSingular : resultPlural
+              }`;
+      }
+      if (empty) empty.hidden = matchingItems.length > 0;
+      if (more) more.hidden = visibleCount >= matchingItems.length;
+      if (clear) clear.disabled = !query && !selectedCategory;
+      if (updateHistory) updateUrl(query, selectedCategory);
+    };
+
+    const initialQuery = params.get('q') ?? '';
+    const initialCategory = params.get('categoria') ?? '';
+    if (search) search.value = initialQuery;
+    if (
+      category &&
+      [...category.options].some(option => option.value === initialCategory)
+    ) {
+      category.value = initialCategory;
+    }
+
+    const resetAndRender = () => {
+      visibleLimit = pageSize;
+      render();
+    };
+
+    search?.addEventListener('input', resetAndRender);
+    category?.addEventListener('change', resetAndRender);
+    clear?.addEventListener('click', () => {
+      if (search) search.value = '';
+      if (category) category.value = '';
+      visibleLimit = pageSize;
+      render();
+      search?.focus();
+    });
+    more?.addEventListener('click', () => {
+      visibleLimit += pageSize;
+      render({ updateHistory: false });
+    });
+
+    render({ updateHistory: false });
+  };
+
+  document.addEventListener('astro:page-load', initializeArchive);
+  initializeArchive();
+</script>
+
+<style lang="less">
+  .archive-list {
+    width: min(100% - 2rem, 70rem);
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 5rem) 0;
+  }
+
+  .archive-list__header h2 {
+    margin: 0;
+    color: var(--headerColor);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .archive-list__summary {
+    margin: 0.5rem 0 0;
+    color: var(--text-secondary);
+    font-size: 0.9375rem;
+  }
+
+  .archive-filters {
+    margin: 2rem 0;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(12rem, 1fr) auto;
+    align-items: end;
+    gap: 1rem;
+    background: var(--background-sections);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+  }
+
+  .archive-filters__field {
+    display: grid;
+    gap: 0.4rem;
+
+    label {
+      color: var(--headerColor);
+      font-size: 0.8125rem;
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 2.75rem;
+      padding: 0.625rem 0.75rem;
+      color: var(--text-primary);
+      background: var(--background-main);
+      border: 1px solid var(--border-color);
+      border-radius: 0.25rem;
+      font: inherit;
+    }
+
+    input::placeholder {
+      color: var(--text-secondary);
+      opacity: 1;
+    }
+  }
+
+  .archive-filters__clear {
+    min-height: 2.75rem;
+    padding: 0.625rem 0.875rem;
+    color: var(--headerColor);
+    background: transparent;
+    border: 1px solid var(--primary);
+    border-radius: 0.25rem;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 700;
+    white-space: nowrap;
+
+    &:hover:not(:disabled),
+    &:focus-visible:not(:disabled) {
+      color: var(--text-white);
+      background: var(--primary);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  .archive-results {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .archive-result[hidden] {
+    display: none;
+  }
+
+  .archive-more {
+    display: block;
+    margin: 1.5rem auto 0;
+    padding: 0.7rem 1.25rem;
+    color: var(--primary);
+    background: transparent;
+    border: 1px solid var(--primary);
+    border-radius: 0.25rem;
+    font: inherit;
+    font-weight: 700;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--text-white);
+      background: var(--primary);
+    }
+  }
+
+  .archive-more[hidden] {
+    display: none;
+  }
+
+  .archive-empty {
+    margin: 2rem 0 0;
+    padding: 2rem 1rem;
+    color: var(--text-secondary);
+    background: var(--background-sections);
+    border: 1px dashed var(--border-color);
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 47.9375rem) {
+    .archive-filters {
+      grid-template-columns: 1fr;
+    }
+
+    .archive-filters__clear {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .archive-more,
+    .archive-filters__clear {
+      transition: none;
+    }
+  }
+</style>
