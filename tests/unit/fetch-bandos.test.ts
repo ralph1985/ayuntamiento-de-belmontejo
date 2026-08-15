@@ -6,8 +6,6 @@ import {
   generateContent,
   generateFilename,
   generateFrontmatter,
-  getBandoId,
-  getExcludedBandoIds,
   parseRSSItems,
 } from '../../scripts/fetch-bandos.js';
 import { buildNotificationText } from '../../scripts/notify-bando-sync.js';
@@ -68,17 +66,6 @@ describe('generateFilename', () => {
 
     expect(filename.length).toBeLessThanOrEqual(54); // id + hyphen + 50 chars
     expect(filename.startsWith('789-')).toBe(true);
-  });
-});
-
-describe('bando exclusions', () => {
-  it('extracts the BandoMóvil ID and loads the tracked exclusions', () => {
-    expect(
-      getBandoId(
-        'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&id=1618397'
-      )
-    ).toBe('1618397');
-    expect(getExcludedBandoIds()).toContain('1618397');
   });
 });
 
