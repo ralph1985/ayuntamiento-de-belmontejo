@@ -1,0 +1,37 @@
+{
+  "pageTitle": "Sobre el Pueblo - Ayuntamiento de Belmontejo",
+  "pageDescription": "Historia, geografía y patrimonio de Belmontejo, municipio de la provincia de Cuenca.",
+  "landingTitle": "Sobre Belmontejo",
+  "landingIntro": "Historia, geografía y patrimonio de Belmontejo.",
+  "overviewEyebrow": "Sobre Belmontejo",
+  "overviewTitle": "Ubicación y datos generales",
+  "overviewDescription": "Belmontejo es un municipio español ubicado en la provincia de Cuenca, en la comunidad autónoma de Castilla-La Mancha. Se encuentra en la comarca de la Manchuela (Manchuela Conquense) y tiene una población que ronda los 129 habitantes a enero de 2024. La altitud media es de aproximadamente 878 m sobre el nivel del mar.",
+  "historyTitle": "Geografía e Historia",
+  "historyParagraphs": [
+    "El relieve de Belmontejo presenta un terreno ondulado típico de la transición entre la Mancha más plana y la Serranía de Cuenca. Se han encontrado vestigios arqueológicos que remontan su ocupación muy atrás en el tiempo —hasta la Edad del Bronce, época visigoda y romana— lo que indica una larga presencia humana en el territorio.",
+    "En el siglo XV, formó parte del señorío de Rodrigo Manrique. A lo largo del tiempo, como tantos municipios rurales de interior, ha experimentado los desafíos demográficos característicos de la España rural."
+  ],
+  "overviewImages": [
+    {
+      "desktopSrc": "/assets/images/imagen-de-prueba-2.jpg",
+      "mobileSrc": "/assets/images/imagen-de-prueba-2-m.jpg",
+      "alt": "Vista de Belmontejo"
+    },
+    {
+      "desktopSrc": "/assets/images/imagen-de-prueba-4.jpg",
+      "mobileSrc": "/assets/images/imagen-de-prueba-4-m.jpg",
+      "alt": "Detalle del entorno urbano de Belmontejo"
+    }
+  ],
+  "quote": "Belmontejo es un municipio rural de la Manchuela conquense. Su paisaje, sus fuentes y su patrimonio forman parte de la vida cotidiana del pueblo.",
+  "quoteAuthor": "Ayuntamiento de Belmontejo",
+  "quoteRole": "Municipio de Cuenca",
+  "videoEyebrow": "Vista desde el cielo",
+  "videoTitle": "Belmontejo desde las alturas",
+  "videoDescription": "Este vídeo recorre Belmontejo desde el aire y muestra el casco urbano y los campos de su entorno.",
+  "videoUrl": "https://player.vimeo.com/video/1133058869?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&title=0&muted=1&background=1",
+  "videoTitleAttribute": "Belmontejo",
+  "mapSubtitle": "Dónde estamos",
+  "mapTitle": "Ubicación de Belmontejo",
+  "mapDescription": "Belmontejo se encuentra en la provincia de Cuenca, dentro de la Manchuela conquense."
+}

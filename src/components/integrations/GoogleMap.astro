@@ -2,12 +2,14 @@
 interface Props {
   title?: string;
   subtitle?: string;
+  description?: string;
   mapId?: string;
 }
 
 const {
   title = 'Ubicación',
   subtitle = 'Encuéntranos en el mapa',
+  description = 'Belmontejo se encuentra en la provincia de Cuenca, dentro de la Manchuela conquense.',
   mapId = 'belmontejo-map',
 } = Astro.props;
 ---
@@ -18,10 +20,7 @@ const {
     <div class="cs-content">
       <span class="cs-topper">{subtitle}</span>
       <h2 class="cs-title">{title}</h2>
-      <p class="cs-text">
-        Belmontejo se encuentra en la provincia de Cuenca, dentro de la
-        Manchuela conquense.
-      </p>
+      <p class="cs-text">{description}</p>
     </div>
     <div class="cs-map-wrapper">
       <iframe

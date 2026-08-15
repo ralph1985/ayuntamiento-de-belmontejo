@@ -355,3 +355,98 @@ collections:
                   name: 'sourceLabel',
                   widget: 'string',
                 }
+
+  - name: 'about-village'
+    label: 'Sobre el pueblo'
+    files:
+      - label: 'Contenido de Sobre el pueblo'
+        name: 'about-village'
+        file: 'src/data/aboutVillage.json'
+        media_folder: 'public/assets/images/sobre-el-pueblo'
+        public_folder: '/assets/images/sobre-el-pueblo'
+        fields:
+          - { label: 'Título SEO', name: 'pageTitle', widget: 'string' }
+          - {
+              label: 'Descripción SEO',
+              name: 'pageDescription',
+              widget: 'text',
+            }
+          - {
+              label: 'Título de portada',
+              name: 'landingTitle',
+              widget: 'string',
+            }
+          - {
+              label: 'Introducción de portada',
+              name: 'landingIntro',
+              widget: 'text',
+            }
+          - {
+              label: 'Etiqueta de ubicación',
+              name: 'overviewEyebrow',
+              widget: 'string',
+            }
+          - {
+              label: 'Título de ubicación',
+              name: 'overviewTitle',
+              widget: 'string',
+            }
+          - {
+              label: 'Descripción general',
+              name: 'overviewDescription',
+              widget: 'text',
+            }
+          - {
+              label: 'Título de historia',
+              name: 'historyTitle',
+              widget: 'string',
+            }
+          - label: 'Párrafos de historia'
+            name: 'historyParagraphs'
+            widget: 'list'
+            field: { label: 'Párrafo', widget: 'text' }
+          - label: 'Imágenes de ubicación'
+            name: 'overviewImages'
+            widget: 'list'
+            min: 2
+            max: 2
+            summary: '{{fields.alt}}'
+            fields:
+              - {
+                  label: 'Imagen escritorio',
+                  name: 'desktopSrc',
+                  widget: 'image',
+                }
+              - { label: 'Imagen móvil', name: 'mobileSrc', widget: 'image' }
+              - { label: 'Texto alternativo', name: 'alt', widget: 'string' }
+          - { label: 'Cita', name: 'quote', widget: 'text' }
+          - { label: 'Autor de la cita', name: 'quoteAuthor', widget: 'string' }
+          - { label: 'Cargo o lugar', name: 'quoteRole', widget: 'string' }
+          - {
+              label: 'Etiqueta del vídeo',
+              name: 'videoEyebrow',
+              widget: 'string',
+            }
+          - { label: 'Título del vídeo', name: 'videoTitle', widget: 'string' }
+          - {
+              label: 'Descripción del vídeo',
+              name: 'videoDescription',
+              widget: 'text',
+            }
+          - { label: 'URL del vídeo', name: 'videoUrl', widget: 'string' }
+          - {
+              label: 'Título accesible del vídeo',
+              name: 'videoTitleAttribute',
+              widget: 'string',
+            }
+          - {
+              label: 'Etiqueta del mapa',
+              name: 'mapSubtitle',
+              widget: 'string',
+            }
+          - { label: 'Título del mapa', name: 'mapTitle', widget: 'string' }
+          - {
+              label: 'Descripción del mapa',
+              name: 'mapDescription',
+              widget: 'text',
+            }

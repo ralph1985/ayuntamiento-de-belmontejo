@@ -5,6 +5,7 @@ import Landing from '@components/sections/Landing.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import GoogleMap from '@components/integrations/GoogleMap.astro';
 import Button from '@components/ui/Button.astro';
+import { aboutVillage } from '@data/aboutVillage';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -13,16 +14,16 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
-  title="Sobre el Pueblo - Ayuntamiento de Belmontejo"
-  description="Historia, geografía y patrimonio de Belmontejo, municipio de la provincia de Cuenca."
+  title={aboutVillage.pageTitle}
+  description={aboutVillage.pageDescription}
   preloadedImage={optimizedImage}
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing title="Sobre Belmontejo" image={optimizedImage}>
-    <p>Historia, geografía y patrimonio de Belmontejo.</p>
+  <Landing title={aboutVillage.landingTitle} image={optimizedImage}>
+    <p>{aboutVillage.landingIntro}</p>
   </Landing>
 
   <!-- ============================================ -->
@@ -36,17 +37,17 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
         <picture class="cs-picture cs-picture1">
           <source
             media="(max-width: 600px)"
-            srcset="/assets/images/imagen-de-prueba-2-m.jpg"
+            srcset={aboutVillage.overviewImages[0].mobileSrc}
           />
           <source
             media="(min-width: 601px)"
-            srcset="/assets/images/imagen-de-prueba-2.jpg"
+            srcset={aboutVillage.overviewImages[0].desktopSrc}
           />
           <img
             aria-hidden="true"
             decoding="async"
-            src="/assets/images/imagen-de-prueba-2.jpg"
-            alt="Vista de Belmontejo"
+            src={aboutVillage.overviewImages[0].desktopSrc}
+            alt={aboutVillage.overviewImages[0].alt}
             loading="lazy"
             width="400"
             height="563"
@@ -55,17 +56,17 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
         <picture class="cs-picture cs-picture2">
           <source
             media="(max-width: 600px)"
-            srcset="/assets/images/imagen-de-prueba-4-m.jpg"
+            srcset={aboutVillage.overviewImages[1].mobileSrc}
           />
           <source
             media="(min-width: 601px)"
-            srcset="/assets/images/imagen-de-prueba-4.jpg"
+            srcset={aboutVillage.overviewImages[1].desktopSrc}
           />
           <img
             aria-hidden="true"
             decoding="async"
-            src="/assets/images/imagen-de-prueba-4.jpg"
-            alt="Detalle del entorno urbano de Belmontejo"
+            src={aboutVillage.overviewImages[1].desktopSrc}
+            alt={aboutVillage.overviewImages[1].alt}
             loading="lazy"
             width="400"
             height="563"
@@ -74,37 +75,19 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
       </div>
       <!-- Right Content Section-->
       <div class="cs-right">
-        <span class="cs-topper">Sobre Belmontejo</span>
-        <h2 class="cs-title">Ubicación y datos generales</h2>
-        <p class="cs-text">
-          Belmontejo es un municipio español ubicado en la provincia de Cuenca,
-          en la comunidad autónoma de Castilla‑La Mancha. Se encuentra en la
-          comarca de la Manchuela (Manchuela Conquense) y tiene una población
-          que ronda los 129 habitantes a enero de 2024. La altitud media es de
-          aproximadamente 878 m sobre el nivel del mar.
-        </p>
-        <h3 class="cs-h3">Geografía e Historia</h3>
-        <p class="cs-text">
-          El relieve de Belmontejo presenta un terreno ondulado típico de la
-          transición entre la Mancha más plana y la Serranía de Cuenca. Se han
-          encontrado vestigios arqueológicos que remontan su ocupación muy atrás
-          en el tiempo —hasta la Edad del Bronce, época visigoda y romana— lo
-          que indica una larga presencia humana en el territorio.
-        </p>
-        <p class="cs-text">
-          En el siglo XV, formó parte del señorío de Rodrigo Manrique. A lo
-          largo del tiempo, como tantos municipios rurales de interior, ha
-          experimentado los desafíos demográficos característicos de la España
-          rural.
-        </p>
+        <span class="cs-topper">{aboutVillage.overviewEyebrow}</span>
+        <h2 class="cs-title">{aboutVillage.overviewTitle}</h2>
+        <p class="cs-text">{aboutVillage.overviewDescription}</p>
+        <h3 class="cs-h3">{aboutVillage.historyTitle}</h3>
+        {
+          aboutVillage.historyParagraphs.map(paragraph => (
+            <p class="cs-text">{paragraph}</p>
+          ))
+        }
         <div class="cs-flex-group">
-          <p class="cs-flex-p">
-            Belmontejo es un municipio rural de la Manchuela conquense. Su
-            paisaje, sus fuentes y su patrimonio forman parte de la vida
-            cotidiana del pueblo.
-          </p>
-          <span class="cs-name">Ayuntamiento de Belmontejo</span>
-          <span class="cs-job">Municipio de Cuenca</span>
+          <p class="cs-flex-p">{aboutVillage.quote}</p>
+          <span class="cs-name">{aboutVillage.quoteAuthor}</span>
+          <span class="cs-job">{aboutVillage.quoteRole}</span>
           <img
             class="cs-quote-icon"
             loading="lazy"
@@ -128,22 +111,19 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <section id="vista-aerea">
     <div class="cs-container">
       <div class="cs-content">
-        <span class="cs-topper">Vista desde el cielo</span>
-        <h2 class="cs-title">Belmontejo desde las alturas</h2>
-        <p class="cs-text">
-          Este vídeo recorre Belmontejo desde el aire y muestra el casco urbano
-          y los campos de su entorno.
-        </p>
+        <span class="cs-topper">{aboutVillage.videoEyebrow}</span>
+        <h2 class="cs-title">{aboutVillage.videoTitle}</h2>
+        <p class="cs-text">{aboutVillage.videoDescription}</p>
       </div>
       <div class="cs-video-wrapper">
         <iframe
-          src="https://player.vimeo.com/video/1133058869?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&title=0&muted=1&background=1"
+          src={aboutVillage.videoUrl}
           width="400"
           height="300"
           frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
-          title="Belmontejo"></iframe>
+          title={aboutVillage.videoTitleAttribute}></iframe>
       </div>
     </div>
   </section>
@@ -152,7 +132,11 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <!--                 Google Map                   -->
   <!-- ============================================ -->
 
-  <GoogleMap title="Ubicación de Belmontejo" subtitle="Dónde estamos" />
+  <GoogleMap
+    title={aboutVillage.mapTitle}
+    subtitle={aboutVillage.mapSubtitle}
+    description={aboutVillage.mapDescription}
+  />
 
   <FAQ />
   <CTA />
