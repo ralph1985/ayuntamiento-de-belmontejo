@@ -1,51 +1,197 @@
 ---
-/**
- * * This custom layout displays bandos posts and a sidebar
- **/
-import FeaturedContent from '@components/sections/FeaturedContent.astro';
 import RecentArticleCard from '@components/ui/RecentArticleCard.astro';
+import { getBandoCategories } from './bandos.helpers';
 
 const { posts } = Astro.props;
+const categories = getBandoCategories(posts.map(post => post.data.category));
+const totalPosts = posts.length;
 ---
 
-<section class="news-container">
-  <section class="main-content">
-    {posts.length === 0 && <h1>No hay bandos recientes</h1>}
-    {
-      posts.length >= 1 &&
-        posts.map(post => (
-          <RecentArticleCard
-            title={post.data.title}
-            description={post.data.description}
-            author={post.data.author}
-            date={post.data.date}
-            image={post.data.image}
-            imageAlt={post.data.imageAlt ?? post.data.title}
-            category={post.data.category}
-            primaryLink={{
-              href: `/bandos/${post.id}`,
-              label: 'Leer bando',
-            }}
-            secondaryLink={
-              post.data.link
-                ? {
-                    href: post.data.link,
-                    label: 'Ver original',
-                    external: true,
-                  }
-                : undefined
-            }
-            variant="bandos"
-          />
-        ))
-    }
-  </section>
-  <aside class="news-sidebar">
-    <div class="news-sidebar_widget-wrapper">
-      <FeaturedContent type="bandos" limit={3} />
+<section class="bandos-list" aria-labelledby="bandos-list-title">
+  <div class="bandos-list__header">
+    <div>
+      <h2 id="bandos-list-title">Avisos publicados</h2>
+      <p class="bandos-list__summary" data-results-summary aria-live="polite">
+        {
+          totalPosts === 1
+            ? '1 bando publicado'
+            : `${totalPosts} bandos publicados`
+        }
+      </p>
     </div>
-  </aside>
+  </div>
+
+  <form class="bandos-filters" data-bandos-filters role="search">
+    <div class="bandos-filters__field bandos-filters__field--search">
+      <label for="bandos-search">Buscar en los bandos</label>
+      <input
+        id="bandos-search"
+        name="q"
+        type="search"
+        placeholder="Título, contenido o categoría"
+        autocomplete="off"
+        data-bandos-search
+      />
+    </div>
+
+    <div class="bandos-filters__field">
+      <label for="bandos-category">Filtrar por categoría</label>
+      <select id="bandos-category" name="categoria" data-bandos-category>
+        <option value="">Todas las categorías</option>
+        {
+          categories.map(category => (
+            <option value={category}>{category}</option>
+          ))
+        }
+      </select>
+    </div>
+
+    <button type="button" class="bandos-filters__clear" data-bandos-clear>
+      Limpiar filtros
+    </button>
+  </form>
+
+  {
+    posts.length > 0 ? (
+      <div class="bandos-results" data-bandos-results>
+        {posts.map(post => (
+          <div
+            class="bandos-result"
+            data-bandos-result
+            data-category={post.data.category}
+            data-search-text={`${post.data.title} ${post.data.description} ${post.data.category}`}
+          >
+            <RecentArticleCard
+              title={post.data.title}
+              description={post.data.description}
+              author={post.data.author}
+              date={post.data.date}
+              image={post.data.image}
+              imageAlt={post.data.imageAlt ?? post.data.title}
+              category={post.data.category}
+              primaryLink={{
+                href: `/bandos/${post.id}`,
+                label: 'Leer bando',
+              }}
+              secondaryLink={
+                post.data.link
+                  ? {
+                      href: post.data.link,
+                      label: 'Ver original',
+                      external: true,
+                    }
+                  : undefined
+              }
+              variant="bandos"
+            />
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p class="bandos-empty">No hay bandos publicados.</p>
+    )
+  }
+
+  <p class="bandos-empty" data-bandos-empty hidden>
+    No hay bandos que coincidan con estos filtros.
+  </p>
 </section>
+
+<script>
+  const initializeBandosFilters = () => {
+    const root = document.querySelector('[data-bandos-filters]');
+    const results = document.querySelector('[data-bandos-results]');
+
+    if (!root || !results || root.dataset.initialized) {
+      return;
+    }
+
+    root.dataset.initialized = 'true';
+    const search = root.querySelector('[data-bandos-search]');
+    const category = root.querySelector('[data-bandos-category]');
+    const clear = root.querySelector('[data-bandos-clear]');
+    const summary = document.querySelector('[data-results-summary]');
+    const empty = document.querySelector('[data-bandos-empty]');
+    const items = [...results.querySelectorAll('[data-bandos-result]')];
+    const total = items.length;
+    const params = new URLSearchParams(globalThis.location.search);
+
+    const normalize = value =>
+      value
+        .toLocaleLowerCase('es')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+
+    const updateUrl = (query, selectedCategory) => {
+      const nextUrl = new URL(globalThis.location.href);
+
+      if (query) nextUrl.searchParams.set('q', query);
+      else nextUrl.searchParams.delete('q');
+
+      if (selectedCategory) {
+        nextUrl.searchParams.set('categoria', selectedCategory);
+      } else {
+        nextUrl.searchParams.delete('categoria');
+      }
+
+      globalThis.history.replaceState({}, '', nextUrl);
+    };
+
+    const render = ({ updateHistory = true } = {}) => {
+      const query = search?.value.trim() ?? '';
+      const selectedCategory = category?.value ?? '';
+      const normalizedQuery = normalize(query);
+      let visibleCount = 0;
+
+      items.forEach(item => {
+        const matchesQuery = normalize(item.dataset.searchText ?? '').includes(
+          normalizedQuery
+        );
+        const matchesCategory =
+          !selectedCategory || item.dataset.category === selectedCategory;
+        const visible = matchesQuery && matchesCategory;
+
+        item.hidden = !visible;
+        if (visible) visibleCount += 1;
+      });
+
+      if (summary) {
+        summary.textContent =
+          visibleCount === total
+            ? `${total} ${total === 1 ? 'bando publicado' : 'bandos publicados'}`
+            : `${visibleCount} de ${total} ${total === 1 ? 'bando' : 'bandos'}`;
+      }
+
+      if (empty) empty.hidden = visibleCount > 0;
+      if (clear) clear.disabled = !query && !selectedCategory;
+      if (updateHistory) updateUrl(query, selectedCategory);
+    };
+
+    const initialQuery = params.get('q') ?? '';
+    const initialCategory = params.get('categoria') ?? '';
+    if (search) search.value = initialQuery;
+    if (
+      category &&
+      [...category.options].some(option => option.value === initialCategory)
+    ) {
+      category.value = initialCategory;
+    }
+
+    search?.addEventListener('input', () => render());
+    category?.addEventListener('change', () => render());
+    clear?.addEventListener('click', () => {
+      if (search) search.value = '';
+      if (category) category.value = '';
+      render();
+      search?.focus();
+    });
+
+    render({ updateHistory: false });
+  };
+
+  document.addEventListener('astro:page-load', initializeBandosFilters);
+  initializeBandosFilters();
+</script>
 
 <style lang="less">
   @import '../styles/layouts/bandos-recent-articles-with-sidebar.less';

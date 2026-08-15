@@ -1,98 +1,111 @@
-/*-- -------------------------- -->
-<---        Main Content        -->
-<--- -------------------------- -*/
+.bandos-list {
+  width: min(100% - 2rem, 70rem);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 5rem) 0;
+}
 
-/* Mobile - 360px */
-@media only screen and (min-width: 0em) {
-  .news-container {
-    width: 94%;
-    max-width: (1120/16em);
-    margin: auto;
-    padding: clamp(60px, 7vw, 100px) 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: (50/16em);
-    position: relative;
+.bandos-list__header h2 {
+  margin: 0;
+  color: var(--headerColor);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.bandos-list__summary {
+  margin: 0.5rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+.bandos-filters {
+  margin: 2rem 0;
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(12rem, 1fr) auto;
+  align-items: end;
+  gap: 1rem;
+  background: var(--background-sections);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+}
+
+.bandos-filters__field {
+  display: grid;
+  gap: 0.4rem;
+
+  label {
+    color: var(--headerColor);
+    font-size: 0.8125rem;
+    font-weight: 700;
   }
 
-  .main-content {
+  input,
+  select {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: (50/16em);
+    min-height: 2.75rem;
+    padding: 0.625rem 0.75rem;
+    color: var(--text-primary);
+    background: var(--background-main);
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font: inherit;
+  }
+
+  input::placeholder {
+    color: var(--text-secondary);
+    opacity: 1;
   }
 }
 
-/* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
-  .news-container {
-    flex-direction: row;
-    align-items: flex-start;
-    column-gap: (48/16em);
+.bandos-filters__clear {
+  min-height: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  color: var(--headerColor);
+  background: transparent;
+  border: 1px solid var(--primary);
+  border-radius: 0.25rem;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled) {
+    color: var(--text-white);
+    background: var(--primary);
   }
 
-  .main-content {
-    width: 69%;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 }
 
-/*-- -------------------------- -->
-<---          Sidebar           -->
-<--- -------------------------- -*/
+.bandos-results {
+  display: grid;
+  gap: 0.75rem;
+}
 
-/* Mobile - 360px */
-@media only screen and (min-width: 0em) {
-  .news-sidebar {
+.bandos-result[hidden] {
+  display: none;
+}
+
+.bandos-empty {
+  margin: 2rem 0 0;
+  padding: 2rem 1rem;
+  color: var(--text-secondary);
+  background: var(--background-sections);
+  border: 1px dashed var(--border-color);
+  text-align: center;
+}
+
+@media only screen and (max-width: 47.9375rem) {
+  .bandos-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .bandos-filters__clear {
     width: 100%;
-    max-width: (795/16em);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    row-gap: (50/16em);
-  }
-
-  .news-sidebar_widget-wrapper {
-    width: 100%;
-    padding: (35/16em);
-    background-color: #f7f7f7;
-    border-radius: (8/16em);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-}
-
-/* Desktop - 1024px */
-@media only screen and (min-width: 64em) {
-  .news-sidebar {
-    width: 27%;
-    max-width: (305/16em);
-  }
-}
-
-/* Dark Mode */
-@media only screen and (min-width: 0em) {
-  body.dark-mode {
-    .news-sidebar_widget-wrapper {
-      background-color: var(--medium);
-    }
-
-    .news-sidebar_widget-h3,
-    .news-sidebar_widget-date,
-    .news-sidebar_widget-header {
-      color: #f7f7f7;
-    }
-
-    .news-sidebar_widget-header {
-      &:after {
-        background: var(--primary);
-      }
-    }
   }
 }
