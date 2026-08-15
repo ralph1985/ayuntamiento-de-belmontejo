@@ -9,18 +9,26 @@ test.describe('Consulta de bandos', () => {
     const search = page.getByLabel('Buscar en los bandos');
     const summary = page.locator('[data-results-summary]');
 
-    await expect(summary).toContainText('44 bandos publicados');
+    await expect(summary).toContainText('Mostrando 8 de 44 bandos');
+    await expect(
+      page.locator('[data-bandos-result]:not([hidden])')
+    ).toHaveCount(8);
+    await page.getByRole('button', { name: 'Ver más' }).click();
+    await expect(summary).toContainText('Mostrando 16 de 44 bandos');
+    await expect(
+      page.locator('[data-bandos-result]:not([hidden])')
+    ).toHaveCount(16);
     await search.fill('ayuntamiento cerrado');
 
     await expect(page).toHaveURL(/\/bandos\?q=ayuntamiento\+cerrado$/);
-    await expect(summary).toContainText('de 44 bandos');
+    await expect(summary).toContainText('5 bandos publicados');
     await expect(
       page.locator('[data-bandos-result]:not([hidden])')
     ).toHaveCount(5);
 
     await page.getByRole('button', { name: 'Limpiar filtros' }).click();
     await expect(page).toHaveURL(/\/bandos\/?$/);
-    await expect(summary).toContainText('44 bandos publicados');
+    await expect(summary).toContainText('Mostrando 8 de 44 bandos');
   });
 
   test('combina categoría y búsqueda y muestra el estado vacío', async ({
@@ -32,12 +40,12 @@ test.describe('Consulta de bandos', () => {
     await expect(page).toHaveURL(/categoria=Info\+General/);
     await expect(
       page.locator('[data-bandos-result]:not([hidden])')
-    ).toHaveCount(44);
+    ).toHaveCount(8);
 
     await page.getByLabel('Buscar en los bandos').fill('no existe este aviso');
     await expect(page.locator('[data-bandos-empty]')).toBeVisible();
     await expect(page.locator('[data-results-summary]')).toContainText(
-      '0 de 44 bandos'
+      '0 bandos publicados'
     );
   });
 

@@ -92,6 +92,14 @@ const totalPosts = posts.length;
     )
   }
 
+  {
+    posts.length > 0 && (
+      <button type="button" class="bandos-more" data-bandos-more>
+        Ver más
+      </button>
+    )
+  }
+
   <p class="bandos-empty" data-bandos-empty hidden>
     No hay bandos que coincidan con estos filtros.
   </p>
@@ -110,10 +118,12 @@ const totalPosts = posts.length;
     const search = root.querySelector('[data-bandos-search]');
     const category = root.querySelector('[data-bandos-category]');
     const clear = root.querySelector('[data-bandos-clear]');
+    const more = document.querySelector('[data-bandos-more]');
     const summary = document.querySelector('[data-results-summary]');
     const empty = document.querySelector('[data-bandos-empty]');
     const items = [...results.querySelectorAll('[data-bandos-result]')];
-    const total = items.length;
+    const pageSize = 8;
+    let visibleLimit = pageSize;
     const params = new URLSearchParams(globalThis.location.search);
 
     const normalize = value =>
@@ -141,7 +151,7 @@ const totalPosts = posts.length;
       const query = search?.value.trim() ?? '';
       const selectedCategory = category?.value ?? '';
       const normalizedQuery = normalize(query);
-      let visibleCount = 0;
+      const matchingItems = [];
 
       items.forEach(item => {
         const matchesQuery = normalize(item.dataset.searchText ?? '').includes(
@@ -149,20 +159,34 @@ const totalPosts = posts.length;
         );
         const matchesCategory =
           !selectedCategory || item.dataset.category === selectedCategory;
-        const visible = matchesQuery && matchesCategory;
-
-        item.hidden = !visible;
-        if (visible) visibleCount += 1;
+        if (matchesQuery && matchesCategory) matchingItems.push(item);
       });
+
+      matchingItems.forEach((item, index) => {
+        item.hidden = index >= visibleLimit;
+      });
+
+      items
+        .filter(item => !matchingItems.includes(item))
+        .forEach(item => {
+          item.hidden = true;
+        });
+
+      const visibleCount = Math.min(visibleLimit, matchingItems.length);
 
       if (summary) {
         summary.textContent =
-          visibleCount === total
-            ? `${total} ${total === 1 ? 'bando publicado' : 'bandos publicados'}`
-            : `${visibleCount} de ${total} ${total === 1 ? 'bando' : 'bandos'}`;
+          visibleCount < matchingItems.length
+            ? `Mostrando ${visibleCount} de ${matchingItems.length} bandos`
+            : `${matchingItems.length} ${
+                matchingItems.length === 1
+                  ? 'bando publicado'
+                  : 'bandos publicados'
+              }`;
       }
 
-      if (empty) empty.hidden = visibleCount > 0;
+      if (empty) empty.hidden = matchingItems.length > 0;
+      if (more) more.hidden = visibleCount >= matchingItems.length;
       if (clear) clear.disabled = !query && !selectedCategory;
       if (updateHistory) updateUrl(query, selectedCategory);
     };
@@ -177,13 +201,23 @@ const totalPosts = posts.length;
       category.value = initialCategory;
     }
 
-    search?.addEventListener('input', () => render());
-    category?.addEventListener('change', () => render());
+    const resetAndRender = () => {
+      visibleLimit = pageSize;
+      render();
+    };
+
+    search?.addEventListener('input', resetAndRender);
+    category?.addEventListener('change', resetAndRender);
     clear?.addEventListener('click', () => {
       if (search) search.value = '';
       if (category) category.value = '';
+      visibleLimit = pageSize;
       render();
       search?.focus();
+    });
+    more?.addEventListener('click', () => {
+      visibleLimit += pageSize;
+      render({ updateHistory: false });
     });
 
     render({ updateHistory: false });
