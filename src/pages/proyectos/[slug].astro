@@ -1,0 +1,50 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTA from '@components/sections/CTA.astro';
+import Landing from '@components/sections/Landing.astro';
+import ProjectDetail from '@components/sections/ProjectDetail.astro';
+import { projects } from '@data/projects';
+import type { Project } from '@data/projects';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props as { project: Project };
+
+// Optimize the shared landing image for all project detail pages.
+import landingImage from '@assets/images/vista-aerea-2.jpg';
+import { getImage } from 'astro:assets';
+const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
+---
+
+<BaseLayout
+  title={`${project.title} - Ayuntamiento de Belmontejo`}
+  description={project.pageDescription}
+  preloadedImage={optimizedImage}
+>
+  <Landing title={project.title} image={optimizedImage}>
+    <p>{project.landingIntro}</p>
+  </Landing>
+
+  <ProjectDetail
+    eyebrow={project.eyebrow}
+    title={project.detailTitle}
+    description={project.detailDescription}
+    imageSrc={project.imageSrc}
+    imageAlt={project.imageAlt}
+    facts={project.facts}
+    sourceHref={project.sourceHref}
+    sourceLabel={project.sourceLabel}
+  />
+  <CTA />
+</BaseLayout>
+
+<style lang="less">
+  @import '../../styles/pages/proyectos.less';
+</style>

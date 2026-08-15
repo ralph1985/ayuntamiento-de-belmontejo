@@ -3,6 +3,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/sections/CTA.astro';
 import Landing from '@components/sections/Landing.astro';
 import Button from '@components/ui/Button.astro';
+import { projects } from '@data/projects';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -40,29 +41,22 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
       </div>
 
       <div class="projects-index__grid">
-        <article class="project-card">
-          <span class="project-card__number">01</span>
-          <h3>Camping rural sostenible</h3>
-          <p>
-            Una nueva infraestructura turística vinculada al Plan de
-            Sostenibilidad Turística en Destino de ADESIMAN.
-          </p>
-          <Button href="/proyectos/proyecto-1" variant="secondary" size="sm">
-            Ver proyecto
-          </Button>
-        </article>
-
-        <article class="project-card">
-          <span class="project-card__number">02</span>
-          <h3>Pista de pádel</h3>
-          <p>
-            Una instalación deportiva ya inaugurada para practicar pádel sin
-            salir de Belmontejo.
-          </p>
-          <Button href="/proyectos/proyecto-2" variant="secondary" size="sm">
-            Ver proyecto
-          </Button>
-        </article>
+        {
+          projects.map(project => (
+            <article class="project-card">
+              <span class="project-card__number">{project.number}</span>
+              <h3>{project.title}</h3>
+              <p>{project.summary}</p>
+              <Button
+                href={`/proyectos/${project.slug}`}
+                variant="secondary"
+                size="sm"
+              >
+                Ver proyecto
+              </Button>
+            </article>
+          ))
+        }
       </div>
     </div>
   </section>
