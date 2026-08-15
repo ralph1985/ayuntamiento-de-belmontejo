@@ -2,9 +2,9 @@
 backend:
   name: github
   repo: ralph1985/ayuntamiento-de-belmontejo
-  branch: develop
-  site_domain: develop-ayuntamiento-de-belmontejo.vercel.app
-  base_url: https://develop-ayuntamiento-de-belmontejo.vercel.app
+  branch: main
+  site_domain: ayuntamiento-de-belmontejo.vercel.app
+  base_url: https://ayuntamiento-de-belmontejo.vercel.app
   auth_endpoint: oauth
 
 # Enable editorial workflow for content approval process
@@ -19,7 +19,7 @@ locale: 'es'
 logo_url: https://decapbridge.com/decapcms-with-bridge.svg
 
 # Add site link in DecapCMS (optional)
-site_url: https://develop-ayuntamiento-de-belmontejo.vercel.app
+site_url: https://ayuntamiento-de-belmontejo.vercel.app
 
 media_folder: src/assets/images # Location where files will be stored in the repo - we store them in src so that Astro can optimize them.
 public_folder: src/assets/images # Ensure that this path is the same as the media_folder path above.
@@ -290,4 +290,68 @@ collections:
                   widget: 'boolean',
                   default: false,
                   hint: 'Solo los enlaces activos aparecerán como enlaces clicables en el footer',
+                }
+
+  - name: 'projects'
+    label: 'Proyectos'
+    files:
+      - label: 'Proyectos municipales'
+        name: 'projects'
+        file: 'src/data/projects.json'
+        media_folder: 'public/assets/images/proyectos'
+        public_folder: '/assets/images/proyectos'
+        fields:
+          - label: 'Proyectos'
+            name: 'projects'
+            widget: 'list'
+            summary: '{{fields.title}}'
+            fields:
+              - {
+                  label: 'Slug de la URL',
+                  name: 'slug',
+                  widget: 'string',
+                  hint: 'No lo cambies si quieres conservar los enlaces actuales.',
+                }
+              - { label: 'Número', name: 'number', widget: 'string' }
+              - { label: 'Título', name: 'title', widget: 'string' }
+              - {
+                  label: 'Descripción SEO',
+                  name: 'pageDescription',
+                  widget: 'text',
+                }
+              - { label: 'Introducción', name: 'landingIntro', widget: 'text' }
+              - { label: 'Resumen', name: 'summary', widget: 'text' }
+              - { label: 'Etiqueta', name: 'eyebrow', widget: 'string' }
+              - {
+                  label: 'Título del detalle',
+                  name: 'detailTitle',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Descripción del detalle',
+                  name: 'detailDescription',
+                  widget: 'text',
+                }
+              - { label: 'Imagen', name: 'imageSrc', widget: 'image' }
+              - {
+                  label: 'Descripción de la imagen',
+                  name: 'imageAlt',
+                  widget: 'string',
+                }
+              - label: 'Datos destacados'
+                name: 'facts'
+                widget: 'list'
+                summary: '{{fields.label}}'
+                fields:
+                  - { label: 'Etiqueta', name: 'label', widget: 'string' }
+                  - { label: 'Valor', name: 'value', widget: 'string' }
+              - {
+                  label: 'Enlace de la fuente',
+                  name: 'sourceHref',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Texto del enlace',
+                  name: 'sourceLabel',
+                  widget: 'string',
                 }

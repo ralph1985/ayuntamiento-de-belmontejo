@@ -1,0 +1,62 @@
+{
+  "projects": [
+    {
+      "slug": "proyecto-1",
+      "number": "01",
+      "title": "Camping rural sostenible",
+      "pageDescription": "Proyecto de camping rural sostenible de Belmontejo, incluido en el Plan de Sostenibilidad Turística en Destino de ADESIMAN.",
+      "landingIntro": "Un nuevo recurso turístico para disfrutar del entorno de Belmontejo.",
+      "summary": "Una nueva infraestructura turística vinculada al Plan de Sostenibilidad Turística en Destino de ADESIMAN.",
+      "eyebrow": "Turismo y sostenibilidad",
+      "detailTitle": "Un camping para abrir Belmontejo a nuevas visitas",
+      "detailDescription": "El Ayuntamiento participa en un proyecto de construcción de un camping rural sostenible dentro del Plan de Sostenibilidad Turística en Destino “Sierra y Mancha Conquense” de ADESIMAN. La actuación busca sumar un alojamiento de corta duración y reforzar la relación entre turismo, paisaje y economía local.",
+      "imageSrc": "/assets/images/vista_aerea.jpg",
+      "imageAlt": "Vista aérea del entorno de Belmontejo",
+      "facts": [
+        {
+          "label": "Programa",
+          "value": "Plan de Sostenibilidad Turística en Destino de ADESIMAN"
+        },
+        {
+          "label": "Estado",
+          "value": "Contrato formalizado en enero de 2026"
+        },
+        {
+          "label": "Adjudicación",
+          "value": "162.000 € a Edificaciones Conquenses S. L."
+        }
+      ],
+      "sourceHref": "https://contratos.gobierto.es/licitaciones/4920754",
+      "sourceLabel": "Consultar la licitación"
+    },
+    {
+      "slug": "proyecto-2",
+      "number": "02",
+      "title": "Pista de pádel",
+      "pageDescription": "Nueva pista de pádel de Belmontejo, inaugurada en julio de 2026 con el apoyo del Ayuntamiento, la Diputación de Cuenca y ADESIMAN.",
+      "landingIntro": "Más deporte y ocio saludable sin salir del municipio.",
+      "summary": "Una instalación deportiva ya inaugurada para practicar pádel sin salir de Belmontejo.",
+      "eyebrow": "Deporte y vida local",
+      "detailTitle": "Una pista para jugar en el pueblo",
+      "detailDescription": "Belmontejo cuenta desde julio de 2026 con una nueva pista de pádel. La instalación responde a una demanda vecinal y evita desplazamientos a otros municipios para practicar este deporte, ampliando las opciones de ocio saludable durante todo el año.",
+      "imageSrc": "/assets/images/proyectos/pista-padel-belmontejo.jpg",
+      "imageAlt": "Cartel municipal de la inauguración de la pista de pádel de Belmontejo",
+      "facts": [
+        {
+          "label": "Inauguración",
+          "value": "10 de julio de 2026"
+        },
+        {
+          "label": "Inversión",
+          "value": "53.000 €"
+        },
+        {
+          "label": "Colaboración",
+          "value": "Ayuntamiento, Diputación de Cuenca y ADESIMAN"
+        }
+      ],
+      "sourceHref": "https://www.bandomovil.com/belmontejo/1592378/0",
+      "sourceLabel": "Ver el aviso municipal"
+    }
+  ]
+}
