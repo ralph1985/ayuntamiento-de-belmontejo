@@ -1,0 +1,117 @@
+/* Progressive scroll reveals. The default state stays fully visible so the
+   site remains usable when scroll-driven animations are unavailable. */
+
+@keyframes municipal-reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes municipal-reveal-left {
+  from {
+    opacity: 0;
+    transform: translateX(-1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes municipal-reveal-right {
+  from {
+    opacity: 0;
+    transform: translateX(1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@supports (animation-timeline: view()) and (animation-range: entry 0% cover 35%) {
+  @media (prefers-reduced-motion: no-preference) {
+    .home-hero__content,
+    .page-hero__inner,
+    .page-hero__media,
+    .section-heading,
+    .services .card,
+    .village-story__content,
+    .cs-faq-item,
+    .home-updates .news-sidebar_widget-link,
+    .home-community__intro,
+    #cta .container,
+    .archive-list__header,
+    .archive-results .archive-result,
+    .project-detail__content,
+    .projects-index__heading,
+    .projects-index .project-card,
+    #search-section .cs-search-wrapper,
+    #search-section .cs-search-tips,
+    #sbs .cs-left,
+    #sbs .cs-right,
+    #vista-aerea .cs-content,
+    #vista-aerea .cs-video-wrapper,
+    .news-header,
+    .news-mainImage,
+    #news-content,
+    .news-sidebar,
+    #weather-page > *,
+    #cs-contact > *,
+    #google-map,
+    .hobby-detail-item,
+    .legal-page__header,
+    .legal-page__content section {
+      animation: linear municipal-reveal-up both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 32%;
+    }
+
+    .village-story__media,
+    #cta picture,
+    .project-detail__figure,
+    .news-mainImage {
+      animation-name: municipal-reveal-right;
+      animation-range: entry 0% cover 38%;
+    }
+
+    .services .card:nth-child(even),
+    .home-updates .news-sidebar_widget-link:nth-child(even),
+    .hobby-detail-item:nth-child(even) {
+      animation-name: municipal-reveal-left;
+    }
+
+    .services .card:nth-child(3n),
+    .home-updates .news-sidebar_widget-link:nth-child(3n),
+    .hobby-detail-item:nth-child(3n) {
+      animation-name: municipal-reveal-right;
+    }
+
+    .page-hero__media,
+    #sbs .cs-left,
+    #vista-aerea .cs-video-wrapper {
+      animation-name: municipal-reveal-right;
+      animation-range: entry 0% cover 38%;
+    }
+
+    .projects-index .project-card:nth-child(even),
+    #search-section .cs-search-tips {
+      animation-name: municipal-reveal-left;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    animation: none !important;
+    transform: none !important;
+  }
+}
