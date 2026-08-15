@@ -25,6 +25,7 @@ test.describe('Consulta de bandos', () => {
     await expect(
       page.locator('[data-bandos-result]:not([hidden])')
     ).toHaveCount(5);
+    await expect(page.getByRole('button', { name: 'Ver más' })).toBeHidden();
 
     await page.getByRole('button', { name: 'Limpiar filtros' }).click();
     await expect(page).toHaveURL(/\/bandos\/?$/);
@@ -44,6 +45,7 @@ test.describe('Consulta de bandos', () => {
 
     await page.getByLabel('Buscar en los bandos').fill('no existe este aviso');
     await expect(page.locator('[data-bandos-empty]')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Ver más' })).toBeHidden();
     await expect(page.locator('[data-results-summary]')).toContainText(
       '0 bandos publicados'
     );
