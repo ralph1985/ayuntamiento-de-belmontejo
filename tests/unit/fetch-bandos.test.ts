@@ -8,7 +8,12 @@ import {
   generateFrontmatter,
   parseRSSItems,
 } from '../../scripts/fetch-bandos.js';
-import { buildNotificationText } from '../../scripts/notify-bando-sync.js';
+import {
+  buildBandoUrl,
+  buildNotificationHtml,
+  buildNotificationText,
+  escapeHtml,
+} from '../../scripts/notify-bando-sync.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 describe('parseRSSItems', () => {
@@ -160,17 +165,49 @@ describe('escapeYaml', () => {
 });
 
 describe('buildNotificationText', () => {
-  it('lists the published bando files and the commit', () => {
+  const bandos = [
+    {
+      title: 'Primer aviso',
+      url: 'https://example.com/bandos/1-primer-aviso/',
+    },
+    {
+      title: 'Segundo aviso',
+      url: 'https://example.com/bandos/2-segundo-aviso/',
+    },
+  ];
+
+  it('lists the published bandos with direct links and the commit', () => {
     const text = buildNotificationText({
       commit: 'abc123',
-      files: [
-        'src/content/bandos/1-primer-aviso.md',
-        'src/content/bandos/2-segundo-aviso.md',
-      ],
+      bandos,
+      siteUrl: 'https://example.com',
     });
 
     expect(text).toContain('Se han publicado 2 bandos nuevos');
-    expect(text).toContain('Commit: abc123');
-    expect(text).toContain('- src/content/bandos/1-primer-aviso.md');
+    expect(text).toContain('Commit abc123');
+    expect(text).toContain(
+      '- Primer aviso: https://example.com/bandos/1-primer-aviso/'
+    );
+  });
+
+  it('builds a safe HTML email with links to each bando and the index', () => {
+    const html = buildNotificationHtml({
+      commit: 'abc123',
+      bandos: [
+        { title: 'Aviso <urgente>', url: 'https://example.com/bandos/1/' },
+      ],
+      siteUrl: 'https://example.com',
+    });
+
+    expect(html).toContain('Aviso &lt;urgente&gt;');
+    expect(html).toContain('href="https://example.com/bandos/1/"');
+    expect(html).toContain('href="https://example.com/bandos/"');
+  });
+
+  it('escapes HTML and builds direct bando URLs', () => {
+    expect(escapeHtml('A & B < C')).toBe('A &amp; B &lt; C');
+    expect(
+      buildBandoUrl('src/content/bandos/1-aviso.md', 'https://example.com/')
+    ).toBe('https://example.com/bandos/1-aviso/');
   });
 });

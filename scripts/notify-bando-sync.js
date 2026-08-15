@@ -1,17 +1,78 @@
 /* eslint-disable no-console */
+/* global URL */
 import 'dotenv/config';
 import { execFile } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
 import { promisify } from 'node:util';
 import nodemailer from 'nodemailer';
 
 const execFileAsync = promisify(execFile);
+const defaultSiteUrl = 'https://ayuntamiento-de-belmontejo.vercel.app';
 
-export function buildNotificationText({ commit, files }) {
-  const count = files.length;
+export function escapeHtml(value) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+export function getBandoTitle(filePath) {
+  const content = fs.readFileSync(filePath, 'utf8');
+  const match = content.match(/^title:\s+'(.*)'$/m);
+
+  if (!match) {
+    return path.basename(filePath, path.extname(filePath));
+  }
+
+  return match[1].replaceAll("''", "'");
+}
+
+export function buildBandoUrl(filePath, siteUrl = defaultSiteUrl) {
+  const slug = path.basename(filePath, path.extname(filePath));
+  return new URL(`/bandos/${slug}/`, siteUrl).toString();
+}
+
+export function buildNotificationText({ commit, bandos, siteUrl }) {
+  const count = bandos.length;
   const label = count === 1 ? 'bando nuevo' : 'bandos nuevos';
-  const list = files.map(file => `- ${file}`).join('\n');
+  const list = bandos.map(bando => `- ${bando.title}: ${bando.url}`).join('\n');
 
-  return `Se han publicado ${count} ${label} en la web del Ayuntamiento de Belmontejo.\n\nCommit: ${commit}\n\nArchivos actualizados:\n${list}`;
+  return `Se han publicado ${count} ${label} en la web del Ayuntamiento de Belmontejo.\n\n${list}\n\nConsulta todos los bandos: ${siteUrl}/bandos/\n\nActualización automática · Commit ${commit}`;
+}
+
+export function buildNotificationHtml({ commit, bandos, siteUrl }) {
+  const count = bandos.length;
+  const label = count === 1 ? 'bando nuevo' : 'bandos nuevos';
+  const rows = bandos
+    .map(
+      bando => `<li style="margin: 0 0 12px;">
+  <a href="${escapeHtml(bando.url)}" style="color: #155e75; font-weight: 700; text-decoration: none;">${escapeHtml(bando.title)}</a>
+</li>`
+    )
+    .join('\n');
+
+  return `<!doctype html>
+<html lang="es">
+  <body style="margin: 0; padding: 24px; background: #f4f1ea; color: #1f2933; font-family: Arial, sans-serif;">
+    <main style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden;">
+      <header style="padding: 28px 32px; background: #155e75; color: #ffffff;">
+        <p style="margin: 0 0 8px; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase;">Ayuntamiento de Belmontejo</p>
+        <h1 style="margin: 0; font-size: 26px; line-height: 1.2;">${count} ${label} publicado${count === 1 ? '' : 's'}</h1>
+      </header>
+      <section style="padding: 28px 32px;">
+        <p style="margin: 0 0 20px; line-height: 1.55;">La actualización automática ha publicado los siguientes avisos municipales:</p>
+        <ul style="margin: 0 0 28px; padding-left: 20px; line-height: 1.5;">
+${rows}
+        </ul>
+        <a href="${escapeHtml(`${siteUrl}/bandos/`)}" style="display: inline-block; padding: 12px 18px; background: #155e75; border-radius: 6px; color: #ffffff; font-weight: 700; text-decoration: none;">Ver todos los bandos</a>
+      </section>
+      <footer style="padding: 18px 32px; background: #f4f1ea; color: #52606d; font-size: 13px; line-height: 1.5;">Actualización automática del RSS oficial · Commit ${escapeHtml(commit)}</footer>
+    </main>
+  </body>
+</html>`;
 }
 
 export async function getChangedBandoFiles(commit) {
@@ -26,6 +87,14 @@ export async function getChangedBandoFiles(commit) {
   ]);
 
   return stdout.split('\n').filter(Boolean);
+}
+
+export async function getChangedBandos(commit, siteUrl) {
+  const files = await getChangedBandoFiles(commit);
+  return files.map(file => ({
+    title: getBandoTitle(file),
+    url: buildBandoUrl(file, siteUrl),
+  }));
 }
 
 export async function notifyBandoSync(commit) {
@@ -43,8 +112,12 @@ export async function notifyBandoSync(commit) {
     );
   }
 
-  const files = await getChangedBandoFiles(commit);
-  if (files.length === 0) {
+  const siteUrl = (process.env.BANDOS_SITE_URL ?? defaultSiteUrl).replace(
+    /\/$/,
+    ''
+  );
+  const bandos = await getChangedBandos(commit, siteUrl);
+  if (bandos.length === 0) {
     throw new Error(`Commit ${commit} does not contain bando changes`);
   }
 
@@ -59,12 +132,14 @@ export async function notifyBandoSync(commit) {
     },
   });
 
-  const text = buildNotificationText({ commit, files });
+  const text = buildNotificationText({ commit, bandos, siteUrl });
+  const html = buildNotificationHtml({ commit, bandos, siteUrl });
   await transporter.sendMail({
     from: process.env.BANDOS_NOTIFY_FROM,
     to: process.env.BANDOS_NOTIFY_TO,
-    subject: `Belmontejo: ${files.length} bando${files.length === 1 ? '' : 's'} publicado${files.length === 1 ? '' : 's'}`,
+    subject: `Belmontejo: ${bandos.length} bando${bandos.length === 1 ? '' : 's'} publicado${bandos.length === 1 ? '' : 's'}`,
     text,
+    html,
   });
 }
 
