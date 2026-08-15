@@ -34,15 +34,15 @@ const navigationScenarios: NavigationScenario[] = [
     expectedHeading: /Bandos/i,
   },
   {
-    label: 'Proyecto 1',
+    label: 'Camping rural',
     expectedPath: '/proyectos/proyecto-1',
-    expectedHeading: /Proyecto 1/i,
+    expectedHeading: /Camping rural sostenible/i,
     parentLabel: 'Proyectos',
   },
   {
-    label: 'Proyecto 2',
+    label: 'Pista de pádel',
     expectedPath: '/proyectos/proyecto-2',
-    expectedHeading: /Proyecto 2/i,
+    expectedHeading: /Pista de pádel/i,
     parentLabel: 'Proyectos',
   },
   {

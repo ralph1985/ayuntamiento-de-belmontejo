@@ -2,7 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/sections/CTA.astro';
 import Landing from '@components/sections/Landing.astro';
-import ProjectPending from '@components/sections/ProjectPending.astro';
+import Button from '@components/ui/Button.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -26,10 +26,46 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
     </p>
   </Landing>
 
-  <ProjectPending
-    title="Iniciativas municipales"
-    description="La información de cada proyecto se publicará cuando esté disponible."
-  />
+  <section class="projects-index" aria-labelledby="projects-index-title">
+    <div class="projects-index__inner">
+      <div class="projects-index__heading">
+        <span class="cs-topper">En marcha</span>
+        <h2 id="projects-index-title">
+          Dos actuaciones para el futuro del pueblo
+        </h2>
+        <p>
+          Conoce dos proyectos que amplían la oferta turística y deportiva de
+          Belmontejo.
+        </p>
+      </div>
+
+      <div class="projects-index__grid">
+        <article class="project-card">
+          <span class="project-card__number">01</span>
+          <h3>Camping rural sostenible</h3>
+          <p>
+            Una nueva infraestructura turística vinculada al Plan de
+            Sostenibilidad Turística en Destino de ADESIMAN.
+          </p>
+          <Button href="/proyectos/proyecto-1" variant="secondary" size="sm">
+            Ver proyecto
+          </Button>
+        </article>
+
+        <article class="project-card">
+          <span class="project-card__number">02</span>
+          <h3>Pista de pádel</h3>
+          <p>
+            Una instalación deportiva ya inaugurada para practicar pádel sin
+            salir de Belmontejo.
+          </p>
+          <Button href="/proyectos/proyecto-2" variant="secondary" size="sm">
+            Ver proyecto
+          </Button>
+        </article>
+      </div>
+    </div>
+  </section>
   <CTA />
 </BaseLayout>
 

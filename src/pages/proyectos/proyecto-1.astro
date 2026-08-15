@@ -2,7 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/sections/CTA.astro';
 import Landing from '@components/sections/Landing.astro';
-import ProjectPending from '@components/sections/ProjectPending.astro';
+import ProjectDetail from '@components/sections/ProjectDetail.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -11,17 +11,38 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
-  title="Proyecto 1 - Ayuntamiento de Belmontejo"
-  description="Información sobre una iniciativa municipal del Ayuntamiento de Belmontejo."
+  title="Camping rural sostenible - Ayuntamiento de Belmontejo"
+  description="Proyecto de camping rural sostenible de Belmontejo, incluido en el Plan de Sostenibilidad Turística en Destino de ADESIMAN."
   preloadedImage={optimizedImage}
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing title="Proyecto 1" image={optimizedImage} />
+  <Landing title="Camping rural sostenible" image={optimizedImage}>
+    <p>Un nuevo recurso turístico para disfrutar del entorno de Belmontejo.</p>
+  </Landing>
 
-  <ProjectPending />
+  <ProjectDetail
+    eyebrow="Turismo y sostenibilidad"
+    title="Un camping para abrir Belmontejo a nuevas visitas"
+    description="El Ayuntamiento participa en un proyecto de construcción de un camping rural sostenible dentro del Plan de Sostenibilidad Turística en Destino “Sierra y Mancha Conquense” de ADESIMAN. La actuación busca sumar un alojamiento de corta duración y reforzar la relación entre turismo, paisaje y economía local."
+    imageSrc="/assets/images/vista_aerea.jpg"
+    imageAlt="Vista aérea del entorno de Belmontejo"
+    facts={[
+      {
+        label: 'Programa',
+        value: 'Plan de Sostenibilidad Turística en Destino de ADESIMAN',
+      },
+      { label: 'Estado', value: 'Contrato formalizado en enero de 2026' },
+      {
+        label: 'Adjudicación',
+        value: '162.000 € a Edificaciones Conquenses S. L.',
+      },
+    ]}
+    sourceHref="https://contratos.gobierto.es/licitaciones/4920754"
+    sourceLabel="Consultar la licitación"
+  />
   <CTA />
 </BaseLayout>
 

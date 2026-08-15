@@ -2,7 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/sections/CTA.astro';
 import Landing from '@components/sections/Landing.astro';
-import ProjectPending from '@components/sections/ProjectPending.astro';
+import ProjectDetail from '@components/sections/ProjectDetail.astro';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -11,17 +11,35 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
-  title="Proyecto 2 - Ayuntamiento de Belmontejo"
-  description="Información sobre una iniciativa municipal del Ayuntamiento de Belmontejo."
+  title="Pista de pádel - Ayuntamiento de Belmontejo"
+  description="Nueva pista de pádel de Belmontejo, inaugurada en julio de 2026 con el apoyo del Ayuntamiento, la Diputación de Cuenca y ADESIMAN."
   preloadedImage={optimizedImage}
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing title="Proyecto 2" image={optimizedImage} />
+  <Landing title="Pista de pádel" image={optimizedImage}>
+    <p>Más deporte y ocio saludable sin salir del municipio.</p>
+  </Landing>
 
-  <ProjectPending />
+  <ProjectDetail
+    eyebrow="Deporte y vida local"
+    title="Una pista para jugar en el pueblo"
+    description="Belmontejo cuenta desde julio de 2026 con una nueva pista de pádel. La instalación responde a una demanda vecinal y evita desplazamientos a otros municipios para practicar este deporte, ampliando las opciones de ocio saludable durante todo el año."
+    imageSrc="/assets/images/proyectos/pista-padel-belmontejo.jpg"
+    imageAlt="Cartel municipal de la inauguración de la pista de pádel de Belmontejo"
+    facts={[
+      { label: 'Inauguración', value: '10 de julio de 2026' },
+      { label: 'Inversión', value: '53.000 €' },
+      {
+        label: 'Colaboración',
+        value: 'Ayuntamiento, Diputación de Cuenca y ADESIMAN',
+      },
+    ]}
+    sourceHref="https://www.bandomovil.com/belmontejo/1592378/0"
+    sourceLabel="Ver el aviso municipal"
+  />
   <CTA />
 </BaseLayout>
 

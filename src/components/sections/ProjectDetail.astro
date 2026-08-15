@@ -1,0 +1,166 @@
+---
+import Button from '@components/ui/Button.astro';
+
+interface ProjectFact {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  imageSrc: string;
+  imageAlt: string;
+  facts: ProjectFact[];
+  sourceHref: string;
+  sourceLabel: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  imageSrc,
+  imageAlt,
+  facts,
+  sourceHref,
+  sourceLabel,
+} = Astro.props as Props;
+---
+
+<section class="project-detail" aria-labelledby="project-detail-title">
+  <div class="project-detail__inner">
+    <div class="project-detail__content">
+      <span class="project-detail__eyebrow">{eyebrow}</span>
+      <h2 id="project-detail-title">{title}</h2>
+      <p class="project-detail__description">{description}</p>
+
+      <dl class="project-detail__facts">
+        {
+          facts.map(fact => (
+            <div>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <Button
+        href={sourceHref}
+        target="_blank"
+        rel="noreferrer"
+        variant="secondary"
+      >
+        {sourceLabel}
+      </Button>
+    </div>
+
+    <figure class="project-detail__figure">
+      <img src={imageSrc} alt={imageAlt} loading="lazy" decoding="async" />
+    </figure>
+  </div>
+</section>
+
+<style lang="less">
+  .project-detail {
+    padding: var(--sectionPadding);
+    background: var(--background-sections);
+  }
+
+  .project-detail__inner {
+    width: min(100%, 76rem);
+    margin: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  .project-detail__content {
+    max-width: 42rem;
+  }
+
+  .project-detail__eyebrow {
+    color: var(--primary);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .project-detail h2 {
+    margin: 0.75rem 0 1rem;
+    color: var(--text-primary);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.05;
+  }
+
+  .project-detail__description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 38rem;
+  }
+
+  .project-detail__facts {
+    display: grid;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+
+  .project-detail__facts div {
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .project-detail__facts dt {
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .project-detail__facts dd {
+    margin: 0.25rem 0 0;
+    color: var(--text-primary);
+    line-height: 1.5;
+  }
+
+  .project-detail__figure {
+    margin: 0;
+    min-height: 20rem;
+    overflow: hidden;
+    background: var(--medium);
+  }
+
+  .project-detail__figure img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 20rem;
+    object-fit: cover;
+  }
+
+  @media only screen and (min-width: 48em) {
+    .project-detail__inner {
+      grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 1.1fr);
+    }
+
+    .project-detail__figure {
+      min-height: 32rem;
+    }
+
+    .project-detail__figure img {
+      min-height: 32rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-detail__figure img {
+      transition: none;
+    }
+  }
+</style>

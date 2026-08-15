@@ -24,11 +24,11 @@
     "url": "/proyectos/",
     "children": [
       {
-        "key": "Proyecto 1",
+        "key": "Camping rural",
         "url": "/proyectos/proyecto-1/"
       },
       {
-        "key": "Proyecto 2",
+        "key": "Pista de pádel",
         "url": "/proyectos/proyecto-2/"
       }
     ]
