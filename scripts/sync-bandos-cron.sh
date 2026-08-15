@@ -39,7 +39,15 @@ fi
 /usr/bin/git merge --ff-only origin/main
 "$PNPM_BIN" run fetch-bandos
 
-if /usr/bin/git diff --quiet -- src/content/bandos; then
+has_bando_changes() {
+  if ! /usr/bin/git diff --quiet -- src/content/bandos; then
+    return 0
+  fi
+
+  [[ -n "$(/usr/bin/git ls-files --others --exclude-standard -- src/content/bandos)" ]]
+}
+
+if ! has_bando_changes; then
   echo 'No new or updated bandos to publish.'
   exit 0
 fi
