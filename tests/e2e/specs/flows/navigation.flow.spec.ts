@@ -5,7 +5,6 @@ type NavigationScenario = {
   expectedPath: string;
   expectedHeading: RegExp;
   startPath?: string;
-  parentLabel?: string;
 };
 
 const escapeRegex = (value: string) =>
@@ -37,13 +36,11 @@ const navigationScenarios: NavigationScenario[] = [
     label: 'Camping rural',
     expectedPath: '/proyectos/proyecto-1',
     expectedHeading: /Camping rural sostenible/i,
-    parentLabel: 'Proyectos',
   },
   {
     label: 'Pista de pádel',
     expectedPath: '/proyectos/proyecto-2',
     expectedHeading: /Pista de pádel/i,
-    parentLabel: 'Proyectos',
   },
   {
     label: 'Buscador',
@@ -60,24 +57,11 @@ test.describe('Navegación principal', () => {
 
       const navigation = page.locator('#cs-navigation').getByRole('navigation');
 
-      if (scenario.parentLabel) {
-        const dropdownButton = navigation.getByRole('button', {
-          name: scenario.parentLabel,
-          exact: true,
-        });
+      await navigation.getByRole('button', { name: /menú/i }).click();
 
-        await dropdownButton.focus();
-        await page.keyboard.press('Enter');
-        await expect(dropdownButton).toHaveAttribute('aria-expanded', 'true');
-
-        await navigation
-          .getByRole('link', { name: scenario.label, exact: true })
-          .click();
-      } else {
-        await navigation
-          .getByRole('link', { name: scenario.label, exact: true })
-          .click();
-      }
+      await navigation
+        .getByRole('link', { name: scenario.label, exact: true })
+        .click();
 
       await expect(page).toHaveURL(
         new RegExp(`${escapeRegex(scenario.expectedPath)}\\/?$`)
@@ -232,12 +216,12 @@ test.describe('Cabecera móvil y preferencias', () => {
 
     await page.locator('#mobile-menu-toggle').click();
 
-    const projectsButton = page.getByRole('button', {
-      name: 'Proyectos',
-      exact: true,
-    });
-    await projectsButton.click();
-    await expect(projectsButton).toHaveAttribute('aria-expanded', 'true');
+    const menuToggle = page.getByRole('button', { name: /abrir menú/i });
+    await menuToggle.click();
+    await expect(menuToggle).toHaveAttribute('aria-expanded', 'true');
+    await expect(
+      page.getByRole('heading', { name: 'Explora el sitio' })
+    ).toBeVisible();
 
     const themeToggle = page.locator('#dark-mode-toggle');
     await expect(themeToggle).toHaveAccessibleName('Activar modo oscuro');

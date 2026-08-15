@@ -15,92 +15,154 @@ const {
 const filteredEntries = filterNavigationEntries(entries, showAdminMenu);
 const isActiveLink = (url: string | undefined) =>
   isActiveNavigationLink(url, currentPathname);
+const findEntry = (key: string) =>
+  filteredEntries.find(entry => entry.key === key);
+const discoverEntries = filteredEntries.filter(entry =>
+  ['Sobre el pueblo', 'Proyectos'].includes(entry.key)
+);
+const currentEntries = filteredEntries.filter(entry =>
+  ['Noticias', 'Bandos'].includes(entry.key)
+);
+const accessEntries = filteredEntries.filter(entry =>
+  ['Inicio', 'Buscador', 'Administración'].includes(entry.key)
+);
+const projectsEntry = findEntry('Proyectos');
 ---
 
 <nav class="cs-nav" aria-label="Navegación principal">
-  <!--Mobile Nav Toggle-->
   <button
     class="cs-toggle"
     id="mobile-menu-toggle"
     aria-expanded="false"
-    aria-controls="cs-expanded-ul"
+    aria-controls="cs-site-menu"
     aria-label="Abrir menú de navegación"
   >
+    <span class="cs-toggle-label">Menú</span>
     <span class="cs-box" aria-hidden="true">
-      <span class="cs-line cs-line1" aria-hidden="true"></span>
-      <span class="cs-line cs-line2" aria-hidden="true"></span>
-      <span class="cs-line cs-line3" aria-hidden="true"></span>
+      <span class="cs-line cs-line1"></span>
+      <span class="cs-line cs-line2"></span>
+      <span class="cs-line cs-line3"></span>
     </span>
   </button>
-  <!-- If you want to use another navigation stitch and enjoy the benefits of dynamic routing, replace the .cs-ul-wrapper in the navigation stitch with this one below -->
-  <div class="cs-ul-wrapper">
-    <ul id="cs-expanded-ul" class="cs-ul">
-      {
-        filteredEntries.map(entry => (
-          <li
-            class:list={[
-              'cs-li',
-              { 'cs-dropdown': entry.children?.length > 0 },
-            ]}
-          >
-            {entry.children?.length > 0 ? (
-              // If entry has children in navData.json, create a button and a dropdown icon
-              <button
-                type="button"
-                aria-expanded="false"
-                aria-controls={`submenu-${entry.key}`}
-                class:list={[
-                  'cs-li-link cs-dropdown-button',
-                  { 'cs-active': isActiveLink(entry.url) },
-                ]}
-              >
-                <span>{entry.key}</span>
-                <span class="cs-drop-icon" aria-hidden="true">
-                  ▾
-                </span>
-              </button>
-            ) : (
-              // If entry does not have children in navData.json, create an anchor
-              <a
-                href={entry.url}
-                class:list={[
-                  'cs-li-link',
-                  {
-                    'cs-active': isActiveLink(entry.url),
-                  },
-                ]}
-                aria-current={
-                  currentPathname === entry.url ? 'page' : undefined
-                }
-                target={entry.isAdmin ? '_blank' : undefined}
-                rel={entry.isAdmin ? 'noopener noreferrer' : undefined}
-              >
-                {entry.key}
-              </a>
-            )}
 
-            {entry.children?.length > 0 && (
-              // If entry has children in navData.json, create a drop down menu
-              <ul id={`submenu-${entry.key}`} class="cs-drop-ul">
-                {entry.children.map(child => (
-                  <li class="cs-drop-li">
-                    <a
-                      href={child.url}
-                      class="cs-li-link cs-drop-link"
-                      aria-current={
-                        currentPathname === child.url ? 'page' : undefined
-                      }
-                    >
-                      {child.key}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </li>
-        ))
-      }
-    </ul>
+  <div class="cs-ul-wrapper cs-menu" id="cs-site-menu" aria-hidden="true">
+    <div class="cs-menu-inner">
+      <div class="cs-menu-intro">
+        <p class="cs-menu-eyebrow">Ayuntamiento de Belmontejo</p>
+        <h2 id="cs-menu-title">Explora el sitio</h2>
+        <p>
+          Información, actualidad y recursos del municipio en un solo lugar.
+        </p>
+      </div>
+
+      <div class="cs-menu-groups">
+        <section class="cs-menu-group" aria-labelledby="cs-menu-discover">
+          <h3 id="cs-menu-discover">Descubre Belmontejo</h3>
+          <ul class="cs-menu-links">
+            {
+              discoverEntries.map(entry => (
+                <li>
+                  <a
+                    href={entry.url}
+                    class:list={[{ 'cs-active': isActiveLink(entry.url) }]}
+                    aria-current={
+                      currentPathname === entry.url ? 'page' : undefined
+                    }
+                  >
+                    <span>{entry.key}</span>
+                    <span class="cs-menu-arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                  </a>
+                  {entry.children?.length > 0 && (
+                    <ul class="cs-menu-children">
+                      {entry.children.map(child => (
+                        <li>
+                          <a
+                            href={child.url}
+                            class:list={[
+                              { 'cs-active': currentPathname === child.url },
+                            ]}
+                            aria-current={
+                              currentPathname === child.url ? 'page' : undefined
+                            }
+                          >
+                            {child.key}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+          {
+            projectsEntry && (
+              <a
+                class="cs-menu-view-all"
+                href={projectsEntry.url}
+                aria-current={
+                  currentPathname === projectsEntry.url ? 'page' : undefined
+                }
+              >
+                Ver todos los proyectos <span aria-hidden="true">→</span>
+              </a>
+            )
+          }
+        </section>
+
+        <section class="cs-menu-group" aria-labelledby="cs-menu-current">
+          <h3 id="cs-menu-current">Actualidad</h3>
+          <ul class="cs-menu-links">
+            {
+              currentEntries.map(entry => (
+                <li>
+                  <a
+                    href={entry.url}
+                    class:list={[{ 'cs-active': isActiveLink(entry.url) }]}
+                    aria-current={
+                      currentPathname === entry.url ? 'page' : undefined
+                    }
+                  >
+                    <span>{entry.key}</span>
+                    <span class="cs-menu-arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+
+        <section class="cs-menu-group" aria-labelledby="cs-menu-access">
+          <h3 id="cs-menu-access">Accesos</h3>
+          <ul class="cs-menu-links cs-menu-links-compact">
+            {
+              accessEntries.map(entry => (
+                <li>
+                  <a
+                    href={entry.url}
+                    class:list={[{ 'cs-active': isActiveLink(entry.url) }]}
+                    aria-current={
+                      currentPathname === entry.url ? 'page' : undefined
+                    }
+                    target={entry.isAdmin ? '_blank' : undefined}
+                    rel={entry.isAdmin ? 'noopener noreferrer' : undefined}
+                  >
+                    <span>{entry.key}</span>
+                    <span class="cs-menu-arrow" aria-hidden="true">
+                      ↗
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      </div>
+    </div>
   </div>
 </nav>
 
