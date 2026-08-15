@@ -32,16 +32,12 @@ test.describe('Consulta de bandos', () => {
     await expect(summary).toContainText('Mostrando 8 de 44 bandos');
   });
 
-  test('combina categoría y búsqueda y muestra el estado vacío', async ({
+  test('oculta el filtro de categoría único y muestra el estado vacío', async ({
     page,
   }) => {
     await page.goto('/bandos', { waitUntil: 'domcontentloaded' });
 
-    await page.getByLabel('Filtrar por categoría').selectOption('Info General');
-    await expect(page).toHaveURL(/categoria=Info\+General/);
-    await expect(
-      page.locator('[data-bandos-result]:not([hidden])')
-    ).toHaveCount(8);
+    await expect(page.getByLabel('Filtrar por categoría')).toBeHidden();
 
     await page.getByLabel('Buscar en los bandos').fill('no existe este aviso');
     await expect(page.locator('[data-bandos-empty]')).toBeVisible();
@@ -56,7 +52,7 @@ test.describe('Consulta de bandos', () => {
     await page.goto('/bandos', { waitUntil: 'domcontentloaded' });
 
     await expect(page.getByLabel('Buscar en los bandos')).toBeVisible();
-    await expect(page.getByLabel('Filtrar por categoría')).toBeVisible();
+    await expect(page.getByLabel('Filtrar por categoría')).toBeHidden();
     await expect(page.locator('.bandos-filters__clear')).toBeVisible();
   });
 });

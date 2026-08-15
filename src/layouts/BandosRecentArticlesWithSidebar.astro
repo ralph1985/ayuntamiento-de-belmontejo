@@ -34,17 +34,19 @@ const totalPosts = posts.length;
       />
     </div>
 
-    <div class="bandos-filters__field">
-      <label for="bandos-category">Filtrar por categoría</label>
-      <select id="bandos-category" name="categoria" data-bandos-category>
-        <option value="">Todas las categorías</option>
-        {
-          categories.map(category => (
-            <option value={category}>{category}</option>
-          ))
-        }
-      </select>
-    </div>
+    {
+      categories.length > 1 && (
+        <div class="bandos-filters__field">
+          <label for="bandos-category">Filtrar por categoría</label>
+          <select id="bandos-category" name="categoria" data-bandos-category>
+            <option value="">Todas las categorías</option>
+            {categories.map(category => (
+              <option value={category}>{category}</option>
+            ))}
+          </select>
+        </div>
+      )
+    }
 
     <button type="button" class="bandos-filters__clear" data-bandos-clear>
       Limpiar filtros
