@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const execFileAsync = promisify(execFile);
+const exclusionsPath = path.join(__dirname, 'bandos-exclusions.json');
 
 export async function fetchBandos() {
   const RSS_URL = 'https://www.bandomovil.com/rss.php?codigo=belmontejo';
@@ -27,6 +28,7 @@ export async function fetchBandos() {
 
     // Parse XML manually since we're in a Node.js environment
     const items = parseRSSItems(xmlText);
+    const excludedBandoIds = getExcludedBandoIds();
 
     console.log(`Found ${items.length} bandos`);
     if (items.length === 0) {
@@ -43,10 +45,16 @@ export async function fetchBandos() {
       created: 0,
       updated: 0,
       unchanged: 0,
+      excluded: 0,
     };
 
     // Generate markdown files for each bando
     for (const item of items) {
+      if (excludedBandoIds.has(getBandoId(item.guid))) {
+        result.excluded += 1;
+        continue;
+      }
+
       const filename = generateFilename(item.title, item.guid);
       const filePath = path.join(contentDir, `${filename}.md`);
       const markdownContent = createBandoMarkdown(item);
@@ -71,13 +79,26 @@ export async function fetchBandos() {
     }
 
     console.log(
-      `RSS import completed successfully: ${result.created} created, ${result.updated} updated, ${result.unchanged} unchanged.`
+      `RSS import completed successfully: ${result.created} created, ${result.updated} updated, ${result.unchanged} unchanged, ${result.excluded} excluded.`
     );
     return result;
   } catch (error) {
     console.error('Error fetching bandos:', error);
     process.exit(1);
   }
+}
+
+export function getBandoId(guid) {
+  return guid.match(/id=(\d+)/)?.[1] ?? '';
+}
+
+export function getExcludedBandoIds() {
+  if (!fs.existsSync(exclusionsPath)) {
+    return new Set();
+  }
+
+  const exclusions = JSON.parse(fs.readFileSync(exclusionsPath, 'utf8'));
+  return new Set(exclusions.ids ?? []);
 }
 
 export function createBandoMarkdown(item) {
