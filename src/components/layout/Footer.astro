@@ -13,10 +13,8 @@ import {
   resolveFooterServiceLink,
 } from '@components/layout/footer.helpers';
 import { getCurrentYear } from '@js/utils';
-import packageJson from '../../../package.json';
 
 const currentYear = getCurrentYear();
-const version = packageJson.version;
 const primaryOffice = getPrimaryOffice();
 const primaryPhone = getPrimaryPhone();
 const primaryEmail = getPrimaryEmail();
@@ -59,7 +57,7 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
       <a class="logo" href="/"
         ><MunicipalSeal
           class="footer-logo-img"
-          alt="logo"
+          alt="Ayuntamiento de Belmontejo"
           width={264}
           height={78}
           loading="lazy"
@@ -167,7 +165,12 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
           {
             primaryEmail && (
               <li>
-                <a href={`mailto:${primaryEmail.address}`}>Enviar correo</a>
+                <a
+                  href={`mailto:${primaryEmail.address}`}
+                  aria-label={`Enviar correo a ${primaryEmail.label}`}
+                >
+                  Correo electrónico
+                </a>
               </li>
             )
           }
@@ -227,11 +230,16 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
   </div>
 
   <div class="credit">
-    <span>Sitio web oficial del</span>
-    <a href="/" target="_blank" rel="noopener">{contactInfo.entity.name}</a>.
-    <span class="copyright-version">
-      Copyright {currentYear} - Presente | v{version}</span
-    >
+    <p class="official-site">
+      Sitio web oficial del <a href="/">{contactInfo.entity.name}</a>.
+      <span class="copyright">Copyright {currentYear}</span>
+    </p>
+    <p class="creator-credit">
+      Web realizada por
+      <a href="https://conquense.dev" target="_blank" rel="noopener noreferrer">
+        conquense.dev
+      </a>
+    </p>
   </div>
 </footer>
 
