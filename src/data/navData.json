@@ -34,11 +34,6 @@
     ]
   },
   {
-    "key": "Testimonios",
-    "url": "/testimonios/",
-    "children": []
-  },
-  {
     "key": "Buscador",
     "url": "/buscar/",
     "children": []

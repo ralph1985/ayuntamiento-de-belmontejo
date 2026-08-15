@@ -46,11 +46,6 @@ const navigationScenarios: NavigationScenario[] = [
     parentLabel: 'Proyectos',
   },
   {
-    label: 'Testimonios',
-    expectedPath: '/testimonios',
-    expectedHeading: /Testimonios/i,
-  },
-  {
     label: 'Buscador',
     expectedPath: '/buscar',
     expectedHeading: /Buscador/i,

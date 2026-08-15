@@ -13,7 +13,6 @@ export const visualRoutes = [
   { path: '/proyectos', name: 'proyectos' },
   { path: '/proyectos/proyecto-1', name: 'proyecto-1' },
   { path: '/proyectos/proyecto-2', name: 'proyecto-2' },
-  { path: '/testimonios', name: 'testimonios' },
   { path: '/buscar', name: 'buscar' },
   { path: '/politica-de-cookies', name: 'politica-de-cookies' },
   { path: '/politica-de-privacidad', name: 'politica-de-privacidad' },
