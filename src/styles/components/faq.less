@@ -45,7 +45,7 @@
     .cs-faq-item {
       list-style: none;
       width: 100%;
-      background: white;
+      background: var(--surface-raised);
       border-radius: (8/16rem);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       transition:
@@ -199,7 +199,7 @@
 
       .cs-title,
       .cs-item-text {
-        color: var(--bodyTextColorWhite);
+        color: var(--on-primary);
         background-color: var(--background-sections);
       }
 
@@ -211,11 +211,11 @@
         &.active {
           .cs-button {
             background-color: var(--secondary);
-            color: var(--bodyTextColorWhite);
+            color: var(--background-main);
 
             &:before,
             &:after {
-              background-color: var(--bodyTextColorWhite);
+              background-color: var(--background-main);
             }
           }
 
@@ -234,7 +234,7 @@
 
         &:before,
         &:after {
-          background-color: var(--bodyTextColorWhite);
+          background-color: var(--on-primary);
         }
       }
     }

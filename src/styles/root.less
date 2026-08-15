@@ -1,4 +1,6 @@
-/* CODESTITCH STYLES, RESET, HEADER/NAVIGATION AND FOOTER */
+/* Global reset, typography, utilities and shared accessibility rules. */
+
+@import "./tokens.less";
 
 /*-- -------------------------- -->
 <---        Core Styles         -->
@@ -6,45 +8,7 @@
 
 /* CodeStitch Root and Helpers */
 @media only screen and (min-width: 0em) {
-  // Website colors - Paleta Belmontejo (Modo Claro)
-  :root {
-    /* Fondos */
-    --background-main: #f7f8f5;
-    --background-sections: #e8eee3;
-
-    /* Textos */
-    --text-primary: #17303a;
-    --text-secondary: #4d6267;
-    --text-white: #f7f8f5;
-
-    /* Colores principales */
-    --primary: #1c5b73;
-    --primaryLight: #4b8296;
-    --secondary: #537149;
-    --secondaryLight: #9bae8a;
-
-    /* Colores de acento */
-    --accent: #b85536;
-    --accentLight: #da7d5d;
-
-    /* Bordes y líneas */
-    --border-color: #cbd6cb;
-
-    /* Variables de compatibilidad (mapeo con nombres antiguos) */
-    --headerColor: var(--text-primary);
-    --bodyTextColor: var(--text-secondary);
-    --bodyTextColorWhite: var(--text-white);
-
-    /* 13px - 16px */
-    --topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
-    /* 31px - 49px */
-    --headerFontSize: clamp(2rem, 4vw, 3.25rem);
-    --bodyFontSize: 1rem;
-
-    /* 60px - 100px top and bottom */
-    --sectionPadding: clamp(4rem, 8vw, 7rem) 1rem;
-  }
-
+  // Shared typography helpers
   // Text styles - can be replaced using CodeStitch's "Content Flair" Stitches
   .cs-topper {
     font-size: var(--topperFontSize);
@@ -134,6 +98,8 @@
 
   body {
     background-color: var(--background-main);
+    color: var(--text-secondary);
+    line-height: 1.5;
     transition:
       background-color 0.2s ease,
       color 0.2s ease;
@@ -173,6 +139,16 @@
     color: var(--text-secondary);
   }
 
+  a {
+    color: var(--primary);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
   a,
   button {
     &:hover {
@@ -193,6 +169,10 @@
     &:focus {
       top: 1rem;
     }
+  }
+
+  .surface-muted {
+    background: var(--surface-muted);
   }
 }
 
@@ -229,7 +209,6 @@
       .cs-moon {
         opacity: 0;
         transform: translate(-50%, -150%);
-        fill: #fff;
       }
     }
   }
@@ -263,6 +242,7 @@
 
     .cs-moon {
       z-index: 2;
+      fill: var(--text-primary);
       // Transition properties
       transition:
         transform 0.3s,

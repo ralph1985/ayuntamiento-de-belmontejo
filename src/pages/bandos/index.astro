@@ -12,6 +12,7 @@ import { getCollection } from 'astro:content';
 import { getImage } from 'astro:assets';
 
 import BandoMovilApp from '@components/sections/BandoMovilApp.astro';
+import Landing from '@components/sections/Landing.astro';
 
 const posts = await getCollection('bandos');
 posts.sort(
@@ -28,16 +29,12 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   description="Consulta todos los bandos y comunicados oficiales del Ayuntamiento de Belmontejo"
   preloadedImage={optimizedImage}
 >
-  <section class="bandos-intro" aria-labelledby="bandos-title">
-    <div class="bandos-intro__content">
-      <span class="bandos-intro__eyebrow">Información municipal</span>
-      <h1 id="bandos-title">Bandos y avisos</h1>
-      <p>
-        Consulta los comunicados oficiales publicados por el Ayuntamiento de
-        Belmontejo.
-      </p>
-    </div>
-  </section>
+  <Landing title="Bandos y avisos" image={optimizedImage}>
+    <p>
+      Consulta los comunicados oficiales publicados por el Ayuntamiento de
+      Belmontejo.
+    </p>
+  </Landing>
 
   <ContentArchive
     posts={posts}
@@ -53,41 +50,3 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
   <BandoMovilApp />
   <CTA />
 </BaseLayout>
-
-<style lang="less">
-  .bandos-intro {
-    padding: clamp(2.5rem, 6vw, 5rem) 1rem clamp(2rem, 4vw, 3.5rem);
-    background: var(--background-sections);
-    border-bottom: 1px solid var(--border-color);
-
-    &__content {
-      width: min(100%, 70rem);
-      margin: 0 auto;
-    }
-
-    &__eyebrow {
-      color: var(--secondary);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0.5rem 0 0;
-      color: var(--headerColor);
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.05;
-    }
-
-    p {
-      max-width: 42rem;
-      margin: 1rem 0 0;
-      color: var(--bodyTextColor);
-      font-size: clamp(1rem, 2vw, 1.125rem);
-      line-height: 1.6;
-    }
-  }
-</style>

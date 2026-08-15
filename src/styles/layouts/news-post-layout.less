@@ -25,7 +25,7 @@
   .news-article {
     width: 100%;
     max-width: (795/16em);
-    background: white;
+    background: var(--surface-raised);
     border-radius: (12/16em);
     padding: clamp(1.5rem, 3vw, 2.5rem);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
@@ -100,7 +100,7 @@
     .news-dot {
       width: 3px;
       height: 3px;
-      background-color: #fe4f70;
+      background-color: var(--accent);
       border-radius: 50%;
       display: block;
     }
@@ -117,7 +117,7 @@
     #news-content {
       margin-top: (16/16em);
       padding-top: (25/16em);
-      border-top: 1px solid #a2a0a0;
+      border-top: 1px solid var(--border-color);
     }
   }
 }
@@ -135,14 +135,8 @@
 @media only screen and (min-width: 0em) {
   body.dark-mode {
     .news-article {
-      .news-h1,
-      .news-author,
-      .news-date {
-        color: #f7f7f7;
-      }
-
       #news-content {
-        border-top-color: #3e3e3b;
+        border-top-color: var(--border-color);
       }
     }
   }

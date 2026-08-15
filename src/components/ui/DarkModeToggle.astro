@@ -35,6 +35,21 @@
     );
   }
   // Creates the dark mode toggle event listener
+  const syncThemeToggle = element => {
+    const isDark = document.body.classList.contains('dark-mode');
+    element.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    element.setAttribute(
+      'aria-label',
+      isDark ? 'Activar modo claro' : 'Activar modo oscuro'
+    );
+  };
+
+  const syncThemeColor = isDark => {
+    document
+      .querySelector('#theme-color')
+      ?.setAttribute('content', isDark ? '#17221f' : '#f7f8f5');
+  };
+
   const setToggleListener = () => {
     const darkModeToggleButton = document.getElementById('dark-mode-toggle');
     if (
@@ -49,14 +64,14 @@
       ariaPressed(darkModeToggleButton);
       const isDark = document.body.classList.contains('dark-mode');
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      darkModeToggleButton.setAttribute(
-        'aria-label',
-        isDark ? 'Activar modo claro' : 'Activar modo oscuro'
-      );
+      syncThemeToggle(darkModeToggleButton);
+      syncThemeColor(isDark);
     };
 
     darkModeToggleButton.addEventListener('click', handleToggleClick);
     darkModeToggleButton.dataset.listenerAttached = 'true';
+    syncThemeToggle(darkModeToggleButton);
+    syncThemeColor(document.body.classList.contains('dark-mode'));
   };
 
   setToggleListener();

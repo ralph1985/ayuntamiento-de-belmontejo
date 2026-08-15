@@ -1,8 +1,12 @@
-@import "../root.less";
+@import "../tokens.less";
 
 .cookie-policy {
   padding: 2rem 0 4rem;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(
+    135deg,
+    var(--background-main) 0%,
+    var(--background-sections) 100%
+  );
   min-height: 100vh;
 }
 
@@ -16,31 +20,31 @@
   text-align: center;
   margin-bottom: 3rem;
   padding: 2rem;
-  background: white;
+  background: var(--surface-raised);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
   h1 {
     font-size: 2.5rem;
-    color: #2c3e50;
+    color: var(--text-primary);
     margin-bottom: 1rem;
   }
 }
 
 .subtitle {
   font-size: 1.1rem;
-  color: #7f8c8d;
+  color: var(--text-secondary);
   margin-bottom: 1rem;
 }
 
 .last-updated {
   font-size: 0.9rem;
-  color: #95a5a6;
+  color: var(--text-secondary);
   margin: 0;
 }
 
 .cookie-policy-content {
-  background: white;
+  background: var(--surface-raised);
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -48,29 +52,29 @@
 
 .policy-section {
   padding: 2rem;
-  border-bottom: 1px solid #ecf0f1;
+  border-bottom: 1px solid var(--border-color);
 
   &:last-child {
     border-bottom: none;
   }
 
   h2 {
-    color: #2c3e50;
+    color: var(--text-primary);
     font-size: 1.5rem;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid #3498db;
+    border-bottom: 2px solid var(--primary);
   }
 
   h3 {
-    color: #34495e;
+    color: var(--text-primary);
     font-size: 1.2rem;
     margin: 1.5rem 0 0.75rem 0;
   }
 
   p {
     line-height: 1.6;
-    color: #555;
+    color: var(--text-secondary);
     margin-bottom: 1rem;
   }
 
@@ -82,20 +86,20 @@
   li {
     margin-bottom: 0.5rem;
     line-height: 1.6;
-    color: #555;
+    color: var(--text-secondary);
   }
 }
 
 .cookie-type {
   margin: 2rem 0;
   padding: 1.5rem;
-  background: #f8f9fa;
+  background: var(--surface-muted);
   border-radius: 8px;
-  border-left: 4px solid #3498db;
+  border-left: 4px solid var(--primary);
 
   h3 {
     margin-top: 0;
-    color: #2c3e50;
+    color: var(--text-primary);
   }
 }
 
@@ -106,17 +110,17 @@
 .cookie-list {
   margin: 1rem 0;
   padding: 1rem;
-  background: white;
+  background: var(--surface-raised);
   border-radius: 6px;
 
   h4 {
     margin: 0 0 0.75rem 0;
-    color: #34495e;
+    color: var(--text-primary);
     font-size: 1rem;
   }
 
   code {
-    background: #f1c40f;
+    background: var(--secondaryLight);
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
     font-family: "Monaco", "Menlo", monospace;
@@ -125,10 +129,10 @@
 }
 
 .privacy-note {
-  background: #e8f5e8;
+  background: color-mix(in srgb, var(--secondary) 16%, var(--background-main));
   padding: 1rem;
   border-radius: 6px;
-  border-left: 4px solid #27ae60;
+  border-left: 4px solid var(--secondary);
   margin-top: 1rem;
 }
 
@@ -141,13 +145,13 @@
 
 .right-item {
   padding: 1.5rem;
-  background: #f8f9fa;
+  background: var(--surface-muted);
   border-radius: 8px;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--border-color);
 
   h3 {
     margin-top: 0;
-    color: #2c3e50;
+    color: var(--text-primary);
     font-size: 1.1rem;
   }
 
@@ -160,26 +164,26 @@
 .manage-cookies {
   margin: 2rem 0;
   padding: 2rem;
-  background: linear-gradient(135deg, #3498db, #2980b9);
-  color: white;
+  background: var(--primary);
+  color: var(--on-primary);
   border-radius: 8px;
   text-align: center;
 
   h3 {
-    color: white;
+    color: var(--on-primary);
     margin-top: 0;
   }
 
   .c-button {
-    background: white;
-    color: #3498db;
+    background: var(--on-primary);
+    color: var(--primary);
     border-radius: 6px;
     font-weight: 600;
     margin-top: 1rem;
     padding: 0.75rem 2rem;
 
     &:hover {
-      background: #f8f9fa;
+      background: var(--surface-muted);
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
@@ -191,19 +195,19 @@
 
   details {
     margin-bottom: 1rem;
-    border: 1px solid #e9ecef;
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     overflow: hidden;
   }
 
   summary {
     padding: 1rem;
-    background: #f8f9fa;
+    background: var(--surface-muted);
     cursor: pointer;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 1px solid var(--border-color);
 
     &:hover {
-      background: #e9ecef;
+      background: var(--background-sections);
     }
   }
 
@@ -214,7 +218,7 @@
 }
 
 .contact-info {
-  background: #f8f9fa;
+  background: var(--surface-muted);
   padding: 1.5rem;
   border-radius: 8px;
   margin-top: 1rem;
@@ -224,7 +228,7 @@
   }
 
   a {
-    color: #3498db;
+    color: var(--primary);
     text-decoration: none;
 
     &:hover {
@@ -319,13 +323,17 @@ body.dark-mode {
     }
 
     code {
-      background: #9a7e3a;
-      color: var(--text-primary);
+      background: var(--secondary);
+      color: var(--background-main);
     }
   }
 
   .privacy-note {
-    background: #2d4a2d;
+    background: color-mix(
+      in srgb,
+      var(--secondary) 24%,
+      var(--background-main)
+    );
     border-left: 4px solid var(--secondary);
 
     strong {
@@ -347,7 +355,7 @@ body.dark-mode {
   }
 
   .manage-cookies {
-    background: linear-gradient(135deg, var(--primary), #4a6f9e);
+    background: var(--primary);
 
     h3 {
       color: var(--text-white);
@@ -380,6 +388,7 @@ body.dark-mode {
 
       &:hover {
         background: var(--accent);
+        color: var(--on-accent);
       }
     }
 
@@ -404,7 +413,7 @@ body.dark-mode {
     }
 
     a {
-      color: var(--primary);
+      color: var(--primaryLight);
 
       &:hover {
         color: var(--primaryLight);

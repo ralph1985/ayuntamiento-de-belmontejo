@@ -404,6 +404,17 @@ const isBandos = kind === 'bandos';
     display: none;
   }
 
+  :global(body.dark-mode) .archive-more {
+    color: var(--primaryLight);
+    border-color: var(--primaryLight);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--background-main);
+      background: var(--primaryLight);
+    }
+  }
+
   .archive-empty {
     margin: 2rem 0 0;
     padding: 2rem 1rem;

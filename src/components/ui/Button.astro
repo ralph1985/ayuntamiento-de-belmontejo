@@ -126,7 +126,7 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
     }
 
     &--primary {
-      color: var(--text-white);
+      color: var(--on-primary);
       background-color: var(--primary);
       z-index: 0;
 
@@ -148,7 +148,7 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
 
       &:hover,
       &:focus-visible {
-        color: var(--text-white);
+        color: var(--on-primary);
       }
     }
 
@@ -160,7 +160,7 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
       &:hover,
       &:focus-visible {
         background-color: var(--primary);
-        color: var(--text-white);
+        color: var(--on-primary);
       }
     }
 
@@ -188,7 +188,7 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
 
       &:hover,
       &:focus-visible {
-        color: var(--button-ghost-hover-color, var(--text-white));
+        color: var(--button-ghost-hover-color, var(--on-primary));
       }
     }
   }
@@ -201,7 +201,7 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
       &:hover,
       &:focus-visible {
         background-color: var(--secondaryLight);
-        color: var(--text-white);
+        color: var(--background-main);
       }
     }
   }

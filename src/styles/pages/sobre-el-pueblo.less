@@ -21,11 +21,10 @@
     }
 
     .cs-left {
-      /* scaling the font size with the view width */
-      font-size: ~"min(2.31vw, .7em)";
-      /* using ems so we can use font size to scale the whole section */
-      width: (631/16em);
-      height: (636/16em);
+      width: 100%;
+      max-width: 40rem;
+      height: clamp(20rem, 72vw, 34rem);
+      font-size: 1rem;
       position: relative;
     }
 
@@ -54,15 +53,15 @@
     }
 
     .cs-picture1 {
-      width: (522/16em);
-      height: (581/16em);
+      width: 74%;
+      height: 90%;
       top: 0;
       left: 0;
     }
 
     .cs-picture2 {
-      width: (414/16em);
-      height: (400/16em);
+      width: 54%;
+      height: 52%;
       background-color: var(--background-main);
       box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 40px;
       /* 6px - 12px */
@@ -206,12 +205,11 @@
       }
 
       .cs-flex-group {
-        background-color: var(--accent);
+        background-color: var(--surface-raised);
       }
 
       .cs-job {
-        color: var(--bodyTextColorWhite);
-        opacity: 0.8;
+        color: var(--text-secondary);
       }
 
       .cs-quote-icon {

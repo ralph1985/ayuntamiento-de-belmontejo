@@ -176,7 +176,7 @@ const getContentTypeLabel = (contentType: string) => {
 
 <style>
   .no-featured-message {
-    color: #6b7280;
+    color: var(--text-secondary);
     font-style: italic;
     font-size: 0.875rem;
     text-align: center;
@@ -184,18 +184,18 @@ const getContentTypeLabel = (contentType: string) => {
   }
 
   .news-sidebar_widget-image--placeholder {
-    background-color: #f3f4f6;
+    background-color: var(--surface-muted);
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #9ca3af;
+    color: var(--text-secondary);
   }
 
   .news-sidebar_widget-category {
     display: block;
     font-size: 0.75rem;
-    color: #0ea5e9;
+    color: var(--primary);
     font-weight: 500;
     margin-top: 0.25rem;
   }
@@ -237,5 +237,9 @@ const getContentTypeLabel = (contentType: string) => {
   body.dark-mode .content-type-badge {
     border-color: rgba(255, 255, 255, 0.16);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  }
+
+  body.dark-mode .content-type-badge--bandos {
+    --badge-color: var(--on-accent);
   }
 </style>

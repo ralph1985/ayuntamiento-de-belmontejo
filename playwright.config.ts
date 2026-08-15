@@ -5,7 +5,7 @@ const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? 'http://127.0.0.1:4173';
 const webServer = process.env.PLAYWRIGHT_BASE_URL
   ? undefined
   : {
-      command: 'pnpm run preview -- --host 127.0.0.1 --port 4173',
+      command: 'pnpm exec astro dev --host 127.0.0.1 --port 4173',
       url: 'http://127.0.0.1:4173',
       reuseExistingServer: !process.env.CI,
       stdout: 'pipe',

@@ -1,4 +1,4 @@
-@import "../root.less";
+@import "../tokens.less";
 
 .legal-notice {
   padding: 2rem 0 4rem;
@@ -26,15 +26,15 @@
   display: inline-block;
   margin-left: 0.25rem;
   padding: 0.1rem 0.4rem;
-  background: rgba(255, 193, 7, 0.15);
-  color: #9c6f19;
+  background: color-mix(in srgb, var(--secondary) 16%, var(--background-main));
+  color: var(--text-primary);
   border-radius: 4px;
   font-size: 0.95rem;
   font-weight: 600;
 }
 
 .legal-notice-content {
-  background: #fff;
+  background: var(--surface-raised);
   border-radius: 16px;
   box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1);
   overflow: hidden;
@@ -96,7 +96,7 @@
   margin-top: 1.5rem;
   padding: 1rem 1.25rem;
   border-left: 4px solid var(--accent);
-  background: rgba(226, 122, 88, 0.12);
+  background: color-mix(in srgb, var(--accent) 12%, var(--background-main));
   color: var(--text-primary);
   border-radius: 8px;
   font-size: 0.95rem;
@@ -135,16 +135,16 @@ body.dark-mode {
   }
 
   .legal-list li {
-    color: var(--text-primary);
+    color: var(--text-secondary);
   }
 
   .pending-data {
-    background: rgba(226, 122, 88, 0.25);
+    background: color-mix(in srgb, var(--accent) 22%, var(--background-main));
     color: var(--text-primary);
   }
 
   .note {
-    background: rgba(226, 122, 88, 0.2);
+    background: color-mix(in srgb, var(--accent) 18%, var(--background-main));
     color: var(--text-primary);
     border-left-color: var(--accent);
   }

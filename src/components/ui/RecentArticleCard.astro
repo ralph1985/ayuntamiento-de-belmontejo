@@ -168,8 +168,8 @@ const formattedDate = formatDate(date);
 
       .news-header {
         padding: clamp(30px, 5vw, 50px);
-        border: 1px solid #ebebeb;
-        background: white;
+        border: 1px solid var(--border-color);
+        background: var(--surface-raised);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         transition: box-shadow 0.3s ease;
 
@@ -219,7 +219,7 @@ const formattedDate = formatDate(date);
       }
 
       .news-category {
-        color: #6b7280;
+        color: var(--text-secondary);
         font-size: 0.875rem;
         font-style: italic;
       }
@@ -257,7 +257,7 @@ const formattedDate = formatDate(date);
       margin: auto;
       box-sizing: border-box;
       padding: 0 (24/16rem);
-      color: var(--headerColor);
+      color: var(--on-primary);
       background-color: var(--primary);
       border-radius: (4/16rem);
       display: inline-block;
@@ -270,7 +270,7 @@ const formattedDate = formatDate(date);
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        background: #fff;
+        background: var(--surface-raised);
         opacity: 0;
         border: 1px solid var(--headerColor);
         border-radius: (4/16rem);
@@ -291,7 +291,7 @@ const formattedDate = formatDate(date);
     }
 
     .news-link--external {
-      background-color: #0ea5e9;
+      background-color: var(--primary);
     }
   }
 
@@ -307,7 +307,7 @@ const formattedDate = formatDate(date);
       .news-desc,
       .news-author,
       .news-date {
-        color: #f7f7f7;
+        color: var(--text-primary);
       }
 
       .news-header {
@@ -355,9 +355,9 @@ const formattedDate = formatDate(date);
       .news-link {
         min-width: 0;
         padding: 0.5rem 0.75rem;
-        color: var(--primary);
+        color: var(--primaryLight);
         background: transparent;
-        border: 1px solid var(--primary);
+        border: 1px solid var(--primaryLight);
         border-radius: 0.25rem;
         font-size: 0.875rem;
         line-height: 1.4;
@@ -368,8 +368,8 @@ const formattedDate = formatDate(date);
 
         &:hover,
         &:focus-visible {
-          color: var(--text-white);
-          background: var(--primary);
+          color: var(--background-main);
+          background: var(--primaryLight);
         }
       }
 
@@ -391,34 +391,6 @@ const formattedDate = formatDate(date);
 
       .news-category {
         color: var(--text-secondary);
-      }
-
-      .news-link {
-        color: var(--text-primary);
-        background-color: var(--primary);
-
-        &:before {
-          background: var(--medium);
-          border-color: var(--text-primary);
-        }
-
-        &:hover {
-          color: var(--text-primary);
-        }
-      }
-
-      .news-link--external {
-        background-color: #0ea5e9;
-        color: #ffffff;
-
-        &:before {
-          background: var(--medium);
-          border-color: #ffffff;
-        }
-
-        &:hover {
-          color: #ffffff;
-        }
       }
     }
   }

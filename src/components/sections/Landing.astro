@@ -3,24 +3,29 @@ import { Picture } from 'astro:assets';
 const { title, image } = Astro.props;
 ---
 
-<section id="int-hero">
-  <h1 id="home-h">{title}</h1>
+<section id="int-hero" aria-labelledby="page-hero-title">
+  <div class="page-hero__inner">
+    <p class="page-hero__eyebrow">Ayuntamiento de Belmontejo</p>
+    <h1 id="page-hero-title">{title}</h1>
 
-  <!-- Additional content slot for descriptions or other content -->
-  <slot />
+    <div class="page-hero__summary">
+      <slot />
+    </div>
+  </div>
 
   <!-- standard <picture> attributes are supported. Set loading to lazy for assets below the fold -->
   <!-- Note: because we use the getImage function to generate an optimized image, we need to use special properties. More info on [the getImage() page](https://docs.astro.build/en/guides/images/#generating-images-with-getimage) -->
-  <Picture
-    src={image.src}
-    width={image.attributes.width}
-    height={image.attributes.height}
-    formats={['avif', 'webp']}
-    aria-hidden="true"
-    decoding="async"
-    alt=""
-    loading="eager"
-  />
+  <div class="page-hero__media" aria-hidden="true">
+    <Picture
+      src={image.src}
+      width={image.attributes.width}
+      height={image.attributes.height}
+      formats={['avif', 'webp']}
+      decoding="async"
+      alt=""
+      loading="eager"
+    />
+  </div>
 </section>
 
 <style lang="less">

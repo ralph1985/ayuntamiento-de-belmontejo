@@ -143,7 +143,7 @@ const organizationSchema = {
     />
     <link rel="manifest" href="/assets/favicons/site.webmanifest?v=2" />
     <meta name="msapplication-TileColor" content="#da532c" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta id="theme-color" name="theme-color" content="#f7f8f5" />
 
     <!-- For home page, use service keywords for the title, including location for SEO.
             Other pages should just include the page name.
@@ -193,15 +193,23 @@ const organizationSchema = {
 </html>
 
 <script is:inline>
+  const themeColorMeta = document.querySelector('#theme-color');
+
+  function updateThemeColor(isDark) {
+    themeColorMeta?.setAttribute('content', isDark ? '#17221f' : '#f7f8f5');
+  }
+
   // helper functions to toggle dark mode
   function enableDarkMode() {
     document.body.classList.add('dark-mode');
     localStorage.setItem('theme', 'dark');
+    updateThemeColor(true);
   }
 
   function disableDarkMode() {
     document.body.classList.remove('dark-mode');
     localStorage.setItem('theme', 'light');
+    updateThemeColor(false);
   }
 
   function setTheme() {

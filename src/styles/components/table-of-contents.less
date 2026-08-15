@@ -1,6 +1,6 @@
 .cs-toc-container {
   border-radius: 0.5em;
-  border: 1px solid #ebebeb;
+  border: 1px solid var(--border-color);
   padding: 2.1875em 1.875em;
   margin-bottom: 2rem;
 }
@@ -50,12 +50,12 @@
 @media only screen and (min-width: 0em) {
   body.dark-mode {
     .cs-toc-link {
-      color: #f7f7f7;
+      color: var(--text-primary);
       &.cs-toc-current {
         color: var(--primaryLight);
       }
       &:hover {
-        opacity: 0.8;
+        opacity: 1;
       }
     }
   }

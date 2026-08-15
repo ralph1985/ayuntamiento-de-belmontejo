@@ -1,8 +1,12 @@
-@import "../root.less";
+@import "../tokens.less";
 
 .privacy-policy {
   padding: 2rem 0 4rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4ecfa 100%);
+  background: linear-gradient(
+    135deg,
+    var(--background-main) 0%,
+    var(--background-sections) 100%
+  );
 }
 
 .privacy-policy .container {
@@ -12,7 +16,7 @@
 }
 
 .policy-section {
-  background: #fff;
+  background: var(--surface-raised);
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(16, 24, 40, 0.08);
   padding: 2rem;
@@ -21,18 +25,18 @@
   h2 {
     font-size: 1.6rem;
     margin-bottom: 1rem;
-    color: #183153;
+    color: var(--text-primary);
   }
 
   p {
-    color: #4a5568;
+    color: var(--text-secondary);
     line-height: 1.65;
     margin-bottom: 1rem;
   }
 
   ul {
     margin: 0 0 1rem 1.25rem;
-    color: #4a5568;
+    color: var(--text-secondary);
 
     li {
       margin-bottom: 0.5rem;
@@ -48,13 +52,13 @@
 }
 
 .info-card {
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.5rem;
 
   h3 {
     margin-top: 0;
-    color: #0f172a;
+    color: var(--text-primary);
     font-size: 1.1rem;
   }
 
@@ -69,7 +73,7 @@
   }
 
   a {
-    color: #2563eb;
+    color: var(--primary);
     font-weight: 500;
   }
 }
@@ -82,15 +86,15 @@
 }
 
 .activity-card {
-  border: 1px solid #dbeafe;
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.25rem;
-  background: #f8fbff;
+  background: var(--surface-muted);
 
   h3 {
     margin-top: 0;
     font-size: 1.1rem;
-    color: #1d4ed8;
+    color: var(--primary);
   }
 
   p {
@@ -106,7 +110,7 @@
 
   li {
     padding: 1rem 0;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--border-color);
 
     &:last-child {
       border-bottom: none;
@@ -122,14 +126,14 @@
 }
 
 .right-card {
-  background: #f1f5f9;
+  background: var(--surface-muted);
   border-radius: 12px;
   padding: 1.25rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-color);
 
   h3 {
     margin-top: 0;
-    color: #0f172a;
+    color: var(--text-primary);
   }
 }
 
@@ -179,6 +183,6 @@ body.dark-mode {
   }
 
   a {
-    color: var(--primary);
+    color: var(--primaryLight);
   }
 }
