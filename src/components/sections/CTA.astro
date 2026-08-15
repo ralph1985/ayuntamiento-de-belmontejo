@@ -9,16 +9,24 @@ import mobileImage from '@assets/images/CTA/DJI_0167.jpg';
 import desktopImage from '@assets/images/CTA/DJI_0167.jpg';
 import fallbackImage from '@assets/images/CTA/DJI_0167.jpg';
 import Button from '@components/ui/Button.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  buttonLabel: string;
+  buttonHref: string;
+  imageAlt: string;
+}
+
+const { title, description, buttonLabel, buttonHref, imageAlt } =
+  Astro.props as Props;
 ---
 
 <section id="cta">
   <div class="container">
-    <h2 class="title">Estamos para ayudarte</h2>
-    <p>
-      Contacta con el Ayuntamiento para consultas, sugerencias o información
-      sobre los servicios municipales.
-    </p>
-    <Button href="/contacto/">Contacto</Button>
+    <h2 class="title">{title}</h2>
+    <p>{description}</p>
+    <Button href={buttonHref}>{buttonLabel}</Button>
   </div>
   <CSPicture
     mobileImgUrl={mobileImage}
@@ -26,7 +34,7 @@ import Button from '@components/ui/Button.astro';
     desktopImgUrl={desktopImage}
     desktopMediaWidth="601px"
     fallbackImgUrl={fallbackImage}
-    alt=""
+    alt={imageAlt}
   />
 </section>
 

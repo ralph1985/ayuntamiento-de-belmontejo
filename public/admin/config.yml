@@ -450,3 +450,136 @@ collections:
               name: 'mapDescription',
               widget: 'text',
             }
+
+  - name: 'home-page'
+    label: 'Portada'
+    files:
+      - label: 'Contenido de la portada'
+        name: 'home-page'
+        file: 'src/data/homePage.json'
+        media_folder: 'public/assets/images/home'
+        public_folder: '/assets/images/home'
+        fields:
+          - { label: 'Título SEO', name: 'pageTitle', widget: 'string' }
+          - {
+              label: 'Descripción SEO',
+              name: 'pageDescription',
+              widget: 'text',
+            }
+          - label: 'Hero principal'
+            name: 'hero'
+            widget: 'object'
+            fields:
+              - { label: 'Etiqueta', name: 'eyebrow', widget: 'string' }
+              - { label: 'Título', name: 'title', widget: 'string' }
+              - { label: 'Resumen', name: 'summary', widget: 'text' }
+              - {
+                  label: 'Texto del botón principal',
+                  name: 'primaryLabel',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Enlace del botón principal',
+                  name: 'primaryHref',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Texto del botón secundario',
+                  name: 'secondaryLabel',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Enlace del botón secundario',
+                  name: 'secondaryHref',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Imagen de escritorio',
+                  name: 'desktopImage',
+                  widget: 'image',
+                }
+              - { label: 'Imagen móvil', name: 'mobileImage', widget: 'image' }
+          - label: 'Servicios destacados'
+            name: 'services'
+            widget: 'list'
+            min: 1
+            summary: '{{fields.title}}'
+            fields:
+              - { label: 'Icono', name: 'icon', widget: 'image' }
+              - {
+                  label: 'Texto alternativo del icono',
+                  name: 'iconAlt',
+                  widget: 'string',
+                }
+              - { label: 'Título', name: 'title', widget: 'string' }
+              - { label: 'Descripción', name: 'description', widget: 'text' }
+          - label: 'Bloque sobre el pueblo'
+            name: 'villageStory'
+            widget: 'object'
+            fields:
+              - { label: 'Etiqueta', name: 'eyebrow', widget: 'string' }
+              - { label: 'Título', name: 'title', widget: 'string' }
+              - { label: 'Descripción', name: 'description', widget: 'text' }
+              - { label: 'Texto', name: 'body', widget: 'text' }
+              - { label: 'Imagen', name: 'image', widget: 'image' }
+              - {
+                  label: 'Texto alternativo de la imagen',
+                  name: 'imageAlt',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Texto del botón',
+                  name: 'buttonLabel',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Enlace del botón',
+                  name: 'buttonHref',
+                  widget: 'string',
+                }
+          - label: 'Actualidad municipal'
+            name: 'updates'
+            widget: 'object'
+            fields:
+              - { label: 'Etiqueta', name: 'eyebrow', widget: 'string' }
+              - { label: 'Título', name: 'title', widget: 'string' }
+              - { label: 'Descripción', name: 'description', widget: 'text' }
+              - {
+                  label: 'Texto del botón',
+                  name: 'buttonLabel',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Enlace del botón',
+                  name: 'buttonHref',
+                  widget: 'string',
+                }
+          - label: 'Comunidad y redes'
+            name: 'community'
+            widget: 'object'
+            fields:
+              - { label: 'Etiqueta', name: 'eyebrow', widget: 'string' }
+              - { label: 'Título', name: 'title', widget: 'string' }
+              - { label: 'Descripción', name: 'description', widget: 'text' }
+          - label: 'Llamada de contacto'
+            name: 'cta'
+            widget: 'object'
+            fields:
+              - { label: 'Título', name: 'title', widget: 'string' }
+              - { label: 'Descripción', name: 'description', widget: 'text' }
+              - {
+                  label: 'Texto del botón',
+                  name: 'buttonLabel',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Enlace del botón',
+                  name: 'buttonHref',
+                  widget: 'string',
+                }
+              - {
+                  label: 'Texto alternativo de la imagen',
+                  name: 'imageAlt',
+                  widget: 'string',
+                  required: false,
+                }

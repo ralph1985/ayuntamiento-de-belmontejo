@@ -1,0 +1,64 @@
+{
+  "pageTitle": "Ayuntamiento de Belmontejo",
+  "pageDescription": "Información municipal, bandos, noticias y patrimonio de Belmontejo, en la provincia de Cuenca.",
+  "hero": {
+    "eyebrow": "Ayuntamiento de Belmontejo",
+    "title": "La vida del pueblo, cerca de ti",
+    "summary": "Bandos, noticias y servicios del Ayuntamiento de Belmontejo.",
+    "primaryLabel": "Conoce el pueblo",
+    "primaryHref": "/sobre-el-pueblo/",
+    "secondaryLabel": "Contactar",
+    "secondaryHref": "/contacto/",
+    "desktopImage": "/assets/images/vista_aerea.png",
+    "mobileImage": "/assets/images/vista_aerea.webp"
+  },
+  "services": [
+    {
+      "icon": "/assets/svgs/service1.svg",
+      "iconAlt": "Historia y patrimonio",
+      "title": "Historia y Patrimonio",
+      "description": "Vestigios arqueológicos, patrimonio local e historia de Belmontejo."
+    },
+    {
+      "icon": "/assets/svgs/service2.svg",
+      "iconAlt": "Naturaleza y paisaje",
+      "title": "Naturaleza y Paisaje",
+      "description": "Campos de la Manchuela, caminos rurales y el paisaje que rodea el municipio."
+    },
+    {
+      "icon": "/assets/svgs/service3.svg",
+      "iconAlt": "Tradición y cultura",
+      "title": "Tradición y Cultura",
+      "description": "Fiestas, costumbres y vida cotidiana de Belmontejo."
+    }
+  ],
+  "villageStory": {
+    "eyebrow": "El pueblo",
+    "title": "Belmontejo y su entorno",
+    "description": "Un municipio de la Manchuela conquense entre campos, fuentes y patrimonio local.",
+    "body": "Las fuentes, las calles y la iglesia de Nuestra Señora de la Asunción forman parte del paisaje cotidiano del municipio.",
+    "image": "/assets/images/vista_aerea.jpg",
+    "imageAlt": "Vista aérea de Belmontejo y su entorno agrícola",
+    "buttonLabel": "Sobre Belmontejo",
+    "buttonHref": "/sobre-el-pueblo/"
+  },
+  "updates": {
+    "eyebrow": "Actualidad municipal",
+    "title": "Comunicados y noticias",
+    "description": "Consulta los últimos bandos y las noticias del Ayuntamiento.",
+    "buttonLabel": "Todas las noticias",
+    "buttonHref": "/noticias/"
+  },
+  "community": {
+    "eyebrow": "Comunidad",
+    "title": "Actualidad y redes",
+    "description": "Sigue la actualidad municipal y consulta las redes del Ayuntamiento."
+  },
+  "cta": {
+    "title": "Estamos para ayudarte",
+    "description": "Contacta con el Ayuntamiento para consultas, sugerencias o información sobre los servicios municipales.",
+    "buttonLabel": "Contacto",
+    "buttonHref": "/contacto/",
+    "imageAlt": ""
+  }
+}

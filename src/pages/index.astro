@@ -7,7 +7,7 @@ import HomeHero from '@components/sections/HomeHero.astro';
 import VillageStory from '@components/sections/VillageStory.astro';
 import HomeUpdates from '@components/sections/HomeUpdates.astro';
 import HomeCommunity from '@components/sections/HomeCommunity.astro';
-import { homeServices } from '@data/homeServices';
+import { homePage } from '@data/homePage';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
@@ -16,27 +16,27 @@ const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
-  title="Ayuntamiento de Belmontejo"
-  description="Información municipal, bandos, noticias y patrimonio de Belmontejo, en la provincia de Cuenca."
+  title={homePage.pageTitle}
+  description={homePage.pageDescription}
   preloadedImage={optimizedImage}
 >
-  <HomeHero />
+  <HomeHero {...homePage.hero} />
 
   <!-- ============================================ -->
   <!--                  Services                    -->
   <!-- ============================================ -->
 
-  <IconBulletList id="services" items={homeServices} />
+  <IconBulletList id="services" items={homePage.services} />
 
-  <VillageStory />
+  <VillageStory {...homePage.villageStory} />
 
   <!-- ============================================ -->
   <!--                    FAQ                       -->
   <!-- ============================================ -->
   <FAQ />
 
-  <HomeUpdates />
-  <HomeCommunity />
+  <HomeUpdates {...homePage.updates} />
+  <HomeCommunity {...homePage.community} />
 
-  <CTA />
+  <CTA {...homePage.cta} />
 </BaseLayout>

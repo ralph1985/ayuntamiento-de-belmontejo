@@ -1,15 +1,23 @@
 ---
 import SocialMediaLinks from '@components/layout/SocialMediaLinks.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+}
+
+const { eyebrow, title, description } = Astro.props as Props;
 ---
 
 <section class="home-community">
   <div class="home-community__inner">
     <div class="home-community__intro">
       <SectionHeading
-        eyebrow="Comunidad"
-        title="Actualidad y redes"
-        description="Sigue la actualidad municipal y consulta las redes del Ayuntamiento."
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
       />
       <SocialMediaLinks className="homepage-social" />
     </div>

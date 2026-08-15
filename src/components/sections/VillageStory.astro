@@ -1,14 +1,36 @@
 ---
 import Button from '@components/ui/Button.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+  buttonLabel: string;
+  buttonHref: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  body,
+  image,
+  imageAlt,
+  buttonLabel,
+  buttonHref,
+} = Astro.props as Props;
 ---
 
 <section class="village-story">
   <div class="village-story__inner">
     <div class="village-story__media">
       <img
-        src="/assets/images/vista_aerea.jpg"
-        alt="Vista aérea de Belmontejo y su entorno agrícola"
+        src={image}
+        alt={imageAlt}
         width="1920"
         height="1080"
         loading="lazy"
@@ -17,17 +39,12 @@ import SectionHeading from '@components/ui/SectionHeading.astro';
     </div>
     <div class="village-story__content">
       <SectionHeading
-        eyebrow="El pueblo"
-        title="Belmontejo y su entorno"
-        description="Un municipio de la Manchuela conquense entre campos, fuentes y patrimonio local."
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
       />
-      <p>
-        Las fuentes, las calles y la iglesia de Nuestra Señora de la Asunción
-        forman parte del paisaje cotidiano del municipio.
-      </p>
-      <Button href="/sobre-el-pueblo/" variant="secondary"
-        >Sobre Belmontejo</Button
-      >
+      <p>{body}</p>
+      <Button href={buttonHref} variant="secondary">{buttonLabel}</Button>
     </div>
   </div>
 </section>

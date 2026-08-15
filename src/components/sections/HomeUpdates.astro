@@ -2,18 +2,25 @@
 import FeaturedContent from '@components/sections/FeaturedContent.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import Button from '@components/ui/Button.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  buttonLabel: string;
+  buttonHref: string;
+}
+
+const { eyebrow, title, description, buttonLabel, buttonHref } =
+  Astro.props as Props;
 ---
 
 <section class="home-updates">
   <div class="home-updates__inner">
-    <SectionHeading
-      eyebrow="Actualidad municipal"
-      title="Comunicados y noticias"
-      description="Consulta los últimos bandos y las noticias del Ayuntamiento."
-    />
+    <SectionHeading eyebrow={eyebrow} title={title} description={description} />
     <FeaturedContent type="both" limit={6} />
     <div class="home-updates__actions">
-      <Button href="/noticias/" variant="secondary">Todas las noticias</Button>
+      <Button href={buttonHref} variant="secondary">{buttonLabel}</Button>
     </div>
   </div>
 </section>

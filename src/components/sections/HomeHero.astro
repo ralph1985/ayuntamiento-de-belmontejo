@@ -1,15 +1,36 @@
 ---
 import Button from '@components/ui/Button.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  summary: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel: string;
+  secondaryHref: string;
+  desktopImage: string;
+  mobileImage: string;
+}
+
+const {
+  eyebrow,
+  title,
+  summary,
+  primaryLabel,
+  primaryHref,
+  secondaryLabel,
+  secondaryHref,
+  desktopImage,
+  mobileImage,
+} = Astro.props as Props;
 ---
 
 <section id="hero" class="home-hero" aria-labelledby="home-hero-title">
   <picture class="home-hero__media" aria-hidden="true">
-    <source
-      media="(max-width: 600px)"
-      srcset="/assets/images/vista_aerea.webp"
-    />
+    <source media="(max-width: 600px)" srcset={mobileImage} />
     <img
-      src="/assets/images/vista_aerea.png"
+      src={desktopImage}
       alt=""
       width="2500"
       height="1667"
@@ -19,15 +40,13 @@ import Button from '@components/ui/Button.astro';
   </picture>
   <div class="home-hero__overlay"></div>
   <div class="home-hero__content">
-    <p class="home-hero__eyebrow">Ayuntamiento de Belmontejo</p>
-    <h1 id="home-hero-title">La vida del pueblo, cerca de ti</h1>
-    <p class="home-hero__summary">
-      Bandos, noticias y servicios del Ayuntamiento de Belmontejo.
-    </p>
+    <p class="home-hero__eyebrow">{eyebrow}</p>
+    <h1 id="home-hero-title">{title}</h1>
+    <p class="home-hero__summary">{summary}</p>
     <div class="home-hero__actions">
-      <Button href="/sobre-el-pueblo/">Conoce el pueblo</Button>
-      <Button href="/contacto/" variant="ghost" class="home-hero__secondary"
-        >Contactar</Button
+      <Button href={primaryHref}>{primaryLabel}</Button>
+      <Button href={secondaryHref} variant="ghost" class="home-hero__secondary"
+        >{secondaryLabel}</Button
       >
     </div>
   </div>
