@@ -1,34 +1,54 @@
-// Checks the value of aria expanded on an element and changes it accordingly whether it is expanded or not
-function ariaExpanded(element) {
-  const isExpanded = element.getAttribute('aria-expanded');
-  element.setAttribute(
-    'aria-expanded',
-    isExpanded === 'false' ? 'true' : 'false'
-  );
-}
+const MOBILE_BREAKPOINT = '(max-width: 74.6875rem)';
 
-// Astro:page-load wrapper for View Transitions purposes
-document.addEventListener('astro:page-load', () => {
-  // Make the script controlling the <Hamburger /> mobile menu component available after navigating to a new page.
+const setAriaExpanded = (element, expanded) => {
+  element?.setAttribute('aria-expanded', String(expanded));
+};
 
-  const CSbody = document.querySelector('body');
-  const CSnavbarMenu = document.getElementById('cs-navigation');
+const initializeNavigation = () => {
+  const body = document.body;
+  const header = document.getElementById('cs-navigation');
   const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-  const mobileHeaderMediaQuery = globalThis.matchMedia(
-    '(max-width: 74.6875rem)'
-  );
-  const SCROLL_HIDE_THRESHOLD = 120;
+
+  if (!body || !header || !mobileMenuToggle || header.dataset.initialized) {
+    return;
+  }
+
+  header.dataset.initialized = 'true';
+  const mobileMediaQuery = globalThis.matchMedia(MOBILE_BREAKPOINT);
   let lastScrollY = globalThis.scrollY;
   let lastVisibleScrollY = globalThis.scrollY;
 
+  const closeDropdown = dropdown => {
+    dropdown.classList.remove('cs-active');
+    setAriaExpanded(dropdown.querySelector('.cs-dropdown-button'), false);
+  };
+
+  const closeMenu = () => {
+    header.classList.remove('cs-active');
+    mobileMenuToggle.classList.remove('cs-active');
+    body.classList.remove('cs-open');
+    setAriaExpanded(mobileMenuToggle, false);
+    mobileMenuToggle.setAttribute('aria-label', 'Abrir menú de navegación');
+    header.querySelectorAll('.cs-dropdown.cs-active').forEach(closeDropdown);
+  };
+
+  const openMenu = () => {
+    header.classList.add('cs-active');
+    mobileMenuToggle.classList.add('cs-active');
+    body.classList.add('cs-open');
+    setAriaExpanded(mobileMenuToggle, true);
+    mobileMenuToggle.setAttribute('aria-label', 'Cerrar menú de navegación');
+  };
+
   const handleScrollDirection = () => {
-    if (!mobileHeaderMediaQuery.matches || !CSnavbarMenu) {
+    if (!mobileMediaQuery.matches) {
+      header.classList.remove('cs-hidden');
       lastScrollY = globalThis.scrollY;
       return;
     }
 
-    if (CSnavbarMenu.classList.contains('cs-active')) {
-      CSnavbarMenu.classList.remove('cs-hidden');
+    if (header.classList.contains('cs-active')) {
+      header.classList.remove('cs-hidden');
       lastScrollY = globalThis.scrollY;
       lastVisibleScrollY = globalThis.scrollY;
       return;
@@ -38,23 +58,62 @@ document.addEventListener('astro:page-load', () => {
     const scrollingDown = currentScrollY > lastScrollY;
     const scrollingUp = currentScrollY < lastScrollY;
 
-    if (
-      scrollingDown &&
-      currentScrollY - lastVisibleScrollY > SCROLL_HIDE_THRESHOLD
-    ) {
-      CSnavbarMenu.classList.add('cs-hidden');
+    if (scrollingDown && currentScrollY - lastVisibleScrollY > 120) {
+      header.classList.add('cs-hidden');
     } else if (scrollingUp) {
-      CSnavbarMenu.classList.remove('cs-hidden');
+      header.classList.remove('cs-hidden');
       lastVisibleScrollY = currentScrollY;
     }
 
     lastScrollY = currentScrollY;
   };
 
-  // Reset header visibility when resizing out of mobile
-  mobileHeaderMediaQuery.addEventListener('change', event => {
-    if (!event.matches && CSnavbarMenu) {
-      CSnavbarMenu.classList.remove('cs-hidden');
+  mobileMenuToggle.addEventListener('click', () => {
+    header.classList.contains('cs-active') ? closeMenu() : openMenu();
+  });
+
+  header.addEventListener('click', event => {
+    if (event.target === header && header.classList.contains('cs-active')) {
+      closeMenu();
+    }
+
+    if (event.target.closest('.cs-li-link:not(.cs-dropdown-button)')) {
+      closeMenu();
+    }
+  });
+
+  header.querySelectorAll('.cs-dropdown').forEach(dropdown => {
+    const dropdownButton = dropdown.querySelector('.cs-dropdown-button');
+
+    dropdownButton?.addEventListener('click', event => {
+      event.stopPropagation();
+      const isActive = dropdown.classList.toggle('cs-active');
+      setAriaExpanded(dropdownButton, isActive);
+    });
+
+    dropdown.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeDropdown(dropdown);
+        dropdownButton?.focus();
+      }
+    });
+
+    dropdown.addEventListener('focusout', event => {
+      if (!dropdown.contains(event.relatedTarget)) {
+        closeDropdown(dropdown);
+      }
+    });
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      if (header.classList.contains('cs-active')) {
+        closeMenu();
+      } else {
+        header
+          .querySelectorAll('.cs-dropdown.cs-active')
+          .forEach(closeDropdown);
+      }
     }
   });
 
@@ -62,114 +121,12 @@ document.addEventListener('astro:page-load', () => {
     passive: true,
   });
 
-  function toggleMenu() {
-    mobileMenuToggle.classList.toggle('cs-active');
-    CSnavbarMenu.classList.toggle('cs-active');
-    CSnavbarMenu.classList.remove('cs-hidden');
-    CSbody.classList.toggle('cs-open');
-  }
-
-  // Toggles the hamburger mobile menu
-  mobileMenuToggle.addEventListener('click', function () {
-    toggleMenu();
-    ariaExpanded(mobileMenuToggle);
-  });
-
-  // Close mobile menu when clicking on the overlay (outside the menu)
-  CSnavbarMenu.addEventListener('click', function (event) {
-    // Only close if clicking on the navigation element itself (the overlay area)
-    // and not on any child elements (the actual menu content)
-    if (
-      event.target === CSnavbarMenu &&
-      CSnavbarMenu.classList.contains('cs-active')
-    ) {
-      toggleMenu();
-      ariaExpanded(mobileMenuToggle);
+  mobileMediaQuery.addEventListener('change', event => {
+    if (!event.matches) {
+      closeMenu();
+      header.classList.remove('cs-hidden');
     }
   });
+};
 
-  // Add event listeners to each dropdown element for accessibility
-  const dropdownElements = document.querySelectorAll('.cs-dropdown');
-  for (const element of dropdownElements) {
-    // This variable tracks if the Escape key was pressed. This flag will be checked in the focusout event handler to ensure that pressing the Escape key does not trigger the focusout event and subsequently remove the cs-active class from the dropdown
-    let escapePressed = false;
-
-    element.addEventListener('focusout', function (event) {
-      if (escapePressed) {
-        escapePressed = false;
-        return; // Skip the focusout logic if escape was pressed
-      }
-      // If the focus has moved outside the dropdown, remove the active class from the dropdown
-      if (!element.contains(event.relatedTarget)) {
-        element.classList.remove('cs-active');
-        // adjust aria-expanded attribute on the dropdown button only
-        const dropdownButton = element.querySelector('.cs-dropdown-button');
-        if (dropdownButton) {
-          ariaExpanded(dropdownButton);
-        }
-      }
-    });
-
-    element.addEventListener('keydown', function (event) {
-      const dropdownButton = element.querySelector('.cs-dropdown-button');
-      // If the dropdown is active, stop the event from propagating. This is so we can use Escape to close the dropdown, then press it again to close the hamburger menu (if needed)
-      if (element.classList.contains('cs-active')) {
-        event.stopPropagation();
-      }
-
-      // Pressing Enter or Space will toggle the dropdown and adjust the aria-expanded attribute
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-
-        element.classList.toggle('cs-active');
-        // adjust aria-expanded attribute on the dropdown button only
-        if (dropdownButton) {
-          ariaExpanded(dropdownButton);
-        }
-      }
-
-      // Pressing Escape will remove the active class from the dropdown. The stopPropagation above will stop the hamburger menu from closing
-      if (event.key === 'Escape') {
-        escapePressed = true;
-        element.classList.remove('cs-active');
-        // adjust aria-expanded attribute on the dropdown button only
-        if (dropdownButton) {
-          ariaExpanded(dropdownButton);
-        }
-      }
-    });
-
-    // Handles dropdown menus on mobile - the matching media query (max-width: 63.9375rem) is necessary so that clicking the dropdown button on desktop does not add the active class and thus interfere with the hover state
-
-    const maxWidthMediaQuery = globalThis.matchMedia('(max-width: 63.9375rem)');
-    if (maxWidthMediaQuery.matches) {
-      element.addEventListener('click', () => {
-        element.classList.toggle('cs-active');
-        const dropdownButton = element.querySelector('.cs-dropdown-button');
-        if (dropdownButton) {
-          ariaExpanded(dropdownButton);
-        }
-      });
-
-      // If you press Escape and the hamburger menu is open, close it
-      document.addEventListener('keydown', event => {
-        if (
-          event.key === 'Escape' &&
-          mobileMenuToggle.classList.contains('cs-active')
-        ) {
-          toggleMenu();
-        }
-      });
-    }
-  }
-
-  // Pressing Enter will redirect to the href
-  const dropdownLinks = document.querySelectorAll('.cs-drop-li > .cs-li-link');
-  for (const link of dropdownLinks) {
-    link.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') {
-        globalThis.location.href = this.href;
-      }
-    });
-  }
-});
+document.addEventListener('astro:page-load', initializeNavigation);

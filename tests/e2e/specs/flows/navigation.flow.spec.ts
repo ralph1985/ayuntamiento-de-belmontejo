@@ -207,3 +207,47 @@ test.describe('Navegación interna de contenido', () => {
     ).toBeVisible();
   });
 });
+
+test.describe('Cabecera móvil y preferencias', () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test('abre y cierra el menú móvil con estados accesibles', async ({
+    page,
+  }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    const header = page.locator('#cs-navigation');
+    const menuToggle = page.locator('#mobile-menu-toggle');
+
+    await expect(menuToggle).toHaveAttribute('aria-expanded', 'false');
+    await menuToggle.click();
+    await expect(menuToggle).toHaveAttribute('aria-expanded', 'true');
+    await expect(menuToggle).toHaveAccessibleName('Cerrar menú de navegación');
+    await expect(header).toHaveClass(/cs-active/);
+
+    await page.keyboard.press('Escape');
+    await expect(menuToggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(header).not.toHaveClass(/cs-active/);
+  });
+
+  test('permite abrir el desplegable y cambiar el modo de color', async ({
+    page,
+  }) => {
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    await page.locator('#mobile-menu-toggle').click();
+
+    const projectsButton = page.getByRole('button', {
+      name: 'Proyectos',
+      exact: true,
+    });
+    await projectsButton.click();
+    await expect(projectsButton).toHaveAttribute('aria-expanded', 'true');
+
+    const themeToggle = page.locator('#dark-mode-toggle');
+    await expect(themeToggle).toHaveAccessibleName('Activar modo oscuro');
+    await themeToggle.click();
+    await expect(page.locator('body')).toHaveClass(/dark-mode/);
+    await expect(themeToggle).toHaveAccessibleName('Activar modo claro');
+  });
+});

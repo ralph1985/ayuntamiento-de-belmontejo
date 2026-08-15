@@ -8,14 +8,17 @@ import MunicipalSeal from '@components/ui/MunicipalSeal.astro';
 <header id="cs-navigation">
   <div class="cs-container">
     <!--Nav Logo-->
-    <a href="/" class="cs-logo" aria-label="back to home">
+    <a href="/" class="cs-logo" aria-label="Ir a la página de inicio">
       <MunicipalSeal
         class="cs-logo-img"
         alt="Escudo de Belmontejo"
         width={210}
         height={29}
       />
-      <span class="cs-logo-text">Ayuntamiento de Belmontejo</span>
+      <span class="cs-logo-text">
+        <span class="cs-logo-kicker">Ayuntamiento</span>
+        <span class="cs-logo-name">Belmontejo</span>
+      </span>
     </a>
     <DarkModeToggle />
     <Navigation currentPathname={Astro.url.pathname} />

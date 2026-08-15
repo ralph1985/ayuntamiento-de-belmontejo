@@ -17,20 +17,20 @@ const isActiveLink = (url: string | undefined) =>
   isActiveNavigationLink(url, currentPathname);
 ---
 
-<nav class="cs-nav" role="navigation">
+<nav class="cs-nav" aria-label="Navegación principal">
   <!--Mobile Nav Toggle-->
   <button
     class="cs-toggle"
     id="mobile-menu-toggle"
     aria-expanded="false"
     aria-controls="cs-expanded-ul"
-    aria-label="Toggle mobile menu."
+    aria-label="Abrir menú de navegación"
   >
-    <div class="cs-box" aria-hidden="true">
+    <span class="cs-box" aria-hidden="true">
       <span class="cs-line cs-line1" aria-hidden="true"></span>
       <span class="cs-line cs-line2" aria-hidden="true"></span>
       <span class="cs-line cs-line3" aria-hidden="true"></span>
-    </div>
+    </span>
   </button>
   <!-- If you want to use another navigation stitch and enjoy the benefits of dynamic routing, replace the .cs-ul-wrapper in the navigation stitch with this one below -->
   <div class="cs-ul-wrapper">
@@ -46,6 +46,7 @@ const isActiveLink = (url: string | undefined) =>
             {entry.children?.length > 0 ? (
               // If entry has children in navData.json, create a button and a dropdown icon
               <button
+                type="button"
                 aria-expanded="false"
                 aria-controls={`submenu-${entry.key}`}
                 class:list={[
@@ -53,7 +54,7 @@ const isActiveLink = (url: string | undefined) =>
                   { 'cs-active': isActiveLink(entry.url) },
                 ]}
               >
-                {entry.key}
+                <span>{entry.key}</span>
                 <span class="cs-drop-icon" aria-hidden="true">
                   ▾
                 </span>
