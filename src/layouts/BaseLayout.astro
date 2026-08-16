@@ -24,7 +24,7 @@ type ContentImage = {
 };
 
 // Create a union type for preloadedImage
-type PreloadedImage = GetImageResult | ContentImage;
+type PreloadedImage = GetImageResult | ContentImage | string;
 
 interface Props {
   title: string;
@@ -33,6 +33,8 @@ interface Props {
 }
 
 const { description, title, preloadedImage } = Astro.props as Props;
+const preloadedImageSrc =
+  typeof preloadedImage === 'string' ? preloadedImage : preloadedImage?.src;
 const baseSiteUrl =
   Astro.site && Astro.site.length > 0 ? Astro.site : contactInfo.entity.domain;
 const normalizedBaseUrl = baseSiteUrl.endsWith('/')
@@ -104,8 +106,8 @@ const organizationSchema = {
 
     <!-- If present, preloads the image passed as a prop -->
     {
-      preloadedImage && (
-        <link rel="preload" href={preloadedImage.src} as="image" />
+      preloadedImageSrc && (
+        <link rel="preload" href={preloadedImageSrc} as="image" />
       )
     }
 
@@ -115,10 +117,10 @@ const organizationSchema = {
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
     {
-      preloadedImage && (
+      preloadedImageSrc && (
         <>
-          <meta property="og:image" content={preloadedImage.src} />
-          <meta property="og:image:secure_url" content={preloadedImage.src} />
+          <meta property="og:image" content={preloadedImageSrc} />
+          <meta property="og:image:secure_url" content={preloadedImageSrc} />
         </>
       )
     }

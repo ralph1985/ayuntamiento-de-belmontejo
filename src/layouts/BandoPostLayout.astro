@@ -1,8 +1,8 @@
 ---
 import { render } from 'astro:content';
-import { Image } from 'astro:assets';
 import contactInfo from '@js/contact';
 import { formatDate } from '@js/utils';
+import { getStaticContentImage } from '@data/contentImage';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import FeaturedContent from '@components/sections/FeaturedContent.astro';
 import TableOfContents from '@components/content/TableOfContents.astro';
@@ -13,6 +13,7 @@ import '@styles/markdown.less';
 const { post } = Astro.props;
 const { title, date, description, image, imageAlt, author, category, link } =
   post.data;
+const staticImage = getStaticContentImage(image);
 const { Content, headings } = await render(post);
 const baseSiteUrl =
   Astro.site && Astro.site.length > 0 ? Astro.site : contactInfo.entity.domain;
@@ -20,12 +21,7 @@ const normalizedBaseUrl = baseSiteUrl.endsWith('/')
   ? baseSiteUrl
   : `${baseSiteUrl}/`;
 const canonicalUrl = new URL(Astro.url.pathname, normalizedBaseUrl).href;
-const imageSrc =
-  typeof image === 'string'
-    ? image
-    : typeof image === 'object' && image?.src
-      ? image.src
-      : undefined;
+const imageSrc = staticImage?.webp;
 const featuredImageUrl = imageSrc
   ? new URL(imageSrc, normalizedBaseUrl).href
   : undefined;
@@ -64,7 +60,11 @@ const articleSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description} preloadedImage={image}>
+<BaseLayout
+  title={title}
+  description={description}
+  preloadedImage={staticImage?.webp}
+>
   <!-- ============================================ -->
   <!--         Bando Article + Sidebar layout        -->
   <!-- ============================================ -->
@@ -112,11 +112,13 @@ const articleSchema = {
         {
           image && (
             <picture class="news-mainImage">
-              <Image
-                src={image}
+              <source type="image/avif" srcset={staticImage?.avif} />
+              <source type="image/webp" srcset={staticImage?.webp} />
+              <img
+                src={staticImage?.fallback}
                 alt={imageAlt || title}
-                width="795"
-                height="400"
+                width="800"
+                height="450"
                 decoding="async"
               />
             </picture>

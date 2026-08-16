@@ -1,7 +1,7 @@
 ---
 import type { ImageMetadata } from 'astro:assets';
-import { Picture } from 'astro:assets';
 import { formatDate } from '@js/utils';
+import { getStaticContentImage } from '@data/contentImage';
 
 type ArticleLink = {
   href: string;
@@ -37,6 +37,7 @@ const {
 
 const hasImage = Boolean(image);
 const showImage = hasImage && variant !== 'bandos';
+const staticImage = getStaticContentImage(image);
 const resolvedAlt = imageAlt ?? title;
 const formattedDate = formatDate(date);
 ---
@@ -51,19 +52,19 @@ const formattedDate = formatDate(date);
   }}
 >
   {
-    showImage && image && (
-      <Picture
-        pictureAttributes={{
-          class: 'news-mainImage',
-        }}
-        src={image}
-        quality="mid"
-        formats={['avif', 'webp', 'jpg']}
-        alt={resolvedAlt}
-        loading="lazy"
-        decoding="async"
-        aria-hidden="true"
-      />
+    showImage && staticImage && (
+      <picture class="news-mainImage" aria-hidden="true">
+        <source type="image/avif" srcset={staticImage.avif} />
+        <source type="image/webp" srcset={staticImage.webp} />
+        <img
+          src={staticImage.fallback}
+          alt={resolvedAlt}
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="450"
+        />
+      </picture>
     )
   }
 

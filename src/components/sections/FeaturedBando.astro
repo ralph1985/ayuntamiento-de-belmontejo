@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import { formatDate } from '@js/utils';
+import { getStaticContentImage } from '@data/contentImage';
 import '@styles/sidebar.less';
 
 interface Props {
@@ -27,8 +27,8 @@ const featuredBandos = posts
     <a class="news-sidebar_widget-link" href={`/bandos/${post.id}`}>
       {post.data.image ? (
         <picture class="news-sidebar_widget-image">
-          <Image
-            src={post.data.image}
+          <img
+            src={getStaticContentImage(post.data.image)?.thumb}
             alt={post.data.imageAlt || post.data.title}
             width="60"
             height="60"

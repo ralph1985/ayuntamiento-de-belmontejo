@@ -5,7 +5,7 @@
  **/
 
 import { formatDate } from '@js/utils';
-import { Picture } from 'astro:assets';
+import { getStaticContentImage } from '@data/contentImage';
 
 const { posts } = Astro.props;
 ---
@@ -24,18 +24,24 @@ const { posts } = Astro.props;
         posts.length >= 1 &&
           posts.map(post => (
             <li class="cs-item">
-              <Picture
-                pictureAttributes={{
-                  class: 'cs-picture',
-                }}
-                src={post.data.image}
-                quality={'mid'}
-                formats={['avif', 'webp', 'jpg']}
-                alt={post.data.imageAlt}
-                loading="lazy"
-                decoding="async"
-                aria-hidden="true"
-              />
+              <picture class="cs-picture" aria-hidden="true">
+                <source
+                  type="image/avif"
+                  srcset={getStaticContentImage(post.data.image)?.avif}
+                />
+                <source
+                  type="image/webp"
+                  srcset={getStaticContentImage(post.data.image)?.webp}
+                />
+                <img
+                  src={getStaticContentImage(post.data.image)?.fallback}
+                  alt={post.data.imageAlt}
+                  loading="lazy"
+                  decoding="async"
+                  width="800"
+                  height="450"
+                />
+              </picture>
               <div class="cs-flex">
                 <span class="cs-date">{formatDate(post.data.date)}</span>
                 <h3 class="cs-h3">{post.data.title}</h3>
