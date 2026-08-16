@@ -5,6 +5,7 @@ type NavigationScenario = {
   expectedPath: string;
   expectedHeading: RegExp;
   startPath?: string;
+  projectChild?: boolean;
 };
 
 const escapeRegex = (value: string) =>
@@ -36,11 +37,13 @@ const navigationScenarios: NavigationScenario[] = [
     label: 'Camping rural',
     expectedPath: '/proyectos/proyecto-1',
     expectedHeading: /Camping rural sostenible/i,
+    projectChild: true,
   },
   {
     label: 'Pista de pádel',
     expectedPath: '/proyectos/proyecto-2',
     expectedHeading: /Pista de pádel/i,
+    projectChild: true,
   },
   {
     label: 'Buscador',
@@ -58,6 +61,10 @@ test.describe('Navegación principal', () => {
       const navigation = page.locator('#cs-navigation').getByRole('navigation');
 
       await navigation.getByRole('button', { name: /menú/i }).click();
+
+      if (scenario.projectChild) {
+        await navigation.getByText('Ver proyectos', { exact: true }).click();
+      }
 
       await navigation
         .getByRole('link', { name: scenario.label, exact: true })

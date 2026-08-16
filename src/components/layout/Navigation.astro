@@ -74,25 +74,63 @@ const projectsEntry = findEntry('Proyectos');
                       ↗
                     </span>
                   </a>
-                  {entry.children?.length > 0 && (
-                    <ul class="cs-menu-children">
-                      {entry.children.map(child => (
-                        <li>
-                          <a
-                            href={child.url}
-                            class:list={[
-                              { 'cs-active': currentPathname === child.url },
-                            ]}
-                            aria-current={
-                              currentPathname === child.url ? 'page' : undefined
-                            }
-                          >
-                            {child.key}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  {entry.children?.length > 0 &&
+                    (entry.key === 'Proyectos' ? (
+                      <details
+                        class="cs-projects-disclosure"
+                        open={entry.children.some(
+                          child => currentPathname === child.url
+                        )}
+                      >
+                        <summary>
+                          <span>Ver proyectos</span>
+                          <span class="cs-disclosure-icon" aria-hidden="true">
+                            ↓
+                          </span>
+                        </summary>
+                        <ul class="cs-menu-children">
+                          {entry.children.map(child => (
+                            <li>
+                              <a
+                                href={child.url}
+                                class:list={[
+                                  {
+                                    'cs-active': currentPathname === child.url,
+                                  },
+                                ]}
+                                aria-current={
+                                  currentPathname === child.url
+                                    ? 'page'
+                                    : undefined
+                                }
+                              >
+                                {child.key}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    ) : (
+                      <ul class="cs-menu-children">
+                        {entry.children.map(child => (
+                          <li>
+                            <a
+                              href={child.url}
+                              class:list={[
+                                { 'cs-active': currentPathname === child.url },
+                              ]}
+                              aria-current={
+                                currentPathname === child.url
+                                  ? 'page'
+                                  : undefined
+                              }
+                            >
+                              {child.key}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    ))}
                 </li>
               ))
             }
