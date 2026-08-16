@@ -8,21 +8,19 @@ import Button from '@components/ui/Button.astro';
 import { projects } from '@data/projects';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-import { getImage } from 'astro:assets';
-const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
+import landingImage from '@data/landingImage';
 ---
 
 <BaseLayout
   title="Proyectos - Ayuntamiento de Belmontejo"
   description="Consulta los proyectos e iniciativas del Ayuntamiento de Belmontejo para mejorar el municipio."
-  preloadedImage={optimizedImage}
+  preloadedImage={landingImage}
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing title="Proyectos" image={optimizedImage}>
+  <Landing title="Proyectos" image={landingImage}>
     <p>
       Consulta los proyectos e iniciativas publicados por el Ayuntamiento de
       Belmontejo.

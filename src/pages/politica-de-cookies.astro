@@ -9,10 +9,7 @@ import contactInfo, {
   getPrimaryPhone,
 } from '@js/contact';
 import Button from '@components/ui/Button.astro';
-import { getImage } from 'astro:assets';
-import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
-
-const optimizedImage = await getImage({ src: vistaAerea });
+import landingImage from '@data/landingImage';
 
 const pageTitle = `Política de Cookies - ${contactInfo.entity.name}`;
 const description = `Información detallada sobre el uso de cookies en el sitio web del ${contactInfo.entity.name} y cómo gestionar sus preferencias.`;
@@ -29,7 +26,7 @@ const primaryOfficeLines = primaryOffice
 ---
 
 <BaseLayout title={pageTitle} description={description}>
-  <Landing title="🍪 Política de Cookies" image={optimizedImage}>
+  <Landing title="🍪 Política de Cookies" image={landingImage}>
     <p class="subtitle">
       Información sobre el uso de cookies en el sitio web del {
         contactInfo.entity.name

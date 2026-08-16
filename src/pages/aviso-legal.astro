@@ -8,10 +8,7 @@ import contactInfo, {
   getPrimaryOffice,
   getPrimaryPhone,
 } from '@js/contact';
-import { getImage } from 'astro:assets';
-import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
-
-const optimizedImage = await getImage({ src: vistaAerea });
+import landingImage from '@data/landingImage';
 
 const pageTitle = `Aviso Legal - ${contactInfo.entity.name}`;
 const description = `Marco legal, condiciones de uso y responsabilidades del sitio web oficial del ${contactInfo.entity.name}.`;
@@ -28,7 +25,7 @@ const primaryOfficeLines = primaryOffice
 ---
 
 <BaseLayout title={pageTitle} description={description}>
-  <Landing title="⚖️ Aviso Legal" image={optimizedImage}>
+  <Landing title="⚖️ Aviso Legal" image={landingImage}>
     <p class="subtitle">
       Información jurídica esencial sobre el sitio web del {
         contactInfo.entity.name

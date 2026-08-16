@@ -1,6 +1,16 @@
 ---
 import { Picture } from 'astro:assets';
-const { title, image } = Astro.props;
+
+interface Props {
+  title: string;
+  image: {
+    src: string;
+    width: number;
+    height: number;
+  };
+}
+
+const { title, image } = Astro.props as Props;
 ---
 
 <section id="int-hero" aria-labelledby="page-hero-title">
@@ -18,9 +28,9 @@ const { title, image } = Astro.props;
   <div class="page-hero__media" aria-hidden="true">
     <Picture
       src={image.src}
-      width={image.attributes.width}
-      height={image.attributes.height}
-      formats={['avif', 'webp']}
+      width={image.width}
+      height={image.height}
+      formats={['webp']}
       decoding="async"
       alt=""
       loading="eager"

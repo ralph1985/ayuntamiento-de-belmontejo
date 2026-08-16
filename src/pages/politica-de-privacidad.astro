@@ -8,12 +8,10 @@ import contactInfo, {
   getPrimaryOffice,
   getPrimaryPhone,
 } from '@js/contact';
-import { getImage } from 'astro:assets';
-import vistaAerea from '../../public/assets/images/vista_aerea.jpg';
+import landingImage from '@data/landingImage';
 
 const pageTitle = `Política de Privacidad - ${contactInfo.entity.name}`;
 const description = `Conoce cómo tratamos tus datos personales en el ${contactInfo.entity.name}, qué derechos te asisten y cómo ejercerlos conforme al RGPD y la LOPDGDD.`;
-const optimizedImage = await getImage({ src: vistaAerea });
 const primaryPhone = getPrimaryPhone();
 const primaryEmail = getPrimaryEmail();
 const primaryOffice = getPrimaryOffice();
@@ -76,7 +74,7 @@ const retentionPolicies = [
 ---
 
 <BaseLayout title={pageTitle} description={description}>
-  <Landing title="🔒 Política de Privacidad" image={optimizedImage}>
+  <Landing title="🔒 Política de Privacidad" image={landingImage}>
     <p class="subtitle">
       Compromiso del {contactInfo.entity.name} con la protección de los datos personales
       <br />

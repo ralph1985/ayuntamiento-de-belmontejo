@@ -5,10 +5,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Landing from '@components/sections/Landing.astro';
 import contactInfo, { getPrimaryOffice } from '@js/contact';
 
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from '@assets/images/vista-aerea-2.jpg';
-import { getImage } from 'astro:assets';
-const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
+import landingImage from '@data/landingImage';
 
 const pageTitle = `El tiempo en Belmontejo - ${contactInfo.entity.name}`;
 const pageDescription =
@@ -19,13 +16,13 @@ const weatherCoordinates = getPrimaryOffice()?.coordinates;
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
-  preloadedImage={optimizedImage}
+  preloadedImage={landingImage}
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing title="El tiempo en Belmontejo" image={optimizedImage}>
+  <Landing title="El tiempo en Belmontejo" image={landingImage}>
     <p>
       Consulta el estado actual del tiempo y la previsión para los próximos 7
       días en Belmontejo.

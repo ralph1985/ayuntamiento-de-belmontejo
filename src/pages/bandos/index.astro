@@ -9,10 +9,9 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/sections/CTA.astro';
 import ContentArchive from '@components/sections/ContentArchive.astro';
 import { getCollection } from 'astro:content';
-import { getImage } from 'astro:assets';
-
 import BandoMovilApp from '@components/sections/BandoMovilApp.astro';
 import Landing from '@components/sections/Landing.astro';
+import landingImage from '@data/landingImage';
 
 const posts = await getCollection('bandos');
 posts.sort(
@@ -20,16 +19,14 @@ posts.sort(
 );
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
 ---
 
 <BaseLayout
   title="Bandos - Ayuntamiento de Belmontejo"
   description="Consulta todos los bandos y comunicados oficiales del Ayuntamiento de Belmontejo"
-  preloadedImage={optimizedImage}
+  preloadedImage={landingImage}
 >
-  <Landing title="Bandos y avisos" image={optimizedImage}>
+  <Landing title="Bandos y avisos" image={landingImage}>
     <p>
       Consulta los comunicados oficiales publicados por el Ayuntamiento de
       Belmontejo.

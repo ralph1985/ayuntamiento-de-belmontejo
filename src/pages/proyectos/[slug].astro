@@ -17,18 +17,15 @@ export function getStaticPaths() {
 
 const { project } = Astro.props as { project: Project };
 
-// Optimize the shared landing image for all project detail pages.
-import landingImage from '@assets/images/vista-aerea-2.jpg';
-import { getImage } from 'astro:assets';
-const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
+import landingImage from '@data/landingImage';
 ---
 
 <BaseLayout
   title={`${project.title} - Ayuntamiento de Belmontejo`}
   description={project.pageDescription}
-  preloadedImage={optimizedImage}
+  preloadedImage={landingImage}
 >
-  <Landing title={project.title} image={optimizedImage}>
+  <Landing title={project.title} image={landingImage}>
     <p>{project.landingIntro}</p>
   </Landing>
 
