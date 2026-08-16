@@ -9,7 +9,7 @@
     "primaryHref": "/sobre-el-pueblo/",
     "secondaryLabel": "Contactar",
     "secondaryHref": "/contacto/",
-    "desktopImage": "/assets/images/vista_aerea.png",
+    "desktopImage": "/assets/images/vista_aerea.webp",
     "mobileImage": "/assets/images/vista_aerea.webp"
   },
   "services": [

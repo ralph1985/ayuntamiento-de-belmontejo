@@ -11,16 +11,18 @@ import HomeUpdates from '@components/sections/HomeUpdates.astro';
 import HomeCommunity from '@components/sections/HomeCommunity.astro';
 import { homePage } from '@data/homePage';
 
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import landingImage from '@assets/images/vista-aerea-2.jpg'; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-import { getImage } from 'astro:assets';
-const optimizedImage = await getImage({ src: landingImage, format: 'avif' });
+const homeHeroImage = {
+  src: homePage.hero.desktopImage,
+  width: 3838,
+  height: 1632,
+  format: 'webp' as const,
+};
 ---
 
 <BaseLayout
   title={homePage.pageTitle}
   description={homePage.pageDescription}
-  preloadedImage={optimizedImage}
+  preloadedImage={homeHeroImage}
 >
   <HomeHero {...homePage.hero} />
 
