@@ -8,28 +8,38 @@ test.describe('Consulta de bandos', () => {
 
     const search = page.getByLabel('Buscar en los bandos');
     const summary = page.locator('[data-results-summary]');
+    const results = page.locator('[data-bandos-result]');
+    const visibleResults = page.locator('[data-bandos-result]:not([hidden])');
+    const more = page.getByRole('button', { name: 'Ver más' });
+    const totalResults = await results.count();
 
-    await expect(summary).toContainText('Mostrando 8 de 44 bandos');
-    await expect(
-      page.locator('[data-bandos-result]:not([hidden])')
-    ).toHaveCount(8);
-    await page.getByRole('button', { name: 'Ver más' }).click();
-    await expect(summary).toContainText('Mostrando 16 de 44 bandos');
-    await expect(
-      page.locator('[data-bandos-result]:not([hidden])')
-    ).toHaveCount(16);
+    await expect(summary).toContainText(
+      `Mostrando 8 de ${totalResults} bandos`
+    );
+    await expect(visibleResults).toHaveCount(Math.min(8, totalResults));
+
+    while (await more.isVisible()) {
+      const visibleBefore = await visibleResults.count();
+      await more.click();
+      await expect(visibleResults).toHaveCount(
+        Math.min(visibleBefore + 8, totalResults)
+      );
+    }
+
+    await expect(visibleResults).toHaveCount(totalResults);
+    await expect(summary).toHaveText(`${totalResults} bandos publicados`);
     await search.fill('ayuntamiento cerrado');
 
     await expect(page).toHaveURL(/\/bandos\?q=ayuntamiento\+cerrado$/);
     await expect(summary).toContainText('5 bandos publicados');
-    await expect(
-      page.locator('[data-bandos-result]:not([hidden])')
-    ).toHaveCount(5);
-    await expect(page.getByRole('button', { name: 'Ver más' })).toBeHidden();
+    await expect(visibleResults).toHaveCount(5);
+    await expect(more).toBeHidden();
 
     await page.getByRole('button', { name: 'Limpiar filtros' }).click();
     await expect(page).toHaveURL(/\/bandos\/?$/);
-    await expect(summary).toContainText('Mostrando 8 de 44 bandos');
+    await expect(summary).toContainText(
+      `Mostrando 8 de ${totalResults} bandos`
+    );
   });
 
   test('oculta el filtro de categoría único y muestra el estado vacío', async ({
