@@ -2,6 +2,12 @@
 import { getCollection, render } from 'astro:content';
 import FaqItem from '@components/faq/FaqItem.astro';
 
+export interface Props {
+  id: string;
+}
+
+const { id: sectionId } = Astro.props;
+
 const faqCollection = await getCollection('faqs');
 const sortedFaqs = faqCollection.sort(
   (a, b) => (a.data.order ?? 0) - (b.data.order ?? 0)
@@ -23,7 +29,7 @@ const defaultActiveId =
   faqEntries.find(faq => faq.isDefaultOpen)?.id ?? faqEntries[0]?.id ?? null;
 ---
 
-<section id="faq-1741">
+<section id={`faq-${sectionId}`} class="faq-section" data-faq-section>
   <div class="cs-container">
     <div class="cs-content">
       <span class="cs-topper">Preguntas frecuentes</span>
@@ -34,7 +40,11 @@ const defaultActiveId =
         faqEntries.length ? (
           <ul class="cs-faq-group">
             {faqEntries.map(({ id, question, Content }) => (
-              <FaqItem question={question} isActive={id === defaultActiveId}>
+              <FaqItem
+                id={`faq-${sectionId}-${id}`}
+                question={question}
+                isActive={id === defaultActiveId}
+              >
                 <Content />
               </FaqItem>
             ))}
@@ -51,18 +61,40 @@ const defaultActiveId =
 </section>
 
 <script>
-  document.addEventListener('astro:page-load', () => {
-    const faqItems = Array.from(document.querySelectorAll('.cs-faq-item'));
-    for (const item of faqItems) {
-      const button = item.querySelector('.cs-button');
-      if (!button) continue;
+  const initializeFaqSections = () => {
+    const sections =
+      document.querySelectorAll<HTMLElement>('[data-faq-section]');
 
-      button.addEventListener('click', () => {
+    for (const section of sections) {
+      if (section.dataset.faqInitialized === 'true') continue;
+      section.dataset.faqInitialized = 'true';
+
+      section.addEventListener('click', event => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+
+        const button = target.closest('.cs-button');
+        if (
+          !(button instanceof HTMLButtonElement) ||
+          !section.contains(button)
+        ) {
+          return;
+        }
+
+        const item = button.closest('.cs-faq-item');
+        const answerId = button.getAttribute('aria-controls');
+        const answer = answerId ? section.querySelector(`#${answerId}`) : null;
+        if (!item || !(answer instanceof HTMLElement)) return;
+
         const isActive = item.classList.toggle('active');
-        button.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        button.setAttribute('aria-expanded', String(isActive));
+        answer.hidden = !isActive;
       });
     }
-  });
+  };
+
+  document.addEventListener('astro:page-load', initializeFaqSections);
+  initializeFaqSections();
 </script>
 
 <style lang="less" is:global>

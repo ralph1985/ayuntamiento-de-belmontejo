@@ -1,10 +1,11 @@
 ---
 export interface Props {
+  id: string;
   question: string;
   isActive?: boolean;
 }
 
-const { question, isActive = false } = Astro.props;
+const { id, question, isActive = false } = Astro.props;
 const classes = ['cs-faq-item', isActive ? 'active' : '']
   .filter(Boolean)
   .join(' ');
@@ -15,10 +16,11 @@ const classes = ['cs-faq-item', isActive ? 'active' : '']
     class="cs-button"
     type="button"
     aria-expanded={isActive ? 'true' : 'false'}
+    aria-controls={`${id}-answer`}
   >
     <span class="cs-button-text">{question}</span>
   </button>
-  <div class="cs-item-text">
+  <div id={`${id}-answer`} class="cs-item-text" hidden={!isActive}>
     <slot />
   </div>
 </li>
