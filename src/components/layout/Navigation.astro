@@ -1,5 +1,6 @@
 ---
 import navData from '@data/navData.json';
+import NavIcon from '@components/ui/NavIcon.astro';
 import {
   filterNavigationEntries,
   isActiveNavigationLink,
@@ -17,8 +18,8 @@ const isActiveLink = (url: string | undefined) =>
   isActiveNavigationLink(url, currentPathname);
 const findEntry = (key: string) =>
   filteredEntries.find(entry => entry.key === key);
-const discoverEntries = filteredEntries.filter(entry =>
-  ['Sobre el pueblo', 'Proyectos'].includes(entry.key)
+const discoverEntries = filteredEntries.filter(
+  entry => entry.key === 'Sobre el pueblo'
 );
 const currentEntries = filteredEntries.filter(entry =>
   ['Noticias', 'Bandos'].includes(entry.key)
@@ -27,6 +28,18 @@ const accessEntries = filteredEntries.filter(entry =>
   ['Inicio', 'Buscador', 'Administración'].includes(entry.key)
 );
 const projectsEntry = findEntry('Proyectos');
+const iconForEntry: Record<
+  string,
+  'home' | 'village' | 'projects' | 'news' | 'notice' | 'search' | 'admin'
+> = {
+  Inicio: 'home',
+  'Sobre el pueblo': 'village',
+  Proyectos: 'projects',
+  Noticias: 'news',
+  Bandos: 'notice',
+  Buscador: 'search',
+  Administración: 'admin',
+};
 ---
 
 <nav class="cs-nav" aria-label="Navegación principal">
@@ -69,86 +82,72 @@ const projectsEntry = findEntry('Proyectos');
                       currentPathname === entry.url ? 'page' : undefined
                     }
                   >
-                    <span>{entry.key}</span>
-                    <span class="cs-menu-arrow" aria-hidden="true">
-                      ↗
+                    <span class="cs-menu-link-label">
+                      <NavIcon name={iconForEntry[entry.key]} size={22} />
+                      <span>{entry.key}</span>
                     </span>
+                    <NavIcon name="arrow" size={19} />
                   </a>
-                  {entry.children?.length > 0 &&
-                    (entry.key === 'Proyectos' ? (
-                      <details
-                        class="cs-projects-disclosure"
-                        open={entry.children.some(
-                          child => currentPathname === child.url
-                        )}
-                      >
-                        <summary>
-                          <span>Ver proyectos</span>
-                          <span class="cs-disclosure-icon" aria-hidden="true">
-                            ↓
-                          </span>
-                        </summary>
-                        <ul class="cs-menu-children">
-                          {entry.children.map(child => (
-                            <li>
-                              <a
-                                href={child.url}
-                                class:list={[
-                                  {
-                                    'cs-active': currentPathname === child.url,
-                                  },
-                                ]}
-                                aria-current={
-                                  currentPathname === child.url
-                                    ? 'page'
-                                    : undefined
-                                }
-                              >
-                                {child.key}
-                              </a>
-                            </li>
-                          ))}
-                        </ul>
-                      </details>
-                    ) : (
-                      <ul class="cs-menu-children">
-                        {entry.children.map(child => (
-                          <li>
-                            <a
-                              href={child.url}
-                              class:list={[
-                                { 'cs-active': currentPathname === child.url },
-                              ]}
-                              aria-current={
-                                currentPathname === child.url
-                                  ? 'page'
-                                  : undefined
-                              }
-                            >
-                              {child.key}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    ))}
+                  {entry.children?.length > 0 && (
+                    <ul class="cs-menu-children">
+                      {entry.children.map(child => (
+                        <li>
+                          <a
+                            href={child.url}
+                            class:list={[
+                              { 'cs-active': currentPathname === child.url },
+                            ]}
+                            aria-current={
+                              currentPathname === child.url ? 'page' : undefined
+                            }
+                          >
+                            <span>{child.key}</span>
+                            <NavIcon name="arrow" size={17} />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))
             }
           </ul>
-          {
-            projectsEntry && (
-              <a
-                class="cs-menu-view-all"
-                href={projectsEntry.url}
-                aria-current={
-                  currentPathname === projectsEntry.url ? 'page' : undefined
-                }
-              >
-                Ver todos los proyectos <span aria-hidden="true">→</span>
-              </a>
-            )
-          }
         </section>
+
+        {
+          projectsEntry && (
+            <section
+              class="cs-menu-group cs-menu-projects"
+              aria-labelledby="cs-menu-projects"
+            >
+              <h3 id="cs-menu-projects">
+                <a href={projectsEntry.url}>Proyectos</a>
+              </h3>
+              <p class="cs-menu-group-intro">
+                Actuaciones que ya están transformando el municipio.
+              </p>
+              <ul class="cs-menu-project-list">
+                {projectsEntry.children?.map((child, index) => (
+                  <li>
+                    <a
+                      href={child.url}
+                      class:list={[
+                        { 'cs-active': currentPathname === child.url },
+                      ]}
+                      aria-current={
+                        currentPathname === child.url ? 'page' : undefined
+                      }
+                    >
+                      <span class="cs-project-index">0{index + 1}</span>
+                      <span class="cs-project-name">{child.key}</span>
+                      <NavIcon name="arrow" size={17} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
 
         <section class="cs-menu-group" aria-labelledby="cs-menu-current">
           <h3 id="cs-menu-current">Actualidad</h3>
@@ -163,10 +162,11 @@ const projectsEntry = findEntry('Proyectos');
                       currentPathname === entry.url ? 'page' : undefined
                     }
                   >
-                    <span>{entry.key}</span>
-                    <span class="cs-menu-arrow" aria-hidden="true">
-                      ↗
+                    <span class="cs-menu-link-label">
+                      <NavIcon name={iconForEntry[entry.key]} size={22} />
+                      <span>{entry.key}</span>
                     </span>
+                    <NavIcon name="arrow" size={19} />
                   </a>
                 </li>
               ))
@@ -189,10 +189,11 @@ const projectsEntry = findEntry('Proyectos');
                     target={entry.isAdmin ? '_blank' : undefined}
                     rel={entry.isAdmin ? 'noopener noreferrer' : undefined}
                   >
-                    <span>{entry.key}</span>
-                    <span class="cs-menu-arrow" aria-hidden="true">
-                      ↗
+                    <span class="cs-menu-link-label">
+                      <NavIcon name={iconForEntry[entry.key]} size={20} />
+                      <span>{entry.key}</span>
                     </span>
+                    <NavIcon name="arrow" size={18} />
                   </a>
                 </li>
               ))

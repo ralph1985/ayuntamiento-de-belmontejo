@@ -9,7 +9,7 @@
   color: var(--text-primary);
   background: transparent;
   border: 1px solid var(--border-color);
-  border-radius: 0.375rem;
+  border-radius: 999px;
   display: inline-flex;
   align-items: center;
   gap: 0.625rem;
@@ -20,11 +20,13 @@
   order: 3;
   transition:
     background-color 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    transform 0.2s ease;
 
   &:hover,
   &:focus-visible {
     background: var(--background-sections);
+    transform: translateY(-1px);
   }
 }
 
@@ -81,8 +83,8 @@
 .cs-ul-wrapper {
   position: fixed;
   inset: var(--header-height) 0 0;
-  padding: 2rem 1rem 3rem;
-  background: var(--background-main);
+  padding: 1.25rem 1rem 3rem;
+  background: color-mix(in srgb, var(--background-main) 94%, var(--primary));
   border-top: 1px solid var(--border-color);
   opacity: 0;
   visibility: hidden;
@@ -109,17 +111,22 @@
 .cs-menu-inner {
   width: min(100%, 76rem);
   margin: 0 auto;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  box-shadow: 0 1.5rem 4rem rgb(var(--shadow-color) / 14%);
 }
 
 .cs-menu-intro {
   max-width: 34rem;
-  padding-bottom: 1.75rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border-color);
 
   h2 {
     margin: 0.25rem 0 0.625rem;
     color: var(--headerColor);
-    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
     letter-spacing: -0.04em;
     line-height: 1;
   }
@@ -144,17 +151,33 @@
 
 .cs-menu-groups {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 2rem;
-  padding-top: 2rem;
+  grid-template-columns: 0.8fr 1.2fr 0.8fr;
+  gap: 1rem;
+  padding-top: 1rem;
 }
 
 .cs-menu-group {
   min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--surface-muted);
 }
 .cs-menu-group h3 {
   margin-bottom: 0.75rem;
   color: var(--text-secondary);
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.cs-menu-group-intro {
+  margin: -0.25rem 0 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.45;
 }
 
 .cs-menu-links,
@@ -170,7 +193,7 @@
 
 .cs-menu-links a {
   min-height: 3.25rem;
-  padding: 0.75rem 0;
+  padding: 0.75rem 0.25rem;
   color: var(--headerColor);
   font-size: 1.125rem;
   font-weight: 700;
@@ -182,7 +205,8 @@
   gap: 1rem;
   transition:
     color 0.2s ease,
-    padding 0.2s ease;
+    padding 0.2s ease,
+    background-color 0.2s ease;
 
   &:hover,
   &:focus-visible,
@@ -192,61 +216,29 @@
 
   &:hover,
   &:focus-visible {
-    padding-left: 0.375rem;
+    padding-left: 0.5rem;
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
   }
 }
 
-.cs-menu-arrow {
+.cs-menu-link-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-icon {
+  flex: 0 0 auto;
+}
+
+.cs-menu-links a > .nav-icon,
+.cs-menu-children a > .nav-icon {
   color: var(--primary);
-  font-size: 1rem;
-  font-weight: 400;
 }
 
 .cs-menu-children {
   padding: 0 0 0.75rem 0.75rem;
   border-left: 2px solid var(--border-color);
-}
-
-.cs-projects-disclosure {
-  margin-top: 0.5rem;
-  border-top: 1px solid var(--border-color);
-
-  summary {
-    min-height: 2.5rem;
-    padding: 0.625rem 0;
-    color: var(--primary);
-    font-size: 0.875rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    list-style: none;
-
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    &:hover,
-    &:focus-visible {
-      text-decoration: underline;
-    }
-  }
-
-  &[open] {
-    .cs-disclosure-icon {
-      transform: rotate(180deg);
-    }
-  }
-
-  .cs-menu-children {
-    margin-bottom: 0.5rem;
-  }
-}
-
-.cs-disclosure-icon {
-  font-size: 1rem;
-  transition: transform 0.2s ease;
 }
 
 .cs-menu-links .cs-menu-children a {
@@ -266,20 +258,48 @@
   }
 }
 
-.cs-menu-view-all {
-  margin-top: 0.75rem;
-  color: var(--primary);
-  font-size: 0.875rem;
-  font-weight: 700;
-  text-decoration: none;
+.cs-menu-projects {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border-color));
+  background: color-mix(in srgb, var(--primary) 7%, var(--surface-muted));
+}
 
-  span {
-    margin-left: 0.25rem;
+.cs-menu-project-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li + li {
+    border-top: 1px solid var(--border-color);
   }
-  &:hover,
-  &:focus-visible {
-    text-decoration: underline;
+
+  a {
+    min-height: 3.5rem;
+    padding: 0.75rem 0;
+    color: var(--headerColor);
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:hover,
+    &:focus-visible,
+    &.cs-active {
+      color: var(--primary);
+    }
   }
+}
+
+.cs-project-index {
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.cs-project-name {
+  font-size: 1rem;
+  font-weight: 800;
 }
 
 .cs-menu-links-compact a {
@@ -294,7 +314,7 @@
   .cs-ul-wrapper {
     inset: var(--header-height) 0 auto;
     max-height: calc(100vh - var(--header-height));
-    padding: 2.5rem 2rem 3.5rem;
+    padding: 2rem 2rem 3.5rem;
     box-shadow: 0 1.5rem 3rem rgb(23 48 58 / 12%);
   }
 }
@@ -307,13 +327,18 @@
   .cs-menu-intro {
     padding-bottom: 1.5rem;
   }
+
+  .cs-menu-inner {
+    padding: 0.75rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cs-toggle,
   .cs-line,
   .cs-ul-wrapper,
-  .cs-menu-links a {
+  .cs-menu-links a,
+  .cs-menu-project-list a {
     transition: none;
   }
 }

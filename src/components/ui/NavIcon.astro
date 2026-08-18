@@ -1,0 +1,59 @@
+---
+type IconName =
+  | 'home'
+  | 'village'
+  | 'projects'
+  | 'news'
+  | 'notice'
+  | 'search'
+  | 'admin'
+  | 'arrow';
+
+interface Props {
+  name: IconName;
+  size?: number;
+}
+
+const { name, size = 24 } = Astro.props;
+
+const paths: Record<IconName, string[]> = {
+  home: ['M3 10.5 12 3l9 7.5', 'M5.5 9.5V21h13V9.5', 'M9.5 21v-6h5v6'],
+  village: [
+    'M3 21h18',
+    'M5 21v-7l4-3 4 3v7',
+    'M13 21V8l3-2 3 2v13',
+    'M7.5 15h3M15 11h2M15 15h2',
+  ],
+  projects: [
+    'M4 6.5 12 3l8 3.5v11L12 21l-8-3.5z',
+    'M4 6.5 12 10l8-3.5M12 10v11',
+  ],
+  news: ['M5 4.5h14v15H5z', 'M8 8h8M8 12h8M8 16h5'],
+  notice: ['M6 4h12v16H6z', 'M9 8h6M9 12h6M9 16h4', 'M4 7h2M4 17h2'],
+  search: [
+    'M10.75 18a7.25 7.25 0 1 0 0-14.5 7.25 7.25 0 0 0 0 14.5Z',
+    'm16 16 5 5',
+  ],
+  admin: [
+    'M12 3 19 6v5c0 4.5-2.8 8.2-7 10-4.2-1.8-7-5.5-7-10V6z',
+    'm9 12 2 2 4-4',
+  ],
+  arrow: ['M5 12h13', 'm13 6 6 6-6 6'],
+};
+---
+
+<svg
+  class="nav-icon"
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.7"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  focusable="false"
+>
+  {paths[name].map(path => <path d={path} />)}
+</svg>
