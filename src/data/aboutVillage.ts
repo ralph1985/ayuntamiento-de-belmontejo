@@ -2,6 +2,19 @@ export interface AboutVillageImage {
   desktopSrc: string;
   mobileSrc: string;
   alt: string;
+  credit?: string;
+  creditHref?: string;
+}
+
+export interface AboutVillageFeature {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  body: string;
+  image: AboutVillageImage;
+  credit?: string;
+  creditHref?: string;
 }
 
 export interface AboutVillageContent {
@@ -14,6 +27,7 @@ export interface AboutVillageContent {
   overviewDescription: string;
   historyTitle: string;
   historyParagraphs: string[];
+  features: AboutVillageFeature[];
   overviewImages: AboutVillageImage[];
   quote: string;
   quoteAuthor: string;
