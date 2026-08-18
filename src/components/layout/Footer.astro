@@ -8,6 +8,7 @@ import contactInfo, {
 import navData from '@data/navData.json';
 import footerServices from '@data/footerServices.json';
 import MunicipalSeal from '@components/ui/MunicipalSeal.astro';
+import NavIcon from '@components/ui/NavIcon.astro';
 import {
   filterFooterNavigationEntries,
   resolveFooterServiceLink,
@@ -48,6 +49,18 @@ const socialIconMap: Record<
 // Filter navigation data to show admin menu only when enabled
 const showAdminMenu = import.meta.env.PUBLIC_ADMIN_MENU === 'true';
 const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
+const footerIconForEntry: Record<
+  string,
+  'home' | 'village' | 'projects' | 'news' | 'notice' | 'search' | 'admin'
+> = {
+  Inicio: 'home',
+  'Sobre el pueblo': 'village',
+  Proyectos: 'projects',
+  Noticias: 'news',
+  Bandos: 'notice',
+  Buscador: 'search',
+  Administración: 'admin',
+};
 ---
 
 <!-- ============================================ --><!--                   Footer                     --><!-- ============================================ -->
@@ -72,7 +85,7 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
       <div class="lists">
         <ul>
           <li>
-            <h2>Información</h2>
+            <h2><NavIcon name="village" size={19} />Información</h2>
           </li>
           {
             filteredNavData.map(entry => (
@@ -82,7 +95,8 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
                   target={entry.isAdmin ? '_blank' : undefined}
                   rel={entry.isAdmin ? 'noopener noreferrer' : undefined}
                 >
-                  {entry.key}
+                  <NavIcon name={footerIconForEntry[entry.key]} size={17} />
+                  <span>{entry.key}</span>
                 </a>
               </li>
             ))
@@ -99,33 +113,35 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
         </ul>
         <ul>
           <li>
-            <h2>Servicios</h2>
+            <h2><NavIcon name="projects" size={19} />Servicios</h2>
           </li>
           {
-            footerServices.services.map(service => {
-              const serviceLink = resolveFooterServiceLink(service);
+            footerServices.services
+              .filter(service => service.url)
+              .map(service => {
+                const serviceLink = resolveFooterServiceLink(service);
 
-              return (
-                <li>
-                  {serviceLink.isLink && service.url ? (
-                    <a
-                      href={service.url}
-                      target={serviceLink.target}
-                      rel={serviceLink.rel}
-                    >
-                      {service.title}
-                    </a>
-                  ) : (
-                    service.title
-                  )}
-                </li>
-              );
-            })
+                return (
+                  <li>
+                    {serviceLink.isLink && service.url ? (
+                      <a
+                        href={service.url}
+                        target={serviceLink.target}
+                        rel={serviceLink.rel}
+                      >
+                        {service.title}
+                      </a>
+                    ) : (
+                      service.title
+                    )}
+                  </li>
+                );
+              })
           }
         </ul>
         <ul>
           <li>
-            <h2>Contacto</h2>
+            <h2><NavIcon name="notice" size={19} />Contacto</h2>
           </li>
           {
             primaryOffice && (
@@ -177,7 +193,7 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
         </ul>
         <ul>
           <li>
-            <h2>Síguenos</h2>
+            <h2><NavIcon name="news" size={19} />Síguenos</h2>
           </li>
           {
             socialEntries.map(([networkId, network]) => {
@@ -209,7 +225,7 @@ const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
         </ul>
         <ul>
           <li>
-            <h2>El tiempo</h2>
+            <h2><NavIcon name="village" size={19} />El tiempo</h2>
           </li>
           {
             weatherCoordinates ? (
