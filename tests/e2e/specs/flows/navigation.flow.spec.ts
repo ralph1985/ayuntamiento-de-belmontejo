@@ -175,9 +175,7 @@ test.describe('Navegación interna de contenido', () => {
       page.waitForURL(/\/politica-de-privacidad\/?$/, {
         waitUntil: 'domcontentloaded',
       }),
-      footer
-        .getByRole('link', { name: 'Política de Privacidad', exact: true })
-        .click(),
+      footer.locator('a[href="/politica-de-privacidad"]').click(),
     ]);
 
     await expect(

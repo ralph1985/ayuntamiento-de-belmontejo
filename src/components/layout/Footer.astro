@@ -66,8 +66,8 @@ const footerIconForEntry: Record<
 <!-- ============================================ --><!--                   Footer                     --><!-- ============================================ -->
 <footer id="footer">
   <div class="container">
-    <div class="left-section">
-      <a class="logo" href="/"
+    <div class="footer-brand">
+      <a class="logo" href="/" aria-label="Ir a la página de inicio"
         ><MunicipalSeal
           class="footer-logo-img"
           alt="Ayuntamiento de Belmontejo"
@@ -76,14 +76,15 @@ const footerIconForEntry: Record<
           loading="lazy"
         /></a
       >
-      <p>
-        {contactInfo.entity.name}. Información municipal, bandos y servicios
-        para Belmontejo.
+      <p class="footer-brand__eyebrow">Sitio web oficial</p>
+      <h2>{contactInfo.entity.name}</h2>
+      <p class="footer-brand__description">
+        Información municipal, bandos y servicios para Belmontejo.
       </p>
     </div>
-    <div class="right-section">
-      <div class="lists">
-        <ul>
+    <div class="footer-content">
+      <div class="footer-link-grid">
+        <ul class="footer-list">
           <li>
             <h2><NavIcon name="village" size={19} />Información</h2>
           </li>
@@ -101,17 +102,8 @@ const footerIconForEntry: Record<
               </li>
             ))
           }
-          <li class="cs-li">
-            <a href="/politica-de-privacidad"> Política de Privacidad </a>
-          </li>
-          <li class="cs-li">
-            <a href="/politica-de-cookies"> Política de Cookies </a>
-          </li>
-          <li class="cs-li">
-            <a href="/aviso-legal"> Aviso Legal </a>
-          </li>
         </ul>
-        <ul>
+        <ul class="footer-list">
           <li>
             <h2><NavIcon name="projects" size={19} />Servicios</h2>
           </li>
@@ -139,7 +131,7 @@ const footerIconForEntry: Record<
               })
           }
         </ul>
-        <ul>
+        <ul class="footer-list footer-list--contact">
           <li>
             <h2><NavIcon name="notice" size={19} />Contacto</h2>
           </li>
@@ -191,7 +183,7 @@ const footerIconForEntry: Record<
             )
           }
         </ul>
-        <ul>
+        <ul class="footer-list footer-list--social">
           <li>
             <h2><NavIcon name="news" size={19} />Síguenos</h2>
           </li>
@@ -223,7 +215,7 @@ const footerIconForEntry: Record<
             })
           }
         </ul>
-        <ul>
+        <ul class="footer-list footer-list--weather">
           <li>
             <h2><NavIcon name="village" size={19} />El tiempo</h2>
           </li>
@@ -245,17 +237,25 @@ const footerIconForEntry: Record<
     </div>
   </div>
 
-  <div class="credit">
-    <p class="official-site">
-      Sitio web oficial del <a href="/">{contactInfo.entity.name}</a>.
-      <span class="copyright">Copyright {currentYear}</span>
-    </p>
-    <p class="creator-credit">
-      Web realizada por
-      <a href="https://conquense.dev" target="_blank" rel="noopener noreferrer">
-        conquense.dev
-      </a>
-    </p>
+  <div class="footer-legal">
+    <nav aria-label="Información legal">
+      <a href="/politica-de-privacidad">Política de Privacidad</a>
+      <a href="/politica-de-cookies">Política de Cookies</a>
+      <a href="/aviso-legal">Aviso Legal</a>
+    </nav>
+    <div class="footer-credits">
+      <p>© {currentYear} {contactInfo.entity.name}</p>
+      <p>
+        Web realizada por
+        <a
+          href="https://conquense.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          conquense.dev
+        </a>
+      </p>
+    </div>
   </div>
 </footer>
 
