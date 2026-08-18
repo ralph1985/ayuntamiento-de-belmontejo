@@ -3,6 +3,7 @@ export interface IconBulletItem {
   iconAlt: string;
   title: string;
   description: string;
+  href?: string;
   iconWidth?: number;
   iconHeight?: number;
 }

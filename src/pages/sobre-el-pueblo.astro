@@ -7,6 +7,7 @@ import Landing from '@components/sections/Landing.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import GoogleMap from '@components/integrations/GoogleMap.astro';
 import Button from '@components/ui/Button.astro';
+import VillageFeature from '@components/sections/VillageFeature.astro';
 import { aboutVillage } from '@data/aboutVillage';
 
 import landingImage from '@data/landingImage';
@@ -29,7 +30,7 @@ import landingImage from '@data/landingImage';
   <!--                 Side By Side                 -->
   <!-- ============================================ -->
 
-  <section id="sbs">
+  <section id="historia">
     <div class="cs-container">
       <!-- Left Image Section -->
       <div class="cs-left">
@@ -43,7 +44,6 @@ import landingImage from '@data/landingImage';
             srcset={aboutVillage.overviewImages[0].desktopSrc}
           />
           <img
-            aria-hidden="true"
             decoding="async"
             src={aboutVillage.overviewImages[0].desktopSrc}
             alt={aboutVillage.overviewImages[0].alt}
@@ -51,6 +51,20 @@ import landingImage from '@data/landingImage';
             width="400"
             height="563"
           />
+          {
+            aboutVillage.overviewImages[0].credit &&
+            aboutVillage.overviewImages[0].creditHref ? (
+              <span class="image-credit">
+                Imagen:{' '}
+                <a
+                  href={aboutVillage.overviewImages[0].creditHref}
+                  rel="noreferrer"
+                >
+                  {aboutVillage.overviewImages[0].credit}
+                </a>
+              </span>
+            ) : null
+          }
         </picture>
         <picture class="cs-picture cs-picture2">
           <source
@@ -62,7 +76,6 @@ import landingImage from '@data/landingImage';
             srcset={aboutVillage.overviewImages[1].desktopSrc}
           />
           <img
-            aria-hidden="true"
             decoding="async"
             src={aboutVillage.overviewImages[1].desktopSrc}
             alt={aboutVillage.overviewImages[1].alt}
@@ -102,6 +115,8 @@ import landingImage from '@data/landingImage';
       </div>
     </div>
   </section>
+
+  {aboutVillage.features.map(feature => <VillageFeature {...feature} />)}
 
   <!-- ============================================ -->
   <!--                 Vista Aérea                  -->

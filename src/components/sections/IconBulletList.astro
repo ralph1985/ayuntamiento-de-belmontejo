@@ -18,22 +18,40 @@ const sectionClass = ['services', customClass].filter(Boolean).join(' ');
 
 <section id={id} class={sectionClass} aria-label="Conoce Belmontejo">
   {
-    items.map(item => (
-      <article class="card">
-        <picture>
-          <img
-            aria-hidden="true"
-            decoding="async"
-            src={item.icon}
-            alt={item.iconAlt}
-            width={item.iconWidth ?? 48}
-            height={item.iconHeight ?? 48}
-          />
-        </picture>
-        <h2>{item.title}</h2>
-        <p>{item.description}</p>
-      </article>
-    ))
+    items.map(item =>
+      item.href ? (
+        <a class="card" href={item.href}>
+          <picture>
+            <img
+              aria-hidden="true"
+              decoding="async"
+              src={item.icon}
+              alt={item.iconAlt}
+              width={item.iconWidth ?? 48}
+              height={item.iconHeight ?? 48}
+            />
+          </picture>
+          <h2>{item.title}</h2>
+          <p>{item.description}</p>
+          <span class="card-link">Conocer más</span>
+        </a>
+      ) : (
+        <article class="card">
+          <picture>
+            <img
+              aria-hidden="true"
+              decoding="async"
+              src={item.icon}
+              alt={item.iconAlt}
+              width={item.iconWidth ?? 48}
+              height={item.iconHeight ?? 48}
+            />
+          </picture>
+          <h2>{item.title}</h2>
+          <p>{item.description}</p>
+        </article>
+      )
+    )
   }
 </section>
 
@@ -91,6 +109,20 @@ const sectionClass = ['services', customClass].filter(Boolean).join(' ');
           text-align: left;
           width: 100%;
           opacity: 1;
+        }
+
+        .card-link {
+          display: inline-block;
+          margin-top: 1rem;
+          color: var(--primary);
+          font-size: 0.9rem;
+          font-weight: 700;
+        }
+
+        &:focus-visible {
+          outline: 3px solid var(--accent);
+          outline-offset: 0.35rem;
+          border-radius: 0.5rem;
         }
       }
     }

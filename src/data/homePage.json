@@ -17,19 +17,22 @@
       "icon": "/assets/svgs/service1.svg",
       "iconAlt": "Historia y patrimonio",
       "title": "Historia y Patrimonio",
-      "description": "Vestigios arqueológicos, patrimonio local e historia de Belmontejo."
+      "description": "La iglesia, las fuentes y la historia que forman parte de la identidad local.",
+      "href": "/sobre-el-pueblo/#historia"
     },
     {
       "icon": "/assets/svgs/service2.svg",
       "iconAlt": "Naturaleza y paisaje",
       "title": "Naturaleza y Paisaje",
-      "description": "Campos de la Manchuela, caminos rurales y el paisaje que rodea el municipio."
+      "description": "Campos, caminos rurales y lugares para descubrir el entorno del municipio.",
+      "href": "/sobre-el-pueblo/#naturaleza"
     },
     {
       "icon": "/assets/svgs/service3.svg",
       "iconAlt": "Tradición y cultura",
       "title": "Tradición y Cultura",
-      "description": "Fiestas, costumbres y vida cotidiana de Belmontejo."
+      "description": "La Enramá, las fiestas y las costumbres que mantienen viva la memoria del pueblo.",
+      "href": "/sobre-el-pueblo/#tradiciones"
     }
   ],
   "villageStory": {

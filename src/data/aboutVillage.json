@@ -11,16 +11,44 @@
     "El relieve de Belmontejo presenta un terreno ondulado típico de la transición entre la Mancha más plana y la Serranía de Cuenca. Se han encontrado vestigios arqueológicos que remontan su ocupación muy atrás en el tiempo —hasta la Edad del Bronce, época visigoda y romana— lo que indica una larga presencia humana en el territorio.",
     "En el siglo XV, formó parte del señorío de Rodrigo Manrique. A lo largo del tiempo, como tantos municipios rurales de interior, ha experimentado los desafíos demográficos característicos de la España rural."
   ],
-  "overviewImages": [
+  "features": [
     {
-      "desktopSrc": "/assets/images/imagen-de-prueba-2.jpg",
-      "mobileSrc": "/assets/images/imagen-de-prueba-2-m.jpg",
-      "alt": "Vista de Belmontejo"
+      "id": "naturaleza",
+      "eyebrow": "El entorno",
+      "title": "Un paisaje para recorrerlo despacio",
+      "description": "Campos, caminos y pequeños lugares que forman parte de la vida cotidiana del pueblo.",
+      "body": "El entorno de Belmontejo se reconoce en sus campos de cultivo, sus caminos rurales y sus cerros. La fuente de La Lobera, la fuente de Abajo y la senda del Molino de Abajo forman parte de ese paisaje cercano. El entorno del pantano también está unido a la memoria local y a la romería de San Isidro.",
+      "image": {
+        "desktopSrc": "/assets/images/vista_aerea.webp",
+        "mobileSrc": "/assets/images/vista_aerea.webp",
+        "alt": "Vista aérea de Belmontejo rodeado de campos y caminos rurales"
+      }
     },
     {
-      "desktopSrc": "/assets/images/imagen-de-prueba-4.jpg",
-      "mobileSrc": "/assets/images/imagen-de-prueba-4-m.jpg",
-      "alt": "Detalle del entorno urbano de Belmontejo"
+      "id": "tradiciones",
+      "eyebrow": "La vida del pueblo",
+      "title": "Tradiciones que siguen vivas",
+      "description": "Las fiestas y costumbres de Belmontejo siguen reuniendo a vecinos y familias.",
+      "body": "Una de las tradiciones más singulares es la Enramá, que se prepara durante la noche del Sábado Santo. Los jóvenes adornan la entrada de la iglesia con ramas y flores de papel, en una celebración vinculada a los quintos y a la llegada de la Pascua. El calendario festivo incluye también San Isidro, las fiestas de la Virgen de la Asunción y Jesús de Nazaret. Los mayos, el juego del Boleo, San Antón y las reuniones alrededor de una torrá completan una memoria cultural hecha de celebraciones y encuentros.",
+      "image": {
+        "desktopSrc": "/assets/images/dji-0167.jpg",
+        "mobileSrc": "/assets/images/dji-0167.jpg",
+        "alt": "Vista del casco urbano y del paisaje de Belmontejo"
+      }
+    }
+  ],
+  "overviewImages": [
+    {
+      "desktopSrc": "/assets/images/belmontejo-patrimonio.webp",
+      "mobileSrc": "/assets/images/belmontejo-patrimonio.webp",
+      "alt": "Iglesia de Nuestra Señora de la Asunción y casas de Belmontejo",
+      "credit": "Turismo de Castilla-La Mancha",
+      "creditHref": "https://www.turismocastillalamancha.es/es/destinos/encanto-rural/cuenca/belmontejo"
+    },
+    {
+      "desktopSrc": "/assets/images/dji-0167.jpg",
+      "mobileSrc": "/assets/images/dji-0167.jpg",
+      "alt": "Vista del casco urbano y del paisaje de Belmontejo"
     }
   ],
   "quote": "Belmontejo es un municipio rural de la Manchuela conquense. Su paisaje, sus fuentes y su patrimonio forman parte de la vida cotidiana del pueblo.",

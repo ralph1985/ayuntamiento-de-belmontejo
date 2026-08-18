@@ -1,0 +1,103 @@
+---
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import type { AboutVillageFeature } from '@data/aboutVillage';
+
+interface Props extends AboutVillageFeature {}
+
+const { id, eyebrow, title, description, body, image, credit, creditHref } =
+  Astro.props as Props;
+---
+
+<section id={id} class:list={['village-feature', `village-feature--${id}`]}>
+  <div class="village-feature__inner">
+    <figure class="village-feature__media">
+      <picture>
+        <source media="(max-width: 600px)" srcset={image.mobileSrc} />
+        <img
+          src={image.desktopSrc}
+          alt={image.alt}
+          width="1920"
+          height="1080"
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+      {
+        credit && creditHref ? (
+          <figcaption>
+            Imagen:{' '}
+            <a href={creditHref} rel="noreferrer">
+              {credit}
+            </a>
+          </figcaption>
+        ) : null
+      }
+    </figure>
+    <div class="village-feature__content">
+      <SectionHeading
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+      />
+      <p>{body}</p>
+    </div>
+  </div>
+</section>
+
+<style lang="less">
+  .village-feature {
+    padding: clamp(4rem, 9vw, 8rem) 1rem;
+    background: var(--background-main);
+
+    &--tradiciones {
+      background: var(--background-sections);
+    }
+  }
+
+  .village-feature__inner {
+    width: min(100%, 75rem);
+    margin: auto;
+    display: grid;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  .village-feature__media {
+    margin: 0;
+  }
+
+  .village-feature__media img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 1rem;
+  }
+
+  .village-feature__media figcaption {
+    margin-top: 0.6rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+  }
+
+  .village-feature__media a {
+    color: inherit;
+  }
+
+  .village-feature__content > p {
+    max-width: 42rem;
+    margin: -1.5rem 0 0;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  @media (min-width: 48rem) {
+    .village-feature__inner {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    }
+
+    .village-feature--tradiciones .village-feature__media {
+      order: 2;
+    }
+  }
+</style>
