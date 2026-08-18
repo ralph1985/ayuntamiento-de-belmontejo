@@ -69,6 +69,7 @@ const { id, eyebrow, title, description, body, image, credit, creditHref } =
   .village-feature__media img {
     display: block;
     width: 100%;
+    height: auto;
     aspect-ratio: 16 / 10;
     object-fit: cover;
     border-radius: 1rem;
@@ -98,6 +99,13 @@ const { id, eyebrow, title, description, body, image, credit, creditHref } =
 
     .village-feature--tradiciones .village-feature__media {
       order: 2;
+    }
+  }
+
+  @media (max-width: 47.9375rem) {
+    .village-feature__media img {
+      height: clamp(12rem, 58vw, 18rem);
+      aspect-ratio: auto;
     }
   }
 </style>
