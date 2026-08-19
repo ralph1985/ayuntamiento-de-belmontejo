@@ -1,7 +1,7 @@
 import { z, defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// Every collection must reflect Decap's config.yml collection schema
+// Every collection must reflect the shape of the editorial content files.
 // In order to be able to optimize images with Astro built-in compoments, like <Image />, we first must use this image helper
 // Doc: https://docs.astro.build/en/guides/images/#images-in-content-collections
 

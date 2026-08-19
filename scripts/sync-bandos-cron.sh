@@ -53,7 +53,7 @@ if ! has_bando_changes; then
 fi
 
 "$PNPM_BIN" run test:unit
-OAUTH_GITHUB_CLIENT_ID=cron OAUTH_GITHUB_CLIENT_SECRET=cron "$PNPM_BIN" run build
+"$PNPM_BIN" run build
 
 if [[ "${SYNC_BANDOS_DRY_RUN:-0}" == '1' ]]; then
   echo 'Dry run completed; changes were not committed or pushed.'

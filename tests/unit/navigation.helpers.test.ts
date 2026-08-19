@@ -1,36 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  filterNavigationEntries,
-  isActiveNavigationLink,
-  type NavigationEntry,
-} from '../../src/components/layout/navigation.helpers';
-
-const baseEntries: NavigationEntry[] = [
-  { key: 'Inicio', url: '/' },
-  { key: 'Noticias', url: '/noticias/' },
-  { key: 'Admin', url: '/admin', isAdmin: true },
-];
-
-describe('filterNavigationEntries', () => {
-  it('removes admin entries when menu is disabled', () => {
-    const result = filterNavigationEntries(baseEntries, false);
-
-    expect(result.map(entry => entry.key)).toStrictEqual([
-      'Inicio',
-      'Noticias',
-    ]);
-  });
-
-  it('keeps admin entries when menu is enabled', () => {
-    const result = filterNavigationEntries(baseEntries, true);
-
-    expect(result.map(entry => entry.key)).toStrictEqual([
-      'Inicio',
-      'Noticias',
-      'Admin',
-    ]);
-  });
-});
+import { isActiveNavigationLink } from '../../src/components/layout/navigation.helpers';
 
 describe('isActiveNavigationLink', () => {
   it('returns true for root when on homepage', () => {

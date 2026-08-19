@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-The Astro site lives in `src/`. Place routed pages in `src/pages`, reusable UI in `src/components`, shared wrappers in `src/layouts`, and Decap CMS collections in `src/content`. Static assets and the `/admin` panel belong in `public/`. Automation scripts sit in `scripts/`—`fetch-bandos.js` refreshes municipal notices. Build output is written to `dist/`; never commit generated files.
+The Astro site lives in `src/`. Place routed pages in `src/pages`, reusable UI in `src/components`, shared wrappers in `src/layouts`, and editorial collections in `src/content`. Static assets belong in `public/`. Automation scripts sit in `scripts/`—`fetch-bandos.js` refreshes municipal notices. Build output is written to `dist/`; never commit generated files.
 
 ## Build, Test, and Development Commands
 
@@ -29,7 +29,7 @@ The repo follows Conventional Commits (`feat:`, `fix:`, `test:`). Write present-
 
 ## Security & Configuration Notes
 
-Store secrets in `.env` (see `README.md` for required keys). Do not commit `.env` or Playwright artifacts containing credentials. Local scripts fall back to mock OAuth secrets, but production requires valid `GITHUB_CLIENT_ID`/`GITHUB_CLIENT_SECRET` variables on Vercel. Review CMS admin exposure before enabling `PUBLIC_ADMIN_MENU=true`.
+Store secrets in `.env` (see `README.md` for required keys). Do not commit `.env` or Playwright artifacts containing credentials.
 
 ## Gestión de tareas y horas
 

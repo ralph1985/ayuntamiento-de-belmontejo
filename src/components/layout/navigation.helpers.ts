@@ -6,21 +6,8 @@ export interface NavigationChild {
 export interface NavigationEntry {
   key: string;
   url: string;
-  isAdmin?: boolean;
   children?: NavigationChild[];
 }
-
-export const filterNavigationEntries = (
-  entries: NavigationEntry[],
-  showAdminMenu: boolean
-) =>
-  entries.filter(entry => {
-    if (entry.isAdmin) {
-      return showAdminMenu;
-    }
-
-    return true;
-  });
 
 export const isActiveNavigationLink = (
   url: string | undefined,

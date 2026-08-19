@@ -4,9 +4,9 @@
 
 - Privacidad: página informativa creada en `src/pages/politica-de-privacidad.astro` con responsable, finalidades, legitimación, cesiones, derechos y canal de reclamaciones actualizado en noviembre de 2025.
 - Cookies: banner de consentimiento granular y carga de GA/Sentry solo con consentimiento; IP anonimizada en GA. Página específica existente: `src/pages/politica-de-cookies.astro`.
-- SEO: `@astrojs/sitemap` activo y `robots.txt` bloquea `/admin`; Open Graph y `canonical` en el layout.
+- SEO: `@astrojs/sitemap` activo; Open Graph y `canonical` en el layout.
 - Sede electrónica: enlace en footer data (`src/data/footerServices.json`).
-- CMS: Decap CMS con OAuth y menú condicionado por `PUBLIC_ADMIN_MENU`. Robots bloquea `/admin`.
+- Contenido editorial: textos, noticias, bandos y datos fijos versionados en `src/content` y `src/data`.
 - Contacto: formulario en `src/pages/contacto.astro` con backend `/api/contacto.json`, reCAPTCHA + Resend, validación server-side y casilla obligatoria de aceptación con cláusula informativa visible bajo el botón.
 - Seguridad HTTP: cabeceras de seguridad configuradas en `vercel.json`, incluyendo HSTS, CSP, protección anti-iframe, MIME sniffing, referrer y permisos del navegador.
 - Dependencias: `astro`, `@astrojs/vercel` y `nodemailer` actualizados a versiones sin vulnerabilidades conocidas según `pnpm audit --prod`.
@@ -30,13 +30,11 @@
 
 ### Atención ciudadana y formularios
 
-- **Media** Remitente Resend: dar de alta un remitente oficial con dominio `@belmontejo.es` en Resend y actualizar `contact.formSender` desde Decap CMS para dejar de usar `onboarding@resend.dev`.
+- **Media** Remitente Resend: dar de alta un remitente oficial con dominio `@belmontejo.es` en Resend y actualizar `contact.formSender` para dejar de usar `onboarding@resend.dev`.
 - **Media** Antiabuso del formulario de contacto: añadir logging básico y valorar un rate limit compartido; el límite actual sigue siendo por instancia serverless.
 - **Media** reCAPTCHA: cuando se confirme el dominio definitivo, añadirlo a los dominios permitidos en Google reCAPTCHA y actualizar las claves/configuración si es necesario para evitar bloqueos.
 
 ### Seguridad y operaciones
-
-- **Media** Compatibilidad OAuth: `astro-decap-cms-oauth@0.5.2` declara peer support hasta Astro 6; el build con Astro 7 pasa, pero conviene validar el flujo `/admin` en producción o sustituir el plugin si aparece una incompatibilidad.
 
 ### SEO y analítica
 

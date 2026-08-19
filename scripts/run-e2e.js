@@ -10,10 +10,6 @@ const defaultFixtures = [
 ];
 const env = {
   ...process.env,
-  OAUTH_GITHUB_CLIENT_ID:
-    process.env.OAUTH_GITHUB_CLIENT_ID ?? 'test-client-id',
-  OAUTH_GITHUB_CLIENT_SECRET:
-    process.env.OAUTH_GITHUB_CLIENT_SECRET ?? 'test-client-secret',
   ASTRO_DEV_TOOLBAR: process.env.ASTRO_DEV_TOOLBAR ?? 'false',
 };
 

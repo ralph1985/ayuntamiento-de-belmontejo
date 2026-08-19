@@ -2,7 +2,6 @@
 import navData from '@data/navData.json';
 import NavIcon from '@components/ui/NavIcon.astro';
 import {
-  filterNavigationEntries,
   isActiveNavigationLink,
   type NavigationEntry,
 } from './navigation.helpers';
@@ -10,10 +9,9 @@ import {
 const {
   entries = navData as NavigationEntry[],
   currentPathname = Astro.url.pathname,
-  showAdminMenu = import.meta.env.PUBLIC_ADMIN_MENU === 'true',
 } = Astro.props;
 
-const filteredEntries = filterNavigationEntries(entries, showAdminMenu);
+const filteredEntries = entries;
 const isActiveLink = (url: string | undefined) =>
   isActiveNavigationLink(url, currentPathname);
 const findEntry = (key: string) =>
@@ -25,12 +23,12 @@ const currentEntries = filteredEntries.filter(entry =>
   ['Noticias', 'Bandos'].includes(entry.key)
 );
 const accessEntries = filteredEntries.filter(entry =>
-  ['Inicio', 'Buscador', 'Administración'].includes(entry.key)
+  ['Inicio', 'Buscador'].includes(entry.key)
 );
 const projectsEntry = findEntry('Proyectos');
 const iconForEntry: Record<
   string,
-  'home' | 'village' | 'projects' | 'news' | 'notice' | 'search' | 'admin'
+  'home' | 'village' | 'projects' | 'news' | 'notice' | 'search'
 > = {
   Inicio: 'home',
   'Sobre el pueblo': 'village',
@@ -38,7 +36,6 @@ const iconForEntry: Record<
   Noticias: 'news',
   Bandos: 'notice',
   Buscador: 'search',
-  Administración: 'admin',
 };
 ---
 
@@ -186,8 +183,6 @@ const iconForEntry: Record<
                     aria-current={
                       currentPathname === entry.url ? 'page' : undefined
                     }
-                    target={entry.isAdmin ? '_blank' : undefined}
-                    rel={entry.isAdmin ? 'noopener noreferrer' : undefined}
                   >
                     <span class="cs-menu-link-label">
                       <NavIcon name={iconForEntry[entry.key]} size={20} />

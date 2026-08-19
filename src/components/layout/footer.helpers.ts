@@ -1,5 +1,3 @@
-import type { NavigationEntry } from './navigation.helpers';
-
 export interface FooterService {
   title: string;
   url?: string | null;
@@ -12,18 +10,6 @@ export interface FooterServiceLinkResolution {
   target?: '_blank';
   rel?: 'noopener noreferrer';
 }
-
-export const filterFooterNavigationEntries = (
-  entries: NavigationEntry[],
-  showAdminMenu: boolean
-) =>
-  entries.filter(entry => {
-    if (entry.isAdmin) {
-      return showAdminMenu;
-    }
-
-    return true;
-  });
 
 export const resolveFooterServiceLink = (
   service: FooterService

@@ -1,37 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import type { NavigationEntry } from '../../src/components/layout/navigation.helpers';
 import {
-  filterFooterNavigationEntries,
   resolveFooterServiceLink,
   type FooterService,
 } from '../../src/components/layout/footer.helpers';
-
-const navigationEntries: NavigationEntry[] = [
-  { key: 'Inicio', url: '/' },
-  { key: 'Noticias', url: '/noticias/' },
-  { key: 'Admin', url: '/admin', isAdmin: true },
-];
-
-describe('filterFooterNavigationEntries', () => {
-  it('removes admin entries when menu is disabled', () => {
-    const result = filterFooterNavigationEntries(navigationEntries, false);
-
-    expect(result.map(entry => entry.key)).toStrictEqual([
-      'Inicio',
-      'Noticias',
-    ]);
-  });
-
-  it('keeps admin entries when menu is enabled', () => {
-    const result = filterFooterNavigationEntries(navigationEntries, true);
-
-    expect(result.map(entry => entry.key)).toStrictEqual([
-      'Inicio',
-      'Noticias',
-      'Admin',
-    ]);
-  });
-});
 
 describe('resolveFooterServiceLink', () => {
   const baseService: FooterService = {

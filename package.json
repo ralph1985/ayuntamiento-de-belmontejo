@@ -35,7 +35,6 @@
     "@sentry/astro": "10.69.0",
     "@types/simple-oauth2": "5.0.7",
     "astro": "7.1.0",
-    "astro-decap-cms-oauth": "0.5.2",
     "autoprefixer": "10.4.22",
     "cors": "2.8.5",
     "dotenv": "17.2.3",

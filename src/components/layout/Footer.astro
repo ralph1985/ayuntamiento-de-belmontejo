@@ -9,10 +9,7 @@ import navData from '@data/navData.json';
 import footerServices from '@data/footerServices.json';
 import MunicipalSeal from '@components/ui/MunicipalSeal.astro';
 import NavIcon from '@components/ui/NavIcon.astro';
-import {
-  filterFooterNavigationEntries,
-  resolveFooterServiceLink,
-} from '@components/layout/footer.helpers';
+import { resolveFooterServiceLink } from '@components/layout/footer.helpers';
 import { getCurrentYear } from '@js/utils';
 
 const currentYear = getCurrentYear();
@@ -46,12 +43,10 @@ const socialIconMap: Record<
   },
 };
 
-// Filter navigation data to show admin menu only when enabled
-const showAdminMenu = import.meta.env.PUBLIC_ADMIN_MENU === 'true';
-const filteredNavData = filterFooterNavigationEntries(navData, showAdminMenu);
+const filteredNavData = navData;
 const footerIconForEntry: Record<
   string,
-  'home' | 'village' | 'projects' | 'news' | 'notice' | 'search' | 'admin'
+  'home' | 'village' | 'projects' | 'news' | 'notice' | 'search'
 > = {
   Inicio: 'home',
   'Sobre el pueblo': 'village',
@@ -59,7 +54,6 @@ const footerIconForEntry: Record<
   Noticias: 'news',
   Bandos: 'notice',
   Buscador: 'search',
-  Administración: 'admin',
 };
 ---
 
@@ -91,11 +85,7 @@ const footerIconForEntry: Record<
           {
             filteredNavData.map(entry => (
               <li class="cs-li">
-                <a
-                  href={entry.url}
-                  target={entry.isAdmin ? '_blank' : undefined}
-                  rel={entry.isAdmin ? 'noopener noreferrer' : undefined}
-                >
+                <a href={entry.url}>
                   <NavIcon name={footerIconForEntry[entry.key]} size={17} />
                   <span>{entry.key}</span>
                 </a>

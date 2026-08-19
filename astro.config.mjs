@@ -5,10 +5,6 @@ import sentry from '@sentry/astro';
 import vercel from '@astrojs/vercel';
 import pkg from './package.json' assert { type: 'json' };
 
-import decapCmsOauth from 'astro-decap-cms-oauth';
-
-// Check if admin should be enabled based on environment variable
-const adminEnabled = process.env.PUBLIC_ADMIN_MENU === 'true';
 const hasClientSentryDsn = Boolean(process.env.PUBLIC_SENTRY_DSN);
 const hasServerSentryDsn = Boolean(process.env.SENTRY_DSN);
 const serverSentryEnabled =
@@ -34,7 +30,6 @@ export default defineConfig({
       },
     }),
     sitemap({
-      filter: page => !page.includes('/admin'),
       customPages: [
         'https://ayuntamiento-de-belmontejo.vercel.app/',
         'https://ayuntamiento-de-belmontejo.vercel.app/contacto/',
@@ -81,9 +76,6 @@ export default defineConfig({
         }
         return item;
       },
-    }),
-    decapCmsOauth({
-      adminDisabled: !adminEnabled,
     }),
   ],
   vite: {

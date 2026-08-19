@@ -7,14 +7,13 @@ Este proyecto es el sitio web oficial del Ayuntamiento de Belmontejo, diseñado 
 - **Anuncios Oficiales (Bandos):** Muestra los bandos municipales, obtenidos automáticamente a través de un script.
 - **Noticias y Proyectos:** Secciones para mantener a los ciudadanos informados sobre las últimas noticias y proyectos del ayuntamiento.
 - **Información del Pueblo:** Detalles sobre la historia, lugares de interés y otra información relevante sobre Belmontejo.
-- **Administración de Contenido:** Utiliza Decap CMS para una fácil gestión del contenido del sitio.
+- **Contenido editorial:** Los textos y avisos se mantienen como archivos versionados del proyecto.
 - **Diseño Adaptable:** Interfaz accesible y fácil de usar en diferentes dispositivos.
 
 ## Tecnologías Utilizadas
 
 - **Astro:** Framework de desarrollo para construir sitios web rápidos y optimizados.
 - **Vercel:** Plataforma para el despliegue y alojamiento del sitio.
-- **Decap CMS:** Sistema de gestión de contenido (CMS) para actualizar el contenido de forma sencilla.
 - **Node.js:** Entorno de ejecución para los scripts del proyecto.
 
 ## Estructura del Proyecto
@@ -24,12 +23,12 @@ El proyecto sigue la convención de Astro y añade algunos directorios auxiliare
 - **/src/pages/**: rutas del sitio (bandos, noticias, páginas estáticas y API).
 - **/src/components/**: componentes reutilizables.
 - **/src/layouts/**: envoltorios compartidos para las páginas.
-- **/src/content/**: colecciones gestionadas por Decap CMS y Markdown generado automáticamente.
+- **/src/content/**: colecciones de noticias, bandos y FAQs en Markdown.
 - **/src/assets**, **/src/icons**, **/src/styles**, **/src/js**: recursos estáticos, iconografía, utilidades de estilo y scripts de apoyo.
 - **/src/data/**: fuentes de datos estáticas que se consumen en el build.
 - **/scripts/**: automatizaciones (`fetch-bandos.js`, `run-e2e.js`).
 - **/tests/**: pruebas unitarias (`tests/unit`) y flujos end-to-end (`tests/e2e`).
-- **/public/**: archivos estáticos servidos tal cual, incluido el panel `/admin`.
+- **/public/**: archivos estáticos servidos tal cual.
 - **/dist/**: salida del build (no debe versionarse).
 - **/coverage/** y **/test-results/**: artefactos generados por Vitest y Playwright.
 
@@ -115,7 +114,7 @@ Si ya tenías el repositorio clonado antes de activar LFS, ejecuta igualmente `g
 
 ### End-to-End (Playwright)
 
-- `scripts/run-e2e.js` se asegura de construir el sitio antes de lanzar Playwright y aporta valores ficticios para `OAUTH_GITHUB_CLIENT_ID` y `OAUTH_GITHUB_CLIENT_SECRET` si no están definidos.
+- `scripts/run-e2e.js` se asegura de construir el sitio antes de lanzar Playwright.
 - Todas las banderas y argumentos tras `pnpm run test:e2e -- ...` se transfieren a `pnpm exec playwright test` (por ejemplo, `--update-snapshots`, `--project=chromium`).
 - Puedes limitar la ejecución a subconjuntos definidos en `scripts/e2e-groups.js` con `pnpm run test:e2e -- --group <nombre>` (por ejemplo, `flows:navigation`).
 - Las specs y snapshots visuales se conservan en `tests/e2e/specs/visual/` y `tests/e2e/__screenshots__/`, pero están desactivados hasta que se revisen y regeneren sus bases de referencia.
@@ -169,25 +168,17 @@ Asegúrate de que el archivo `sonar-project.properties` contiene los identificad
 
 El sitio está configurado para un despliegue continuo en Vercel. Cada vez que se realiza un `push` a la rama principal, se despliega automáticamente una nueva versión.
 
-## Panel de Administración
-
-El sitio incluye un panel de administración de Decap CMS en `/admin`. Para habilitarlo, es necesario configurar la variable de entorno `PUBLIC_ADMIN_MENU` a `true`.
-
 ## Variables de Entorno
 
-Es necesario crear un archivo `.env` en la raíz del proyecto con las siguientes variables para el correcto funcionamiento del panel de administración:
+Las variables necesarias para el formulario de contacto y las integraciones opcionales son:
 
-- `GITHUB_CLIENT_ID`: ID de cliente OAuth de GitHub que usa `astro-decap-cms-oauth` en producción (por ejemplo, en Vercel).
-- `GITHUB_CLIENT_SECRET`: Secreto asociado al cliente anterior.
-- `PUBLIC_ADMIN_MENU`: `true` o `false` para mostrar u ocultar el menú de administración en la navegación.
-- `OAUTH_GITHUB_CLIENT_ID` y `OAUTH_GITHUB_CLIENT_SECRET` (opcional): sobrescriben los valores ficticios usados por `scripts/run-e2e.js` durante los builds locales.
 - `RESEND_API_KEY`: clave privada de Resend con permisos para enviar correos.
 - `PUBLIC_RECAPTCHA_SITE_KEY`: clave pública de reCAPTCHA v3 usada por el formulario de contacto para generar el token anti-spam en el navegador.
 - `RECAPTCHA_SECRET_KEY`: clave privada asociada al sitio reCAPTCHA. El endpoint `/api/contacto.json` la usa para validar cada envío antes de reenviar el mensaje por Resend.
 
-Los campos `contact.formSender` y `contact.formRecipient` (ver `src/data/contact-info.json`) se gestionan desde Decap CMS y controlan el remitente/destinatario usados por la API de Resend. Mientras no exista un remitente bajo el dominio municipal, utiliza `onboarding@resend.dev` (valor ya cargado en `formSender`).
+Los campos `contact.formSender` y `contact.formRecipient` de `src/data/contact-info.json` controlan el remitente y destinatario usados por la API de Resend. Mientras no exista un remitente bajo el dominio municipal, utiliza `onboarding@resend.dev` (valor ya cargado en `formSender`).
 
-No compartas el archivo `.env` ni las credenciales generadas. Antes de habilitar el panel de administración en un entorno público, revisa que el despliegue esté protegido siguiendo las directrices de Vercel.
+No compartas el archivo `.env` ni las credenciales generadas.
 
 ### Monitoreo de errores (Sentry)
 
