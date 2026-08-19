@@ -180,6 +180,8 @@ Los campos `contact.formSender` y `contact.formRecipient` de `src/data/contact-i
 
 No compartas el archivo `.env` ni las credenciales generadas.
 
+El formulario combina reCAPTCHA, un campo trampa (honeypot) invisible para los usuarios y un límite local de cinco intentos por IP y hora. Este último se reinicia al cambiar la instancia serverless, por lo que actúa como defensa complementaria y no como un contador global.
+
 ### Monitoreo de errores (Sentry)
 
 El SDK de Sentry queda configurado mediante `sentry.client.config.ts` y `sentry.server.config.ts`. Para activarlo, define las siguientes variables:

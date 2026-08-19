@@ -17,6 +17,7 @@ type ContactFormPayload = {
   message?: string;
   recaptchaToken?: string;
   privacyConsent?: boolean;
+  website?: string;
 };
 
 const jsonResponse = (
@@ -57,13 +58,10 @@ const stripControlCharacters = (
   return cleaned;
 };
 
-// Nota: el almacenamiento en memoria hace que el contador se restablezca en cada
-// arranque de proceso (o instancia serverless), por lo que el límite es por
-// instancia y no compartido. Depende de `x-forwarded-for`/`x-real-ip` para
-// identificar la IP del cliente y no usa cookies (evita manipulación del lado del
-// cliente).
-const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hora
+// El contador vive en la instancia serverless actual. Es una defensa ligera
+// y complementaria a reCAPTCHA, no un límite global entre todas las instancias.
 const RATE_LIMIT_MAX_REQUESTS = 5;
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
 const rateLimitBuckets = new Map<string, number[]>();
 
 const getClientIp = (request: globalThis.Request): string => {
@@ -110,6 +108,34 @@ const applyRateLimit = (ip: string): RateLimitResult => {
     remaining,
     resetAt,
   };
+};
+
+const logContactEvent = (
+  event:
+    | 'configuration-error'
+    | 'honeypot'
+    | 'rate-limited'
+    | 'recaptcha-error'
+    | 'validation-error'
+    | 'resend-error'
+    | 'success'
+): void => {
+  const message = `[contact-form] ${event}`;
+
+  if (event === 'configuration-error' || event.endsWith('error')) {
+    // eslint-disable-next-line no-console
+    console.error(message);
+    return;
+  }
+
+  if (event === 'honeypot' || event === 'rate-limited') {
+    // eslint-disable-next-line no-console
+    console.warn(message);
+    return;
+  }
+
+  // eslint-disable-next-line no-console
+  console.info(message);
 };
 
 const toRateLimitHeaders = (
@@ -228,7 +254,7 @@ const ensureConfig = () => {
     !RECAPTCHA_SECRET_KEY
   ) {
     throw new Error(
-      'Configuración incompleta. Revisa RESEND_API_KEY, RECAPTCHA_SECRET_KEY y los campos formSender/formRecipient en los datos de contacto.'
+      'Configuración incompleta. Revisa Resend, reCAPTCHA y los campos formSender/formRecipient en los datos de contacto.'
     );
   }
 };
@@ -312,6 +338,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     ensureConfig();
   } catch (error) {
+    logContactEvent('configuration-error');
     return jsonResponse(
       { success: false, error: (error as Error).message },
       500
@@ -329,10 +356,15 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   const clientIp = getClientIp(request);
+  if (data.website?.trim()) {
+    logContactEvent('honeypot');
+    return jsonResponse({ success: true });
+  }
   const rateLimit = applyRateLimit(clientIp);
   const rateLimitHeaders = toRateLimitHeaders(rateLimit);
 
   if (rateLimit.limited) {
+    logContactEvent('rate-limited');
     return jsonResponse(
       {
         success: false,
@@ -345,6 +377,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const recaptchaValidation = await verifyRecaptchaToken(data.recaptchaToken);
   if (!recaptchaValidation.success) {
+    logContactEvent('recaptcha-error');
     return jsonResponse(
       { success: false, error: recaptchaValidation.error },
       400,
@@ -354,6 +387,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   const validation = validatePayload(data);
   if (!validation.success) {
+    logContactEvent('validation-error');
     return jsonResponse(
       { success: false, error: validation.error },
       400,
@@ -389,6 +423,7 @@ export const POST: APIRoute = async ({ request }) => {
       const message =
         errorBody?.message ??
         'No se pudo enviar el correo. Inténtalo de nuevo más tarde.';
+      logContactEvent('resend-error');
       return jsonResponse(
         { success: false, error: message },
         502,
@@ -396,8 +431,10 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    logContactEvent('success');
     return jsonResponse({ success: true }, 200, rateLimitHeaders);
   } catch (error) {
+    logContactEvent('resend-error');
     return jsonResponse(
       {
         success: false,

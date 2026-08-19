@@ -70,6 +70,16 @@ const privacyContactEmail = emails[0]?.address ?? '';
             municipales. Indica un medio de contacto para recibir respuesta.
           </p>
         </div>
+        <div class="cs-honeypot" aria-hidden="true">
+          <label for="website">Sitio web</label>
+          <input
+            type="text"
+            id="website"
+            name="website"
+            tabindex="-1"
+            autocomplete="off"
+          />
+        </div>
         <label data-field="name">
           <span class="cs-field-label">
             Nombre
@@ -304,6 +314,7 @@ const privacyContactEmail = emails[0]?.address ?? '';
     subject: string;
     message: string;
     privacyConsent: boolean;
+    website: string;
   };
   type FieldName = keyof FormValues;
   type ValidationError = { field: FieldName; message: string };
@@ -359,6 +370,7 @@ const privacyContactEmail = emails[0]?.address ?? '';
       subject: getValue('subject'),
       message: getValue('message'),
       privacyConsent: formData.get('privacyConsent') === 'on',
+      website: getValue('website'),
     };
   };
 

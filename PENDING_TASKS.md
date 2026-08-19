@@ -31,7 +31,7 @@
 ### Atención ciudadana y formularios
 
 - **Media** Remitente Resend: dar de alta un remitente oficial con dominio `@belmontejo.es` en Resend y actualizar `contact.formSender` para dejar de usar `onboarding@resend.dev`.
-- **Media** Antiabuso del formulario de contacto: añadir logging básico y valorar un rate limit compartido; el límite actual sigue siendo por instancia serverless.
+- **Media** Antiabuso del formulario de contacto: logging básico y honeypot añadidos; el rate limit actual es por instancia serverless.
 - **Media** reCAPTCHA: cuando se confirme el dominio definitivo, añadirlo a los dominios permitidos en Google reCAPTCHA y actualizar las claves/configuración si es necesario para evitar bloqueos.
 
 ### Seguridad y operaciones
