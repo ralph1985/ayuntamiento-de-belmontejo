@@ -50,13 +50,13 @@ const primaryOfficeLines = primaryOffice
           </p>
           <ul class="legal-list">
             <li>
-              <strong>Domicilio:</strong>
+              <strong>Domicilio:</strong>{' '}
               {primaryOfficeLines.join(', ')}
             </li>
             {
               primaryPhone && (
                 <li>
-                  <strong>Teléfono:</strong>
+                  <strong>Teléfono:</strong>{' '}
                   <a href={`tel:${primaryPhone.href}`}>
                     {primaryPhone.display}
                   </a>
@@ -66,7 +66,7 @@ const primaryOfficeLines = primaryOffice
             {
               primaryEmail && (
                 <li>
-                  <strong>Correo electrónico:</strong>
+                  <strong>Correo electrónico:</strong>{' '}
                   <a href={`mailto:${primaryEmail.address}`}>
                     {primaryEmail.address}
                   </a>
@@ -74,19 +74,19 @@ const primaryOfficeLines = primaryOffice
               )
             }
             <li>
-              <strong>CIF:</strong>
+              <strong>CIF:</strong>{' '}
               <span class="pending-data"
                 >[Pendiente de facilitar por el ayuntamiento]</span
               >
             </li>
             <li>
-              <strong>Datos registrales / DIR3:</strong>
+              <strong>Datos registrales / DIR3:</strong>{' '}
               <span class="pending-data"
                 >[Pendiente de facilitar por el ayuntamiento]</span
               >
             </li>
             <li>
-              <strong>Horario de atención:</strong>
+              <strong>Horario de atención:</strong>{' '}
               <span class="pending-data"
                 >[Pendiente de facilitar por el ayuntamiento]</span
               >
@@ -104,7 +104,7 @@ const primaryOfficeLines = primaryOffice
             El acceso y navegación por este sitio web implica la aceptación de
             las presentes condiciones generales de uso. El {
               contactInfo.entity.name
-            }
+            }{' '}
             facilita información y servicios municipales con el objetivo de mejorar
             la comunicación con la ciudadanía.
           </p>
@@ -186,7 +186,7 @@ const primaryOfficeLines = primaryOffice
         <section class="legal-section" id="cookies">
           <h2>6. Política de cookies</h2>
           <p>
-            El uso de cookies y tecnologías similares se detalla en la
+            El uso de cookies y tecnologías similares se detalla en la{' '}
             <a href="/politica-de-cookies">Política de Cookies</a> del sitio. En ella
             encontrarás la información sobre los tipos de cookies utilizadas, su finalidad
             y el modo de gestionar tus preferencias.
@@ -203,7 +203,7 @@ const primaryOfficeLines = primaryOffice
             {
               primaryEmail && (
                 <li>
-                  <strong>Correo electrónico:</strong>
+                  <strong>Correo electrónico:</strong>{' '}
                   <a href={`mailto:${primaryEmail.address}`}>
                     {primaryEmail.address}
                   </a>
@@ -213,7 +213,7 @@ const primaryOfficeLines = primaryOffice
             {
               primaryPhone && (
                 <li>
-                  <strong>Teléfono:</strong>
+                  <strong>Teléfono:</strong>{' '}
                   <a href={`tel:${primaryPhone.href}`}>
                     {primaryPhone.display}
                   </a>
@@ -223,13 +223,12 @@ const primaryOfficeLines = primaryOffice
             {
               primaryOffice && (
                 <li>
-                  <strong>Sede física:</strong>
-                  {primaryOfficeLines.join(', ')}
+                  <strong>Sede física:</strong> {primaryOfficeLines.join(', ')}
                 </li>
               )
             }
             <li>
-              <strong>Sede electrónica / registro:</strong>
+              <strong>Sede electrónica / registro:</strong>{' '}
               <span class="pending-data"
                 >[Añadir enlace oficial cuando esté disponible]</span
               >

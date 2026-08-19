@@ -126,12 +126,12 @@ const primaryOfficeLines = primaryOffice
               </div>
               <p class="privacy-note">
                 <strong>Nota de privacidad:</strong> El uso de reCAPTCHA está sujeto
-                a la
+                a la{' '}
                 <a
                   href="https://policies.google.com/privacy"
                   rel="noreferrer"
                   target="_blank">Política de Privacidad</a
-                > y a los
+                > y a los{' '}
                 <a
                   href="https://policies.google.com/terms"
                   rel="noreferrer"
@@ -299,7 +299,7 @@ const primaryOfficeLines = primaryOffice
             {
               primaryEmail && (
                 <p>
-                  <strong>📧 Email:</strong>
+                  <strong>📧 Email:</strong>{' '}
                   <a href={`mailto:${primaryEmail.address}`}>
                     {primaryEmail.address}
                   </a>
@@ -309,7 +309,7 @@ const primaryOfficeLines = primaryOffice
             {
               primaryPhone && (
                 <p>
-                  <strong>📞 Teléfono:</strong>
+                  <strong>📞 Teléfono:</strong>{' '}
                   <a href={`tel:${primaryPhone.href}`}>
                     {primaryPhone.display}
                   </a>
@@ -319,7 +319,7 @@ const primaryOfficeLines = primaryOffice
             {
               primaryOffice && (
                 <p>
-                  <strong>📍 Dirección:</strong>
+                  <strong>📍 Dirección:</strong>{' '}
                   {primaryOfficeLines.map((line, index) => (
                     <>
                       {line}

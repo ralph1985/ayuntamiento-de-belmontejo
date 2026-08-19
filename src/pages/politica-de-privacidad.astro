@@ -108,7 +108,7 @@ const retentionPolicies = [
               {
                 primaryPhone && (
                   <li>
-                    Teléfono:
+                    Teléfono:{' '}
                     <a href={`tel:${primaryPhone.href}`}>
                       {primaryPhone.display}
                     </a>
@@ -118,7 +118,7 @@ const retentionPolicies = [
               {
                 primaryEmail && (
                   <li>
-                    Correo electrónico:
+                    Correo electrónico:{' '}
                     <a href={`mailto:${primaryEmail.address}`}>
                       {primaryEmail.address}
                     </a>
@@ -126,7 +126,7 @@ const retentionPolicies = [
                 )
               }
               <li>
-                Sede electrónica / web:
+                Sede electrónica / web:{' '}
                 <a href={contactInfo.entity.domain} rel="noopener noreferrer">
                   {contactInfo.entity.domain}
                 </a>
