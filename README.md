@@ -170,17 +170,11 @@ El sitio está configurado para un despliegue continuo en Vercel. Cada vez que s
 
 ## Variables de Entorno
 
-Las variables necesarias para el formulario de contacto y las integraciones opcionales son:
-
-- `RESEND_API_KEY`: clave privada de Resend con permisos para enviar correos.
-- `PUBLIC_RECAPTCHA_SITE_KEY`: clave pública de reCAPTCHA v3 usada por el formulario de contacto para generar el token anti-spam en el navegador.
-- `RECAPTCHA_SECRET_KEY`: clave privada asociada al sitio reCAPTCHA. El endpoint `/api/contacto.json` la usa para validar cada envío antes de reenviar el mensaje por Resend.
-
-Los campos `contact.formSender` y `contact.formRecipient` de `src/data/contact-info.json` controlan el remitente y destinatario usados por la API de Resend. Mientras no exista un remitente bajo el dominio municipal, utiliza `onboarding@resend.dev` (valor ya cargado en `formSender`).
+El formulario de contacto no necesita variables de entorno ni un backend: valida los campos en el navegador y prepara un correo `mailto:` dirigido a `alcaldia@belmontejo.es`. Si el dispositivo no tiene una aplicación de correo configurada, muestra la dirección municipal y una opción para copiarla.
 
 No compartas el archivo `.env` ni las credenciales generadas.
 
-El formulario combina reCAPTCHA, un campo trampa (honeypot) invisible para los usuarios y un límite local de cinco intentos por IP y hora. Este último se reinicia al cambiar la instancia serverless, por lo que actúa como defensa complementaria y no como un contador global.
+La web no recibe ni almacena los datos introducidos en el formulario de contacto. La entrega del mensaje depende de la aplicación de correo que elija la persona usuaria.
 
 ### Monitoreo de errores (Sentry)
 

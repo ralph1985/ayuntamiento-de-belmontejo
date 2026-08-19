@@ -16,6 +16,7 @@ const SUBJECT_MAX_LENGTH = 150;
 const MESSAGE_MAX_LENGTH = 1000;
 const phones = contactInfo.contact?.phones ?? [];
 const emails = contactInfo.contact?.emails ?? [];
+const contactEmail = emails[0]?.address ?? 'alcaldia@belmontejo.es';
 const offices = (contactInfo.offices ?? []).map(office => ({
   ...office,
   lines: [
@@ -52,13 +53,14 @@ const privacyContactEmail = emails[0]?.address ?? '';
       <form
         id="cs-form"
         name="Contact Form"
-        method="post"
+        method="get"
         novalidate
         data-name-max-length={NAME_MAX_LENGTH}
         data-email-max-length={EMAIL_MAX_LENGTH}
         data-phone-max-length={PHONE_MAX_LENGTH}
         data-subject-max-length={SUBJECT_MAX_LENGTH}
         data-message-max-length={MESSAGE_MAX_LENGTH}
+        data-contact-email={contactEmail}
       >
         <div class="cs-content">
           <span class="cs-topper">Contacto</span>
@@ -69,16 +71,6 @@ const privacyContactEmail = emails[0]?.address ?? '';
             Usa este formulario para consultas, sugerencias y trámites
             municipales. Indica un medio de contacto para recibir respuesta.
           </p>
-        </div>
-        <div class="cs-honeypot" aria-hidden="true">
-          <label for="website">Sitio web</label>
-          <input
-            type="text"
-            id="website"
-            name="website"
-            tabindex="-1"
-            autocomplete="off"
-          />
         </div>
         <label data-field="name">
           <span class="cs-field-label">
@@ -180,23 +172,6 @@ const privacyContactEmail = emails[0]?.address ?? '';
             data-field-error="message"
             aria-live="polite"></span>
         </label>
-        <label class="cs-checkbox" data-field="privacyConsent">
-          <input
-            type="checkbox"
-            id="privacy-consent"
-            name="privacyConsent"
-            required
-            data-field-input="privacyConsent"
-          />
-          <span>
-            He leído y acepto la{' '}
-            <a href="/politica-de-privacidad">Política de Privacidad</a>.
-          </span>
-          <span
-            class="cs-field-error"
-            data-field-error="privacyConsent"
-            aria-live="polite"></span>
-        </label>
         <Button type="submit">Enviar mensaje</Button>
         <p
           class="cs-form-status"
@@ -205,10 +180,24 @@ const privacyContactEmail = emails[0]?.address ?? '';
           role="status"
         >
         </p>
+        <div class="cs-mailto-fallback" data-mailto-fallback hidden>
+          <p>
+            Se ha preparado un correo en tu aplicación de correo. Si no se abre,
+            escribe directamente a
+            <a data-contact-email-link href={`mailto:${contactEmail}`}>
+              {contactEmail}
+            </a>.
+          </p>
+          <Button type="button" variant="secondary" size="sm" data-copy-email>
+            Copiar correo
+          </Button>
+          <span class="cs-copy-status" data-copy-status aria-live="polite"
+          ></span>
+        </div>
         <p class="cs-legal-notice">
-          Responsable: {contactInfo.entity.name}. Finalidad: tramitar tu
-          consulta y facilitarte una respuesta. Derechos: acceso, rectificación,
-          supresión, oposición y demás previstos en la{' '}
+          Responsable: {contactInfo.entity.name}. El formulario prepara un
+          correo en tu dispositivo; esta web no recibe ni almacena sus datos.
+          Consulta tus derechos y el resto de información en la{' '}
           <a href="/politica-de-privacidad">Política de Privacidad</a>
           {
             privacyContactEmail && (
@@ -306,6 +295,8 @@ const privacyContactEmail = emails[0]?.address ?? '';
 </BaseLayout>
 
 <script>
+  import { buildContactMailto } from '@js/contact-form.helpers';
+
   type FormStatus = 'idle' | 'pending' | 'success' | 'error';
   type FormValues = {
     name: string;
@@ -313,27 +304,10 @@ const privacyContactEmail = emails[0]?.address ?? '';
     phone: string;
     subject: string;
     message: string;
-    privacyConsent: boolean;
-    website: string;
   };
   type FieldName = keyof FormValues;
   type ValidationError = { field: FieldName; message: string };
-  /* eslint-disable no-unused-vars */
-  type Grecaptcha = {
-    ready: (callback: () => void) => void;
-    execute: (
-      siteKey: string,
-      options: {
-        action: string;
-      }
-    ) => Promise<string>;
-  };
-  type RecaptchaWindow = Window & { grecaptcha?: Grecaptcha };
-  /* eslint-enable no-unused-vars */
-  const RECAPTCHA_SITE_KEY = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ?? '';
   const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const isRecaptchaConfigured = Boolean(RECAPTCHA_SITE_KEY);
-  let recaptchaReadyPromise: Promise<Grecaptcha> | null = null;
 
   const getStatusMessage = (variant: FormStatus): string => {
     switch (variant) {
@@ -369,8 +343,6 @@ const privacyContactEmail = emails[0]?.address ?? '';
       phone: getValue('phone'),
       subject: getValue('subject'),
       message: getValue('message'),
-      privacyConsent: formData.get('privacyConsent') === 'on',
-      website: getValue('website'),
     };
   };
 
@@ -463,24 +435,12 @@ const privacyContactEmail = emails[0]?.address ?? '';
       });
     }
 
-    if (!values.privacyConsent) {
-      errors.push({
-        field: 'privacyConsent',
-        message: 'Debes aceptar la política de privacidad para continuar.',
-      });
-    }
-
     if (errors.length > 0) {
       return { success: false, errors };
     }
 
     return { success: true };
   };
-
-  const toJsonPayload = (values: FormValues, recaptchaToken: string) => ({
-    ...values,
-    recaptchaToken,
-  });
 
   const mountCharacterCounter = (
     field: HTMLTextAreaElement | null,
@@ -529,104 +489,9 @@ const privacyContactEmail = emails[0]?.address ?? '';
   };
 
   const clearAllFieldErrors = (form: HTMLFormElement) => {
-    (
-      [
-        'name',
-        'email',
-        'phone',
-        'subject',
-        'message',
-        'privacyConsent',
-      ] as FieldName[]
-    ).forEach(field => setFieldError(form, field));
-  };
-
-  const ensureRecaptchaReady = (): Promise<Grecaptcha> => {
-    if (!isRecaptchaConfigured) {
-      return Promise.reject(
-        new Error(
-          'No se ha configurado reCAPTCHA. Contacta con el equipo técnico.'
-        )
-      );
-    }
-
-    if (recaptchaReadyPromise) {
-      return recaptchaReadyPromise;
-    }
-
-    recaptchaReadyPromise = new Promise((resolve, reject) => {
-      const start = Date.now();
-
-      const injectScript = () => {
-        if (document.querySelector('script[data-recaptcha-script="true"]')) {
-          return;
-        }
-
-        const script = document.createElement('script');
-        script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
-        script.async = true;
-        script.defer = true;
-        script.dataset.recaptchaScript = 'true';
-        script.onerror = () => {
-          recaptchaReadyPromise = null;
-          reject(
-            new Error(
-              'No se pudo cargar el servicio reCAPTCHA. Recarga la página e inténtalo de nuevo.'
-            )
-          );
-        };
-        document.head.appendChild(script);
-      };
-
-      const waitForReady = () => {
-        const grecaptcha = (window as RecaptchaWindow).grecaptcha;
-
-        if (grecaptcha?.ready) {
-          grecaptcha.ready(() => resolve(grecaptcha));
-          return;
-        }
-
-        if (Date.now() - start > 10000) {
-          recaptchaReadyPromise = null;
-          reject(
-            new Error(
-              'No se pudo inicializar reCAPTCHA. Recarga la página e inténtalo de nuevo.'
-            )
-          );
-          return;
-        }
-
-        injectScript();
-        window.setTimeout(waitForReady, 200);
-      };
-
-      waitForReady();
-    });
-
-    return recaptchaReadyPromise;
-  };
-
-  const requestRecaptchaToken = async (): Promise<string> => {
-    const grecaptcha = await ensureRecaptchaReady();
-    let token: string;
-
-    try {
-      token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {
-        action: 'contact_form',
-      });
-    } catch {
-      throw new Error(
-        'No se pudo validar reCAPTCHA. Refresca la página e inténtalo de nuevo.'
-      );
-    }
-
-    if (!token) {
-      throw new Error(
-        'No se pudo validar reCAPTCHA. Refresca la página e inténtalo de nuevo.'
-      );
-    }
-
-    return token;
+    (['name', 'email', 'phone', 'subject', 'message'] as FieldName[]).forEach(
+      field => setFieldError(form, field)
+    );
   };
 
   const mountContactForm = () => {
@@ -646,6 +511,16 @@ const privacyContactEmail = emails[0]?.address ?? '';
     const charCounter = form.querySelector(
       '[data-char-counter]'
     ) as HTMLElement | null;
+    const fallbackElement = form.querySelector(
+      '[data-mailto-fallback]'
+    ) as HTMLElement | null;
+    const copyEmailButton = form.querySelector(
+      '[data-copy-email]'
+    ) as HTMLButtonElement | null;
+    const copyStatus = form.querySelector(
+      '[data-copy-status]'
+    ) as HTMLElement | null;
+    const contactEmail = form.dataset.contactEmail ?? '';
     const messageMaxLength = Number(form.dataset.messageMaxLength ?? '0');
     const limits = {
       name: Number(form.dataset.nameMaxLength ?? '0'),
@@ -662,13 +537,23 @@ const privacyContactEmail = emails[0]?.address ?? '';
 
     form.dataset.enhanced = 'true';
 
-    form.addEventListener('submit', async event => {
+    copyEmailButton?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(contactEmail);
+        if (copyStatus) copyStatus.textContent = 'Correo copiado.';
+      } catch {
+        if (copyStatus) {
+          copyStatus.textContent = `Copia manualmente ${contactEmail}.`;
+        }
+      }
+    });
+
+    form.addEventListener('submit', event => {
       event.preventDefault();
 
       if (!submitButton) return;
 
       clearAllFieldErrors(form);
-      updateStatus(statusElement, 'pending');
       submitButton.disabled = true;
       submitButton.setAttribute('aria-busy', 'true');
 
@@ -687,26 +572,14 @@ const privacyContactEmail = emails[0]?.address ?? '';
           throw new Error(summaryMessage);
         }
 
-        const recaptchaToken = await requestRecaptchaToken();
-
-        const response = await fetch('/api/contacto.json', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(toJsonPayload(values, recaptchaToken)),
-        });
-
-        const result = await response.json().catch(() => ({}));
-
-        if (!response.ok || !result?.success) {
-          throw new Error(
-            result?.error ??
-              'No se pudo enviar el mensaje. Inténtalo más tarde.'
-          );
-        }
-
-        updateStatus(statusElement, 'success');
+        const mailto = buildContactMailto(contactEmail, values);
+        updateStatus(
+          statusElement,
+          'success',
+          'Se ha preparado un correo con tu consulta.'
+        );
+        if (fallbackElement) fallbackElement.hidden = false;
+        window.location.href = mailto;
         form.reset();
         resetCounter?.();
         clearAllFieldErrors(form);

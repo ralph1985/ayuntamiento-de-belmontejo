@@ -7,7 +7,7 @@
 - SEO: `@astrojs/sitemap` activo; Open Graph y `canonical` en el layout.
 - Sede electrónica: enlace en footer data (`src/data/footerServices.json`).
 - Contenido editorial: textos, noticias, bandos y datos fijos versionados en `src/content` y `src/data`.
-- Contacto: formulario en `src/pages/contacto.astro` con backend `/api/contacto.json`, reCAPTCHA + Resend, validación server-side y casilla obligatoria de aceptación con cláusula informativa visible bajo el botón.
+- Contacto: formulario en `src/pages/contacto.astro` con validación en el navegador, generación de `mailto:` hacia `alcaldia@belmontejo.es` y fallback visible para copiar la dirección.
 - Seguridad HTTP: cabeceras de seguridad configuradas en `vercel.json`, incluyendo HSTS, CSP, protección anti-iframe, MIME sniffing, referrer y permisos del navegador.
 - Dependencias: `astro`, `@astrojs/vercel` y `nodemailer` actualizados a versiones sin vulnerabilidades conocidas según `pnpm audit --prod`.
 - Canónicos/OG: el layout base normaliza la URL a partir del dominio definido en `contact-info.json`, evitando duplicidades de protocolo o barra final.
@@ -29,10 +29,6 @@
 - **Media** Redes sociales: los enlaces de Facebook e Instagram no se abren en Chrome iOS (posible bloqueo por esquema `intent://` o `target="_blank"`). Reproducir el bug en un dispositivo real, revisar atributos `rel` y usar URLs HTTPS limpias que funcionen en WebView móviles.
 
 ### Atención ciudadana y formularios
-
-- **Media** Remitente Resend: dar de alta un remitente oficial con dominio `@belmontejo.es` en Resend y actualizar `contact.formSender` para dejar de usar `onboarding@resend.dev`.
-- **Media** Antiabuso del formulario de contacto: logging básico y honeypot añadidos; el rate limit actual es por instancia serverless.
-- **Media** reCAPTCHA: cuando se confirme el dominio definitivo, añadirlo a los dominios permitidos en Google reCAPTCHA y actualizar las claves/configuración si es necesario para evitar bloqueos.
 
 ### Seguridad y operaciones
 

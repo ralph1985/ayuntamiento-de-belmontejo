@@ -26,9 +26,9 @@ const primaryOfficeLines = primaryOffice
 const processingActivities = [
   {
     title: 'Gestión de consultas y solicitudes ciudadanas',
-    data: 'Nombre y apellidos, teléfono, correo electrónico, contenido de la consulta, metadatos técnicos básicos (IP, agente de usuario)',
+    data: 'Nombre y apellidos, teléfono, correo electrónico y contenido de la consulta',
     purpose:
-      'Registrar y dar respuesta a peticiones, incidencias o solicitudes recibidas a través de formularios, correo electrónico o teléfono',
+      'Dar respuesta a peticiones, incidencias o solicitudes recibidas por correo electrónico o teléfono',
     legalBasis: 'Consentimiento de la persona interesada (art. 6.1.a RGPD)',
   },
   {
@@ -51,7 +51,7 @@ const processingActivities = [
 
 const retentionPolicies = [
   {
-    context: 'Consultas recibidas vía formulario o email',
+    context: 'Consultas recibidas vía email o teléfono',
     period:
       'Se conservarán mientras se tramita la solicitud y, una vez resuelta, durante los plazos necesarios para atender posibles responsabilidades administrativas (hasta 5 años).',
   },
@@ -200,9 +200,9 @@ const retentionPolicies = [
         <ul>
           <li>
             Proveedores tecnológicos necesarios para la prestación del servicio
-            (alojamiento, mantenimiento web, herramientas de correo), con los
-            que se han firmado contratos de encargo de tratamiento conforme al
-            art. 28 RGPD.
+            (alojamiento y mantenimiento web). El formulario de contacto no
+            transmite datos a este sitio: abre la aplicación de correo elegida
+            por la persona usuaria para que envíe el mensaje directamente.
           </li>
           <li>
             Google LLC, únicamente cuando la persona usuaria acepta las cookies

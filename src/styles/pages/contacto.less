@@ -60,18 +60,6 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       transition: box-shadow 0.3s ease;
 
-      .cs-honeypot {
-        position: absolute !important;
-        width: 1px !important;
-        height: 1px !important;
-        padding: 0 !important;
-        margin: -1px !important;
-        overflow: hidden !important;
-        clip: rect(0, 0, 0, 0) !important;
-        white-space: nowrap !important;
-        border: 0 !important;
-      }
-
       &:hover {
         box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
       }
@@ -144,42 +132,6 @@
         }
       }
 
-      .cs-checkbox {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: (12/16rem);
-        margin-bottom: (24/16rem);
-        font-weight: 500;
-        line-height: 1.5;
-
-        input[type="checkbox"] {
-          width: (20/16rem);
-          height: (20/16rem);
-          margin-top: (4/16rem);
-          accent-color: var(--primary);
-
-          &.is-invalid {
-            outline: 2px solid var(--danger);
-            outline-offset: 1px;
-          }
-        }
-
-        span {
-          font-weight: 500;
-          color: var(--bodyTextColor);
-
-          a {
-            color: var(--primary);
-            text-decoration: underline;
-          }
-        }
-
-        .cs-field-error {
-          flex-basis: 100%;
-          margin-left: calc((20 / 16rem) + (12 / 16rem));
-        }
-      }
-
       .cs-legal-notice {
         font-size: (14/16rem);
         color: var(--text-secondary);
@@ -234,6 +186,35 @@
 
         &[data-status="error"] {
           color: var(--danger);
+        }
+      }
+
+      .cs-mailto-fallback {
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 1px solid var(--border-strong);
+        border-radius: (8/16rem);
+        color: var(--bodyTextColor);
+
+        &[hidden] {
+          display: none;
+        }
+
+        p {
+          margin: 0 0 1rem;
+          line-height: 1.5;
+        }
+
+        a {
+          color: var(--primary);
+          font-weight: 700;
+          text-decoration: underline;
+        }
+
+        .cs-copy-status {
+          margin-left: 0.75rem;
+          font-size: 0.875rem;
+          font-weight: 600;
         }
       }
     }
