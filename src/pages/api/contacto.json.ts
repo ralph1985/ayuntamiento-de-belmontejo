@@ -241,8 +241,13 @@ type RecaptchaResponse = {
   success: boolean;
   score?: number;
   action?: string;
+  hostname?: string;
   'error-codes'?: string[];
 };
+
+const EXPECTED_RECAPTCHA_HOSTNAME = new globalThis.URL(
+  contactInfo.entity.domain
+).hostname;
 
 const verifyRecaptchaToken = async (
   token: string | undefined
@@ -282,7 +287,10 @@ const verifyRecaptchaToken = async (
 
     if (
       !verification.success ||
-      (typeof verification.score === 'number' && verification.score < 0.5)
+      verification.action !== 'contact_form' ||
+      verification.hostname !== EXPECTED_RECAPTCHA_HOSTNAME ||
+      typeof verification.score !== 'number' ||
+      verification.score < 0.5
     ) {
       return {
         success: false,

@@ -8,6 +8,8 @@
 - Sede electrónica: enlace en footer data (`src/data/footerServices.json`).
 - CMS: Decap CMS con OAuth y menú condicionado por `PUBLIC_ADMIN_MENU`. Robots bloquea `/admin`.
 - Contacto: formulario en `src/pages/contacto.astro` con backend `/api/contacto.json`, reCAPTCHA + Resend, validación server-side y casilla obligatoria de aceptación con cláusula informativa visible bajo el botón.
+- Seguridad HTTP: cabeceras de seguridad configuradas en `vercel.json`, incluyendo HSTS, CSP, protección anti-iframe, MIME sniffing, referrer y permisos del navegador.
+- Dependencias: `astro`, `@astrojs/vercel` y `nodemailer` actualizados a versiones sin vulnerabilidades conocidas según `pnpm audit --prod`.
 - Canónicos/OG: el layout base normaliza la URL a partir del dominio definido en `contact-info.json`, evitando duplicidades de protocolo o barra final.
 - Datos estructurados: `BaseLayout` emite `GovernmentOrganization` y las plantillas de noticias/bandos generan `NewsArticle` con URLs normalizadas.
 
@@ -29,12 +31,12 @@
 ### Atención ciudadana y formularios
 
 - **Media** Remitente Resend: dar de alta un remitente oficial con dominio `@belmontejo.es` en Resend y actualizar `contact.formSender` desde Decap CMS para dejar de usar `onboarding@resend.dev`.
-- **Media** Antiabuso del formulario de contacto: añadir medidas específicas de captcha, rate limiting y logging básico para detectar automatización y abuso incluso tras añadir el backend.
+- **Media** Antiabuso del formulario de contacto: añadir logging básico y valorar un rate limit compartido; el límite actual sigue siendo por instancia serverless.
 - **Media** reCAPTCHA: cuando se confirme el dominio definitivo, añadirlo a los dominios permitidos en Google reCAPTCHA y actualizar las claves/configuración si es necesario para evitar bloqueos.
 
 ### Seguridad y operaciones
 
-- **Alta** Seguridad: cabeceras HTTP (CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, COOP/COEP) no configuradas. En Vercel se pueden aplicar vía middleware de Astro o `vercel.json` (headers).
+- **Media** Compatibilidad OAuth: `astro-decap-cms-oauth@0.5.2` declara peer support hasta Astro 6; el build con Astro 7 pasa, pero conviene validar el flujo `/admin` en producción o sustituir el plugin si aparece una incompatibilidad.
 
 ### SEO y analítica
 
@@ -49,7 +51,6 @@
 - **Alta** Tests de integración: definir una suite que cubra flujos completos (p. ej., creación/edición de bandos vía CMS mock + render en frontend) y servicios como `fetch-bandos.js`, de modo que validemos la integración entre scripts, contenido y UI más allá de los e2e visuales.
 - **Alta** Revisar tipados TypeScript: auditar componentes, scripts y configuración para asegurar tipados estrictos (comprobar/activar `strict` en `tsconfig`, añadir tipos en layouts, scripts y endpoints y documentar las convenciones en el repo).
 - **Media** Dependencias pnpm: crear una rutina trimestral para revisar qué paquetes pueden actualizarse (todas las versiones están fijadas). Documentar en `PENDING_TASKS.md` o un changelog interno qué versión tenía cada paquete y cuál se sube, y apoyarse en Codex/Dependabot para automatizar PRs.
-- **Alta** Actualización de seguridad retenida: subir `astro` a `>=7.1.0` y `@astrojs/vercel` a `>=11.0.3` cuando las versiones hayan superado la cuarentena de siete días de pnpm; no añadir excepciones a `minimumReleaseAge`.
 
 ## Bug detectado
 
