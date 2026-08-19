@@ -33,6 +33,8 @@ export interface HomeSectionHeading {
 export interface HomeUpdatesContent extends HomeSectionHeading {
   buttonLabel: string;
   buttonHref: string;
+  bandosButtonLabel: string;
+  bandosButtonHref: string;
 }
 
 export interface HomeCtaContent {

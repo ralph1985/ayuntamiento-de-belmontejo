@@ -50,7 +50,9 @@
     "title": "Comunicados y noticias",
     "description": "Consulta los últimos bandos y las noticias del Ayuntamiento.",
     "buttonLabel": "Todas las noticias",
-    "buttonHref": "/noticias/"
+    "buttonHref": "/noticias/",
+    "bandosButtonLabel": "Todos los bandos",
+    "bandosButtonHref": "/bandos/"
   },
   "community": {
     "eyebrow": "Comunidad",
