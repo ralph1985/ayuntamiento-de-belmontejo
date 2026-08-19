@@ -12,6 +12,7 @@ import { getCollection } from 'astro:content';
 import BandoMovilApp from '@components/sections/BandoMovilApp.astro';
 import Landing from '@components/sections/Landing.astro';
 import landingImage from '@data/landingImage';
+import { homePage } from '@data/homePage';
 
 const posts = await getCollection('bandos');
 posts.sort(
@@ -45,5 +46,5 @@ posts.sort(
     linkLabel="Leer bando"
   />
   <BandoMovilApp />
-  <CTA />
+  <CTA {...homePage.cta} />
 </BaseLayout>

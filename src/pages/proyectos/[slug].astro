@@ -4,6 +4,7 @@ import CTA from '@components/sections/CTA.astro';
 import Landing from '@components/sections/Landing.astro';
 import ProjectDetail from '@components/sections/ProjectDetail.astro';
 import { projects } from '@data/projects';
+import { homePage } from '@data/homePage';
 import type { Project } from '@data/projects';
 
 export const prerender = true;
@@ -39,7 +40,7 @@ import landingImage from '@data/landingImage';
     sourceHref={project.sourceHref}
     sourceLabel={project.sourceLabel}
   />
-  <CTA />
+  <CTA {...homePage.cta} />
 </BaseLayout>
 
 <style lang="less">

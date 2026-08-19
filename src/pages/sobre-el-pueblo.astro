@@ -9,6 +9,7 @@ import GoogleMap from '@components/integrations/GoogleMap.astro';
 import Button from '@components/ui/Button.astro';
 import VillageFeature from '@components/sections/VillageFeature.astro';
 import { aboutVillage } from '@data/aboutVillage';
+import { homePage } from '@data/homePage';
 
 import landingImage from '@data/landingImage';
 ---
@@ -153,7 +154,7 @@ import landingImage from '@data/landingImage';
   />
 
   <FAQ id="about" />
-  <CTA />
+  <CTA {...homePage.cta} />
 </BaseLayout>
 
 <style lang="less">

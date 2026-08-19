@@ -6,6 +6,7 @@ import CTA from '@components/sections/CTA.astro';
 import Landing from '@components/sections/Landing.astro';
 import Button from '@components/ui/Button.astro';
 import { projects } from '@data/projects';
+import { homePage } from '@data/homePage';
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import landingImage from '@data/landingImage';
@@ -70,7 +71,7 @@ import landingImage from '@data/landingImage';
       </div>
     </div>
   </section>
-  <CTA />
+  <CTA {...homePage.cta} />
 </BaseLayout>
 
 <style lang="less">

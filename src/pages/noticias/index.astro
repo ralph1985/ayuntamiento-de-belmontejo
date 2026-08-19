@@ -11,6 +11,7 @@ import ContentArchive from '@components/sections/ContentArchive.astro';
 import { getCollection } from 'astro:content';
 import Landing from '@components/sections/Landing.astro';
 import landingImage from '@data/landingImage';
+import { homePage } from '@data/homePage';
 
 const posts = await getCollection('noticias');
 posts.sort(
@@ -40,5 +41,5 @@ posts.sort(
     emptyMessage="No hay noticias publicadas."
     linkLabel="Continuar leyendo"
   />
-  <CTA />
+  <CTA {...homePage.cta} />
 </BaseLayout>

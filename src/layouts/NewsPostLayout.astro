@@ -8,6 +8,7 @@ import FeaturedContent from '@components/sections/FeaturedContent.astro';
 import TableOfContents from '@components/content/TableOfContents.astro';
 import CTA from '@components/sections/CTA.astro';
 import '@styles/markdown.less';
+import { homePage } from '@data/homePage';
 
 const { post } = Astro.props;
 const { title, date, description, image, imageAlt, author } = post.data;
@@ -139,7 +140,7 @@ const articleSchema = {
     </aside>
   </div>
 
-  <CTA />
+  <CTA {...homePage.cta} />
 </BaseLayout>
 
 <style lang="less">
