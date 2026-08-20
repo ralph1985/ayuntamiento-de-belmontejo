@@ -12,7 +12,7 @@ const { eyebrow, title, description } = Astro.props as Props;
 ---
 
 <section class="home-community">
-  <div class="home-community__inner">
+  <div class="home-community__inner site-container site-container--wide">
     <div class="home-community__intro">
       <SectionHeading
         eyebrow={eyebrow}
@@ -27,11 +27,9 @@ const { eyebrow, title, description } = Astro.props as Props;
 <style lang="less">
   .home-community {
     background: var(--background-main);
-    padding: clamp(4rem, 9vw, 8rem) 1rem;
+    padding-block: clamp(4rem, 9vw, 8rem);
   }
   .home-community__inner {
-    width: min(100%, 75rem);
-    margin: auto;
     display: grid;
     gap: 3rem;
   }

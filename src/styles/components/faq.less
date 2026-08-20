@@ -4,10 +4,8 @@
     padding: var(--sectionPadding);
     position: relative;
 
-    .cs-container {
-      width: 100%;
-      /* changes to 1280px at desktop */
-      max-width: (584/16rem);
+    .site-container {
+      max-width: none;
       margin: 2em auto;
       display: flex;
       flex-direction: column;
@@ -174,8 +172,8 @@
 /* Desktop - 1024px */
 @media only screen and (min-width: 64rem) {
   .faq-section {
-    .cs-container {
-      max-width: (1280/16rem);
+    .site-container {
+      max-width: none;
       flex-direction: row;
       justify-content: space-between;
       align-items: stretch;

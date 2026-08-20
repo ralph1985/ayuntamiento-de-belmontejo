@@ -1,11 +1,9 @@
 #footer {
-  padding: clamp(3.5rem, 7vw, 6rem) 1rem 1rem;
+  padding: clamp(3.5rem, 7vw, 6rem) 0 1rem;
   background: var(--text-primary);
   color: var(--text-white);
 
-  .container {
-    width: min(100%, 80rem);
-    margin: 0 auto;
+  .site-container {
     display: grid;
     gap: clamp(2.5rem, 6vw, 5rem);
   }
@@ -189,7 +187,7 @@
 
 @media only screen and (min-width: 48rem) {
   #footer {
-    .container {
+    .site-container {
       grid-template-columns: minmax(14rem, 0.8fr) minmax(0, 1.8fr);
       align-items: start;
     }

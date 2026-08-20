@@ -25,7 +25,7 @@ const {
 ---
 
 <section class="home-updates">
-  <div class="home-updates__inner">
+  <div class="home-updates__inner site-container site-container--wide">
     <SectionHeading eyebrow={eyebrow} title={title} description={description} />
     <FeaturedContent type="both" limit={6} />
     <div class="home-updates__actions">
@@ -40,11 +40,9 @@ const {
 <style lang="less">
   .home-updates {
     background: var(--background-sections);
-    padding: clamp(4rem, 9vw, 8rem) 1rem;
+    padding-block: clamp(4rem, 9vw, 8rem);
   }
   .home-updates__inner {
-    width: min(100%, 75rem);
-    margin: auto;
   }
   .home-updates__actions {
     margin-top: 2rem;

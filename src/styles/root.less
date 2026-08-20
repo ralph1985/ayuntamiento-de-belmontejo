@@ -106,10 +106,30 @@
       color 0.2s ease;
   }
 
-  .container {
-    width: 92%;
-    margin: auto;
+  .site-container {
+    --site-container-max-width: var(--container-max-width);
+    width: min(
+      calc(100% - (var(--container-gutter) * 2)),
+      var(--site-container-max-width)
+    );
+    margin-inline: auto;
     position: relative;
+  }
+
+  .site-container--reading {
+    --site-container-max-width: var(--container-reading-max-width);
+  }
+
+  .site-container--wide {
+    --site-container-max-width: var(--container-max-width);
+  }
+
+  .site-container--form {
+    --site-container-max-width: var(--container-form-max-width);
+  }
+
+  .site-container--article {
+    --site-container-max-width: var(--container-article-max-width);
   }
 
   h1,

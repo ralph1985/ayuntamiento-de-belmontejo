@@ -1,8 +1,11 @@
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
   .news-container {
-    width: 94%;
-    max-width: (1120/16em);
+    width: min(
+      calc(100% - (var(--container-gutter) * 2)),
+      var(--container-article-max-width)
+    );
+    max-width: none;
     margin: auto;
     padding: clamp(60px, 7vw, 100px) 0;
     display: flex;

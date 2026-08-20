@@ -45,7 +45,10 @@
     }
 
     .page-hero__inner {
-      width: min(100%, 75rem);
+      width: min(
+        calc(100% - (var(--container-gutter) * 2)),
+        var(--container-max-width)
+      );
       margin: 0 auto;
     }
 

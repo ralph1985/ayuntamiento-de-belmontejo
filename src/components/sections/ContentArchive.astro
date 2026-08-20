@@ -49,7 +49,10 @@ const totalPosts = posts.length;
 const isBandos = kind === 'bandos';
 ---
 
-<section class="archive-list" aria-labelledby={`${kind}-archive-title`}>
+<section
+  class="archive-list site-container site-container--article"
+  aria-labelledby={`${kind}-archive-title`}
+>
   <div class="archive-list__header">
     <div>
       <h2 id={`${kind}-archive-title`}>{heading}</h2>
@@ -290,8 +293,6 @@ const isBandos = kind === 'bandos';
 
 <style lang="less">
   .archive-list {
-    width: min(100% - 2rem, 70rem);
-    margin: 0 auto;
     padding: clamp(2.5rem, 6vw, 5rem) 0;
   }
 

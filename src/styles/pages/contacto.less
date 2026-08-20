@@ -14,18 +14,16 @@
     --bodyFontSize: 1rem;
 
     /* 60px - 100px top and bottom */
-    --sectionPadding: clamp(3.75em, 7.82vw, 6.25em) 1rem;
+    --sectionPadding: clamp(3.75em, 7.82vw, 6.25em) 0;
   }
 
   #cs-contact {
     font-family: "Roboto", "Arial", sans-serif;
     padding: var(--sectionPadding);
 
-    .cs-container {
-      width: 100%;
-      /* changes to 1280px at desktop */
-      max-width: (800/16rem);
-      margin: auto;
+    .site-container {
+      max-width: none;
+      margin-inline: auto;
     }
 
     .cs-content {
@@ -354,8 +352,8 @@
 /* Small Desktop - 1024px */
 @media only screen and (min-width: 64em) {
   #cs-contact {
-    .cs-container {
-      max-width: (1280/16rem);
+    .site-container {
+      max-width: none;
       display: flex;
       justify-content: flex-end;
       align-items: flex-start;

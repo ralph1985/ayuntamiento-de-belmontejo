@@ -2,7 +2,7 @@
 @media only screen and (min-width: 0em) {
   #cta {
     margin-top: 0;
-    padding: clamp(4rem, 8vw, 7rem) 1rem;
+    padding-block: clamp(4rem, 8vw, 7rem);
     position: relative;
 
     &:before {
@@ -18,7 +18,7 @@
       z-index: -1;
     }
 
-    .container {
+    .site-container {
       text-align: center;
     }
 
@@ -47,7 +47,7 @@
 /* Small Desktop */
 @media only screen and (min-width: 64em) {
   #cta {
-    padding: clamp(5rem, 10vw, 9rem) 1rem;
+    padding-block: clamp(5rem, 10vw, 9rem);
   }
 }
 
@@ -68,9 +68,8 @@
       display: none;
     }
 
-    .container {
-      width: min(100%, 42rem);
-      margin: auto;
+    .site-container {
+      width: min(calc(100% - (var(--container-gutter) * 2)), 42rem);
     }
   }
 }

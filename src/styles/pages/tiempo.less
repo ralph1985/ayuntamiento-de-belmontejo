@@ -8,10 +8,9 @@
       var(--background-main) 100%
     );
 
-    .cs-container {
-      width: 100%;
-      max-width: 80rem;
-      margin: 0 auto;
+    .site-container {
+      max-width: none;
+      margin-inline: auto;
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -21,7 +20,7 @@
 
 @media only screen and (min-width: 64em) {
   #weather-page {
-    .cs-container {
+    .site-container {
       gap: 2.5rem;
     }
   }

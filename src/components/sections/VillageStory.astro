@@ -26,7 +26,7 @@ const {
 ---
 
 <section class="village-story">
-  <div class="village-story__inner">
+  <div class="village-story__inner site-container site-container--wide">
     <div class="village-story__media">
       <img
         src={image}
@@ -52,11 +52,9 @@ const {
 <style lang="less">
   .village-story {
     background: var(--background-main);
-    padding: clamp(4rem, 9vw, 8rem) 1rem;
+    padding-block: clamp(4rem, 9vw, 8rem);
   }
   .village-story__inner {
-    width: min(100%, 75rem);
-    margin: auto;
     display: grid;
     gap: clamp(2.5rem, 7vw, 6rem);
     align-items: center;
