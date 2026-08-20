@@ -1,22 +1,44 @@
 <div class="search-container">
-  <div class="search-input-wrapper">
-    <input
-      type="text"
-      id="search-input"
-      placeholder="Buscar en noticias y bandos..."
-      class="search-input"
-    />
-    <button id="search-button" class="search-button" aria-label="Buscar">
-      <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20">
-        <path
-          fill="currentColor"
-          d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-        ></path>
-      </svg>
-    </button>
-  </div>
+  <form id="search-form" class="search-form" role="search">
+    <label for="search-input" class="sr-only">
+      Buscar en noticias y bandos
+    </label>
+    <div class="search-input-wrapper">
+      <input
+        type="search"
+        id="search-input"
+        placeholder="Buscar en noticias y bandos..."
+        class="search-input"
+        autocomplete="off"
+        aria-controls="search-results"
+      />
+      <button id="search-button" class="search-button" type="submit">
+        <span class="sr-only">Buscar</span>
+        <svg
+          class="search-icon"
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          aria-hidden="true"
+        >
+          <path
+            fill="currentColor"
+            d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </form>
 
-  <div id="search-results" class="search-results" style="display: none;">
+  <div
+    id="search-results"
+    class="search-results"
+    style="display: none;"
+    role="region"
+    aria-label="Resultados de búsqueda"
+    aria-live="polite"
+  >
+    <div id="search-status" class="search-status" aria-live="polite"></div>
     <div id="search-loading" class="search-loading" style="display: none;">
       Buscando...
     </div>
@@ -27,7 +49,18 @@
     >
       No se encontraron resultados
     </div>
+    <div id="search-error" class="search-error" style="display: none;">
+      No se pudo cargar el buscador. Inténtalo de nuevo.
+    </div>
     <div id="search-results-list" class="search-results-list"></div>
+    <button
+      id="search-more"
+      class="search-more"
+      type="button"
+      style="display: none;"
+    >
+      Mostrar más resultados
+    </button>
   </div>
 </div>
 
@@ -36,6 +69,12 @@
 </style>
 
 <script>
+  import {
+    escapeRegExp,
+    getSearchTerms,
+    matchesSearchQuery,
+  } from './search.helpers';
+
   interface SearchItem {
     id: string;
     type: string;
@@ -49,21 +88,29 @@
     tags: string[];
   }
 
+  interface SavedSearchState {
+    query: string;
+    results: SearchItem[];
+    timestamp: number;
+  }
+
+  const PAGE_SIZE = 10;
   let searchData: SearchItem[] = [];
   let isDataLoaded = false;
+  let dataLoadFailed = false;
   let lastTrackedQuery: string | null = null;
 
   function saveSearchState(query: string, results: SearchItem[]) {
-    const state = { query, results, timestamp: Date.now() };
+    const state: SavedSearchState = { query, results, timestamp: Date.now() };
     localStorage.setItem('searchState', JSON.stringify(state));
   }
 
-  function loadSearchState() {
+  function loadSearchState(): SavedSearchState | null {
     try {
       const saved = localStorage.getItem('searchState');
       if (!saved) return null;
 
-      const state = JSON.parse(saved);
+      const state = JSON.parse(saved) as SavedSearchState;
       if (Date.now() - state.timestamp > 3600000) {
         localStorage.removeItem('searchState');
         return null;
@@ -81,10 +128,17 @@
     localStorage.removeItem('searchState');
   }
 
+  function updateQueryInUrl(query: string) {
+    const url = new URL(globalThis.location.href);
+    if (query.trim()) url.searchParams.set('q', query.trim());
+    else url.searchParams.delete('q');
+    globalThis.history.replaceState({}, '', url);
+  }
+
   const searchDataUrl = `/search-data.json?v=${import.meta.env.PUBLIC_APP_VERSION ?? 'dev'}`;
 
   async function loadSearchData() {
-    if (isDataLoaded) return;
+    if (isDataLoaded || dataLoadFailed) return;
 
     try {
       const response = await fetch(searchDataUrl);
@@ -93,6 +147,7 @@
       searchData = await response.json();
       isDataLoaded = true;
     } catch (error) {
+      dataLoadFailed = true;
       // eslint-disable-next-line no-console
       console.error('Error loading search data:', error);
     }
@@ -101,10 +156,7 @@
   function trackSearchEvent(query: string, resultsCount: number) {
     const sanitizedQuery = query.trim();
     if (!sanitizedQuery || sanitizedQuery === lastTrackedQuery) return;
-
     lastTrackedQuery = sanitizedQuery;
-
-    if (typeof window === 'undefined') return;
 
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-explicit-any
     const gtag = (window as typeof window & { gtag?: (...args: any[]) => void })
@@ -118,28 +170,79 @@
     }
   }
 
-  function highlightSearchTerms(text: string, query: string): string {
-    const searchTerms = query
-      .toLowerCase()
-      .trim()
-      .split(' ')
-      .filter(term => term.length > 0);
+  function appendHighlightedText(
+    container: HTMLElement,
+    text: string,
+    query: string
+  ) {
+    const terms = getSearchTerms(query).map(escapeRegExp);
+    if (!terms.length) {
+      container.textContent = text;
+      return;
+    }
 
-    return searchTerms.reduce((acc, term) => {
-      const regex = new RegExp(`(${term})`, 'gi');
-      return acc.replace(regex, '<mark>$1</mark>');
-    }, text);
+    const pattern = new RegExp(`(${terms.join('|')})`, 'gi');
+    let lastIndex = 0;
+    for (const match of text.matchAll(pattern)) {
+      const index = match.index ?? 0;
+      container.append(document.createTextNode(text.slice(lastIndex, index)));
+      const mark = document.createElement('mark');
+      mark.textContent = match[0];
+      container.append(mark);
+      lastIndex = index + match[0].length;
+    }
+    container.append(document.createTextNode(text.slice(lastIndex)));
+  }
+
+  function createResult(item: SearchItem, query: string) {
+    const link = document.createElement('a');
+    link.className = 'search-result-item';
+    link.href = item.url;
+
+    const title = document.createElement('div');
+    title.className = 'search-result-title';
+    appendHighlightedText(title, item.title, query);
+
+    const description = document.createElement('div');
+    description.className = 'search-result-description';
+    const shortDescription =
+      item.description.length > 150
+        ? `${item.description.substring(0, 150)}...`
+        : item.description;
+    appendHighlightedText(description, shortDescription, query);
+
+    const meta = document.createElement('div');
+    meta.className = 'search-result-meta';
+    const type = document.createElement('span');
+    type.className = `search-result-type ${item.type}`;
+    type.textContent = item.type;
+    const date = document.createElement('span');
+    date.className = 'search-result-date';
+    date.textContent = new Date(item.date).toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    const author = document.createElement('span');
+    author.className = 'search-result-author';
+    author.textContent = item.author;
+    meta.append(type, date, author);
+    link.append(title, description, meta);
+    return link;
   }
 
   function mountSearchBox() {
+    const searchForm = document.getElementById(
+      'search-form'
+    ) as HTMLFormElement | null;
     const searchInput = document.getElementById(
       'search-input'
     ) as HTMLInputElement | null;
-    const searchButton = document.getElementById(
-      'search-button'
-    ) as HTMLButtonElement | null;
     const searchResults = document.getElementById(
       'search-results'
+    ) as HTMLElement | null;
+    const searchStatus = document.getElementById(
+      'search-status'
     ) as HTMLElement | null;
     const searchLoading = document.getElementById(
       'search-loading'
@@ -147,155 +250,128 @@
     const searchNoResults = document.getElementById(
       'search-no-results'
     ) as HTMLElement | null;
+    const searchError = document.getElementById(
+      'search-error'
+    ) as HTMLElement | null;
     const searchResultsList = document.getElementById(
       'search-results-list'
     ) as HTMLElement | null;
+    const searchMore = document.getElementById(
+      'search-more'
+    ) as HTMLButtonElement | null;
 
     if (
+      !searchForm ||
       !searchInput ||
-      !searchButton ||
       !searchResults ||
+      !searchStatus ||
       !searchLoading ||
       !searchNoResults ||
+      !searchError ||
       !searchResultsList ||
+      !searchMore ||
       searchInput.dataset.enhanced === 'true'
-    ) {
+    )
       return;
-    }
 
     searchInput.dataset.enhanced = 'true';
-
     let searchTimeout: ReturnType<typeof setTimeout>;
+    let currentResults: SearchItem[] = [];
+    let visibleResults = PAGE_SIZE;
 
-    function hideSearchResults() {
-      if (!searchInput.value.trim()) {
-        searchResults.style.display = 'none';
-      }
+    function resetMessages() {
+      searchNoResults.style.display = 'none';
+      searchError.style.display = 'none';
+      searchStatus.textContent = '';
     }
 
-    function displaySearchResults(results: SearchItem[], query: string) {
+    function renderResults(results: SearchItem[], query: string) {
+      currentResults = results;
+      visibleResults = Math.min(visibleResults, PAGE_SIZE);
       searchResults.style.display = 'block';
       searchLoading.style.display = 'none';
+      searchResultsList.replaceChildren(
+        ...results
+          .slice(0, visibleResults)
+          .map(item => createResult(item, query))
+      );
+      searchMore.style.display =
+        results.length > visibleResults ? 'block' : 'none';
+      searchStatus.textContent = `${results.length} ${results.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}.`;
       saveSearchState(query, results);
 
       if (results.length === 0) {
         searchNoResults.style.display = 'block';
-        searchResultsList.innerHTML = '';
-        return;
+        searchStatus.textContent = '0 resultados encontrados.';
       }
-
-      searchNoResults.style.display = 'none';
-
-      const resultsHTML = results
-        .slice(0, 10)
-        .map(item => {
-          const date = new Date(item.date).toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          });
-
-          const highlightedTitle = highlightSearchTerms(item.title, query);
-          const highlightedDescription = highlightSearchTerms(
-            item.description.length > 150
-              ? item.description.substring(0, 150) + '...'
-              : item.description,
-            query
-          );
-
-          return `<div class="search-result-item" onclick="window.location.href='${item.url}'">
-            <div class="search-result-title">${highlightedTitle}</div>
-            <div class="search-result-description">${highlightedDescription}</div>
-            <div class="search-result-meta">
-              <span class="search-result-type ${item.type}">${item.type}</span>
-              <span class="search-result-date">${date}</span>
-              <span class="search-result-author">${item.author}</span>
-            </div>
-          </div>`;
-        })
-        .join('');
-
-      searchResultsList.innerHTML = resultsHTML;
     }
 
     function performSearch(query: string) {
-      if (!query.trim()) {
-        hideSearchResults();
+      const trimmedQuery = query.trim();
+      updateQueryInUrl(trimmedQuery);
+      resetMessages();
+      if (!trimmedQuery) {
+        searchResults.style.display = 'none';
+        clearSearchState();
         return;
       }
-
-      const normalizedQuery = query.toLowerCase().trim();
-      const searchTerms = normalizedQuery
-        .split(' ')
-        .filter(term => term.length > 0);
-
-      const results = searchData.filter(item => {
-        const searchableText = [
-          item.title,
-          item.description,
-          item.content,
-          item.author,
-          ...(item.tags || []),
-        ]
-          .join(' ')
-          .toLowerCase();
-
-        return searchTerms.every(term => searchableText.includes(term));
-      });
-
-      displaySearchResults(results, query);
-      trackSearchEvent(query, results.length);
+      if (dataLoadFailed) {
+        searchResults.style.display = 'block';
+        searchError.style.display = 'block';
+        searchStatus.textContent = 'No se pudo cargar el índice de búsqueda.';
+        return;
+      }
+      const results = searchData.filter(item =>
+        matchesSearchQuery(
+          [
+            item.title,
+            item.description,
+            item.content,
+            item.author,
+            ...(item.tags || []),
+          ].join(' '),
+          trimmedQuery
+        )
+      );
+      visibleResults = PAGE_SIZE;
+      renderResults(results, trimmedQuery);
+      trackSearchEvent(trimmedQuery, results.length);
     }
 
     function initializeSearch() {
+      const urlQuery = new URL(globalThis.location.href).searchParams.get('q');
       const savedState = loadSearchState();
-      if (savedState && savedState.query && savedState.results) {
-        searchInput.value = savedState.query;
-        displaySearchResults(savedState.results, savedState.query);
-      }
+      const initialQuery = urlQuery ?? savedState?.query ?? '';
+      if (!initialQuery) return;
+      searchInput.value = initialQuery;
+      if (urlQuery || isDataLoaded) performSearch(initialQuery);
+      else if (savedState) renderResults(savedState.results, savedState.query);
     }
+
+    searchForm.addEventListener('submit', event => {
+      event.preventDefault();
+      performSearch(searchInput.value);
+    });
 
     searchInput.addEventListener('input', event => {
       clearTimeout(searchTimeout);
       const query = (event.target as HTMLInputElement).value;
-
       if (query.trim()) {
         searchLoading.style.display = 'block';
-        searchNoResults.style.display = 'none';
-        searchResultsList.innerHTML = '';
+        resetMessages();
         searchResults.style.display = 'block';
-
-        searchTimeout = setTimeout(() => {
-          performSearch(query);
-        }, 300);
+        searchTimeout = setTimeout(() => performSearch(query), 300);
       } else {
-        hideSearchResults();
-        clearSearchState();
+        performSearch('');
       }
     });
 
-    searchButton.addEventListener('click', () => {
-      const query = searchInput.value;
-      if (query.trim()) {
-        performSearch(query);
-      }
+    searchMore.addEventListener('click', () => {
+      visibleResults += PAGE_SIZE;
+      renderResults(currentResults, searchInput.value);
     });
 
-    searchInput.addEventListener('focus', loadSearchData);
-
-    searchInput.addEventListener('keydown', event => {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        const query = searchInput.value;
-        if (query.trim()) {
-          performSearch(query);
-        }
-      }
-    });
-
-    loadSearchData().then(() => {
-      initializeSearch();
-    });
+    loadSearchData().then(() => initializeSearch());
   }
 
   ['astro:page-load', 'astro:after-swap'].forEach(eventName => {

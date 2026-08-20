@@ -17,7 +17,7 @@ function waitForSearchData(page: Page) {
   return page.waitForResponse(response => {
     try {
       const url = new URL(response.url());
-      return url.pathname.endsWith('/api/search-data.json') && response.ok();
+      return url.pathname.endsWith('/search-data.json') && response.ok();
     } catch {
       return false;
     }

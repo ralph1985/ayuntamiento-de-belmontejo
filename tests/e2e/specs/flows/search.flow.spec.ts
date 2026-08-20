@@ -21,19 +21,10 @@ test.describe('Buscador municipal', () => {
     await expect(firstResult).toBeVisible();
     await expect(firstResult).toContainText(/vandalismo/i);
 
-    const onclickValue = await firstResult.getAttribute('onclick');
-    if (!onclickValue) {
+    const targetPath = await firstResult.getAttribute('href');
+    if (!targetPath) {
       throw new Error('No se pudo obtener la ruta de navegación del resultado');
     }
-
-    const targetMatch = new RegExp(/'([^']+)'/).exec(onclickValue);
-    if (!targetMatch?.[1]) {
-      throw new Error(
-        'No se pudo interpretar la ruta de navegación del resultado'
-      );
-    }
-
-    const targetPath = targetMatch[1];
 
     await Promise.all([
       page.waitForURL(new RegExp(`${escapeRegex(targetPath)}\\/?$`)),
@@ -45,8 +36,8 @@ test.describe('Buscador municipal', () => {
       page.getByRole('heading', { level: 1, name: /vandalismo/i })
     ).toBeVisible();
 
-    await page.goBack();
-    await page.waitForURL(/\/buscar\/?$/);
+    await page.goBack({ waitUntil: 'commit' });
+    await expect(page).toHaveURL(/\/buscar\/?\?q=vandalismo$/);
     await page.waitForFunction(() => {
       return document.querySelectorAll('.search-result-item').length > 0;
     });
@@ -56,8 +47,8 @@ test.describe('Buscador municipal', () => {
     await expect(restoredFirstResult).toBeVisible();
     await expect(restoredFirstResult).toContainText(/vandalismo/i);
 
-    const restoredOnclick = await restoredFirstResult.getAttribute('onclick');
-    if (restoredOnclick !== onclickValue) {
+    const restoredHref = await restoredFirstResult.getAttribute('href');
+    if (restoredHref !== targetPath) {
       throw new Error('El resultado restaurado no coincide con el inicial');
     }
   });
