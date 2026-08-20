@@ -7,7 +7,7 @@
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
   #historia {
-    padding: var(--sectionPadding);
+    padding: var(--section-padding);
 
     .site-container {
       max-width: none;
@@ -29,7 +29,7 @@
 
     .cs-picture {
       border-radius: (24/16em);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-md);
       transition: box-shadow 0.3s ease;
       display: block;
       position: absolute;
@@ -37,7 +37,7 @@
       overflow: hidden;
 
       &:hover {
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-lg);
       }
 
       img {
@@ -56,8 +56,8 @@
       right: 0.75rem;
       bottom: 0.75rem;
       padding: 0.35rem 0.5rem;
-      background: rgba(14, 31, 39, 0.78);
-      color: #fff;
+      background: rgb(var(--color-photo-scrim-rgb) / 82%);
+      color: var(--color-text-inverse);
       font-size: 0.75rem;
       line-height: 1.3;
       z-index: 1;
@@ -77,10 +77,10 @@
     .cs-picture2 {
       width: 54%;
       height: 52%;
-      background-color: var(--background-main);
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 40px;
+      background-color: var(--color-bg);
+      box-shadow: var(--shadow-lg);
       /* 6px - 12px */
-      border: clamp(0.375em, 1.5vw, 0.75em) solid var(--background-main);
+      border: clamp(0.375em, 1.5vw, 0.75em) solid var(--color-bg);
       right: 0;
       bottom: 0;
     }
@@ -107,14 +107,14 @@
       line-height: 1.2em;
       text-align: left;
       margin: (32/16rem) 0 (16/16rem) 0;
-      color: var(--headerColor);
+      color: var(--color-text);
     }
 
     .cs-text {
       text-align: left;
       max-width: (750/16rem);
       margin-bottom: (16/16rem);
-      color: var(--bodyTextColor);
+      color: var(--color-text-muted);
 
       &:last-of-type {
         margin-bottom: (32/16rem);
@@ -124,7 +124,7 @@
     .cs-flex-group {
       /* 16px - 32px */
       padding: clamp(1rem, 3vw, 2rem);
-      background-color: var(--background-sections);
+      background-color: var(--color-bg-subtle);
       border-radius: (16/16rem);
       position: relative;
     }
@@ -134,7 +134,7 @@
       font-size: clamp(0.875rem, 1.5vw, 1rem);
       line-height: 1.5em;
       margin: 0 0 (16/16rem);
-      color: var(--text-secondary);
+      color: var(--color-text-muted);
     }
 
     .cs-name {
@@ -143,14 +143,14 @@
       line-height: 1.2em;
       text-transform: uppercase;
       margin: 0 0 (4/16rem);
-      color: var(--headerColor);
+      color: var(--color-text);
       display: block;
     }
 
     .cs-job {
       font-size: (14/16rem);
       line-height: 1.5em;
-      color: var(--text-secondary);
+      color: var(--color-text-muted);
       display: block;
     }
 
@@ -192,46 +192,6 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    #historia {
-      .cs-left {
-        &:before,
-        &:after {
-          background: var(--accent);
-        }
-      }
-
-      .cs-picture2 {
-        background-color: var(--dark);
-        /* 6px - 12px */
-        border: clamp(0.375em, 1.5vw, 0.75em) solid var(--dark);
-      }
-
-      .cs-topper {
-        color: var(--primaryLight);
-      }
-
-      .cs-title,
-      .cs-text,
-      .cs-h3,
-      .cs-flex-p,
-      .cs-name {
-        color: var(--bodyTextColorWhite);
-      }
-
-      .cs-flex-group {
-        background-color: var(--surface-raised);
-      }
-
-      .cs-job {
-        color: var(--text-secondary);
-      }
-
-      .cs-quote-icon {
-        opacity: 0.2;
-      }
-    }
-  }
 }
 
 /*-- -------------------------- -->
@@ -241,8 +201,8 @@
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
   #vista-aerea {
-    padding: var(--sectionPadding);
-    background-color: var(--background-sections);
+    padding: var(--section-padding);
+    background-color: var(--color-bg-subtle);
 
     .site-container {
       max-width: none;
@@ -270,7 +230,7 @@
 
     .cs-text {
       margin-bottom: 0;
-      color: var(--bodyTextColor);
+      color: var(--color-text-muted);
       text-align: center;
     }
 
@@ -281,7 +241,7 @@
       height: 0;
       overflow: hidden;
       border-radius: (16/16rem);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-md);
 
       iframe {
         position: absolute;
@@ -307,22 +267,4 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    #vista-aerea {
-      background-color: var(--background-sections);
-
-      .cs-topper {
-        color: var(--primaryLight);
-      }
-
-      .cs-title,
-      .cs-text {
-        color: var(--bodyTextColorWhite);
-      }
-
-      .cs-video-wrapper {
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-      }
-    }
-  }
 }

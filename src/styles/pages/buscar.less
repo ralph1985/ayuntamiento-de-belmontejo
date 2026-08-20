@@ -11,8 +11,8 @@
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
   #search-section {
-    padding: var(--sectionPadding);
-    background-color: var(--background-main);
+    padding: var(--section-padding);
+    background-color: var(--color-bg);
 
     .site-container {
       max-width: none;
@@ -33,13 +33,13 @@
       width: 100%;
       max-width: (600/16rem);
       padding: (24/16rem);
-      background: var(--background-secondary, #f8f9fa);
+      background: var(--color-bg-subtle);
       border-radius: (8/16rem);
-      border: 1px solid var(--border-color, #e0e0e0);
+      border: 1px solid var(--color-border);
 
       h3 {
         margin: 0 0 (16/16rem) 0;
-        color: var(--headerColor);
+        color: var(--color-text);
         font-size: (20/16rem);
       }
 
@@ -52,7 +52,7 @@
           position: relative;
           margin-bottom: (8/16rem);
           padding-left: (24/16rem);
-          color: var(--bodyTextColor);
+          color: var(--color-text-muted);
           font-size: (16/16rem);
           line-height: 1.5em;
 
@@ -61,7 +61,7 @@
             position: absolute;
             left: 0;
             top: 0;
-            color: var(--primary, #ffba43);
+            color: var(--color-link);
             font-weight: bold;
           }
 
@@ -126,11 +126,5 @@
         }
       }
     }
-  }
-}
-
-body.dark-mode {
-  .cs-search-tips {
-    background-color: var(--background-sections) !important;
   }
 }

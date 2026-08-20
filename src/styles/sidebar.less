@@ -18,14 +18,14 @@
     width: 100%;
     padding: (20/16em) (16/16em);
     margin-bottom: (30/16rem);
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    background: var(--surface-raised);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
     transition: box-shadow 0.3s ease;
 
     &:hover {
-      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+      box-shadow: var(--shadow-lg);
     }
   }
 
@@ -34,7 +34,7 @@
     font-weight: bold;
     text-align: center;
     margin-bottom: (16/16rem);
-    color: var(--headerColor);
+    color: var(--color-text);
     display: block;
     position: relative;
 
@@ -43,7 +43,7 @@
       width: (50/16rem);
       height: 3px;
       margin: (16/16rem) auto;
-      background: var(--headerColor);
+      background: var(--color-text);
       border-radius: (4/16rem);
       display: block;
       position: relative;
@@ -54,7 +54,7 @@
     text-decoration: none;
     width: 100%;
     padding: (20/16rem) 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--color-border);
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -96,14 +96,14 @@
     text-decoration: none;
     margin: 0;
     margin-bottom: (4/16rem);
-    color: var(--headerColor);
+    color: var(--color-text);
     display: block;
   }
 
   .news-sidebar_widget-date {
     font-size: (14/16rem);
     line-height: 1.5em;
-    color: var(--bodyTextColor);
+    color: var(--color-text-muted);
     display: block;
   }
 }
@@ -128,26 +128,4 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    .news-sidebar_widget-header {
-      color: var(--bodyTextColorWhite) !important;
-
-      &:after {
-        background: var(--primary);
-      }
-    }
-
-    .news-sidebar_widget-date {
-      color: var(--text-secondary);
-    }
-
-    .news-sidebar_widget-category {
-      color: var(--primaryLight);
-    }
-
-    .news-sidebar_widget-link {
-      color: var(--text-secondary);
-      background-color: var(--surface-raised) !important;
-    }
-  }
 }

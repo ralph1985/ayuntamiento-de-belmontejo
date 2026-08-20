@@ -1,5 +1,5 @@
 .projects-index {
-  padding: var(--sectionPadding);
+  padding: var(--section-padding);
 }
 
 .projects-index__inner {
@@ -12,13 +12,13 @@
 
 .projects-index h2 {
   margin: 0.75rem 0 1rem;
-  color: var(--text-primary);
+  color: var(--color-text);
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.05;
 }
 
 .projects-index__heading p {
-  color: var(--text-secondary);
+  color: var(--color-text-muted);
   font-size: 1.1rem;
   line-height: 1.7;
 }
@@ -31,16 +31,16 @@
 
 .project-card {
   overflow: hidden;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  background: var(--surface-raised);
+  background: var(--color-surface);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-0.25rem);
-    box-shadow: 0 1rem 2rem rgb(var(--shadow-color) / 12%);
+    box-shadow: 0 1rem 2rem rgb(var(--color-shadow-rgb) / 12%);
   }
 }
 
@@ -56,7 +56,7 @@
 }
 
 .project-card__number {
-  color: var(--primary);
+  color: var(--color-link);
   font-size: 0.875rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -64,14 +64,14 @@
 
 .project-card h3 {
   margin: 0.75rem 0;
-  color: var(--text-primary);
+  color: var(--color-text);
   font-size: clamp(1.5rem, 3vw, 2rem);
 }
 
 .project-card p {
   min-height: 5rem;
   margin-bottom: 1.5rem;
-  color: var(--text-secondary);
+  color: var(--color-text-muted);
   line-height: 1.6;
 }
 

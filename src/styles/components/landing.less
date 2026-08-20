@@ -16,8 +16,8 @@
       height: 100%;
       background: linear-gradient(
         90deg,
-        rgb(14 31 39 / 0.9),
-        rgb(14 31 39 / 0.48)
+        rgb(var(--color-photo-scrim-rgb) / 92%),
+        rgb(var(--color-photo-scrim-rgb) / 50%)
       );
       display: block;
       position: absolute;
@@ -53,7 +53,7 @@
     }
 
     .page-hero__eyebrow {
-      color: var(--hero-eyebrow);
+      color: var(--color-hero-eyebrow);
       font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 0.12em;
@@ -63,15 +63,16 @@
     }
 
     h1 {
+      font-family: var(--font-editorial);
       font-size: clamp(2.25rem, 6vw, 4.5rem);
       text-align: left;
       max-width: 14ch;
       margin: 0;
-      color: var(--text-white);
+      color: var(--color-text-inverse);
       position: relative;
       text-shadow: none;
-      font-weight: 900;
-      letter-spacing: -0.04em;
+      font-weight: 700;
+      letter-spacing: -0.025em;
     }
 
     .page-hero__summary,
@@ -79,7 +80,7 @@
       text-align: left;
       max-width: 38rem;
       margin: 1rem 0 0;
-      color: var(--text-white);
+      color: var(--color-text-inverse);
       display: block;
       text-shadow: none;
       font-size: 1.0625rem;

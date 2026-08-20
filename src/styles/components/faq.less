@@ -1,7 +1,7 @@
 /* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
   .faq-section {
-    padding: var(--sectionPadding);
+    padding: var(--section-padding);
     position: relative;
 
     .site-container {
@@ -43,9 +43,9 @@
     .cs-faq-item {
       list-style: none;
       width: 100%;
-      background: var(--surface-raised);
+      background: var(--color-surface);
       border-radius: (8/16rem);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-md);
       transition:
         box-shadow 0.3s ease,
         border-bottom 0.3s;
@@ -53,21 +53,21 @@
       overflow: hidden;
 
       &:hover {
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-lg);
       }
 
       &.active {
         .cs-button {
-          background-color: var(--secondary);
-          color: var(--bodyTextColorWhite);
+          background-color: var(--color-territory-surface);
+          color: var(--color-on-territory);
 
           &:before {
-            background-color: var(--bodyTextColorWhite);
+            background-color: var(--color-on-territory);
             transform: rotate(315deg);
           }
 
           &:after {
-            background-color: var(--bodyTextColorWhite);
+            background-color: var(--color-on-territory);
             transform: rotate(-315deg);
           }
         }
@@ -77,7 +77,7 @@
           /* 16px - 24px */
           padding: (16/16rem) clamp(1rem, 2vw, 1.5rem);
           opacity: 1;
-          border: 1px solid var(--border-color);
+          border: 1px solid var(--color-border);
         }
       }
     }
@@ -92,8 +92,8 @@
       padding: (16/16rem);
       padding-left: (52/16rem);
       background-color: transparent;
-      color: var(--headerColor);
-      border: 1px solid var(--border-color);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
       display: block;
       position: relative;
       transition:
@@ -109,7 +109,7 @@
         content: "";
         width: (8/16rem);
         height: (2/16rem);
-        background-color: var(--headerColor);
+        background-color: var(--color-text);
         opacity: 1;
         display: block;
         position: absolute;
@@ -126,7 +126,7 @@
         content: "";
         width: (8/16rem);
         height: (2/16rem);
-        background-color: var(--headerColor);
+        background-color: var(--color-text);
         opacity: 1;
         display: block;
         position: absolute;
@@ -147,7 +147,7 @@
       margin: 0;
       /* clips the text so it doesn't show up */
       overflow: hidden;
-      color: var(--bodyTextColor);
+      color: var(--color-text-muted);
       opacity: 0;
       transition:
         opacity 0.3s,
@@ -191,50 +191,4 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0rem) {
-  body.dark-mode {
-    .faq-section {
-      background-color: var(--medium);
-
-      .cs-title,
-      .cs-item-text {
-        color: var(--on-primary);
-        background-color: var(--background-sections);
-      }
-
-      .cs-topper {
-        color: var(--primaryLight);
-      }
-
-      .cs-faq-item {
-        &.active {
-          .cs-button {
-            background-color: var(--secondary);
-            color: var(--background-main);
-
-            &:before,
-            &:after {
-              background-color: var(--background-main);
-            }
-          }
-
-          .cs-item-text {
-            /* 20px - 24px */
-            padding-top: clamp(1.25rem, 1.3vw, 1.5rem);
-            border-color: var(--accent);
-          }
-        }
-      }
-
-      .cs-button {
-        color: var(--bodyTextColorWhite);
-        border-color: var(--accent);
-        background-color: var(--background-sections);
-
-        &:before,
-        &:after {
-          background-color: var(--on-primary);
-        }
-      }
-    }
-  }
 }

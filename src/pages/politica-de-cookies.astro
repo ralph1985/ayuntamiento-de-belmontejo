@@ -26,7 +26,7 @@ const primaryOfficeLines = primaryOffice
 ---
 
 <BaseLayout title={pageTitle} description={description}>
-  <Landing title="🍪 Política de Cookies" image={landingImage}>
+  <Landing title="Política de Cookies" image={landingImage}>
     <p class="subtitle">
       Información sobre el uso de cookies en el sitio web del {
         contactInfo.entity.name
@@ -251,7 +251,7 @@ const primaryOfficeLines = primaryOffice
             {
               primaryEmail && (
                 <p>
-                  <strong>📧 Email:</strong>{' '}
+                  <strong>Email:</strong>{' '}
                   <a href={`mailto:${primaryEmail.address}`}>
                     {primaryEmail.address}
                   </a>
@@ -261,7 +261,7 @@ const primaryOfficeLines = primaryOffice
             {
               primaryPhone && (
                 <p>
-                  <strong>📞 Teléfono:</strong>{' '}
+                  <strong>Teléfono:</strong>{' '}
                   <a href={`tel:${primaryPhone.href}`}>
                     {primaryPhone.display}
                   </a>
@@ -271,7 +271,7 @@ const primaryOfficeLines = primaryOffice
             {
               primaryOffice && (
                 <p>
-                  <strong>📍 Dirección:</strong>{' '}
+                  <strong>Dirección:</strong>{' '}
                   {primaryOfficeLines.map((line, index) => (
                     <>
                       {line}

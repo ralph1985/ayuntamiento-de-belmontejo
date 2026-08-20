@@ -33,7 +33,7 @@
         content: "";
         width: 100%;
         height: 100%;
-        background: #000;
+        background: var(--color-surface-inverse);
         opacity: 0.7;
         display: block;
         position: absolute;
@@ -72,13 +72,13 @@
         height: 100%;
         background: -moz-linear-gradient(
           top,
-          rgba(250, 251, 252, 0.5) 0%,
-          rgba(250, 251, 252, 0) 100%
+          rgb(var(--color-inverse-rgb) / 50%) 0%,
+          rgb(var(--color-inverse-rgb) / 0%) 100%
         ); /* FF3.6-15 */
         background: -webkit-linear-gradient(
           top,
-          rgba(250, 251, 252, 0.5) 0%,
-          rgba(250, 251, 252, 0) 100%
+          rgb(var(--color-inverse-rgb) / 50%) 0%,
+          rgb(var(--color-inverse-rgb) / 0%) 100%
         ); /* Chrome10-25,Safari5.1-6 */
         opacity: 1;
         display: block;
@@ -105,13 +105,13 @@
     .cs-topper {
       text-align: center;
       margin-bottom: (16/16rem);
-      color: var(--primary);
+      color: var(--color-link);
     }
 
     .cs-title {
       text-align: center;
       width: 100%;
-      color: var(--bodyTextColorWhite);
+      color: var(--color-text-inverse);
     }
 
     .cs-text {
@@ -120,7 +120,7 @@
       margin: 0 auto clamp(2rem, 4vw, 2.5rem) 0;
       /* 40px - 48px */
       margin-bottom: clamp(2.5rem, 4vw, 3rem);
-      color: var(--bodyTextColorWhite);
+      color: var(--color-text-inverse);
     }
 
     .c-button {
@@ -133,8 +133,8 @@
     }
 
     .c-button--ghost {
-      --button-ghost-color: var(--bodyTextColorWhite);
-      --button-ghost-fill: #000;
+      --button-ghost-color: var(--color-text-inverse);
+      --button-ghost-fill: var(--color-surface-inverse);
       font-size: (16/16rem);
       font-weight: 700;
       min-height: clamp(2.875em, 5.5vw, 3.5em);
@@ -162,13 +162,13 @@
         height: 100%;
         background: -moz-linear-gradient(
           top,
-          rgba(250, 251, 252, 0) 0%,
-          rgba(250, 251, 252, 0.5) 100%
+          rgb(var(--color-inverse-rgb) / 0%) 0%,
+          rgb(var(--color-inverse-rgb) / 50%) 100%
         ); /* FF3.6-15 */
         background: -webkit-linear-gradient(
           top,
-          rgba(250, 251, 252, 0) 0%,
-          rgba(250, 251, 252, 0.5) 100%
+          rgb(var(--color-inverse-rgb) / 0%) 0%,
+          rgb(var(--color-inverse-rgb) / 50%) 100%
         ); /* Chrome10-25,Safari5.1-6 */
         opacity: 1;
         display: block;
@@ -199,15 +199,6 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    #hero {
-      .cs-background {
-        &:before {
-          opacity: 0.8;
-        }
-      }
-    }
-  }
 }
 
 /* PAGE-SPECIFIC STYLES FOR THE HOME PAGE */
@@ -219,7 +210,7 @@
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
   #sbs {
-    padding: var(--sectionPadding);
+    padding: var(--section-padding);
 
     .site-container {
       width: 100%;
@@ -268,10 +259,10 @@
     .cs-picture2 {
       width: (414/16em);
       height: (400/16em);
-      background-color: #fff;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 40px;
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-lg);
       /* 6px - 12px */
-      border: clamp(0.375em, 1.5vw, 0.75em) solid #fff;
+      border: clamp(0.375em, 1.5vw, 0.75em) solid var(--color-surface);
       right: 0;
       bottom: 0;
     }
@@ -304,7 +295,7 @@
     .cs-flex-group {
       /* 16px - 32px */
       padding: clamp(1rem, 3vw, 2rem);
-      background-color: #f7f7f7;
+      background-color: var(--color-bg-subtle);
       border-radius: (16/16rem);
       position: relative;
     }
@@ -314,7 +305,7 @@
       font-size: clamp(0.875rem, 1.5vw, 1rem);
       line-height: 1.5em;
       margin: 0 0 (16/16rem);
-      color: #353535;
+      color: var(--color-text);
     }
 
     .cs-name {
@@ -323,14 +314,14 @@
       line-height: 1.2em;
       text-transform: uppercase;
       margin: 0 0 (4/16rem);
-      color: var(--headerColor);
+      color: var(--color-text);
       display: block;
     }
 
     .cs-job {
       font-size: (14/16rem);
       line-height: 1.5em;
-      color: #353535;
+      color: var(--color-text);
       display: block;
     }
 
@@ -372,47 +363,6 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    #sbs {
-      .cs-left {
-        &:before,
-        &:after {
-          background: var(--accent);
-        }
-      }
-
-      .cs-picture2 {
-        background-color: var(--dark);
-        /* 6px - 12px */
-        border: clamp(0.375em, 1.5vw, 0.75em) solid var(--dark);
-      }
-
-      .cs-topper {
-        color: var(--primaryLight);
-      }
-
-      .cs-title,
-      .cs-text,
-      .cs-h3,
-      .cs-flex-p,
-      .cs-name {
-        color: var(--bodyTextColorWhite);
-      }
-
-      .cs-flex-group {
-        background-color: var(--accent);
-      }
-
-      .cs-job {
-        color: var(--bodyTextColorWhite);
-        opacity: 0.8;
-      }
-
-      .cs-quote-icon {
-        opacity: 0.2;
-      }
-    }
-  }
 }
 
 /*-- -------------------------- -->
@@ -422,7 +372,7 @@
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
   #sbs-r {
-    padding: var(--sectionPadding);
+    padding: var(--section-padding);
 
     .site-container {
       width: 100%;
@@ -471,10 +421,10 @@
     .cs-picture2 {
       width: (414/16em);
       height: (400/16em);
-      background-color: #fff;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 40px;
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-lg);
       /* 6px - 12px */
-      border: clamp(0.375em, 1.5vw, 0.75em) solid #fff;
+      border: clamp(0.375em, 1.5vw, 0.75em) solid var(--color-surface);
       bottom: 0;
       left: 0;
     }
@@ -506,7 +456,7 @@
     .cs-flex-group {
       /* 16px - 32px */
       padding: clamp(1rem, 3vw, 2rem);
-      background-color: #f7f7f7;
+      background-color: var(--color-bg-subtle);
       border-radius: (16/16rem);
       position: relative;
     }
@@ -516,7 +466,7 @@
       font-size: clamp(0.875rem, 1.5vw, 1rem);
       line-height: 1.5em;
       margin: 0 0 (16/16rem);
-      color: #353535;
+      color: var(--color-text);
     }
 
     .cs-name {
@@ -525,14 +475,14 @@
       line-height: 1.2em;
       text-transform: uppercase;
       margin: 0 0 (4/16rem);
-      color: var(--headerColor);
+      color: var(--color-text);
       display: block;
     }
 
     .cs-job {
       font-size: (14/16rem);
       line-height: 1.5em;
-      color: #353535;
+      color: var(--color-text);
       display: block;
     }
 
@@ -572,49 +522,6 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    #sbs-r {
-      background-color: var(--medium);
-
-      .cs-left {
-        &:before,
-        &:after {
-          background: var(--accent);
-        }
-      }
-
-      .cs-picture2 {
-        background-color: var(--dark);
-        /* 6px - 12px */
-        border: clamp(0.375em, 1.5vw, 0.75em) solid var(--dark);
-      }
-
-      .cs-topper {
-        color: var(--primaryLight);
-      }
-
-      .cs-title,
-      .cs-text,
-      .cs-h3,
-      .cs-flex-p,
-      .cs-name {
-        color: var(--bodyTextColorWhite);
-      }
-
-      .cs-flex-group {
-        background-color: var(--accent);
-      }
-
-      .cs-job {
-        color: var(--bodyTextColorWhite);
-        opacity: 0.8;
-      }
-
-      .cs-quote-icon {
-        opacity: 0.2;
-      }
-    }
-  }
 }
 
 /*-- -------------------------- -->
@@ -624,8 +531,8 @@
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
   #featured-content {
-    padding: var(--sectionPadding);
-    background-color: #f7f7f7;
+    padding: var(--section-padding);
+    background-color: var(--color-bg-subtle);
 
     .site-container {
       width: 100%;
@@ -653,7 +560,7 @@
       line-height: 1.2em;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      color: var(--primary);
+      color: var(--color-link);
       display: block;
     }
 
@@ -664,17 +571,17 @@
       text-align: center;
       max-width: (700/16rem);
       margin: 0 auto;
-      color: var(--headerColor);
+      color: var(--color-text);
       position: relative;
     }
 
     .cs-text {
-      font-size: var(--bodyFontSize);
+      font-size: var(--font-size-body);
       line-height: 1.5em;
       text-align: center;
       max-width: (630/16rem);
       margin: 0 auto;
-      color: var(--bodyTextColor);
+      color: var(--color-text-muted);
     }
 
     .featured-content-wrapper {
@@ -688,7 +595,7 @@
         font-size: (24/16rem);
         font-weight: 700;
         margin-bottom: (24/16rem);
-        color: var(--headerColor);
+        color: var(--color-text);
         text-align: center;
       }
 
@@ -697,15 +604,15 @@
         align-items: center;
         gap: (16/16rem);
         padding: (16/16rem);
-        background: white;
+        background: var(--color-surface);
         border-radius: (8/16rem);
         text-decoration: none;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: var(--shadow-sm);
         transition: all 0.3s ease;
 
         &:hover {
           transform: translateY(-2px);
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+          box-shadow: var(--shadow-lg);
         }
       }
 
@@ -726,12 +633,12 @@
         font-weight: 600;
         line-height: 1.3em;
         margin-bottom: (8/16rem);
-        color: var(--headerColor);
+        color: var(--color-text);
       }
 
       :global(.news-sidebar_widget-date) {
         font-size: (14/16rem);
-        color: var(--bodyTextColor);
+        color: var(--color-text-muted);
         margin-bottom: (4/16rem);
         display: block;
       }
@@ -760,15 +667,6 @@
 }
 
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    #featured-content {
-      background-color: var(--background-sections);
-    }
-
-    .cs-title {
-      color: var(--bodyTextColorWhite) !important;
-    }
-  }
 }
 
 /*-- -------------------------- -->
@@ -778,8 +676,8 @@
 /* Mobile - 360px */
 @media only screen and (min-width: 0em) {
   #social-media {
-    padding: var(--sectionPadding);
-    background-color: #f7f7f7;
+    padding: var(--section-padding);
+    background-color: var(--color-bg-subtle);
 
     .site-container {
       width: 100%;
@@ -829,11 +727,11 @@
           border-radius: 0.75rem;
           font-size: 1.125rem;
           font-weight: 600;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: var(--shadow-sm);
 
           &:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
           }
 
           .social-icon {
@@ -846,12 +744,6 @@
           }
         }
       }
-    }
-  }
-
-  body.dark-mode {
-    #social-media {
-      background-color: var(--background-main);
     }
   }
 }

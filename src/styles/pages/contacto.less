@@ -8,18 +8,18 @@
 @media only screen and (min-width: 0em) {
   :root {
     /* 13px - 16px */
-    --topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
+    --font-size-topper: clamp(0.8125rem, 1.6vw, 1rem);
     /* 31px - 49px */
-    --headerFontSize: clamp(1.9375rem, 4.5vw, 3.0625rem);
-    --bodyFontSize: 1rem;
+    --font-size-heading: clamp(1.9375rem, 4.5vw, 3.0625rem);
+    --font-size-body: 1rem;
 
     /* 60px - 100px top and bottom */
-    --sectionPadding: clamp(3.75em, 7.82vw, 6.25em) 0;
+    --section-padding: clamp(3.75em, 7.82vw, 6.25em) 0;
   }
 
   #cs-contact {
     font-family: "Roboto", "Arial", sans-serif;
-    padding: var(--sectionPadding);
+    padding: var(--section-padding);
 
     .site-container {
       max-width: none;
@@ -52,14 +52,14 @@
 
     #cs-form {
       margin-bottom: (40/16rem);
-      background: var(--surface-raised);
+      background: var(--color-surface);
       border-radius: (12/16rem);
       padding: clamp(1.5rem, 3vw, 2.5rem);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-md);
       transition: box-shadow 0.3s ease;
 
       &:hover {
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-lg);
       }
 
       label {
@@ -68,7 +68,7 @@
         line-height: 1.5em;
         /* 12px - 20px */
         margin-bottom: clamp(0.75rem, 1.3em, 1.25rem);
-        color: var(--headerColor);
+        color: var(--color-text);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -81,7 +81,7 @@
           margin-bottom: (4/16rem);
 
           .cs-required-indicator {
-            color: var(--danger);
+            color: var(--color-danger);
             margin-left: (4/16rem);
             font-weight: 700;
           }
@@ -90,14 +90,14 @@
         .cs-field-hint {
           font-size: (14/16rem);
           font-weight: 500;
-          color: var(--text-secondary);
+          color: var(--color-text-muted);
           margin-top: (4/16rem);
         }
 
         .cs-field-error {
           font-size: (14/16rem);
           font-weight: 600;
-          color: var(--danger);
+          color: var(--color-danger);
           margin-top: (6/16rem);
           min-height: (20/16rem);
         }
@@ -117,27 +117,35 @@
         /* prevents border & padding from affecting height */
         box-sizing: border-box;
         padding-left: (20/16rem);
-        border: 1px solid var(--border-strong);
+        color: var(--color-text);
+        background: var(--color-surface-muted);
+        caret-color: var(--color-text);
+        border: 1px solid var(--color-border-strong);
         border-radius: (8/16rem);
         transition: border 0.3s;
 
         &:hover {
-          border: 1px solid var(--primary);
+          border: 1px solid var(--color-link);
         }
 
         &.is-invalid {
-          border: 2px solid var(--danger);
+          border: 2px solid var(--color-danger);
+        }
+
+        &::placeholder {
+          color: var(--color-text-muted);
+          opacity: 1;
         }
       }
 
       .cs-legal-notice {
         font-size: (14/16rem);
-        color: var(--text-secondary);
+        color: var(--color-text-muted);
         line-height: 1.6;
         margin: (12/16rem) 0 (20/16rem);
 
         a {
-          color: var(--primary);
+          color: var(--color-link);
           text-decoration: underline;
         }
       }
@@ -156,7 +164,7 @@
       .cs-char-counter {
         font-size: (14/16rem);
         font-weight: 600;
-        color: var(--text-secondary);
+        color: var(--color-text-muted);
         margin-top: (8/16rem);
         text-align: right;
         align-self: flex-end;
@@ -175,24 +183,24 @@
         }
 
         &[data-status="pending"] {
-          color: var(--primary);
+          color: var(--color-link);
         }
 
         &[data-status="success"] {
-          color: var(--success);
+          color: var(--color-success);
         }
 
         &[data-status="error"] {
-          color: var(--danger);
+          color: var(--color-danger);
         }
       }
 
       .cs-mailto-fallback {
         margin-top: 1rem;
         padding: 1rem;
-        border: 1px solid var(--border-strong);
+        border: 1px solid var(--color-border-strong);
         border-radius: (8/16rem);
-        color: var(--bodyTextColor);
+        color: var(--color-text-muted);
 
         &[hidden] {
           display: none;
@@ -204,7 +212,7 @@
         }
 
         a {
-          color: var(--primary);
+          color: var(--color-link);
           font-weight: 700;
           text-decoration: underline;
         }
@@ -223,7 +231,7 @@
       /* 20px - 40px left & right */
       padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 3vw, 2.5rem);
       border-radius: (8/16rem);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: var(--shadow-md);
       transition: box-shadow 0.3s ease;
       display: flex;
       flex-direction: column;
@@ -234,7 +242,7 @@
       overflow: hidden;
 
       &:hover {
-        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+        box-shadow: var(--shadow-lg);
       }
     }
 
@@ -244,7 +252,7 @@
       font-weight: 700;
       line-height: 1.2em;
       margin-bottom: (8/16rem);
-      color: var(--bodyTextColorWhite);
+      color: var(--color-text-inverse);
       display: block;
     }
 
@@ -254,7 +262,7 @@
       line-height: 1.2em;
       text-decoration: none;
       margin-bottom: (20/16rem);
-      color: var(--bodyTextColorWhite);
+      color: var(--color-text-inverse);
       display: block;
       position: relative;
 
@@ -306,8 +314,8 @@
         height: 100%;
         background: linear-gradient(
           180deg,
-          rgba(0, 0, 0, 0) 0%,
-          rgba(0, 0, 0, 0.8) 100%
+          rgb(var(--color-overlay-rgb) / 0%) 0%,
+          rgb(var(--color-overlay-rgb) / 82%) 100%
         );
         display: block;
         position: absolute;
@@ -412,46 +420,4 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    #cs-contact {
-      .cs-text,
-      .cs-title {
-        color: var(--bodyTextColorWhite);
-      }
-
-      .cs-topper {
-        color: var(--primaryLight);
-      }
-
-      a,
-      .cs-form-status[data-status="pending"] {
-        color: var(--primaryLight);
-      }
-
-      #cs-form {
-        background-color: var(--background-sections);
-
-        label,
-        input,
-        textarea {
-          color: var(--bodyTextColorWhite);
-          background-color: transparent;
-
-          &::placeholder {
-            color: var(--text-secondary);
-            opacity: 1;
-          }
-        }
-      }
-
-      .cs-bg-picture {
-        background-color: #000;
-
-        img {
-          /* lets parent background-color bleed through and darken it */
-          opacity: 0.5;
-        }
-      }
-    }
-  }
 }

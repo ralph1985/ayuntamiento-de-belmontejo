@@ -4,8 +4,8 @@
   padding: 2rem 0 4rem;
   background: linear-gradient(
     135deg,
-    var(--background-main) 0%,
-    var(--background-sections) 100%
+    var(--color-bg) 0%,
+    var(--color-bg-subtle) 100%
   );
 }
 
@@ -15,27 +15,27 @@
 }
 
 .policy-section {
-  background: var(--surface-raised);
+  background: var(--color-surface);
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(16, 24, 40, 0.08);
+  box-shadow: var(--shadow-md);
   padding: 2rem;
   margin-bottom: 1.5rem;
 
   h2 {
     font-size: 1.6rem;
     margin-bottom: 1rem;
-    color: var(--text-primary);
+    color: var(--color-text);
   }
 
   p {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     line-height: 1.65;
     margin-bottom: 1rem;
   }
 
   ul {
     margin: 0 0 1rem 1.25rem;
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
 
     li {
       margin-bottom: 0.5rem;
@@ -51,13 +51,13 @@
 }
 
 .info-card {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.5rem;
 
   h3 {
     margin-top: 0;
-    color: var(--text-primary);
+    color: var(--color-text);
     font-size: 1.1rem;
   }
 
@@ -72,7 +72,7 @@
   }
 
   a {
-    color: var(--primary);
+    color: var(--color-link);
     font-weight: 500;
   }
 }
@@ -85,15 +85,15 @@
 }
 
 .activity-card {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 1.25rem;
-  background: var(--surface-muted);
+  background: var(--color-surface-muted);
 
   h3 {
     margin-top: 0;
     font-size: 1.1rem;
-    color: var(--primary);
+    color: var(--color-link);
   }
 
   p {
@@ -109,7 +109,7 @@
 
   li {
     padding: 1rem 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--color-border);
 
     &:last-child {
       border-bottom: none;
@@ -125,63 +125,19 @@
 }
 
 .right-card {
-  background: var(--surface-muted);
+  background: var(--color-surface-muted);
   border-radius: 12px;
   padding: 1.25rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
 
   h3 {
     margin-top: 0;
-    color: var(--text-primary);
+    color: var(--color-text);
   }
 }
 
 @media (max-width: 600px) {
   .policy-section {
     padding: 1.5rem;
-  }
-}
-
-body.dark-mode {
-  .privacy-policy {
-    background: linear-gradient(135deg, var(--dark) 0%, var(--medium) 100%);
-  }
-
-  .policy-section {
-    background: var(--medium);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
-
-    h2 {
-      color: var(--text-primary);
-    }
-
-    p,
-    ul {
-      color: var(--text-secondary);
-    }
-  }
-
-  .info-card,
-  .activity-card,
-  .right-card {
-    background: var(--dark);
-    border-color: var(--accent);
-
-    h3 {
-      color: var(--text-primary);
-    }
-
-    p,
-    li {
-      color: var(--text-secondary);
-    }
-  }
-
-  .retention-list li {
-    border-color: var(--accent);
-  }
-
-  a {
-    color: var(--primaryLight);
   }
 }

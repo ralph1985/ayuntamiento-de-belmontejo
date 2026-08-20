@@ -93,6 +93,26 @@ const organizationSchema = {
 <!-- A fully fleshed-out <head>, dynamically changing based on contact-info.json and the page front matter -->
 <html lang="es">
   <head>
+    <script is:inline>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem('theme');
+          const systemIsDark = window.matchMedia(
+            '(prefers-color-scheme: dark)'
+          ).matches;
+          const theme =
+            savedTheme === 'dark' || savedTheme === 'light'
+              ? savedTheme
+              : systemIsDark
+                ? 'dark'
+                : 'light';
+          document.documentElement.dataset.theme = theme;
+        } catch {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+
     <!-- View Transitions support -->
     <ClientRouter />
 
@@ -144,8 +164,8 @@ const organizationSchema = {
       href="/assets/favicons/favicon-16x16.png?v=2"
     />
     <link rel="manifest" href="/assets/favicons/site.webmanifest?v=2" />
-    <meta name="msapplication-TileColor" content="#da532c" />
-    <meta id="theme-color" name="theme-color" content="#f7f8f5" />
+    <meta name="msapplication-TileColor" content="#17333c" />
+    <meta id="theme-color" name="theme-color" content="#f5f7f3" />
 
     <!-- For home page, use service keywords for the title, including location for SEO.
             Other pages should just include the page name.
@@ -176,9 +196,7 @@ const organizationSchema = {
   </head>
   <body>
     <!-- Screen reader skip main nav -->
-    <a class="skip" aria-label="skip to main content" href="#main"
-      >Click To Skip To Main Content</a
-    >
+    <a class="skip" href="#main">Saltar al contenido principal</a>
 
     <Header />
     <main id="main">
@@ -196,45 +214,43 @@ const organizationSchema = {
 
 <script is:inline>
   const themeColorMeta = document.querySelector('#theme-color');
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-  function updateThemeColor(isDark) {
-    themeColorMeta?.setAttribute('content', isDark ? '#17221f' : '#f7f8f5');
+  function updateThemeColor(theme) {
+    themeColorMeta?.setAttribute(
+      'content',
+      theme === 'dark' ? '#14211f' : '#f5f7f3'
+    );
   }
 
-  // helper functions to toggle dark mode
-  function enableDarkMode() {
-    document.body.classList.add('dark-mode');
-    localStorage.setItem('theme', 'dark');
-    updateThemeColor(true);
+  function applyTheme(theme, persist = false) {
+    const normalizedTheme = theme === 'dark' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = normalizedTheme;
+    document.body?.classList.toggle('dark-mode', normalizedTheme === 'dark');
+    if (persist) localStorage.setItem('theme', normalizedTheme);
+    updateThemeColor(normalizedTheme);
+    document.dispatchEvent(
+      new CustomEvent('municipal:theme-change', {
+        detail: { theme: normalizedTheme },
+      })
+    );
   }
 
-  function disableDarkMode() {
-    document.body.classList.remove('dark-mode');
-    localStorage.setItem('theme', 'light');
-    updateThemeColor(false);
+  function restoreTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    const theme =
+      savedTheme === 'dark' || savedTheme === 'light'
+        ? savedTheme
+        : systemTheme.matches
+          ? 'dark'
+          : 'light';
+    applyTheme(theme);
   }
 
-  function setTheme() {
-    // default to the light theme
-    let theme = 'light';
-
-    // check localStorage for a saved 'theme' variable. if it's there, the user has visited before, so apply the necessary theme choices
-    if (localStorage.getItem('theme')) {
-      theme = localStorage.getItem('theme');
-    }
-    // if it's not there, check to see if the user has applied dark mode preferences themselves in the browser
-    else if (
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    ) {
-      theme = 'dark';
-    }
-
-    // if there is no preference set, the default of light will be used. apply accordingly
-    theme === 'dark' ? enableDarkMode() : disableDarkMode();
-  }
-
-  setTheme();
-
-  document.addEventListener('astro:after-swap', setTheme); // For View Transitions purposes - astro:after-swap ensures that the theme is kept after navigating to a new page.
+  window.__applyMunicipalTheme = applyTheme;
+  restoreTheme();
+  document.addEventListener('astro:after-swap', restoreTheme);
+  systemTheme.addEventListener('change', () => {
+    if (!localStorage.getItem('theme')) restoreTheme();
+  });
 </script>

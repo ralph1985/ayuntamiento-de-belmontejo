@@ -2,6 +2,7 @@ export const visualRoutes = [
   { path: '/', name: 'inicio' },
   { path: '/sobre-el-pueblo', name: 'sobre-el-pueblo' },
   { path: '/contacto', name: 'contacto' },
+  { path: '/tiempo', name: 'tiempo' },
   { path: '/noticias', name: 'noticias' },
   { path: '/noticias/ayudas-despoblacion-cuenca', name: 'noticias-detalle' },
   { path: '/bandos', name: 'bandos' },
@@ -16,4 +17,5 @@ export const visualRoutes = [
   { path: '/buscar', name: 'buscar' },
   { path: '/politica-de-cookies', name: 'politica-de-cookies' },
   { path: '/politica-de-privacidad', name: 'politica-de-privacidad' },
+  { path: '/pagina-inexistente', name: '404' },
 ];

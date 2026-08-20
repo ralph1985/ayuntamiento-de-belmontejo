@@ -6,7 +6,7 @@
     font-weight: 700;
     line-height: 1.75em;
     margin-bottom: 1rem;
-    color: var(--headerColor);
+    color: var(--color-text);
   }
 
   h2 {
@@ -14,7 +14,7 @@
     font-weight: 700;
     line-height: 1.5em;
     margin-bottom: (16/16rem);
-    color: var(--headerColor);
+    color: var(--color-text);
     &[id] {
       scroll-margin-top: 8rem; /* adds margin top when scrolling down to a h2 header using a TOC link */
     }
@@ -25,7 +25,7 @@
     font-weight: 700;
     line-height: 1.5em;
     margin-bottom: (16/16rem);
-    color: var(--headerColor);
+    color: var(--color-text);
   }
 
   h4,
@@ -35,7 +35,7 @@
     font-weight: 700;
     line-height: 1.5em;
     margin-bottom: (16/16rem);
-    color: var(--headerColor);
+    color: var(--color-text);
   }
 
   p {
@@ -43,13 +43,13 @@
     line-height: 1.6em;
     margin: 0;
     margin-bottom: (16/16rem);
-    color: var(--bodyTextColor);
+    color: var(--color-text-muted);
   }
 
   a {
     font-size: inherit;
     text-decoration: underline;
-    color: var(--secondary);
+    color: var(--color-territory);
   }
 
   ul,
@@ -63,7 +63,7 @@
       line-height: 1.6em;
       list-style: circle;
       margin-bottom: (16/16rem);
-      color: var(--bodyTextColor);
+      color: var(--color-text-muted);
     }
   }
 
@@ -84,24 +84,4 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    #news-content {
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        color: var(--text-primary);
-      }
-
-      p,
-      li {
-        color: var(--text-secondary);
-      }
-      a {
-        color: var(--primaryLight);
-      }
-    }
-  }
 }

@@ -45,9 +45,7 @@ test.describe('Gestión de cookies', () => {
       .toBe('true');
 
     await expect(page.locator('#cookie-banner')).toBeHidden();
-    await expect(
-      page.locator('#floating-cookie-manager', { hasText: '🍪' })
-    ).toBeVisible();
+    await expect(page.locator('#floating-cookie-manager')).toBeVisible();
   });
 
   test('permite cambiar preferencias desde la Política de Cookies', async ({

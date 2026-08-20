@@ -3,8 +3,8 @@
   width: 100%;
   min-height: var(--header-height);
   box-sizing: border-box;
-  background: var(--background-main);
-  border-bottom: 1px solid var(--border-color);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
   position: fixed;
   inset: 0 0 auto;
   z-index: 10000;
@@ -31,9 +31,13 @@
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    color: var(--headerColor);
+    color: var(--color-text);
     text-decoration: none;
     z-index: 2;
+
+    &:visited {
+      color: var(--color-text);
+    }
 
     &:focus-visible {
       border-radius: 0.25rem;
@@ -54,7 +58,7 @@
     }
 
     .cs-logo-kicker {
-      color: var(--text-secondary);
+      color: var(--color-text-muted);
       font-size: 0.625rem;
       font-weight: 700;
       letter-spacing: 0.12em;
@@ -62,14 +66,15 @@
     }
 
     .cs-logo-name {
-      color: var(--headerColor);
+      color: var(--color-text);
+      font-family: var(--font-editorial);
       font-size: 1rem;
-      font-weight: 900;
+      font-weight: 700;
       letter-spacing: -0.02em;
     }
 
     &:hover .cs-logo-name {
-      color: var(--primary);
+      color: var(--color-link-hover);
     }
   }
 }

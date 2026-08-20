@@ -1,7 +1,7 @@
 #footer {
   padding: clamp(3.5rem, 7vw, 6rem) 0 1rem;
-  background: var(--text-primary);
-  color: var(--text-white);
+  background: var(--color-surface-inverse);
+  color: var(--color-text-inverse);
 
   .site-container {
     display: grid;
@@ -25,7 +25,7 @@
 
     h2 {
       margin: 0.25rem 0 0.75rem;
-      color: var(--text-white);
+      color: var(--color-text-inverse);
       font-size: clamp(1.5rem, 3vw, 2rem);
       letter-spacing: -0.03em;
     }
@@ -33,7 +33,7 @@
 
   .footer-brand__eyebrow {
     margin: 0;
-    color: var(--footer-link);
+    color: var(--color-footer-link);
     font-size: 0.75rem;
     font-weight: 800;
     letter-spacing: 0.12em;
@@ -43,7 +43,7 @@
   .footer-brand__description {
     max-width: 22rem;
     margin: 0;
-    color: color-mix(in srgb, var(--text-white) 78%, transparent);
+    color: color-mix(in srgb, var(--color-text-inverse) 78%, transparent);
     font-size: 0.9375rem;
     line-height: 1.65;
   }
@@ -66,14 +66,14 @@
 
     li {
       margin-bottom: 0.7rem;
-      color: color-mix(in srgb, var(--text-white) 78%, transparent);
+      color: color-mix(in srgb, var(--color-text-inverse) 78%, transparent);
       font-size: 0.9375rem;
       line-height: 1.5;
     }
 
     h2 {
       margin: 0 0 1rem;
-      color: var(--text-white);
+      color: var(--color-text-inverse);
       font-size: 0.8125rem;
       font-weight: 800;
       letter-spacing: 0.1em;
@@ -85,7 +85,7 @@
     }
 
     h2 .nav-icon {
-      color: var(--footer-link);
+      color: var(--color-footer-link);
     }
 
     a {
@@ -95,10 +95,14 @@
         color 0.2s ease,
         padding-left 0.2s ease;
 
+      &:visited {
+        color: inherit;
+      }
+
       &:hover,
       &:focus-visible {
         padding-left: 0.25rem;
-        color: var(--footer-link);
+        color: var(--color-footer-link);
       }
     }
 
@@ -109,13 +113,13 @@
     }
 
     .cs-li .nav-icon {
-      color: color-mix(in srgb, var(--footer-link) 70%, transparent);
+      color: color-mix(in srgb, var(--color-footer-link) 70%, transparent);
       transition: color 0.2s ease;
     }
 
     .cs-li a:hover .nav-icon,
     .cs-li a:focus-visible .nav-icon {
-      color: var(--footer-link);
+      color: var(--color-footer-link);
     }
   }
 
@@ -136,17 +140,33 @@
   .weather-item--footer {
     margin: 0;
     padding: 0.75rem;
-    border: 1px solid color-mix(in srgb, var(--text-white) 20%, transparent);
+    border: 1px solid
+      color-mix(in srgb, var(--color-text-inverse) 20%, transparent);
     border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--text-white) 7%, transparent);
+    background: color-mix(in srgb, var(--color-text-inverse) 7%, transparent);
+
+    pm-weather {
+      --weather-compact-text: var(--color-text-inverse);
+      --weather-compact-muted: color-mix(
+        in srgb,
+        var(--color-text-inverse) 82%,
+        transparent
+      );
+      --weather-compact-footer: color-mix(
+        in srgb,
+        var(--color-text-inverse) 76%,
+        transparent
+      );
+    }
   }
 
   .footer-legal {
     width: min(100%, 80rem);
     margin: clamp(2.5rem, 5vw, 4rem) auto 0;
     padding-top: 1rem;
-    border-top: 1px solid color-mix(in srgb, var(--text-white) 22%, transparent);
-    color: color-mix(in srgb, var(--text-white) 65%, transparent);
+    border-top: 1px solid
+      color-mix(in srgb, var(--color-text-inverse) 22%, transparent);
+    color: color-mix(in srgb, var(--color-text-inverse) 65%, transparent);
     font-size: 0.8125rem;
     display: flex;
     align-items: center;
@@ -171,16 +191,20 @@
     color: inherit;
     text-decoration: none;
 
+    &:visited {
+      color: inherit;
+    }
+
     &:hover,
     &:focus-visible {
-      color: var(--footer-link);
+      color: var(--color-footer-link);
       text-decoration: underline;
       text-underline-offset: 0.2em;
     }
   }
 
   a:focus-visible {
-    outline: 3px solid var(--accentLight);
+    outline: 3px solid var(--color-accent-soft);
     outline-offset: 4px;
   }
 }
@@ -226,11 +250,5 @@
     .footer-list .cs-li .nav-icon {
       transition: none;
     }
-  }
-}
-
-@media only screen and (min-width: 0em) {
-  body.dark-mode #footer {
-    background: var(--background-sections);
   }
 }

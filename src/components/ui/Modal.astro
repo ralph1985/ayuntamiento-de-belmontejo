@@ -102,7 +102,7 @@ const overlayClassName = [MODAL_OVERLAY_BASE_CLASS, overlayClass]
   }
 
   .c-modal[hidden] {
-    display: none !important;
+    display: none;
   }
 
   .c-modal.is-open {
@@ -112,7 +112,10 @@ const overlayClassName = [MODAL_OVERLAY_BASE_CLASS, overlayClass]
   .c-modal__overlay {
     position: absolute;
     inset: 0;
-    background: var(--modal-overlay-background, rgba(0, 0, 0, 0.6));
+    background: var(
+      --modal-overlay-background,
+      rgb(var(--color-overlay-rgb) / 68%)
+    );
   }
 
   .c-modal__dialog {
@@ -122,10 +125,10 @@ const overlayClassName = [MODAL_OVERLAY_BASE_CLASS, overlayClass]
     max-width: min(90vw, 40rem);
     max-height: 90vh;
     overflow-y: auto;
-    background: var(--modal-dialog-background, #ffffff);
+    background: var(--modal-dialog-background, var(--color-surface));
     border-radius: var(--modal-dialog-radius, 1rem);
     padding: var(--modal-dialog-padding, 0);
-    box-shadow: var(--modal-dialog-shadow, 0 24px 48px rgba(15, 23, 42, 0.2));
+    box-shadow: var(--modal-dialog-shadow, var(--shadow-lg));
   }
 
   .c-modal__close {
@@ -134,19 +137,19 @@ const overlayClassName = [MODAL_OVERLAY_BASE_CLASS, overlayClass]
     right: 1rem;
     background: transparent;
     border: none;
-    color: var(--modal-close-color, #111827);
+    color: var(--modal-close-color, var(--color-text));
     font-size: 2rem;
     line-height: 1;
     cursor: pointer;
   }
 
   .c-modal__close:focus-visible {
-    outline: 3px solid var(--modal-close-focus-outline, #0f766e);
+    outline: 3px solid var(--modal-close-focus-outline, var(--color-focus));
     outline-offset: 4px;
   }
 
   .c-modal__close:hover {
-    color: var(--modal-close-hover-color, #0f172a);
+    color: var(--modal-close-hover-color, var(--color-link-hover));
   }
 
   @media (prefers-reduced-motion: no-preference) {

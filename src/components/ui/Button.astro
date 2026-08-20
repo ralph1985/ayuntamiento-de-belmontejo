@@ -90,7 +90,7 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
     justify-content: center;
     gap: 0.5rem;
     border: none;
-    border-radius: 0;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -100,8 +100,16 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
       transform 0.2s ease;
 
     &:focus-visible {
-      outline: 2px solid var(--accent);
+      outline: 3px solid var(--color-focus);
       outline-offset: 2px;
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+
+    &:visited {
+      color: inherit;
     }
 
     &--full {
@@ -126,15 +134,15 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
     }
 
     &--primary {
-      color: var(--on-primary);
-      background-color: var(--primary);
+      color: var(--color-on-action);
+      background-color: var(--color-action);
       z-index: 0;
 
       &:before {
         content: '';
         position: absolute;
         inset: 0;
-        background-color: var(--accent);
+        background-color: var(--color-accent);
         transform: scaleX(0);
         transform-origin: left;
         transition: transform 0.3s ease;
@@ -148,19 +156,19 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
 
       &:hover,
       &:focus-visible {
-        color: var(--on-primary);
+        color: var(--color-on-accent);
       }
     }
 
     &--secondary {
       background-color: transparent;
-      border: 2px solid var(--primary);
-      color: var(--primary);
+      border: 2px solid var(--color-link);
+      color: var(--color-link);
 
       &:hover,
       &:focus-visible {
-        background-color: var(--primary);
-        color: var(--on-primary);
+        background-color: var(--color-link);
+        color: var(--color-on-action);
       }
     }
 
@@ -188,20 +196,7 @@ const computedRel = tag === 'a' ? resolveRelAttribute(target, rel) : undefined;
 
       &:hover,
       &:focus-visible {
-        color: var(--button-ghost-hover-color, var(--on-primary));
-      }
-    }
-  }
-
-  :global(.dark-mode) {
-    .c-button--secondary {
-      border-color: var(--secondaryLight);
-      color: var(--secondaryLight);
-
-      &:hover,
-      &:focus-visible {
-        background-color: var(--secondaryLight);
-        color: var(--background-main);
+        color: var(--button-ghost-hover-color, var(--color-on-action));
       }
     }
   }

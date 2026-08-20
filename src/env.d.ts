@@ -17,3 +17,8 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+interface Window {
+  // eslint-disable-next-line no-unused-vars
+  __applyMunicipalTheme?: (theme: 'light' | 'dark', persist?: boolean) => void;
+}

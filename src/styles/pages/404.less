@@ -14,20 +14,20 @@
     font-size: 6rem;
     font-weight: 900;
     margin: 0;
-    color: var(--primary);
+    color: var(--color-link);
     opacity: 0.55;
   }
 
   h2 {
     font-size: 2rem;
     margin: 1rem 0;
-    color: var(--text-primary);
+    color: var(--color-text);
   }
 
   p {
     font-size: 1.1rem;
     margin-bottom: 2rem;
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     line-height: 1.6;
   }
 }
@@ -48,20 +48,20 @@
   }
 
   .c-button--primary {
-    --accent: var(--primary);
-    background: var(--primary);
-    color: var(--on-primary);
+    --accent: var(--color-action);
+    background: var(--color-action);
+    color: var(--color-on-action);
   }
 
   .c-button--secondary {
     border-width: 2px;
-    border-color: var(--primary);
-    color: var(--primary);
+    border-color: var(--color-action);
+    color: var(--color-link);
 
     &:hover,
     &:focus-visible {
-      background: var(--primary);
-      color: var(--on-primary);
+      background: var(--color-action);
+      color: var(--color-on-action);
     }
   }
 }

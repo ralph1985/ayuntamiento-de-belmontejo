@@ -1,50 +1,106 @@
-/* Belmontejo visual tokens. Keep light and dark values in one place. */
+/* Belmontejo semantic tokens. Theme selectors only change token values. */
 
 :root {
-  --background-main: #f7f8f5;
-  --background-sections: #e8eee3;
-  --surface-raised: #ffffff;
-  --surface-muted: #f0f3ed;
-
-  --text-primary: #17303a;
-  --text-secondary: #4d6267;
-  --text-white: #f7f8f5;
-
-  --primary: #1c5b73;
-  --primaryLight: #356f83;
-  --secondary: #537149;
-  --secondaryLight: #5a744e;
-  --accent: #a7442d;
-  --accentLight: #da7d5d;
-
-  --border-color: #cbd6cb;
-  --border-strong: #9eafa1;
-  --on-primary: #ffffff;
-  --on-accent: #ffffff;
-  --focus-ring: #a7442d;
-  --danger: #b42318;
-  --success: #087443;
-  --footer-link: #f0a182;
-  --hero-eyebrow: #e1edda;
-  --social-facebook: #0d5bd7;
-  --social-instagram: #b92f4b;
-  --shadow-color: 23 48 58;
-
+  color-scheme: light;
+  --color-bg: #f5f7f3;
+  --color-bg-subtle: #e8eee7;
+  --color-surface: #ffffff;
+  --color-surface-muted: #eef2ed;
+  --color-surface-inverse: #17333c;
+  --color-text: #17333c;
+  --color-text-muted: #40575c;
+  --color-text-inverse: #f8faf6;
+  --color-link: #14566f;
+  --color-link-hover: #0b4055;
+  --color-link-visited: #654a72;
+  --color-action: #14566f;
+  --color-action-hover: #0b4055;
+  --color-on-action: #ffffff;
+  --color-territory: #4c6d43;
+  --color-territory-strong: #395633;
+  --color-territory-surface: #4c6d43;
+  --color-on-territory: #ffffff;
+  --color-accent: #9c3e29;
+  --color-accent-soft: #c76648;
+  --color-on-accent: #ffffff;
+  --color-border: #c6d2c8;
+  --color-border-strong: #8fa298;
+  --color-focus: #b74429;
+  --color-danger: #a8271d;
+  --color-success: #087443;
+  --color-footer-link: #ffb093;
+  --color-hero-eyebrow: #e2f0d8;
+  --color-facebook: #0d5bd7;
+  --color-instagram: #b92f4b;
+  --color-highlight: #fff0a8;
+  --color-shadow-rgb: 23 51 60;
+  --color-photo-scrim-rgb: 12 31 38;
+  --color-overlay-rgb: 7 19 24;
+  --color-inverse-rgb: 248 250 246;
+  --shadow-sm: 0 0.125rem 0.625rem rgb(var(--color-shadow-rgb) / 9%);
+  --shadow-md: 0 0.75rem 2rem rgb(var(--color-shadow-rgb) / 13%);
+  --shadow-lg: 0 1.5rem 4rem rgb(var(--color-shadow-rgb) / 18%);
+  --weather-panel-bg: var(--color-surface);
+  --weather-panel-border: var(--color-border);
+  --weather-panel-shadow: var(--shadow-lg);
+  --weather-card-bg: var(--color-surface-muted);
+  --weather-card-border: var(--color-border);
+  --weather-card-shadow: var(--shadow-md);
+  --weather-compact-text: var(--color-text);
+  --weather-compact-muted: var(--color-text-muted);
+  --weather-compact-footer: var(--color-text-muted);
   --radius-sm: 0.375rem;
   --radius-md: 0.75rem;
   --radius-lg: 1rem;
-
-  --topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
-  --headerFontSize: clamp(2rem, 4vw, 3.25rem);
-  --bodyFontSize: 1rem;
-  --sectionPadding: clamp(4rem, 8vw, 7rem) 0;
+  --radius-pill: 999px;
+  --font-body: "Roboto", Arial, sans-serif;
+  --font-editorial: "Source Serif 4", Georgia, serif;
+  --font-size-topper: clamp(0.8125rem, 1.6vw, 0.9375rem);
+  --font-size-heading: clamp(2.25rem, 4.5vw, 3.75rem);
+  --font-size-body: 1rem;
+  --section-padding: clamp(4.5rem, 8vw, 7rem) 0;
   --container-gutter: clamp(1rem, 3vw, 2rem);
   --container-max-width: 80rem;
   --container-reading-max-width: 60rem;
   --container-form-max-width: 50rem;
   --container-article-max-width: 70rem;
+}
 
-  --headerColor: var(--text-primary);
-  --bodyTextColor: var(--text-secondary);
-  --bodyTextColorWhite: var(--text-white);
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #14211f;
+  --color-bg-subtle: #1d2d29;
+  --color-surface: #243630;
+  --color-surface-muted: #1a2925;
+  --color-surface-inverse: #0e1917;
+  --color-text: #f1f6f0;
+  --color-text-muted: #c3d0c7;
+  --color-text-inverse: #f8faf6;
+  --color-link: #a6dbe5;
+  --color-link-hover: #d0eef2;
+  --color-link-visited: #d6bedf;
+  --color-action: #23677b;
+  --color-action-hover: #2d7b90;
+  --color-on-action: #ffffff;
+  --color-territory: #b8d397;
+  --color-territory-strong: #cbe1ae;
+  --color-territory-surface: #416039;
+  --color-on-territory: #ffffff;
+  --color-accent: #ed9471;
+  --color-accent-soft: #ffb092;
+  --color-on-accent: #17211f;
+  --color-border: #40554d;
+  --color-border-strong: #697f75;
+  --color-focus: #ffad8d;
+  --color-danger: #ffaaa0;
+  --color-success: #80dda9;
+  --color-footer-link: #cbe1ae;
+  --color-hero-eyebrow: #d9edc8;
+  --color-highlight: #635b2d;
+  --color-shadow-rgb: 0 0 0;
+  --color-photo-scrim-rgb: 5 16 20;
+  --color-overlay-rgb: 0 0 0;
+  --shadow-sm: 0 0.125rem 0.625rem rgb(var(--color-shadow-rgb) / 25%);
+  --shadow-md: 0 0.75rem 2rem rgb(var(--color-shadow-rgb) / 34%);
+  --shadow-lg: 0 1.5rem 4rem rgb(var(--color-shadow-rgb) / 44%);
 }

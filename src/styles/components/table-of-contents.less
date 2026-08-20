@@ -1,6 +1,6 @@
 .cs-toc-container {
   border-radius: 0.5em;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--color-border);
   padding: 2.1875em 1.875em;
   margin-bottom: 2rem;
 }
@@ -22,21 +22,21 @@
     padding-left: 1.5rem;
   }
   &:has(.cs-toc-current) {
-    border-left: 2px solid var(--primaryLight);
-    color: var(--primaryLight);
+    border-left: 2px solid var(--color-link);
+    color: var(--color-link);
   }
 }
 
 .cs-toc-link {
   transition: color 0.2s ease-in-out;
-  color: var(--bodyTextColor);
+  color: var(--color-text-muted);
   text-decoration: none;
   &.cs-toc-current {
-    color: var(--primaryLight);
+    color: var(--color-link);
     font-weight: 700;
   }
   &:hover {
-    color: var(--primaryLight);
+    color: var(--color-link);
   }
 }
 
@@ -48,15 +48,4 @@
 
 /* Dark Mode */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    .cs-toc-link {
-      color: var(--text-primary);
-      &.cs-toc-current {
-        color: var(--primaryLight);
-      }
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
 }

@@ -9,6 +9,7 @@ export const e2eGroups = {
   'flows:noticias': ['tests/e2e/specs/flows/noticias.flow.spec.ts'],
   'flows:navigation': ['tests/e2e/specs/flows/navigation.flow.spec.ts'],
   'flows:search': ['tests/e2e/specs/flows/search.flow.spec.ts'],
+  'flows:theme': ['tests/e2e/specs/flows/theme-parity.flow.spec.ts'],
   'flows:all': [
     '@flows:cookies',
     '@flows:faq',
@@ -16,5 +17,6 @@ export const e2eGroups = {
     '@flows:noticias',
     '@flows:navigation',
     '@flows:search',
+    '@flows:theme',
   ],
 };

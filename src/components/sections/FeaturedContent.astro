@@ -176,7 +176,7 @@ const getContentTypeLabel = (contentType: string) => {
 
 <style>
   .no-featured-message {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-style: italic;
     font-size: 0.875rem;
     text-align: center;
@@ -184,25 +184,25 @@ const getContentTypeLabel = (contentType: string) => {
   }
 
   .news-sidebar_widget-image--placeholder {
-    background-color: var(--surface-muted);
+    background-color: var(--color-surface-muted);
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
   }
 
   .news-sidebar_widget-category {
     display: block;
     font-size: 0.75rem;
-    color: var(--primary);
+    color: var(--color-link);
     font-weight: 500;
     margin-top: 0.25rem;
   }
 
   .content-type-badge {
-    --badge-bg: var(--primary, #285c8d);
-    --badge-color: var(--text-white, #f5f1e9);
+    --badge-bg: var(--color-action);
+    --badge-color: var(--color-on-action);
     display: inline-flex;
     align-items: center;
     font-size: 0.6875rem;
@@ -215,8 +215,8 @@ const getContentTypeLabel = (contentType: string) => {
     line-height: 1;
     background-color: var(--badge-bg);
     color: var(--badge-color);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
     transition:
       background-color 0.2s ease,
       color 0.2s ease,
@@ -225,21 +225,12 @@ const getContentTypeLabel = (contentType: string) => {
   }
 
   .content-type-badge--noticias {
-    --badge-bg: var(--primary, #285c8d);
-    --badge-color: var(--text-white, #f5f1e9);
+    --badge-bg: var(--color-action);
+    --badge-color: var(--color-on-action);
   }
 
   .content-type-badge--bandos {
-    --badge-bg: var(--accent, #b35030);
-    --badge-color: var(--text-white, #f5f1e9);
-  }
-
-  body.dark-mode .content-type-badge {
-    border-color: rgba(255, 255, 255, 0.16);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
-  }
-
-  body.dark-mode .content-type-badge--bandos {
-    --badge-color: var(--on-accent);
+    --badge-bg: var(--color-accent);
+    --badge-color: var(--color-on-accent);
   }
 </style>
