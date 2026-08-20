@@ -104,3 +104,4 @@ const initializeNavigation = () => {
 };
 
 document.addEventListener('astro:page-load', initializeNavigation);
+initializeNavigation();

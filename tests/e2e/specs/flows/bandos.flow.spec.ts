@@ -31,8 +31,8 @@ test.describe('Consulta de bandos', () => {
     await search.fill('ayuntamiento cerrado');
 
     await expect(page).toHaveURL(/\/bandos\?q=ayuntamiento\+cerrado$/);
-    await expect(summary).toContainText('5 bandos publicados');
-    await expect(visibleResults).toHaveCount(5);
+    await expect(summary).toContainText('1 bando publicado');
+    await expect(visibleResults).toHaveCount(1);
     await expect(more).toBeHidden();
 
     await page.getByRole('button', { name: 'Limpiar filtros' }).click();
