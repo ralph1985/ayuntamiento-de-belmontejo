@@ -228,23 +228,25 @@ const footerIconForEntry: Record<
   </div>
 
   <div class="footer-legal">
-    <nav aria-label="Información legal">
-      <a href="/politica-de-privacidad">Política de Privacidad</a>
-      <a href="/politica-de-cookies">Política de Cookies</a>
-      <a href="/aviso-legal">Aviso Legal</a>
-    </nav>
-    <div class="footer-credits">
-      <p>© {currentYear} {contactInfo.entity.name}</p>
-      <p>
-        Web realizada por{' '}
-        <a
-          href="https://conquense.dev"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          conquense.dev
-        </a>
-      </p>
+    <div class="footer-legal__inner site-container">
+      <nav aria-label="Información legal">
+        <a href="/politica-de-privacidad">Política de Privacidad</a>
+        <a href="/politica-de-cookies">Política de Cookies</a>
+        <a href="/aviso-legal">Aviso Legal</a>
+      </nav>
+      <div class="footer-credits">
+        <p>© {currentYear} {contactInfo.entity.name}</p>
+        <p>
+          Web realizada por{' '}
+          <a
+            href="https://conquense.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            conquense.dev
+          </a>
+        </p>
+      </div>
     </div>
   </div>
 </footer>

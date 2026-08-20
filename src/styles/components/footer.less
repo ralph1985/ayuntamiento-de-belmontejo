@@ -161,13 +161,15 @@
   }
 
   .footer-legal {
-    width: min(100%, 80rem);
     margin: clamp(2.5rem, 5vw, 4rem) auto 0;
     padding-top: 1rem;
     border-top: 1px solid
       color-mix(in srgb, var(--color-text-inverse) 22%, transparent);
     color: color-mix(in srgb, var(--color-text-inverse) 65%, transparent);
     font-size: 0.8125rem;
+  }
+
+  .footer-legal__inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -237,7 +239,7 @@
 
 @media only screen and (max-width: 47.9375rem) {
   #footer {
-    .footer-legal {
+    .footer-legal__inner {
       align-items: flex-start;
       flex-direction: column;
     }
