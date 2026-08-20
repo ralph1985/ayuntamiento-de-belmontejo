@@ -127,7 +127,11 @@ const retentionPolicies = [
               }
               <li>
                 Sede electrónica / web:{' '}
-                <a href={contactInfo.entity.domain} rel="noopener noreferrer">
+                <a
+                  href={contactInfo.entity.domain}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {contactInfo.entity.domain}
                 </a>
               </li>
@@ -270,8 +274,10 @@ const retentionPolicies = [
         <p>
           Si considera que sus derechos no han sido atendidos, puede presentar
           una reclamación ante la Agencia Española de Protección de Datos (AEPD)
-          a través de <a href="https://www.aepd.es" rel="noopener noreferrer"
-            >www.aepd.es</a
+          a través de <a
+            href="https://www.aepd.es"
+            target="_blank"
+            rel="noopener noreferrer">www.aepd.es</a
           > o en la calle Jorge Juan 6, 28001 Madrid.
         </p>
       </div>

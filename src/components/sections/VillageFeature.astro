@@ -26,7 +26,7 @@ const { id, eyebrow, title, description, body, image, credit, creditHref } =
         credit && creditHref ? (
           <figcaption>
             Imagen:{' '}
-            <a href={creditHref} rel="noreferrer">
+            <a href={creditHref} target="_blank" rel="noopener noreferrer">
               {credit}
             </a>
           </figcaption>

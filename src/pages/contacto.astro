@@ -239,7 +239,12 @@ const privacyContactEmail = emails[0]?.address ?? '';
             <>
               <span class="cs-header">{office.label}</span>
               {office.mapsUrl ? (
-                <a class="cs-link" href={office.mapsUrl}>
+                <a
+                  class="cs-link"
+                  href={office.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {office.lines.map((line, index) => {
                     const isLastLine = index === office.lines.length - 1;
 

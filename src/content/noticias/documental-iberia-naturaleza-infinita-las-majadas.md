@@ -52,4 +52,4 @@ Es una excelente oportunidad para ver en pantalla grande los paisajes de nuestra
 
 ---
 
-_Fuente: [Voces de Cuenca](https://www.vocesdecuenca.com/culturayvida/un-documental-rodado-parcialmente-en-las-majadas-se-proyecta-en-los-cines-de-cuenca-hasta-el-proximo-jueves/)_
+_Fuente: <a href="https://www.vocesdecuenca.com/culturayvida/un-documental-rodado-parcialmente-en-las-majadas-se-proyecta-en-los-cines-de-cuenca-hasta-el-proximo-jueves/" target="_blank" rel="noopener noreferrer">Voces de Cuenca</a>_

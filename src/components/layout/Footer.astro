@@ -129,7 +129,11 @@ const footerIconForEntry: Record<
             primaryOffice && (
               <li>
                 {primaryOffice.mapsUrl ? (
-                  <a href={primaryOffice.mapsUrl}>
+                  <a
+                    href={primaryOffice.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {officeLocationLines.map((line, index) => (
                       <>
                         {line}
