@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { acceptCookiesBeforeNavigation } from '../../support/browser-helpers';
 
 type NavigationScenario = {
   label: string;
@@ -168,15 +169,12 @@ test.describe('Navegación interna de contenido', () => {
   test('el pie incluye acceso a la Política de Privacidad', async ({
     page,
   }) => {
+    await acceptCookiesBeforeNavigation(page);
     await page.goto('/', { waitUntil: 'domcontentloaded' });
 
     const footer = page.getByRole('contentinfo');
-    await Promise.all([
-      page.waitForURL(/\/politica-de-privacidad\/?$/, {
-        waitUntil: 'domcontentloaded',
-      }),
-      footer.locator('a[href="/politica-de-privacidad"]').click(),
-    ]);
+    await footer.locator('a[href="/politica-de-privacidad"]').click();
+    await expect(page).toHaveURL(/\/politica-de-privacidad\/?$/);
 
     await expect(
       page.getByRole('heading', {

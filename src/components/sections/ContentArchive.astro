@@ -222,9 +222,11 @@ const isBandos = kind === 'bandos';
       const query = search?.value.trim() ?? '';
       const selectedCategory = category?.value ?? '';
       const normalizedQuery = normalize(query);
+      const searchTerms = normalizedQuery.split(/\s+/).filter(Boolean);
       const matchingItems = items.filter(item => {
-        const matchesQuery = normalize(item.dataset.searchText ?? '').includes(
-          normalizedQuery
+        const searchableText = normalize(item.dataset.searchText ?? '');
+        const matchesQuery = searchTerms.every(term =>
+          searchableText.includes(term)
         );
         const matchesCategory =
           !selectedCategory || item.dataset.category === selectedCategory;
