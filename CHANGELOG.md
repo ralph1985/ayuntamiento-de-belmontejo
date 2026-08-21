@@ -19,7 +19,7 @@ All notable changes to this project are documented in this file. The project rem
 
 **Window:** 2025-11-03 – 2025-11-05
 
-- **2025-11-05** – Added Sentry integration, dotenv-based environment checks, cookie-consent E2E coverage, README restructuring, footer navigation helpers, slug fixes, and refreshed bandos screenshots (c2ce660, 597c78f, c03575f, 45ee11e, a9a48df, dfd216d, 753154c, 36c769d, 2acf7cf, 8a6a6f0, 7e22c4a, 12351d4, c4a60e4).
+- **2025-11-05** – Added dotenv-based environment checks, cookie-consent E2E coverage, README restructuring, footer navigation helpers, slug fixes, and refreshed bandos screenshots (c2ce660, 597c78f, c03575f, 45ee11e, a9a48df, dfd216d, 753154c, 36c769d, 2acf7cf, 8a6a6f0, 7e22c4a, 12351d4, c4a60e4).
 - **2025-11-04** – Extended visual regression coverage with new routes, merged dark-mode baselines, and stabilised the Playwright visual suite (36c29ba, e4b6343, a7db588, e0bfb56).
 - **2025-11-03** – Published the MIT licence and established the first Playwright visual baselines, including dark-mode runs (9853c81, 411cf64, 370cca8, 64264b0).
 

@@ -3,7 +3,6 @@
 ## Cumplido
 
 - Privacidad: página informativa creada en `src/pages/politica-de-privacidad.astro` con responsable, finalidades, legitimación, cesiones, derechos y canal de reclamaciones actualizado en noviembre de 2025.
-- Cookies: banner de consentimiento granular y carga de GA/Sentry solo con consentimiento; IP anonimizada en GA. Página específica existente: `src/pages/politica-de-cookies.astro`.
 - SEO: `@astrojs/sitemap` activo; Open Graph y `canonical` en el layout.
 - Sede electrónica: enlace en footer data (`src/data/footerServices.json`).
 - Contenido editorial: textos, noticias, bandos y datos fijos versionados en `src/content` y `src/data`.

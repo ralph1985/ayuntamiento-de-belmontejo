@@ -175,16 +175,3 @@ El formulario de contacto no necesita variables de entorno ni un backend: valida
 No compartas el archivo `.env` ni las credenciales generadas.
 
 La web no recibe ni almacena los datos introducidos en el formulario de contacto. La entrega del mensaje depende de la aplicación de correo que elija la persona usuaria.
-
-### Monitoreo de errores (Sentry)
-
-El SDK de Sentry queda configurado mediante `sentry.client.config.ts` y `sentry.server.config.ts`. Para activarlo, define las siguientes variables:
-
-- `PUBLIC_SENTRY_DSN`: DSN público que se inyecta en el bundle del navegador.
-- `SENTRY_DSN`: DSN privado usado en el runtime del servidor (renderizado SSR en Vercel).
-- `PUBLIC_SENTRY_ENVIRONMENT` / `SENTRY_ENVIRONMENT` (opcional): etiqueta el entorno (`production`, `preview`, etc.). En caso de ausencia se usará `import.meta.env.MODE`.
-- `PUBLIC_SENTRY_TRACES_SAMPLE_RATE` / `SENTRY_TRACES_SAMPLE_RATE` (opcional): ajuste decimal entre `0` y `1` para el muestreo de trazas. Por defecto se envía `0.1`.
-- `PUBLIC_SENTRY_RELEASE` / `SENTRY_RELEASE` (opcional): identifica la release desplegada; si no se define se utiliza automáticamente la versión de `package.json`.
-- `SENTRY_ENABLE_SERVER` (opcional): ajústalo a `true` si quieres habilitar el rastreo de errores en el runtime de servidor. Por defecto permanece desactivado para evitar procesar datos sin consentimiento explícito.
-
-El SDK en el navegador sólo se carga cuando el usuario acepta las cookies analíticas (mismo grupo que Google Analytics). También se expone `import.meta.env.PUBLIC_APP_VERSION` con la versión actual del proyecto, útil para mostrar la release activa en alguna sección de la UI. Si alguna variable no está presente, la inicialización correspondiente se omite de forma silenciosa. La subida automática de _source maps_ está desactivada por defecto para evitar requerir un `SENTRY_AUTH_TOKEN`; si necesitas habilitarla, elimina la opción `sourcemaps.disable` del bloque `sentry()` en `astro.config.mjs` y configura `SENTRY_AUTH_TOKEN`, `SENTRY_ORG` y `SENTRY_PROJECT`.

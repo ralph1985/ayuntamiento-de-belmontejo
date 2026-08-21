@@ -32,7 +32,6 @@
     "@astrojs/sitemap": "3.7.3",
     "@astrojs/vercel": "11.0.3",
     "@project-manager/pm-weather": "https://raw.githubusercontent.com/ralph1985/project-manager/5cec3858ff6ed5b469591d48ba240471439b9d3f/artifacts/project-manager-pm-weather-0.2.0.tgz",
-    "@sentry/astro": "10.69.0",
     "@types/simple-oauth2": "5.0.7",
     "astro": "7.1.0",
     "autoprefixer": "10.4.22",

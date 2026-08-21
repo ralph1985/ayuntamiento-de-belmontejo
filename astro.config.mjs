@@ -1,14 +1,9 @@
 import 'dotenv/config';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import sentry from '@sentry/astro';
 import vercel from '@astrojs/vercel';
 import pkg from './package.json' assert { type: 'json' };
 
-const hasClientSentryDsn = Boolean(process.env.PUBLIC_SENTRY_DSN);
-const hasServerSentryDsn = Boolean(process.env.SENTRY_DSN);
-const serverSentryEnabled =
-  hasServerSentryDsn && process.env.SENTRY_ENABLE_SERVER === 'true';
 const appVersion = pkg?.version ?? '0.0.0';
 
 export default defineConfig({
@@ -20,15 +15,6 @@ export default defineConfig({
   },
   adapter: vercel(),
   integrations: [
-    sentry({
-      enabled: {
-        client: hasClientSentryDsn,
-        server: serverSentryEnabled,
-      },
-      sourcemaps: {
-        disable: true,
-      },
-    }),
     sitemap({
       customPages: [
         'https://ayuntamiento-de-belmontejo.vercel.app/',
