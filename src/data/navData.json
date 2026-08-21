@@ -24,12 +24,28 @@
     "url": "/proyectos/",
     "children": [
       {
-        "key": "Camping rural",
-        "url": "/proyectos/proyecto-1/"
+        "key": "Recuperación de la Enrama",
+        "url": "/proyectos/enrama/"
       },
       {
         "key": "Pista de pádel",
         "url": "/proyectos/proyecto-2/"
+      },
+      {
+        "key": "Vivienda de Mayores",
+        "url": "/proyectos/vivienda-de-mayores/"
+      },
+      {
+        "key": "Comunidad Energética",
+        "url": "/proyectos/comunidad-energetica/"
+      },
+      {
+        "key": "Camping rural",
+        "url": "/proyectos/proyecto-1/"
+      },
+      {
+        "key": "Red de agua",
+        "url": "/proyectos/red-abastecimiento-agua/"
       }
     ]
   },

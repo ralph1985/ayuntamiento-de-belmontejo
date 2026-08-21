@@ -1,8 +1,129 @@
 {
   "projects": [
     {
-      "slug": "proyecto-1",
+      "slug": "proyecto-2",
+      "number": "02",
+      "date": "2026-07-10",
+      "title": "Pista de pádel",
+      "pageDescription": "Nueva pista de pádel de Belmontejo, inaugurada en julio de 2026 con el apoyo del Ayuntamiento, la Diputación de Cuenca y ADESIMAN.",
+      "landingIntro": "Más deporte y ocio saludable sin salir del municipio.",
+      "summary": "Una instalación deportiva ya inaugurada para practicar pádel sin salir de Belmontejo.",
+      "eyebrow": "Deporte y vida local",
+      "detailTitle": "Una pista para jugar en el pueblo",
+      "detailDescription": "Belmontejo cuenta desde julio de 2026 con una nueva pista de pádel. La instalación responde a una demanda vecinal y evita desplazamientos a otros municipios para practicar este deporte, ampliando las opciones de ocio saludable durante todo el año.",
+      "imageSrc": "/assets/images/proyectos/pista-padel-belmontejo.jpg",
+      "imageAlt": "Cartel municipal de la inauguración de la pista de pádel de Belmontejo",
+      "facts": [
+        {
+          "label": "Inauguración",
+          "value": "10 de julio de 2026"
+        },
+        {
+          "label": "Inversión",
+          "value": "53.000 €"
+        },
+        {
+          "label": "Colaboración",
+          "value": "Ayuntamiento, Diputación de Cuenca y ADESIMAN"
+        }
+      ],
+      "sourceHref": "https://www.bandomovil.com/belmontejo/1592378/0",
+      "sourceLabel": "Ver el aviso municipal"
+    },
+    {
+      "slug": "enrama",
       "number": "01",
+      "date": "2026-07-20",
+      "title": "Recuperación de la Enrama",
+      "pageDescription": "Proyecto de recuperación, documentación y difusión de la tradición de la Enrama de Belmontejo.",
+      "landingIntro": "Una tradición local que vuelve a ocupar su lugar en la memoria del pueblo.",
+      "summary": "Un proyecto cultural para documentar y transmitir una tradición propia de Belmontejo.",
+      "eyebrow": "Patrimonio y memoria",
+      "detailTitle": "Guardar una tradición para que siga viva",
+      "detailDescription": "Belmontejo impulsa la recuperación, documentación y difusión de la tradición de la Enrama con el apoyo de la convocatoria provincial de patrimonio cultural inmaterial de 2026. El proyecto pone el foco en conservar la memoria y facilitar su transmisión entre generaciones.",
+      "imageSrc": "/assets/images/proyectos/enrama-belmontejo.png",
+      "imageAlt": "Calle de un pueblo decorada con ramas y elementos tradicionales durante una celebración",
+      "facts": [
+        {
+          "label": "Proyecto",
+          "value": "Recuperación, documentación y difusión de la tradición de la Enrama"
+        },
+        {
+          "label": "Convocatoria",
+          "value": "Patrimonio cultural inmaterial de la Diputación de Cuenca, 2026"
+        },
+        {
+          "label": "Ayuda concedida",
+          "value": "1.148,64 €"
+        }
+      ],
+      "sourceHref": "https://eldigitaldecuenca.com/2026/07/20/cuenca-blinda-su-historia-36-proyectos-recibiran-ayudas-para-salvar-siglos-de-tradiciones/",
+      "sourceLabel": "Consultar la ayuda cultural"
+    },
+    {
+      "slug": "vivienda-de-mayores",
+      "number": "03",
+      "date": "2026-03-18",
+      "title": "Vivienda de Mayores",
+      "pageDescription": "Gestión integral de la Vivienda de Mayores de Belmontejo para mantener los cuidados y los servicios sociales en el municipio.",
+      "landingIntro": "Cuidar a las personas mayores sin alejarlas de su entorno.",
+      "summary": "Un recurso social para favorecer la vida en el pueblo y la atención de proximidad.",
+      "eyebrow": "Cuidados y comunidad",
+      "detailTitle": "Seguir viviendo en el pueblo",
+      "detailDescription": "El Ayuntamiento ha licitado la gestión integral de la Vivienda de Mayores de Belmontejo, un recurso que permite mantener la atención y el acompañamiento cerca de las familias y del entorno habitual de sus residentes.",
+      "imageSrc": "/assets/images/proyectos/vivienda-mayores-belmontejo.png",
+      "imageAlt": "Edificio rural de piedra y yeso con acceso accesible y jardín",
+      "facts": [
+        {
+          "label": "Actuación",
+          "value": "Gestión integral de la Vivienda de Mayores"
+        },
+        {
+          "label": "Publicación",
+          "value": "18 de marzo de 2026"
+        },
+        {
+          "label": "Tipo",
+          "value": "Contrato de servicios sociales"
+        }
+      ],
+      "sourceHref": "https://contratos.gobierto.es/adjudicadores/ayuntamiento-de-belmontejo",
+      "sourceLabel": "Consultar la contratación"
+    },
+    {
+      "slug": "comunidad-energetica",
+      "number": "04",
+      "date": "2026-01-15",
+      "title": "Comunidad Energética Local",
+      "pageDescription": "Comunidad energética local de Belmontejo para impulsar el ahorro y la producción de energía renovable compartida.",
+      "landingIntro": "Energía limpia y participación vecinal para avanzar juntos.",
+      "summary": "Una iniciativa vecinal para producir y compartir energía renovable en el municipio.",
+      "eyebrow": "Energía y sostenibilidad",
+      "detailTitle": "Producir energía para la comunidad",
+      "detailDescription": "Belmontejo ha puesto en marcha la creación de una comunidad energética local con participación vecinal. La iniciativa busca que hogares, pequeños negocios y edificios municipales puedan beneficiarse de una producción energética más cercana, renovable y compartida.",
+      "imageSrc": "/assets/images/proyectos/comunidad-energetica-belmontejo.png",
+      "imageAlt": "Paneles solares sobre un tejado de un pueblo de Castilla-La Mancha",
+      "facts": [
+        {
+          "label": "Iniciativa",
+          "value": "Comunidad Energética Local de Belmontejo"
+        },
+        {
+          "label": "Participación",
+          "value": "Inscripción abierta a vecinos y pequeñas empresas"
+        },
+        {
+          "label": "Aportación comunicada",
+          "value": "50 € por contador"
+        }
+      ],
+      "sourceHref": "https://www.bandomovil.com/belmontejo/1485611/0",
+      "sourceLabel": "Ver la información municipal"
+    },
+    {
+      "slug": "proyecto-1",
+      "number": "05",
+      "date": "2026-01-01",
       "title": "Camping rural sostenible",
       "pageDescription": "Proyecto de camping rural sostenible de Belmontejo, incluido en el Plan de Sostenibilidad Turística en Destino de ADESIMAN.",
       "landingIntro": "Un nuevo recurso turístico para disfrutar del entorno de Belmontejo.",
@@ -30,33 +151,34 @@
       "sourceLabel": "Consultar la licitación"
     },
     {
-      "slug": "proyecto-2",
-      "number": "02",
-      "title": "Pista de pádel",
-      "pageDescription": "Nueva pista de pádel de Belmontejo, inaugurada en julio de 2026 con el apoyo del Ayuntamiento, la Diputación de Cuenca y ADESIMAN.",
-      "landingIntro": "Más deporte y ocio saludable sin salir del municipio.",
-      "summary": "Una instalación deportiva ya inaugurada para practicar pádel sin salir de Belmontejo.",
-      "eyebrow": "Deporte y vida local",
-      "detailTitle": "Una pista para jugar en el pueblo",
-      "detailDescription": "Belmontejo cuenta desde julio de 2026 con una nueva pista de pádel. La instalación responde a una demanda vecinal y evita desplazamientos a otros municipios para practicar este deporte, ampliando las opciones de ocio saludable durante todo el año.",
-      "imageSrc": "/assets/images/proyectos/pista-padel-belmontejo.jpg",
-      "imageAlt": "Cartel municipal de la inauguración de la pista de pádel de Belmontejo",
+      "slug": "red-abastecimiento-agua",
+      "number": "06",
+      "date": "2025-02-25",
+      "title": "Mejora de la red de agua",
+      "pageDescription": "Actuación de mejora del abastecimiento y reducción de pérdidas en la red de agua potable de Belmontejo.",
+      "landingIntro": "Una red más eficiente para un servicio básico del municipio.",
+      "summary": "Obras para mejorar el abastecimiento y reducir las pérdidas de agua potable.",
+      "eyebrow": "Servicios públicos",
+      "detailTitle": "Mejorar una red esencial",
+      "detailDescription": "Las obras de mejora del abastecimiento y reducción de pérdidas en la red de agua potable de Belmontejo finalizaron en febrero de 2025. La actuación modernizó un servicio básico y reforzó la eficiencia de la red municipal.",
+      "imageSrc": "/assets/images/proyectos/agua-belmontejo.png",
+      "imageAlt": "Contador de agua revisado en una calle de un pueblo",
       "facts": [
         {
-          "label": "Inauguración",
-          "value": "10 de julio de 2026"
+          "label": "Finalización",
+          "value": "25 de febrero de 2025"
         },
         {
           "label": "Inversión",
-          "value": "53.000 €"
+          "value": "Cerca de 36.000 €"
         },
         {
-          "label": "Colaboración",
-          "value": "Ayuntamiento, Diputación de Cuenca y ADESIMAN"
+          "label": "Objetivo",
+          "value": "Mejorar el abastecimiento y reducir pérdidas"
         }
       ],
-      "sourceHref": "https://www.bandomovil.com/belmontejo/1592378/0",
-      "sourceLabel": "Ver el aviso municipal"
+      "sourceHref": "https://www.castillalamancha.es/actualidad/notasdeprensa/el-gobierno-regional-finaliza-las-obras-de-mejora-de-la-red-de-abastecimiento-de-belmontejo",
+      "sourceLabel": "Leer la información oficial"
     }
   ]
 }
