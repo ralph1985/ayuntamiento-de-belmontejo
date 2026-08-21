@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { createHash } from 'node:crypto';
 import { getCollection } from 'astro:content';
+import { projects } from '@data/projects';
 
 // Generate search index at build time so it can be served as a static asset.
 export const prerender = true;
@@ -32,6 +33,24 @@ export const GET: APIRoute = async () => {
       content: bando.body || '',
       category: bando.data.category || 'Info General',
       tags: ['bando', bando.data.category || 'Info General'],
+    })),
+    ...projects.map(project => ({
+      id: project.slug,
+      type: 'proyecto',
+      title: project.title,
+      description: project.pageDescription,
+      author: 'Ayuntamiento de Belmontejo',
+      date: new Date(project.date).toISOString(),
+      url: `/proyectos/${project.slug}`,
+      content: [
+        project.landingIntro,
+        project.summary,
+        project.eyebrow,
+        project.detailTitle,
+        project.detailDescription,
+        ...project.facts.flatMap(fact => [fact.label, fact.value]),
+      ].join(' '),
+      tags: ['proyecto', project.eyebrow],
     })),
   ];
 
