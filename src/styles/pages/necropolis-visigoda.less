@@ -1,0 +1,72 @@
+.heritage-page {
+  padding: var(--section-padding);
+}
+
+.heritage-page__inner {
+  max-width: 52rem;
+}
+
+.heritage-page__lead,
+.heritage-page__copy p {
+  color: var(--color-text);
+  font-size: clamp(1.08rem, 2vw, 1.25rem);
+  line-height: 1.75;
+}
+
+.heritage-page__lead {
+  margin: 0 0 2rem;
+  font-weight: 600;
+}
+
+.heritage-page__figure {
+  margin: 0 0 clamp(2rem, 5vw, 4rem);
+}
+
+.heritage-page__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.heritage-page__figure figcaption {
+  margin-top: 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.heritage-page__figure a,
+.heritage-page__source-link {
+  color: var(--color-link);
+  font-weight: 700;
+}
+
+.heritage-page__copy {
+  max-width: 44rem;
+}
+
+.heritage-page__source {
+  margin-top: clamp(2.5rem, 6vw, 5rem);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.heritage-page__source h2 {
+  margin: 0.5rem 0 0.75rem;
+  color: var(--color-text);
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+}
+
+.heritage-page__source p:not(.cs-topper) {
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.heritage-page__source-link {
+  display: inline-flex;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+}

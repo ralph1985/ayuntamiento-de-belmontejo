@@ -16,8 +16,8 @@ const isActiveLink = (url: string | undefined) =>
   isActiveNavigationLink(url, currentPathname);
 const findEntry = (key: string) =>
   filteredEntries.find(entry => entry.key === key);
-const discoverEntries = filteredEntries.filter(
-  entry => entry.key === 'Sobre el pueblo'
+const discoverEntries = filteredEntries.filter(entry =>
+  ['Sobre el pueblo', 'Necrópolis visigoda'].includes(entry.key)
 );
 const currentEntries = filteredEntries.filter(entry =>
   ['Noticias', 'Bandos'].includes(entry.key)
@@ -32,6 +32,7 @@ const iconForEntry: Record<
 > = {
   Inicio: 'home',
   'Sobre el pueblo': 'village',
+  'Necrópolis visigoda': 'village',
   Proyectos: 'projects',
   Noticias: 'news',
   Bandos: 'notice',

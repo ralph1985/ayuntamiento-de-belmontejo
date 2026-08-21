@@ -1,0 +1,94 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTA from '@components/sections/CTA.astro';
+import Landing from '@components/sections/Landing.astro';
+import { homePage } from '@data/homePage';
+
+const sourceUrl =
+  'https://almaerrantedeestosmontes.blogspot.com/2023/05/necropolis-visigoda-de-belmontejo-mas.html';
+---
+
+<BaseLayout
+  title="La necrópolis visigoda de Belmontejo"
+  description="Información sobre la necrópolis altomedieval situada en el entorno de Belmontejo, junto al río Belvís."
+>
+  <Landing
+    title="La necrópolis visigoda de Belmontejo"
+    image={{
+      src: '/assets/images/belmontejo-patrimonio.webp',
+      width: 1200,
+      height: 800,
+    }}
+  >
+    <p>Una huella altomedieval en el paisaje cercano al municipio.</p>
+  </Landing>
+
+  <main class="heritage-page">
+    <div class="site-container site-container--narrow heritage-page__inner">
+      <p class="heritage-page__lead">
+        En el entorno de Belmontejo se conservan restos de una necrópolis
+        altomedieval con sepulturas excavadas directamente en la roca arenisca.
+      </p>
+
+      <figure class="heritage-page__figure">
+        <img
+          src="/assets/images/belmontejo-patrimonio.webp"
+          alt="Vista del casco urbano y de la iglesia de Belmontejo"
+          width="1200"
+          height="800"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>
+          Imagen del entorno de Belmontejo. Crédito:
+          <a
+            href="https://www.turismocastillalamancha.es/es/destinos/encanto-rural/cuenca/belmontejo"
+            target="_blank"
+            rel="noopener noreferrer">Turismo de Castilla-La Mancha</a
+          >.
+        </figcaption>
+      </figure>
+
+      <div class="heritage-page__copy">
+        <p>
+          Según la documentación disponible, el yacimiento reúne decenas de
+          tumbas de tipo bañera, orientadas principalmente de oeste a este y
+          fechadas de forma aproximada entre los siglos VII y VIII. En sus
+          inmediaciones también se ha descrito un pequeño eremitorio rupestre
+          junto al río Belvís.
+        </p>
+        <p>
+          Este enclave forma parte de la historia del territorio y merece ser
+          conocido y conservado. Si visitas la zona, respeta las fincas, no
+          retires materiales y no alteres las tumbas ni el terreno.
+        </p>
+      </div>
+
+      <aside class="heritage-page__source" aria-labelledby="source-title">
+        <p class="cs-topper">Para saber más</p>
+        <h2 id="source-title">Documentación original</h2>
+        <p>
+          La descripción, las fotografías y la localización detallada del
+          yacimiento pueden consultarse en el artículo original de
+          <em>Alma errante de estos montes</em>.
+        </p>
+        <a
+          class="heritage-page__source-link"
+          href={sourceUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Leer la fuente original <span aria-hidden="true">↗</span>
+        </a>
+      </aside>
+    </div>
+  </main>
+
+  <CTA {...homePage.cta} />
+</BaseLayout>
+
+<style lang="less">
+  @import '../../styles/pages/necropolis-visigoda.less';
+</style>

@@ -24,6 +24,11 @@ const navigationScenarios: NavigationScenario[] = [
     expectedHeading: /Sobre Belmontejo/i,
   },
   {
+    label: 'Necrópolis visigoda',
+    expectedPath: '/patrimonio/necropolis-visigoda',
+    expectedHeading: /La necrópolis visigoda de Belmontejo/i,
+  },
+  {
     label: 'Noticias',
     expectedPath: '/noticias',
     expectedHeading: /Noticias/i,
