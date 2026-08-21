@@ -16,6 +16,8 @@ export interface Project {
   detailDescription: string;
   imageSrc: string;
   imageAlt: string;
+  detailImageSrc?: string;
+  detailImageAlt?: string;
   facts: ProjectFact[];
   sourceHref: string;
   sourceLabel: string;

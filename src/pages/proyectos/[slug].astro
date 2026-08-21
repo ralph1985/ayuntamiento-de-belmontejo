@@ -34,8 +34,8 @@ import landingImage from '@data/landingImage';
     eyebrow={project.eyebrow}
     title={project.detailTitle}
     description={project.detailDescription}
-    imageSrc={project.imageSrc}
-    imageAlt={project.imageAlt}
+    imageSrc={project.detailImageSrc ?? project.imageSrc}
+    imageAlt={project.detailImageAlt ?? project.imageAlt}
     facts={project.facts}
     sourceHref={project.sourceHref}
     sourceLabel={project.sourceLabel}

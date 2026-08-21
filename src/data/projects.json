@@ -11,8 +11,10 @@
       "eyebrow": "Deporte y vida local",
       "detailTitle": "Una pista para jugar en el pueblo",
       "detailDescription": "Belmontejo cuenta desde julio de 2026 con una nueva pista de pádel. La instalación responde a una demanda vecinal y evita desplazamientos a otros municipios para practicar este deporte, ampliando las opciones de ocio saludable durante todo el año.",
-      "imageSrc": "/assets/images/proyectos/pista-padel-belmontejo.jpg",
-      "imageAlt": "Cartel municipal de la inauguración de la pista de pádel de Belmontejo",
+      "imageSrc": "/assets/images/proyectos/pista-padel-belmontejo-1.png",
+      "imageAlt": "Pista de pádel municipal de Belmontejo junto al área recreativa",
+      "detailImageSrc": "/assets/images/proyectos/pista-padel-belmontejo-2.png",
+      "detailImageAlt": "Vista lateral de la pista de pádel municipal de Belmontejo",
       "facts": [
         {
           "label": "Inauguración",
