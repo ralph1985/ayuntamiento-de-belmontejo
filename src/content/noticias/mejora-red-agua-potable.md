@@ -2,7 +2,11 @@
 title: El Gobierno regional finaliza las obras de mejora de la red de abastecimiento de agua potable en Belmontejo
 description: Se ha concluido una inversión cercana a los 36.000 € para la mejora de la red de agua potable con instalación de contador de captación, válvulas de sectorización, placas fotovoltaicas y renovación de acometidas domiciliarias.
 author: Redacción
-date: 2024-08-30T10:30:00.000Z
+date: 2025-02-25T10:30:00.000Z
+image: src/assets/images/noticias/mejora-red-agua-potable.jpg
+imageAlt: Visita a las obras de mejora de la red de agua de Belmontejo
+imageCredit: Voces de Cuenca
+imageCreditHref: https://www.vocesdecuenca.com/provincia/lamancha/el-gobierno-regional-finaliza-las-obras-de-mejora-de-la-red-de-abastecimiento-de-belmontejo/
 isFeatured: true
 ---
 
