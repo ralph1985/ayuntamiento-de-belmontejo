@@ -22,6 +22,7 @@ const {
   author,
 } = post.data;
 const staticImage = getStaticContentImage(image);
+const resolvedImageAlt = imageAlt ?? title;
 const { Content, headings } = await render(post);
 const baseSiteUrl =
   Astro.site && Astro.site.length > 0 ? Astro.site : contactInfo.entity.domain;
@@ -106,34 +107,37 @@ const articleSchema = {
           </div>
         </header>
 
-        <!--Main Article Image-->
-        <picture class="news-mainImage">
-          <source type="image/avif" srcset={staticImage?.avif} />
-          <source type="image/webp" srcset={staticImage?.webp} />
-          <img
-            src={staticImage?.fallback}
-            alt={imageAlt}
-            width="800"
-            height="450"
-            decoding="async"
-          />
-        </picture>
         {
-          imageCredit && (
-            <p class="news-image-credit">
-              <span>Imagen: </span>
-              {imageCreditHref ? (
-                <a
-                  href={imageCreditHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {imageCredit}
-                </a>
-              ) : (
-                imageCredit
+          staticImage && (
+            <>
+              <picture class="news-mainImage">
+                <source type="image/avif" srcset={staticImage.avif} />
+                <source type="image/webp" srcset={staticImage.webp} />
+                <img
+                  src={staticImage.fallback}
+                  alt={resolvedImageAlt}
+                  width="800"
+                  height="450"
+                  decoding="async"
+                />
+              </picture>
+              {imageCredit && (
+                <p class="news-image-credit">
+                  <span>Imagen: </span>
+                  {imageCreditHref ? (
+                    <a
+                      href={imageCreditHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {imageCredit}
+                    </a>
+                  ) : (
+                    imageCredit
+                  )}
+                </p>
               )}
-            </p>
+            </>
           )
         }
 

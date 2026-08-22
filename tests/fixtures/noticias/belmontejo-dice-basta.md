@@ -3,8 +3,6 @@ title: Belmontejo dice basta y estudia cancelar sus fiestas si persiste la olead
 description: El Ayuntamiento y la Asociación Cultural denuncian pintadas de odio, conducción temeraria por el casco urbano, roturas de lunas de vehículos y botellones. Si estos actos no cesan, podrían cancelar las fiestas del municipio.
 author: Redacción
 date: 2025-10-15T10:00:00.000Z
-image: src/assets/images/noticias/belmontejo-dice-basta.jpg
-imageAlt: Vista de Belmontejo
 isFeatured: true
 ---
 
