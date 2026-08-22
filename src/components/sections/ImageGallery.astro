@@ -36,10 +36,9 @@ const modalId = `${id}-modal`;
         rows.map((row, rowIndex) => (
           <div class={`cs-row cs-row-${rowIndex + 1}`}>
             {row.map((image, imageIndex) => (
-              <div
+              <button
+                type="button"
                 class="cs-picture-button"
-                role="button"
-                tabindex="0"
                 aria-label={`Ver imagen: ${image.alt}`}
                 data-modal-trigger
                 data-image-src={image.desktopSrc}
@@ -63,7 +62,7 @@ const modalId = `${id}-modal`;
                     height={image.height ?? 560}
                   />
                 </picture>
-              </div>
+              </button>
             ))}
           </div>
         ))

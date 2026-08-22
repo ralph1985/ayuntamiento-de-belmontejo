@@ -87,6 +87,9 @@ test.describe('Gestión de cookies', () => {
 
     const modal = page.locator('#cookie-settings-modal');
     await expect(modal).toBeVisible();
+    await expect(
+      modal.getByRole('button', { name: 'Cerrar configuración de cookies' })
+    ).toBeFocused();
 
     const analyticsCheckbox = modal.locator('#analytics-cookies');
     await expect(analyticsCheckbox).not.toBeChecked();
@@ -151,9 +154,18 @@ test.describe('Gestión de cookies', () => {
     const modal = page.locator('#cookie-settings-modal');
     await expect(modal).toBeVisible();
 
+    await expect(
+      modal.getByRole('button', { name: 'Cerrar configuración de cookies' })
+    ).toBeFocused();
+
+    await page.keyboard.press('Escape');
+    await expect(modal).toBeHidden();
+    await expect(manageButton).toBeFocused();
+
     const analyticsCheckbox = modal.locator('#analytics-cookies');
     await expect(analyticsCheckbox).not.toBeChecked();
 
+    await manageButton.click();
     await page
       .getByRole('button', { name: /Cerrar configuración de cookies/i })
       .click();

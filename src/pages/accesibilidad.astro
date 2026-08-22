@@ -1,0 +1,89 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Landing from '@components/sections/Landing.astro';
+import contactInfo, { getPrimaryEmail } from '@js/contact';
+import landingImage from '@data/landingImage';
+
+const pageTitle = `Declaración de accesibilidad - ${contactInfo.entity.name}`;
+const description = `Declaración de accesibilidad del sitio web oficial del ${contactInfo.entity.name}.`;
+const primaryEmail = getPrimaryEmail();
+---
+
+<BaseLayout title={pageTitle} description={description}>
+  <Landing title="Declaración de accesibilidad" image={landingImage}>
+    <p>
+      Información sobre el compromiso del {contactInfo.entity.name} con un sitio web
+      accesible.
+    </p>
+  </Landing>
+
+  <section class="accessibility-page" aria-labelledby="accessibility-title">
+    <div class="site-container site-container--reading">
+      <h2 id="accessibility-title">Compromiso de accesibilidad</h2>
+      <p>
+        El {contactInfo.entity.name} trabaja para que los contenidos de este sitio
+        puedan ser consultados y utilizados por el mayor número posible de personas,
+        con independencia de sus capacidades o del dispositivo utilizado.
+      </p>
+
+      <h2>Estado de conformidad</h2>
+      <p>
+        Este sitio se encuentra en proceso de revisión y mejora continua de su
+        accesibilidad. La presente declaración se actualizará cuando finalice la
+        auditoría técnica completa y se incorporen sus conclusiones.
+      </p>
+
+      <h2>Observaciones y contacto</h2>
+      <p>
+        Si encuentras una barrera de acceso, indícanos la página, el contenido
+        afectado y el problema observado para poder revisarlo.
+        {
+          primaryEmail && (
+            <>
+              {' '}
+              Puedes escribir a{' '}
+              <a href={`mailto:${primaryEmail.address}`}>
+                {primaryEmail.address}
+              </a>
+              .
+            </>
+          )
+        }
+      </p>
+      <p>
+        También puedes utilizar el <a href="/contacto">formulario de contacto</a
+        >.
+      </p>
+
+      <h2>Fecha de la declaración</h2>
+      <p>22 de agosto de 2026.</p>
+
+      <h2>Marco de referencia</h2>
+      <p>
+        La revisión toma como referencia las Pautas de Accesibilidad para el
+        Contenido Web (WCAG) y los requisitos aplicables a los sitios web del
+        sector público.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style lang="less">
+  .accessibility-page {
+    padding: var(--section-padding);
+
+    h2 {
+      margin-top: 2rem;
+    }
+
+    h2:first-child {
+      margin-top: 0;
+    }
+
+    p {
+      max-width: 70ch;
+    }
+  }
+</style>

@@ -4,6 +4,20 @@
   const MODAL_CLOSE_SELECTOR = '[data-modal-close]';
   const OPEN_CLASS = 'is-open';
   const BODY_OVERFLOW_DATA_KEY = 'modalPrevOverflow';
+  const FOCUSABLE_SELECTOR = [
+    'a[href]',
+    'area[href]',
+    'button:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    'iframe',
+    'object',
+    'embed',
+    '[contenteditable]',
+    '[tabindex]:not([tabindex="-1"])',
+  ].join(',');
+  const modalState = new WeakMap();
 
   const getBody = () => document.body;
 
@@ -28,6 +42,46 @@
     delete body.dataset[BODY_OVERFLOW_DATA_KEY];
   };
 
+  const getFocusableElements = modal =>
+    Array.from(modal.querySelectorAll(FOCUSABLE_SELECTOR)).filter(element => {
+      const styles = globalThis.getComputedStyle?.(element);
+      return !element.hidden && styles?.visibility !== 'hidden';
+    });
+
+  const focusModal = modal => {
+    const dialog = modal.querySelector('[data-modal-dialog]');
+    const focusable = getFocusableElements(dialog ?? modal);
+    (focusable[0] ?? dialog ?? modal).focus?.();
+  };
+
+  const handleFocusTrap = event => {
+    const modal = event.target.closest?.(
+      `${MODAL_ROOT_SELECTOR}.${OPEN_CLASS}`
+    );
+    if (!modal || event.key !== 'Tab') {
+      return;
+    }
+
+    const focusable = getFocusableElements(
+      modal.querySelector('[data-modal-dialog]') ?? modal
+    );
+    if (!focusable.length) {
+      event.preventDefault();
+      modal.querySelector('[data-modal-dialog]')?.focus();
+      return;
+    }
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
   const openModalElement = modal => {
     if (!modal) {
       return;
@@ -36,7 +90,20 @@
     modal.classList.add(OPEN_CLASS);
     modal.removeAttribute('hidden');
     modal.setAttribute('aria-hidden', 'false');
+    if (!modalState.has(modal)) {
+      const activeElement = document.activeElement;
+      modalState.set(modal, {
+        opener:
+          activeElement && typeof activeElement.focus === 'function'
+            ? activeElement
+            : null,
+      });
+    }
     lockScroll();
+    (globalThis.requestAnimationFrame ?? globalThis.setTimeout)(
+      () => focusModal(modal),
+      0
+    );
   };
 
   const closeModalElement = modal => {
@@ -48,6 +115,11 @@
     modal.setAttribute('hidden', '');
     modal.setAttribute('aria-hidden', 'true');
     unlockScroll();
+    const state = modalState.get(modal);
+    modalState.delete(modal);
+    if (state?.opener?.isConnected) {
+      state.opener.focus();
+    }
   };
 
   const getModalElement = id =>
@@ -93,6 +165,20 @@
       close: MODAL_CLOSE_SELECTOR,
     },
   };
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Tab') {
+      handleFocusTrap(event);
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      const openModal = getOpenModals()[0];
+      if (openModal) {
+        closeModalElement(openModal);
+      }
+    }
+  });
 
   if (!globalThis.ModalUtils) {
     Object.defineProperty(globalThis, 'ModalUtils', {

@@ -5,15 +5,21 @@ const cookieModalId = 'cookie-settings-modal';
 const cookieModalTitleId = 'cookie-settings-title';
 ---
 
-<div id="cookie-banner" class="cookie-banner" style="display: none;">
+<div
+  id="cookie-banner"
+  class="cookie-banner"
+  style="display: none;"
+  role="region"
+  aria-label="Aviso de cookies"
+>
   <div class="cookie-banner-content">
     <div class="cookie-banner-text">
       <h3>Gestión de Cookies</h3>
       <p>
         Este sitio web utiliza cookies para mejorar su experiencia de
-        navegación. Las cookies analíticas de Google Analytics nos
-        ayudan a entender cómo interactúan los visitantes con el sitio y
-        detectar errores técnicos.
+        navegación. Las cookies analíticas de Google Analytics nos ayudan a
+        entender cómo interactúan los visitantes con el sitio y detectar errores
+        técnicos.
       </p>
       <p class="cookie-banner-link">
         <a href="/politica-de-cookies" target="_blank"
@@ -22,16 +28,25 @@ const cookieModalTitleId = 'cookie-settings-title';
       </p>
     </div>
     <div class="cookie-banner-buttons">
-      <button id="accept-all-cookies" class="cookie-btn cookie-btn-accept">
+      <button
+        type="button"
+        id="accept-all-cookies"
+        class="cookie-btn cookie-btn-accept"
+      >
         Aceptar todas
       </button>
       <button
+        type="button"
         id="accept-necessary-only"
         class="cookie-btn cookie-btn-necessary"
       >
         Solo necesarias
       </button>
-      <button id="cookie-settings" class="cookie-btn cookie-btn-settings">
+      <button
+        type="button"
+        id="cookie-settings"
+        class="cookie-btn cookie-btn-settings"
+      >
         Configurar
       </button>
     </div>
@@ -83,13 +98,16 @@ const cookieModalTitleId = 'cookie-settings-title';
       <p class="cookie-category-description">
         Estas cookies nos permiten analizar el uso del sitio web para mejorar su
         rendimiento y experiencia de usuario, además de detectar errores de
-        forma proactiva. Utilizamos Google Analytics para estos
-        propósitos.
+        forma proactiva. Utilizamos Google Analytics para estos propósitos.
       </p>
     </div>
   </div>
   <div class="cookie-modal-footer">
-    <button id="save-cookie-preferences" class="cookie-btn cookie-btn-accept">
+    <button
+      type="button"
+      id="save-cookie-preferences"
+      class="cookie-btn cookie-btn-accept"
+    >
       Guardar preferencias
     </button>
   </div>

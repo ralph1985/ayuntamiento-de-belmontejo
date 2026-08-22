@@ -7,7 +7,9 @@ test.describe('Buscador municipal', () => {
   test('permite buscar, navegar y conservar resultados', async ({ page }) => {
     await page.goto('/buscar', { waitUntil: 'networkidle' });
 
-    const searchInput = page.getByPlaceholder('Buscar en noticias y bandos...');
+    const searchInput = page.getByPlaceholder(
+      'Buscar en noticias, bandos y proyectos...'
+    );
     await searchInput.click();
     await searchInput.fill('vandalismo');
 
