@@ -2,22 +2,29 @@
 import { getCollection } from 'astro:content';
 import { formatDate } from '@js/utils';
 import { getStaticContentImage } from '@data/contentImage';
+import { isCurrentlyFeatured } from '@data/featuredContent';
 import '@styles/sidebar.less';
 
 interface Props {
   type?: 'noticias' | 'bandos' | 'both';
   limit?: number;
+  perTypeLimit?: number;
   excludeCurrentPost?: string;
 }
 
-const { type = 'both', limit = 3, excludeCurrentPost } = Astro.props;
+const {
+  type = 'both',
+  limit = 3,
+  perTypeLimit,
+  excludeCurrentPost,
+} = Astro.props;
 
 let featuredContent: any[] = [];
 
 if (type === 'noticias' || type === 'both') {
   const noticias = await getCollection('noticias');
   const featuredNoticias = noticias
-    .filter(post => post.data.isFeatured === true)
+    .filter(post => isCurrentlyFeatured(post))
     .filter(post =>
       excludeCurrentPost ? post.id !== excludeCurrentPost : true
     )
@@ -28,12 +35,31 @@ if (type === 'noticias' || type === 'both') {
 if (type === 'bandos' || type === 'both') {
   const bandos = await getCollection('bandos');
   const featuredBandos = bandos
-    .filter(post => post.data.isFeatured === true)
+    .filter(post => isCurrentlyFeatured(post))
     .filter(post =>
       excludeCurrentPost ? post.id !== excludeCurrentPost : true
     )
     .map(post => ({ ...post, contentType: 'bandos' }));
   featuredContent.push(...featuredBandos);
+}
+
+if (type === 'both' && perTypeLimit !== undefined) {
+  featuredContent = [
+    ...featuredContent
+      .filter(post => post.contentType === 'noticias')
+      .sort(
+        (a, b) =>
+          new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+      )
+      .slice(0, perTypeLimit),
+    ...featuredContent
+      .filter(post => post.contentType === 'bandos')
+      .sort(
+        (a, b) =>
+          new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+      )
+      .slice(0, perTypeLimit),
+  ];
 }
 
 // Sort by date and limit results

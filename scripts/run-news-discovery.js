@@ -87,7 +87,7 @@ async function createPullRequest({ branch, created, rejected, warnings }) {
     '',
     ...created.map(
       item =>
-        `- **${item.title}** — [fuente](${item.sourceUrl})${item.confidence === 'low' ? ' — **requiere revisión editorial**' : ''}`
+        `- **${item.title}** — [fuente](${item.sourceUrl}) — Destacada: **${item.featured ? 'sí' : 'no'}**${item.featured ? ` hasta ${item.featuredUntil}` : ` (${item.reason})`}${item.confidence === 'low' ? ' — **requiere revisión editorial**' : ''}`
     ),
     ...(rejected.length
       ? [

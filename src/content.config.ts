@@ -21,6 +21,7 @@ const newsCollection = defineCollection({
       imageCredit: z.string().optional(),
       imageCreditHref: z.string().url().optional(),
       isFeatured: z.boolean().optional().default(false),
+      featuredUntil: z.date().optional(),
     }),
 });
 
@@ -44,6 +45,7 @@ const bandosCollection = defineCollection({
       guid: z.string(),
       link: z.string(),
       isFeatured: z.boolean().optional().default(false),
+      featuredUntil: z.date().optional(),
       isUsefulForGuide: z.boolean().optional().default(false),
       guideDecisionSource: z
         .enum(['codex', 'fallback'])

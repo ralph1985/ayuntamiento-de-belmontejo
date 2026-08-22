@@ -11,6 +11,8 @@ const __dirname = path.dirname(__filename);
 export const projectRoot = path.join(__dirname, '..');
 const codexTimeoutMs = 10 * 60 * 1000;
 const maxImageBytes = 12 * 1024 * 1024;
+const featureWindowDays = 30;
+const featureDurationDays = 90;
 const newsDir = path.join(projectRoot, 'src', 'content', 'noticias');
 const sourceImageDir = path.join(
   projectRoot,
@@ -84,6 +86,36 @@ export function normalizeTitle(value) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
+}
+
+export function decideFeatured(candidate, now = new Date()) {
+  const publishedAt = new Date(candidate.date);
+  const ageDays = (now.valueOf() - publishedAt.valueOf()) / 86_400_000;
+  const eligible =
+    candidate.featureRecommendation === true &&
+    candidate.featureConfidence === 'high' &&
+    candidate.localRelevance === 'direct' &&
+    ageDays >= 0 &&
+    ageDays <= featureWindowDays;
+  const featuredUntil = new Date(publishedAt);
+  featuredUntil.setDate(featuredUntil.getDate() + featureDurationDays);
+
+  let reason = candidate.featureReason || 'Codex no ha recomendado destacarla.';
+  if (candidate.featureRecommendation !== true) {
+    reason = 'Codex no la ha propuesto como destacada.';
+  } else if (candidate.featureConfidence !== 'high') {
+    reason = 'La confianza editorial no es alta.';
+  } else if (candidate.localRelevance !== 'direct') {
+    reason = 'La relevancia es provincial y no exclusivamente local.';
+  } else if (ageDays > featureWindowDays) {
+    reason = `La noticia tiene más de ${featureWindowDays} días.`;
+  }
+
+  return {
+    featured: eligible,
+    featuredUntil: featuredUntil.toISOString().slice(0, 10),
+    reason,
+  };
 }
 
 export function parseCodexOutput(output) {
@@ -177,6 +209,11 @@ export function validateCandidates(
         throw new Error('confidence debe ser high, medium o low.');
       }
 
+      const localRelevance = raw.localRelevance ?? 'direct';
+      if (!['direct', 'provincial'].includes(localRelevance)) {
+        throw new Error('localRelevance debe ser direct o provincial.');
+      }
+
       const candidate = {
         title,
         description,
@@ -191,12 +228,22 @@ export function validateCandidates(
         imageAlt:
           typeof raw.imageAlt === 'string' ? raw.imageAlt.trim() : undefined,
         confidence,
+        featureRecommendation: raw.featureRecommendation === true,
+        featureConfidence: confidence,
+        featureReason:
+          typeof raw.featureReason === 'string'
+            ? raw.featureReason.trim()
+            : undefined,
+        localRelevance,
         reviewReason:
           typeof raw.reviewReason === 'string'
             ? raw.reviewReason.trim()
             : undefined,
       };
-      candidates.push(candidate);
+      candidates.push({
+        ...candidate,
+        ...decideFeatured(candidate),
+      });
       seenUrls.add(normalizedSourceUrl);
       seenTitles.add(normalizedCandidateTitle);
     } catch (error) {
@@ -238,9 +285,10 @@ export async function buildDiscoveryPrompt(existingNews, allowedDomains) {
     'Incluye una imagen directa solo si aparece en el artículo y puedes atribuirla claramente al medio; si no, deja imageUrl vacío.',
     `Dominios aceptados inicialmente: ${allowedDomains.join(', ')}.`,
     'Devuelve exclusivamente JSON válido, sin markdown ni texto adicional, con esta forma exacta:',
-    '{"candidates":[{"title":"...","description":"...","bodyMarkdown":"...","sourceName":"...","sourceUrl":"https://...","date":"YYYY-MM-DD","imageUrl":"https://...","imageAlt":"...","confidence":"high|medium|low","reviewReason":"..."}]}',
+    '{"candidates":[{"title":"...","description":"...","bodyMarkdown":"...","sourceName":"...","sourceUrl":"https://...","date":"YYYY-MM-DD","imageUrl":"https://...","imageAlt":"...","confidence":"high|medium|low","localRelevance":"direct|provincial","featureRecommendation":true,"featureReason":"...","reviewReason":"..."}]}',
     'bodyMarkdown debe ser un texto periodístico breve de 2 a 5 párrafos o secciones Markdown, basado solo en la fuente. No incluyas front matter ni enlaces inventados.',
     'Usa confidence low si la relevancia local, la fuente o algún dato importante requiere comprobación manual; en ese caso explica reviewReason.',
+    `Propón featureRecommendation=true solo para una noticia directamente sobre Belmontejo, de alta confianza y publicada en los últimos ${featureWindowDays} días. La decisión final la aplicará una regla automática.`,
     `Noticias ya publicadas, que debes evitar duplicar:\n- ${existingTitles || '(ninguna)'}`,
   ].join('\n');
 }
@@ -404,7 +452,10 @@ export async function materializeCandidates(candidates) {
             `imageCreditHref: ${candidate.sourceUrl}`,
           ]
         : []),
-      'isFeatured: false',
+      `isFeatured: ${candidate.featured}`,
+      ...(candidate.featured
+        ? [`featuredUntil: ${candidate.featuredUntil}`]
+        : []),
       '---',
       '',
     ].join('\n');

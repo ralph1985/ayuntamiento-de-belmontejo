@@ -2,10 +2,11 @@
 import { getCollection } from 'astro:content';
 import { formatDate } from '@js/utils';
 import { getStaticContentImage } from '@data/contentImage';
+import { isCurrentlyFeatured } from '@data/featuredContent';
 import '@styles/sidebar.less';
 
 const posts = await getCollection('noticias');
-const featuredPosts = posts.filter(post => post.data.isFeatured === true);
+const featuredPosts = posts.filter(post => isCurrentlyFeatured(post));
 ---
 
 <h3 class="news-sidebar_widget-header">Noticias Destacadas</h3>

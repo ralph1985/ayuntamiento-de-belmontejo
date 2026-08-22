@@ -1,12 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import {
   buildDiscoveryPrompt,
+  decideFeatured,
   isAllowedDomain,
   normalizeTitle,
   normalizeUrl,
   parseCodexOutput,
   validateCandidates,
 } from '../../scripts/news-discovery.js';
+import { isCurrentlyFeatured } from '../../src/data/featuredContent';
 
 const allowedDomains = ['vocesdecuenca.com', 'eldigitaldecuenca.com'];
 
@@ -63,6 +65,50 @@ describe('news discovery helpers', () => {
       confidence: 'low',
       reviewReason: 'Comprobar la cifra.',
     });
+  });
+
+  it('only auto-features recent, direct, high-confidence recommendations', () => {
+    expect(
+      decideFeatured(
+        {
+          date: '2026-08-01T00:00:00.000Z',
+          featureRecommendation: true,
+          featureConfidence: 'high',
+          localRelevance: 'direct',
+          featureReason: 'Hecho local relevante.',
+        },
+        new Date('2026-08-22T00:00:00.000Z')
+      )
+    ).toMatchObject({ featured: true, featuredUntil: '2026-10-30' });
+
+    expect(
+      decideFeatured(
+        {
+          date: '2026-07-01T00:00:00.000Z',
+          featureRecommendation: true,
+          featureConfidence: 'high',
+          localRelevance: 'direct',
+        },
+        new Date('2026-08-22T00:00:00.000Z')
+      )
+    ).toMatchObject({
+      featured: false,
+      reason: 'La noticia tiene más de 30 días.',
+    });
+  });
+
+  it('expires legacy featured content without requiring a cleanup commit', () => {
+    expect(
+      isCurrentlyFeatured(
+        {
+          data: {
+            date: new Date('2025-08-15T00:00:00.000Z'),
+            isFeatured: true,
+          },
+        },
+        new Date('2026-08-22T00:00:00.000Z')
+      )
+    ).toBe(false);
   });
 
   it('rejects bandos or sources outside the configured media set', () => {

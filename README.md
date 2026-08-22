@@ -149,6 +149,8 @@ El comando `pnpm run discover-news` invoca Codex con búsqueda web para localiza
 
 La automatización reutiliza una autenticación válida de `gh` (`gh auth token`) o, como alternativa, `NEWS_GITHUB_TOKEN` (token fino con permisos de contenidos y pull requests). También reutiliza las variables SMTP de bandos si no se definen las variables `NEWS_*` equivalentes. Para probarla sin escribir archivos, crear ramas ni abrir PR usa `pnpm run discover-news:dry-run`.
 
+Codex también propone si una noticia debe destacarse, pero la decisión final la aplica una regla determinista: solo se destacan noticias directas de Belmontejo, de confianza alta y publicadas en los últimos 30 días. La PR y el correo muestran la decisión, el motivo y la fecha de caducidad. Las destacadas antiguas caducan automáticamente a los 90 días y la portada reserva tres huecos para noticias y tres para bandos.
+
 En el servidor autorizado, programa la ejecución diaria a las 13:00 de Madrid:
 
 ```cron

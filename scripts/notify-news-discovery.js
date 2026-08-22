@@ -20,6 +20,12 @@ export function buildNewsNotificationText({
   const news = created
     .map(item => `- ${item.title}\n  ${item.sourceUrl}`)
     .join('\n');
+  const featured = created
+    .map(
+      item =>
+        `- ${item.title}: ${item.featured ? `sí, hasta ${item.featuredUntil}` : `no (${item.reason})`}`
+    )
+    .join('\n');
   const review = created
     .filter(item => item.confidence === 'low')
     .map(
@@ -35,6 +41,7 @@ export function buildNewsNotificationText({
     '',
     `Noticias propuestas (${created.length}):`,
     news || '- Ninguna',
+    `\nDecisión de destacada:\n${featured || '- Ninguna'}`,
     review ? `\nRevisión editorial pendiente:\n${review}` : '',
     rejected.length
       ? `\nDescartadas:\n${rejected.map(item => `- ${item.title}: ${item.reason}`).join('\n')}`
@@ -59,7 +66,7 @@ export function buildNewsNotificationHtml({
   const rows = created
     .map(
       item =>
-        `<li style="margin:0 0 14px"><a href="${escapeHtml(item.sourceUrl)}" style="color:#155e75;font-weight:700">${escapeHtml(item.title)}</a>${item.confidence === 'low' ? '<br><span style="color:#9a3412">Revisión editorial pendiente</span>' : ''}</li>`
+        `<li style="margin:0 0 14px"><a href="${escapeHtml(item.sourceUrl)}" style="color:#155e75;font-weight:700">${escapeHtml(item.title)}</a><br><span style="color:#52606d">Destacada: ${item.featured ? `sí, hasta ${escapeHtml(item.featuredUntil)}` : `no (${escapeHtml(item.reason)})`}</span>${item.confidence === 'low' ? '<br><span style="color:#9a3412">Revisión editorial pendiente</span>' : ''}</li>`
     )
     .join('');
   const extra = [

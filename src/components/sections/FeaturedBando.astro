@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import { formatDate } from '@js/utils';
 import { getStaticContentImage } from '@data/contentImage';
+import { isCurrentlyFeatured } from '@data/featuredContent';
 import '@styles/sidebar.less';
 
 interface Props {
@@ -12,7 +13,7 @@ const { excludeCurrentPost } = Astro.props;
 
 const posts = await getCollection('bandos');
 const featuredBandos = posts
-  .filter(post => post.data.isFeatured === true)
+  .filter(post => isCurrentlyFeatured(post))
   .filter(post => (excludeCurrentPost ? post.id !== excludeCurrentPost : true));
 ---
 
