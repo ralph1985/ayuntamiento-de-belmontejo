@@ -193,6 +193,13 @@ async function main() {
         ]
       : []),
   ]);
+  await command('pnpm', [
+    'exec',
+    'prettier',
+    '--write',
+    '--',
+    ...result.created.map(item => item.file),
+  ]);
   await command('pnpm', ['run', 'format']);
   await command('pnpm', ['run', 'lint']);
   await command('pnpm', ['run', 'test:unit']);
