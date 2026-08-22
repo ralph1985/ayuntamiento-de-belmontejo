@@ -17,6 +17,8 @@
     "preview": "astro dev",
     "commit": "git-cz",
     "fetch-bandos": "node scripts/fetch-bandos.js",
+    "discover-news": "node scripts/run-news-discovery.js",
+    "discover-news:dry-run": "NEWS_DRY_RUN=1 node scripts/run-news-discovery.js",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
     "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.astro --fix",
     "format": "prettier --check .",

@@ -143,6 +143,20 @@ PATH=/home/rafa/.nvm/versions/node/v22.23.1/bin:/usr/local/bin:/usr/bin:/bin
 
 La hora se interpreta en la zona horaria del servidor. Para comprobar el proceso sin publicar cambios, usa `SYNC_BANDOS_DRY_RUN=1 scripts/sync-bandos-cron.sh`.
 
+## Descubrimiento automático de noticias
+
+El comando `pnpm run discover-news` invoca Codex con búsqueda web para localizar noticias nuevas de Belmontejo en medios fiables de Cuenca y Castilla-La Mancha. La salida se valida contra la colección existente, excluye bandos y genera una única PR revisable; no publica noticias directamente en `main`. Las imágenes solo se incorporan cuando se puede conservar una atribución visible al medio.
+
+La automatización reutiliza una autenticación válida de `gh` (`gh auth token`) o, como alternativa, `NEWS_GITHUB_TOKEN` (token fino con permisos de contenidos y pull requests). También reutiliza las variables SMTP de bandos si no se definen las variables `NEWS_*` equivalentes. Para probarla sin escribir archivos, crear ramas ni abrir PR usa `pnpm run discover-news:dry-run`.
+
+En el servidor autorizado, programa la ejecución diaria a las 13:00 de Madrid:
+
+```cron
+PATH=/home/rafa/.nvm/versions/node/v22.23.1/bin:/usr/local/bin:/usr/bin:/bin
+CRON_TZ=Europe/Madrid
+0 13 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/discover-news-cron.sh >> /tmp/ayuntamiento-belmontejo-news.log 2>&1
+```
+
 ## Calidad y estilo del código
 
 - `pnpm run lint`, `pnpm run lint:fix`, `pnpm run format` y `pnpm run format:write` ayudan a asegurar el estilo (ESLint + Prettier).

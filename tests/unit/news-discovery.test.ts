@@ -1,0 +1,114 @@
+import { describe, expect, it } from 'vitest';
+import {
+  buildDiscoveryPrompt,
+  isAllowedDomain,
+  normalizeTitle,
+  normalizeUrl,
+  parseCodexOutput,
+  validateCandidates,
+} from '../../scripts/news-discovery.js';
+
+const allowedDomains = ['vocesdecuenca.com', 'eldigitaldecuenca.com'];
+
+const candidate = {
+  title: 'Una actividad nueva en Belmontejo',
+  description: 'Una noticia comprobada sobre Belmontejo.',
+  bodyMarkdown:
+    'La actividad reunió a vecinos de Belmontejo.\n\nLa fuente aporta los detalles.',
+  sourceName: 'Voces de Cuenca',
+  sourceUrl: 'https://www.vocesdecuenca.com/provincia/actividad-belmontejo/',
+  date: '2026-08-20',
+  confidence: 'high',
+};
+
+describe('news discovery helpers', () => {
+  it('normalizes URLs and titles for deduplication', () => {
+    expect(
+      normalizeUrl('https://www.vocesdecuenca.com/noticia/?utm_source=x#photo')
+    ).toBe('https://www.vocesdecuenca.com/noticia');
+    expect(normalizeTitle('Árboles y tradición')).toBe('arboles y tradicion');
+  });
+
+  it('allows configured media domains but rejects unrelated sites', () => {
+    expect(
+      isAllowedDomain('https://www.vocesdecuenca.com/noticia', allowedDomains)
+    ).toBe(true);
+    expect(isAllowedDomain('https://example.com/noticia', allowedDomains)).toBe(
+      false
+    );
+  });
+
+  it('parses JSON wrapped in a Codex code fence', () => {
+    expect(parseCodexOutput('```json\n{"candidates":[]}\n```')).toEqual({
+      candidates: [],
+    });
+  });
+
+  it('accepts a valid candidate and preserves a low-confidence review flag', () => {
+    const result = validateCandidates(
+      {
+        candidates: [
+          {
+            ...candidate,
+            confidence: 'low',
+            reviewReason: 'Comprobar la cifra.',
+          },
+        ],
+      },
+      { allowedDomains }
+    );
+    expect(result.rejected).toHaveLength(0);
+    expect(result.candidates[0]).toMatchObject({
+      title: candidate.title,
+      confidence: 'low',
+      reviewReason: 'Comprobar la cifra.',
+    });
+  });
+
+  it('rejects bandos or sources outside the configured media set', () => {
+    const result = validateCandidates(
+      {
+        candidates: [
+          {
+            ...candidate,
+            sourceUrl: 'https://www.bandomovil.com/belmontejo/123',
+          },
+          {
+            ...candidate,
+            title: 'Otra noticia',
+            sourceUrl: 'https://example.com/otra',
+          },
+        ],
+      },
+      { allowedDomains }
+    );
+    expect(result.candidates).toHaveLength(0);
+    expect(result.rejected).toHaveLength(2);
+  });
+
+  it('rejects an existing source URL or title', () => {
+    const result = validateCandidates(
+      { candidates: [candidate, { ...candidate, title: 'Otra noticia' }] },
+      {
+        allowedDomains,
+        existingNews: [
+          { title: candidate.title, sourceUrl: candidate.sourceUrl },
+        ],
+      }
+    );
+    expect(result.candidates).toHaveLength(0);
+    expect(
+      result.rejected.every(item => item.reason.includes('ya existe'))
+    ).toBe(true);
+  });
+
+  it('includes the existing titles and source policy in the prompt', async () => {
+    const prompt = await buildDiscoveryPrompt(
+      [{ title: 'Noticia previa', sourceUrl: candidate.sourceUrl }],
+      allowedDomains
+    );
+    expect(prompt).toContain('Noticia previa');
+    expect(prompt).toContain('vocesdecuenca.com');
+    expect(prompt).toContain('Excluye bandos');
+  });
+});
