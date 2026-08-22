@@ -25,6 +25,11 @@
     "children": []
   },
   {
+    "key": "Guía práctica",
+    "url": "/guia-practica/",
+    "children": []
+  },
+  {
     "key": "Proyectos",
     "url": "/proyectos/",
     "children": [

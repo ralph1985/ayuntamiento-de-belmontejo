@@ -1,0 +1,141 @@
+---
+export const prerender = true;
+
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTA from '@components/sections/CTA.astro';
+import Landing from '@components/sections/Landing.astro';
+import NavIcon from '@components/ui/NavIcon.astro';
+import landingImage from '@data/landingImage';
+import citizenGuide from '@data/citizenGuide.json';
+import { homePage } from '@data/homePage';
+import { formatDate } from '@js/utils';
+
+const usefulKeywords = [
+  'ayuntamiento',
+  'atención',
+  'farmacia',
+  'consultorio',
+  'médico',
+  'servicios sociales',
+  'residuos',
+  'basura',
+  'horario',
+  'vacunación',
+  'pista',
+  'escuela',
+];
+
+const bandos = await getCollection('bandos');
+const usefulBandos = bandos
+  .filter(bando => {
+    const text =
+      `${bando.data.title} ${bando.data.description}`.toLocaleLowerCase('es');
+    return usefulKeywords.some(keyword => text.includes(keyword));
+  })
+  .sort(
+    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+  )
+  .slice(0, 6);
+---
+
+<BaseLayout
+  title="Guía práctica - Ayuntamiento de Belmontejo"
+  description={citizenGuide.intro}
+  preloadedImage={landingImage}
+>
+  <Landing title="Guía práctica" image={landingImage}>
+    <p>{citizenGuide.intro}</p>
+  </Landing>
+
+  <main class="citizen-guide">
+    <div class="site-container site-container--wide citizen-guide__inner">
+      <div class="citizen-guide__meta">
+        <span>Información municipal</span>
+        <span>Revisada el {citizenGuide.lastVerified}</span>
+      </div>
+
+      <div class="citizen-guide__grid">
+        {
+          citizenGuide.sections.map(section => (
+            <section class="citizen-guide__section">
+              <p class="cs-topper">{section.eyebrow}</p>
+              <h2>{section.title}</h2>
+              <p class="citizen-guide__description">{section.description}</p>
+              <div class="citizen-guide__items">
+                {section.items.map(item => (
+                  <article class="citizen-guide__item">
+                    <div>
+                      <h3>{item.label}</h3>
+                      <p>{item.value}</p>
+                    </div>
+                    <a
+                      href={item.href}
+                      target={item.external ? '_blank' : undefined}
+                      rel={item.external ? 'noopener noreferrer' : undefined}
+                    >
+                      {item.action}
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  </article>
+                ))}
+              </div>
+            </section>
+          ))
+        }
+      </div>
+
+      <section
+        class="citizen-guide__notices"
+        aria-labelledby="useful-notices-title"
+      >
+        <div class="citizen-guide__section-heading">
+          <div>
+            <p class="cs-topper">Actualidad vecinal</p>
+            <h2 id="useful-notices-title">Avisos útiles recientes</h2>
+          </div>
+          <a href="/bandos/"
+            >Ver todos los bandos <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <p class="citizen-guide__description">
+          Información seleccionada de los comunicados municipales. Comprueba
+          siempre la fecha y abre el aviso completo para conocer sus detalles.
+        </p>
+        {
+          usefulBandos.length > 0 ? (
+            <div class="citizen-guide__notice-grid">
+              {usefulBandos.map(bando => (
+                <article class="citizen-guide__notice">
+                  <div class="citizen-guide__notice-icon">
+                    <NavIcon name="notice" size={22} />
+                  </div>
+                  <div>
+                    <p class="citizen-guide__notice-date">
+                      {formatDate(bando.data.date)}
+                    </p>
+                    <h3>{bando.data.title}</h3>
+                    <a href={`/bandos/${bando.id}`}>
+                      Leer el bando <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <p class="citizen-guide__empty">
+              No hay avisos útiles recientes disponibles. Consulta todos los
+              bandos para ver el archivo municipal.
+            </p>
+          )
+        }
+      </section>
+    </div>
+  </main>
+
+  <CTA {...homePage.cta} />
+</BaseLayout>
+
+<style lang="less">
+  @import '../styles/pages/guia-practica.less';
+</style>

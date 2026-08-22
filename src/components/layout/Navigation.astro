@@ -23,7 +23,7 @@ const currentEntries = filteredEntries.filter(entry =>
   ['Noticias', 'Bandos'].includes(entry.key)
 );
 const accessEntries = filteredEntries.filter(entry =>
-  ['Inicio', 'Buscador'].includes(entry.key)
+  ['Inicio', 'Guía práctica', 'Buscador'].includes(entry.key)
 );
 const projectsEntry = findEntry('Proyectos');
 const iconForEntry: Record<
@@ -36,6 +36,7 @@ const iconForEntry: Record<
   Proyectos: 'projects',
   Noticias: 'news',
   Bandos: 'notice',
+  'Guía práctica': 'notice',
   Buscador: 'search',
 };
 ---

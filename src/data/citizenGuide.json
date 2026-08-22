@@ -1,0 +1,52 @@
+{
+  "lastVerified": "22 de agosto de 2026",
+  "intro": "Información municipal esencial y avisos útiles para resolver gestiones del día a día.",
+  "sections": [
+    {
+      "eyebrow": "Atención municipal",
+      "title": "Contacta con el Ayuntamiento",
+      "description": "Consulta, presenta una solicitud o pregunta por un servicio municipal.",
+      "items": [
+        {
+          "label": "Teléfono de atención",
+          "value": "969 296 279",
+          "href": "tel:+34969296279",
+          "action": "Llamar"
+        },
+        {
+          "label": "Correo de Alcaldía",
+          "value": "alcaldia@belmontejo.es",
+          "href": "mailto:alcaldia@belmontejo.es",
+          "action": "Escribir"
+        },
+        {
+          "label": "Casa Consistorial",
+          "value": "C/ Pósito, 5 · Belmontejo, Cuenca",
+          "href": "https://maps.app.goo.gl/6uVfjtU9YSU8ubnAA",
+          "action": "Ver ubicación",
+          "external": true
+        }
+      ]
+    },
+    {
+      "eyebrow": "Gestiones online",
+      "title": "Haz tus trámites desde casa",
+      "description": "Accede a la sede electrónica para consultar trámites y presentar solicitudes.",
+      "items": [
+        {
+          "label": "Sede Electrónica",
+          "value": "belmontejo.sedelectronica.es",
+          "href": "https://belmontejo.sedelectronica.es/",
+          "action": "Abrir sede",
+          "external": true
+        },
+        {
+          "label": "Formulario de contacto",
+          "value": "Envía una consulta al Ayuntamiento.",
+          "href": "/contacto/",
+          "action": "Contactar"
+        }
+      ]
+    }
+  ]
+}

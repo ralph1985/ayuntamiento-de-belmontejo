@@ -39,6 +39,11 @@ const navigationScenarios: NavigationScenario[] = [
     expectedHeading: /Bandos/i,
   },
   {
+    label: 'Guía práctica',
+    expectedPath: '/guia-practica',
+    expectedHeading: /Guía práctica/i,
+  },
+  {
     label: 'Camping rural',
     expectedPath: '/proyectos/proyecto-1',
     expectedHeading: /Camping rural sostenible/i,
