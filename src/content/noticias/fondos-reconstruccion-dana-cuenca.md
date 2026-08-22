@@ -3,8 +3,8 @@ title: La provincia de Cuenca recibe 40 millones del Gobierno de España para la
 description: Fondos destinados a la reconstrucción de infraestructuras y ayuda al medio rural tras los estragos de la DANA. Una oportunidad para mejorar las infraestructuras de municipios como Belmontejo.
 author: Redacción
 date: 2024-12-01T16:00:00.000Z
-image: src/assets/images/noticias/imagen-de-prueba-3.jpg
-imageAlt: Reconstrucción en la provincia de Cuenca
+image: src/assets/images/noticias/fondos-reconstruccion-dana-cuenca.jpg
+imageAlt: Contador de agua en una calle de Belmontejo
 isFeatured: true
 ---
 

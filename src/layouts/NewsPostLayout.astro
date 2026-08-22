@@ -11,7 +11,16 @@ import '@styles/markdown.less';
 import { homePage } from '@data/homePage';
 
 const { post } = Astro.props;
-const { title, date, description, image, imageAlt, author } = post.data;
+const {
+  title,
+  date,
+  description,
+  image,
+  imageAlt,
+  imageCredit,
+  imageCreditHref,
+  author,
+} = post.data;
 const staticImage = getStaticContentImage(image);
 const { Content, headings } = await render(post);
 const baseSiteUrl =
@@ -109,6 +118,24 @@ const articleSchema = {
             decoding="async"
           />
         </picture>
+        {
+          imageCredit && (
+            <p class="news-image-credit">
+              <span>Imagen: </span>
+              {imageCreditHref ? (
+                <a
+                  href={imageCreditHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {imageCredit}
+                </a>
+              ) : (
+                imageCredit
+              )}
+            </p>
+          )
+        }
 
         <!-- Mobile Table of Contents -->
         <div class="news-sidebar_widget-wrapper cs-hide-on-desktop">

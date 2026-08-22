@@ -3,8 +3,10 @@ title: Belmontejo dice basta y estudia cancelar sus fiestas si persiste la olead
 description: El Ayuntamiento y la Asociación Cultural denuncian pintadas de odio, conducción temeraria por el casco urbano, roturas de lunas de vehículos y botellones. Si estos actos no cesan, podrían cancelar las fiestas del municipio.
 author: Redacción
 date: 2025-10-15T10:00:00.000Z
-image: src/assets/images/noticias/imagen-de-prueba-3.jpg
-imageAlt: Vista de Belmontejo
+image: src/assets/images/noticias/belmontejo-dice-basta.jpg
+imageAlt: Vista de Belmontejo desde el casco urbano
+imageCredit: Turismo de Castilla-La Mancha
+imageCreditHref: https://www.turismocastillalamancha.es/es/destinos/encanto-rural/cuenca/belmontejo
 isFeatured: true
 ---
 

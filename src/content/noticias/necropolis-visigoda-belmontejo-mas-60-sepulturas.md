@@ -3,8 +3,10 @@ title: Descubierta necrópolis visigoda en Belmontejo con más de 60 sepulturas 
 description: Un blog especializado en arqueología documenta una importante necrópolis visigoda en Belmontejo con más de 80 sepulcros excavados en roca arenisca, datados del siglo VII d.C.
 author: Redacción
 date: 2023-05-24T12:00:00.000Z
-image: src/assets/images/noticias/imagen-de-prueba-3.jpg
-imageAlt: Vista aérea de Belmontejo donde se encuentra la necrópolis visigoda
+image: src/assets/images/noticias/necropolis-visigoda-belmontejo-mas-60-sepulturas.jpg
+imageAlt: Sepulturas excavadas en la roca de la necrópolis visigoda de Belmontejo
+imageCredit: Alma Errante de estos Montes
+imageCreditHref: https://almaerrantedeestosmontes.blogspot.com/2023/05/necropolis-visigoda-de-belmontejo-mas.html
 isFeatured: true
 ---
 

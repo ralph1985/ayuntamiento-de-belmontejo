@@ -18,6 +18,8 @@ const newsCollection = defineCollection({
       date: z.date(),
       image: image(),
       imageAlt: z.string(),
+      imageCredit: z.string().optional(),
+      imageCreditHref: z.string().url().optional(),
       isFeatured: z.boolean().optional().default(false),
     }),
 });
