@@ -7,6 +7,8 @@ category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1626857'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1626857'
 isFeatured: true
+isUsefulForGuide: true
+guideDecisionSource: codex
 ---
 
 AVISO URGENTE

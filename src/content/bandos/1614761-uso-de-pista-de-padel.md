@@ -7,6 +7,8 @@ category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1614761'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1614761'
 isFeatured: true
+isUsefulForGuide: true
+guideDecisionSource: codex
 ---
 
 Desde el Ayuntamiento de Belmontejo queremos recordar que la pista de pádel es una instalación destinada exclusivamente a la práctica de este deporte.

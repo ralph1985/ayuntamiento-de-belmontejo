@@ -7,6 +7,8 @@ category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1618397'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1618397'
 isFeatured: true
+isUsefulForGuide: true
+guideDecisionSource: codex
 ---
 
 El próximo jueves 13 de agosto, el Ayuntamiento permanecerá cerrado.

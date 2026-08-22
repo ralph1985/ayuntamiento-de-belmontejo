@@ -7,6 +7,8 @@ category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1618359'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1618359'
 isFeatured: true
+isUsefulForGuide: false
+guideDecisionSource: codex
 ---
 
 Información Eclipse

@@ -7,6 +7,8 @@ category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1606277'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1606277'
 isFeatured: true
+isUsefulForGuide: true
+guideDecisionSource: codex
 ---
 
 Día: Miércoles, 29 de julio

@@ -7,6 +7,8 @@ category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1612369'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1612369'
 isFeatured: true
+isUsefulForGuide: true
+guideDecisionSource: codex
 ---
 
 📢 El próximo domingo, 9 de agosto la Vuelta Ciclista a Castilla–La Mancha pasará por la carretera N-420, a la altura de Belmontejo.

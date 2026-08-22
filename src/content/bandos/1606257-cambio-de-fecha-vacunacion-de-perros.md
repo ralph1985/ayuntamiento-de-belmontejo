@@ -7,6 +7,8 @@ category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1606257'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1606257'
 isFeatured: true
+isUsefulForGuide: true
+guideDecisionSource: codex
 ---
 
 Cambio de fecha de Vacunación de perros.

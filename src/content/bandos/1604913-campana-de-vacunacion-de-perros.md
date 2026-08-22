@@ -7,6 +7,8 @@ category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1604913'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1604913'
 isFeatured: true
+isUsefulForGuide: false
+guideDecisionSource: codex
 ---
 
 Lugar: Escuelas.
