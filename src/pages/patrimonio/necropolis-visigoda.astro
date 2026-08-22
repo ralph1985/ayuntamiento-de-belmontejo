@@ -4,6 +4,7 @@ export const prerender = true;
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CTA from '@components/sections/CTA.astro';
 import Landing from '@components/sections/Landing.astro';
+import NavIcon from '@components/ui/NavIcon.astro';
 import { homePage } from '@data/homePage';
 
 const sourceUrl =
@@ -78,7 +79,7 @@ const sourceUrl =
           target="_blank"
           rel="noopener noreferrer"
         >
-          Leer la fuente original <span aria-hidden="true">↗</span>
+          Leer la fuente original <NavIcon name="arrow" size={16} />
         </a>
       </aside>
     </div>

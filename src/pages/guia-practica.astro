@@ -75,7 +75,7 @@ const usefulBandos = bandos
                       rel={item.external ? 'noopener noreferrer' : undefined}
                     >
                       {item.action}
-                      <span aria-hidden="true">↗</span>
+                      <NavIcon name="arrow" size={16} />
                     </a>
                   </article>
                 ))}
@@ -94,9 +94,9 @@ const usefulBandos = bandos
             <p class="cs-topper">Actualidad vecinal</p>
             <h2 id="useful-notices-title">Avisos útiles recientes</h2>
           </div>
-          <a href="/bandos/"
-            >Ver todos los bandos <span aria-hidden="true">↗</span></a
-          >
+          <a href="/bandos/">
+            Ver todos los bandos <NavIcon name="arrow" size={16} />
+          </a>
         </div>
         <p class="citizen-guide__description">
           Información seleccionada de los comunicados municipales. Comprueba
@@ -116,7 +116,7 @@ const usefulBandos = bandos
                     </p>
                     <h3>{bando.data.title}</h3>
                     <a href={`/bandos/${bando.id}`}>
-                      Leer el bando <span aria-hidden="true">↗</span>
+                      Leer el bando <NavIcon name="arrow" size={16} />
                     </a>
                   </div>
                 </article>
