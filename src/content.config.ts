@@ -42,6 +42,11 @@ const bandosCollection = defineCollection({
       guid: z.string(),
       link: z.string(),
       isFeatured: z.boolean().optional().default(false),
+      isUsefulForGuide: z.boolean().optional().default(false),
+      guideDecisionSource: z
+        .enum(['codex', 'fallback'])
+        .optional()
+        .default('fallback'),
     }),
 });
 

@@ -11,28 +11,9 @@ import citizenGuide from '@data/citizenGuide.json';
 import { homePage } from '@data/homePage';
 import { formatDate } from '@js/utils';
 
-const usefulKeywords = [
-  'ayuntamiento',
-  'atención',
-  'farmacia',
-  'consultorio',
-  'médico',
-  'servicios sociales',
-  'residuos',
-  'basura',
-  'horario',
-  'vacunación',
-  'pista',
-  'escuela',
-];
-
 const bandos = await getCollection('bandos');
 const usefulBandos = bandos
-  .filter(bando => {
-    const text =
-      `${bando.data.title} ${bando.data.description}`.toLocaleLowerCase('es');
-    return usefulKeywords.some(keyword => text.includes(keyword));
-  })
+  .filter(bando => bando.data.isUsefulForGuide === true)
   .sort(
     (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
   )

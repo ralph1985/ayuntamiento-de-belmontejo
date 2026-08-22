@@ -5,6 +5,10 @@ import path from 'node:path';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
+import {
+  classifyBandosWithCodex,
+  fallbackGuideDecision,
+} from './codex-bando-classifier.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,26 +47,59 @@ export async function fetchBandos() {
       created: 0,
       updated: 0,
       unchanged: 0,
+      classifiedWithCodex: 0,
+      classificationFallback: 0,
     };
 
-    // Generate markdown files for each bando
+    const pending = [];
+
+    // Detect new or changed bandos before asking Codex to classify them.
     for (const item of items) {
       const filename = generateFilename(item.title, item.guid);
       const filePath = path.join(contentDir, `${filename}.md`);
-      const markdownContent = createBandoMarkdown(item);
       const previousContent = fs.existsSync(filePath)
         ? fs.readFileSync(filePath, 'utf8')
         : undefined;
+      const previousDecision = readGuideDecision(previousContent);
+      const unchangedMarkdown = previousDecision
+        ? createBandoMarkdown(item, previousDecision)
+        : undefined;
 
-      if (previousContent === markdownContent) {
+      if (previousContent && previousContent === unchangedMarkdown) {
         result.unchanged += 1;
         continue;
       }
 
+      pending.push({ item, filePath, previousContent });
+    }
+
+    let decisions = new Map();
+    if (pending.length > 0) {
+      try {
+        decisions = await classifyBandosWithCodex(
+          pending.map(({ item }) => ({
+            ...item,
+            content: generateContent(item),
+          }))
+        );
+        result.classifiedWithCodex = pending.length;
+      } catch (error) {
+        console.warn(
+          `Codex no pudo clasificar los bandos; se publicarán fuera de la guía: ${error.message}`
+        );
+        result.classificationFallback = pending.length;
+      }
+    }
+
+    // Generate markdown files for each new or changed bando.
+    for (const { item, filePath, previousContent } of pending) {
+      const decision = decisions.get(item.guid) ?? fallbackGuideDecision;
+      const markdownContent = createBandoMarkdown(item, decision);
+
       fs.writeFileSync(filePath, markdownContent, 'utf8');
       result[previousContent === undefined ? 'created' : 'updated'] += 1;
       console.log(
-        `${previousContent === undefined ? 'Created' : 'Updated'}: ${filename}.md`
+        `${previousContent === undefined ? 'Created' : 'Updated'}: ${path.basename(filePath)}`
       );
     }
 
@@ -71,7 +108,7 @@ export async function fetchBandos() {
     }
 
     console.log(
-      `RSS import completed successfully: ${result.created} created, ${result.updated} updated, ${result.unchanged} unchanged.`
+      `RSS import completed successfully: ${result.created} created, ${result.updated} updated, ${result.unchanged} unchanged, ${result.classifiedWithCodex} classified with Codex, ${result.classificationFallback} fallback.`
     );
     return result;
   } catch (error) {
@@ -80,8 +117,11 @@ export async function fetchBandos() {
   }
 }
 
-export function createBandoMarkdown(item) {
-  const frontmatter = generateFrontmatter(item);
+export function createBandoMarkdown(
+  item,
+  guideDecision = fallbackGuideDecision
+) {
+  const frontmatter = generateFrontmatter(item, guideDecision);
   const content = generateContent(item);
 
   return `---\n${frontmatter}\n---\n\n${content}\n`;
@@ -151,7 +191,10 @@ export function generateFilename(title, guid) {
   return id ? `${id}-${slug}` : slug;
 }
 
-export function generateFrontmatter(item) {
+export function generateFrontmatter(
+  item,
+  guideDecision = fallbackGuideDecision
+) {
   const date = new Date(item.pubDate);
   const isoDate = date.toISOString();
 
@@ -178,7 +221,26 @@ date: ${isoDate}
 category: '${escapeYaml(item.category)}'
 guid: '${escapeYaml(item.guid)}'
 link: '${escapeYaml(item.link)}'
-isFeatured: ${isFeatured}`;
+isFeatured: ${isFeatured}
+isUsefulForGuide: ${guideDecision.isUsefulForGuide}
+guideDecisionSource: ${guideDecision.guideDecisionSource}`;
+}
+
+export function readGuideDecision(markdown) {
+  if (!markdown) return undefined;
+
+  const isUsefulMatch = markdown.match(
+    /^isUsefulForGuide:\s*(true|false)\s*$/m
+  );
+  const sourceMatch = markdown.match(
+    /^guideDecisionSource:\s*(codex|fallback)\s*$/m
+  );
+  if (!isUsefulMatch || !sourceMatch) return undefined;
+
+  return {
+    isUsefulForGuide: isUsefulMatch[1] === 'true',
+    guideDecisionSource: sourceMatch[1],
+  };
 }
 
 export function generateContent(item) {

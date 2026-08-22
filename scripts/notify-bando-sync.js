@@ -30,6 +30,19 @@ export function getBandoTitle(filePath) {
   return match[1].replaceAll("''", "'");
 }
 
+export function getBandoGuideDecision(filePath) {
+  const content = fs.readFileSync(filePath, 'utf8');
+  const isUsefulMatch = content.match(/^isUsefulForGuide:\s*(true|false)\s*$/m);
+  const sourceMatch = content.match(
+    /^guideDecisionSource:\s*(codex|fallback)\s*$/m
+  );
+
+  return {
+    isUsefulForGuide: isUsefulMatch?.[1] === 'true',
+    source: sourceMatch?.[1] ?? 'fallback',
+  };
+}
+
 export function buildBandoUrl(filePath, siteUrl = defaultSiteUrl) {
   const slug = path.basename(filePath, path.extname(filePath));
   return new URL(`/bandos/${slug}/`, siteUrl).toString();
@@ -38,7 +51,12 @@ export function buildBandoUrl(filePath, siteUrl = defaultSiteUrl) {
 export function buildNotificationText({ commit, bandos, siteUrl }) {
   const count = bandos.length;
   const label = count === 1 ? 'bando nuevo' : 'bandos nuevos';
-  const list = bandos.map(bando => `- ${bando.title}: ${bando.url}`).join('\n');
+  const list = bandos
+    .map(
+      bando =>
+        `- ${bando.title}\n  Guía práctica: ${bando.isUsefulForGuide ? 'sí' : 'no'}${bando.source === 'fallback' ? ' (clasificación no disponible)' : ''}\n  ${bando.url}`
+    )
+    .join('\n');
 
   return `Se han publicado ${count} ${label} en la web del Ayuntamiento de Belmontejo.\n\n${list}\n\nConsulta todos los bandos: ${siteUrl}/bandos/\n\nActualización automática · Commit ${commit}`;
 }
@@ -48,8 +66,9 @@ export function buildNotificationHtml({ commit, bandos, siteUrl }) {
   const label = count === 1 ? 'bando nuevo' : 'bandos nuevos';
   const rows = bandos
     .map(
-      bando => `<li style="margin: 0 0 12px;">
+      bando => `<li style="margin: 0 0 16px;">
   <a href="${escapeHtml(bando.url)}" style="color: #155e75; font-weight: 700; text-decoration: none;">${escapeHtml(bando.title)}</a>
+  <br><span style="color: #52606d; font-size: 13px;">Guía práctica: ${bando.isUsefulForGuide ? 'sí' : 'no'}${bando.source === 'fallback' ? ' (clasificación no disponible)' : ''}</span>
 </li>`
     )
     .join('\n');
@@ -94,6 +113,7 @@ export async function getChangedBandos(commit, siteUrl) {
   return files.map(file => ({
     title: getBandoTitle(file),
     url: buildBandoUrl(file, siteUrl),
+    ...getBandoGuideDecision(file),
   }));
 }
 
