@@ -35,7 +35,7 @@ const mapPlaces = placeData.places.filter(
   place =>
     typeof place.latitude === 'number' &&
     typeof place.longitude === 'number' &&
-    typeof place.markerLabel === 'string'
+    typeof place.mapIcon === 'string'
 );
 const mapPlacesJson = mapPlaces.map(place => ({
   id: place.id,
@@ -44,11 +44,16 @@ const mapPlacesJson = mapPlaces.map(place => ({
   description: place.description,
   address: place.address,
   mapIcon: place.mapIcon,
-  markerLabel: place.markerLabel,
   latitude: place.latitude,
   longitude: place.longitude,
   mapsUrl: mapsUrl(place),
 }));
+const mapLegend = [
+  { icon: 'heritage', label: 'Patrimonio' },
+  { icon: 'civic', label: 'Servicios' },
+  { icon: 'pool', label: 'Piscina' },
+  { icon: 'nature', label: 'Naturaleza' },
+];
 ---
 
 <BaseLayout
@@ -100,6 +105,25 @@ const mapPlacesJson = mapPlaces.map(place => ({
           aria-label={mapTitle}
           data-map-container
         >
+        </div>
+        <div class="discover-map-legend" aria-label="Leyenda del mapa">
+          <p>Leyenda</p>
+          <ul>
+            {
+              mapLegend.map(item => (
+                <li>
+                  <span
+                    class:list={[
+                      'discover-map-legend__swatch',
+                      `is-${item.icon}`,
+                    ]}
+                    aria-hidden="true"
+                  />
+                  {item.label}
+                </li>
+              ))
+            }
+          </ul>
         </div>
         <p class="discover-map-status" data-map-status role="status">
           Cargando el mapa...
@@ -178,6 +202,16 @@ const mapPlacesJson = mapPlaces.map(place => ({
                   {place.detailHref && (
                     <a href={place.detailHref}>Más información</a>
                   )}
+                  {typeof place.latitude === 'number' &&
+                    typeof place.longitude === 'number' && (
+                      <a
+                        href="#discover-map"
+                        data-map-focus={place.id}
+                        aria-controls="discover-map"
+                      >
+                        Ver en el mapa
+                      </a>
+                    )}
                 </div>
                 {place.sourceHref && place.sourceLabel && (
                   <p class="place-card__source">
@@ -223,7 +257,6 @@ const mapPlacesJson = mapPlaces.map(place => ({
     description: string;
     address: string;
     mapIcon?: string;
-    markerLabel: string;
     latitude: number;
     longitude: number;
     mapsUrl: string;
@@ -232,6 +265,32 @@ const mapPlacesJson = mapPlaces.map(place => ({
   const mapPlaces = JSON.parse(
     document.getElementById('places-map-data')?.textContent ?? '[]'
   ) as MapPlace[];
+  let focusMapPlace: Function | null = null;
+
+  const markerSvg = (icon: string) => {
+    const paths: Record<string, string[]> = {
+      heritage: [
+        'M4 21h16',
+        'M5 21V10a7 7 0 0 1 14 0v11',
+        'M9 21v-7M15 21v-7M4 10h16',
+      ],
+      civic: [
+        'M3 21h18',
+        'M5 21v-9l7-4 7 4v9',
+        'M8 21v-5h3v5M13 16h3v5M12 8V4M9 6h6',
+      ],
+      pool: [
+        'M3 12c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 4-2',
+        'M3 17c2.5 0 2.5 2 5 2s2.5-2 5-2 2.5 2 5 2 2.5-2 4-2',
+      ],
+      nature: [
+        'M20 4C11 4 5 8 5 15c0 3 2 5 5 5 7 0 10-7 10-16Z',
+        'M4 21c3-5 7-8 13-11',
+      ],
+    };
+    const selectedPaths = paths[icon] ?? paths.civic;
+    return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${selectedPaths.map(path => `<path d="${path}"></path>`).join('')}</svg>`;
+  };
 
   const setMapStatus = (message: string, isError = false) => {
     const status = document.querySelector('[data-map-status]');
@@ -282,10 +341,10 @@ const mapPlacesJson = mapPlaces.map(place => ({
     const markerEntries = mapPlaces.map(place => {
       const icon = L.divIcon({
         className: 'place-map-icon-wrapper',
-        html: `<span class="place-map-icon place-map-icon--${place.mapIcon ?? 'default'}" aria-hidden="true"><span>${place.markerLabel}</span></span>`,
-        iconSize: [36, 44],
-        iconAnchor: [18, 42],
-        popupAnchor: [0, -42],
+        html: `<span class="place-map-icon place-map-icon--${place.mapIcon ?? 'default'}">${markerSvg(place.mapIcon ?? 'civic')}</span>`,
+        iconSize: [48, 56],
+        iconAnchor: [24, 53],
+        popupAnchor: [0, -53],
       });
       const marker = L.marker([place.latitude, place.longitude], {
         icon,
@@ -298,18 +357,42 @@ const mapPlacesJson = mapPlaces.map(place => ({
       return { place, marker };
     });
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
-      maxZoom: 19,
-    })
-      .on('tileerror', () => {
+    let tileLayer = L.tileLayer(
+      'https://tile.opentopomap.org/{z}/{x}/{y}.png',
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, SRTM | Map style &copy; <a href="https://opentopomap.org/">OpenTopoMap</a> (CC-BY-SA)',
+        maxZoom: 17,
+      }
+    ).addTo(map);
+    let usedFallbackTiles = false;
+    tileLayer.on('tileerror', () => {
+      if (usedFallbackTiles) {
         setMapStatus(
           'No se pudieron cargar las teselas del mapa. El listado sigue disponible.',
           true
         );
-      })
-      .addTo(map);
+        return;
+      }
+      usedFallbackTiles = true;
+      tileLayer.remove();
+      const fallbackLayer = L.tileLayer(
+        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+          maxZoom: 19,
+        }
+      );
+      fallbackLayer.on('tileerror', () => {
+        setMapStatus(
+          'No se pudieron cargar las teselas del mapa. El listado sigue disponible.',
+          true
+        );
+      });
+      tileLayer = fallbackLayer.addTo(map);
+      setMapStatus('Usando el mapa base alternativo.');
+    });
 
     if (markerEntries.length > 1) {
       map.fitBounds(
@@ -321,11 +404,37 @@ const mapPlacesJson = mapPlaces.map(place => ({
     }
 
     const filterMap = (category: string) => {
+      const visibleMarkers = markerEntries.filter(
+        ({ place }) => !category || place.category === category
+      );
       markerEntries.forEach(({ place, marker }) => {
         const shouldShow = !category || place.category === category;
         if (shouldShow) marker.addTo(map);
         else map.removeLayer(marker);
       });
+      if (visibleMarkers.length > 1) {
+        map.fitBounds(
+          L.latLngBounds(
+            visibleMarkers.map(({ place }) => [place.latitude, place.longitude])
+          ),
+          { padding: [48, 48] }
+        );
+      } else if (visibleMarkers.length === 1) {
+        const { place } = visibleMarkers[0];
+        map.setView([place.latitude, place.longitude], 17);
+      }
+      setMapStatus(
+        visibleMarkers.length
+          ? `${visibleMarkers.length} ${visibleMarkers.length === 1 ? 'ubicación verificada' : 'ubicaciones verificadas'} en el mapa.`
+          : 'No hay ubicaciones verificadas en esta categoría. Consulta el listado.'
+      );
+    };
+
+    focusMapPlace = id => {
+      const entry = markerEntries.find(({ place }) => place.id === id);
+      if (!entry) return;
+      map.setView([entry.place.latitude, entry.place.longitude], 17);
+      entry.marker.openPopup();
     };
 
     document
@@ -338,6 +447,23 @@ const mapPlacesJson = mapPlaces.map(place => ({
       `${markerEntries.length} ubicaciones verificadas. Pulsa un marcador para consultar sus datos.`
     );
   };
+
+  document.addEventListener('click', event => {
+    const target = event.target as HTMLElement;
+    const focusLink = target.closest<HTMLElement>('[data-map-focus]');
+    const placeId = focusLink?.dataset.mapFocus;
+    if (!placeId) return;
+    event.preventDefault();
+    initializeMap();
+    focusMapPlace?.(placeId);
+    document.querySelector('[data-map-container]')?.scrollIntoView({
+      behavior: globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')
+        .matches
+        ? 'auto'
+        : 'smooth',
+      block: 'center',
+    });
+  });
 
   const observeMap = () => {
     const container = document.querySelector('[data-map-container]');

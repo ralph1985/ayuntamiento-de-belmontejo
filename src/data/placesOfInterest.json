@@ -22,7 +22,6 @@
       "sourceLabel": "Turismo de Castilla-La Mancha",
       "sourceHref": "https://www.turismocastillalamancha.es/es/destinos/encanto-rural/cuenca/belmontejo",
       "mapIcon": "heritage",
-      "markerLabel": "P",
       "latitude": 39.8223706,
       "longitude": -2.3464065,
       "coordinateSource": "https://www.openstreetmap.org/way/369543545"
@@ -35,7 +34,6 @@
       "address": "C/ Pósito, 5, 16779 Belmontejo",
       "mapsUrl": "https://maps.app.goo.gl/6uVfjtU9YSU8ubnAA",
       "mapIcon": "civic",
-      "markerLabel": "A",
       "latitude": 39.8210581,
       "longitude": -2.3452782,
       "coordinateSource": "https://www.openstreetmap.org/way/1500211305"
@@ -100,7 +98,6 @@
       "sourceLabel": "Aviso municipal sobre la piscina",
       "sourceHref": "https://www.bandomovil.com/belmontejo",
       "mapIcon": "pool",
-      "markerLabel": "P",
       "latitude": 39.8211,
       "longitude": -2.3490266,
       "coordinateSource": "https://www.openstreetmap.org/way/998233833"
