@@ -53,7 +53,7 @@ test.describe('FAQ accordion interactions', () => {
   test('mantiene una instancia aislada en Sobre el pueblo', async ({
     page,
   }) => {
-    await page.goto('/sobre-el-pueblo', { waitUntil: 'networkidle' });
+    await page.goto('/sobre-el-pueblo', { waitUntil: 'domcontentloaded' });
 
     const faqSection = page.locator('#faq-about');
     await expect(faqSection).toBeVisible();

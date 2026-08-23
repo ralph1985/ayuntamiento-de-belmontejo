@@ -51,7 +51,20 @@ jobs:
             curl -s -o /dev/null -w "HTTP %{http_code}\n" "$base$path"
           done
 
-      - name: Run critical E2E tests against production
+      - name: Run functional E2E tests with deterministic fixtures
+        env:
+          ASTRO_DEV_BACKGROUND: '0'
+        run: pnpm run test:e2e -- tests/e2e/specs/flows
+
+      - name: Verify critical production routes
         env:
           PLAYWRIGHT_BASE_URL: https://ayuntamiento-de-belmontejo.vercel.app
-        run: pnpm exec playwright test tests/e2e/specs/flows --config=playwright.config.ts
+        run: |
+          for path in / /noticias /bandos /sobre-el-pueblo /buscar; do
+            status=$(curl -s -o /dev/null -w "%{http_code}" "$PLAYWRIGHT_BASE_URL$path")
+            if [ "$status" != "200" ]; then
+              echo "Production route $path returned HTTP $status" >&2
+              exit 1
+            fi
+            echo "Production route $path returned HTTP $status"
+          done

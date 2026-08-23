@@ -7,19 +7,24 @@ test.describe('Consulta de noticias', () => {
     await page.goto('/noticias', { waitUntil: 'domcontentloaded' });
 
     const summary = page.locator('[data-results-summary]');
+    const results = page.locator('[data-archive-result]');
+    const totalResults = await results.count();
     await expect(summary).toContainText(
-      'Mostrando 8 de 10 noticias publicadas'
+      `Mostrando 8 de ${totalResults} noticias publicadas`
     );
     await expect(
       page.locator('[data-archive-result]:not([hidden])')
-    ).toHaveCount(8);
+    ).toHaveCount(Math.min(8, totalResults));
 
-    await page.getByRole('button', { name: 'Ver más' }).click();
-    await expect(summary).toContainText('10 noticias publicadas');
+    const more = page.getByRole('button', { name: 'Ver más' });
+    while (await more.isVisible()) {
+      await more.click();
+    }
+    await expect(summary).toHaveText(`${totalResults} noticias publicadas`);
     await expect(
       page.locator('[data-archive-result]:not([hidden])')
-    ).toHaveCount(10);
-    await expect(page.getByRole('button', { name: 'Ver más' })).toBeHidden();
+    ).toHaveCount(totalResults);
+    await expect(more).toBeHidden();
   });
 
   test('filtra por texto y conserva el estado en la URL', async ({ page }) => {

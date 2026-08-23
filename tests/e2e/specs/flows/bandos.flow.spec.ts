@@ -8,9 +8,10 @@ test.describe('Consulta de bandos', () => {
 
     const search = page.getByLabel('Buscar en los bandos');
     const summary = page.locator('[data-results-summary]');
-    const results = page.locator('[data-bandos-result]');
-    const visibleResults = page.locator('[data-bandos-result]:not([hidden])');
+    const results = page.locator('[data-archive-result]');
+    const visibleResults = page.locator('[data-archive-result]:not([hidden])');
     const more = page.getByRole('button', { name: 'Ver más' });
+    await expect(results.first()).toBeAttached();
     const totalResults = await results.count();
 
     await expect(summary).toContainText(
@@ -28,9 +29,9 @@ test.describe('Consulta de bandos', () => {
 
     await expect(visibleResults).toHaveCount(totalResults);
     await expect(summary).toHaveText(`${totalResults} bandos publicados`);
-    await search.fill('ayuntamiento cerrado');
+    await search.fill('farmacia cerrada');
 
-    await expect(page).toHaveURL(/\/bandos\?q=ayuntamiento\+cerrado$/);
+    await expect(page).toHaveURL(/\/bandos\?q=farmacia\+cerrada$/);
     await expect(summary).toContainText('1 bando publicado');
     await expect(visibleResults).toHaveCount(1);
     await expect(more).toBeHidden();
