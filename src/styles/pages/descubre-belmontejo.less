@@ -133,9 +133,11 @@
 }
 
 .place-map-marker {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   position: relative;
-  width: 3rem;
-  height: 3rem;
+  width: max-content;
 }
 
 .place-map-icon {
@@ -165,9 +167,6 @@
 }
 
 .place-map-label {
-  position: absolute;
-  top: calc(100% + 0.35rem);
-  left: 50%;
   max-width: 16rem;
   padding: 0.35rem 0.55rem;
   color: #101817;
@@ -179,7 +178,6 @@
   font-weight: 800;
   line-height: 1.2;
   text-align: center;
-  transform: translateX(-50%);
   white-space: normal;
 }
 
