@@ -24,6 +24,7 @@ const {
 const staticImage = getStaticContentImage(image);
 const resolvedImageAlt = imageAlt ?? title;
 const { Content, headings } = await render(post);
+const hasTableOfContents = headings.some(heading => heading.depth <= 3);
 const baseSiteUrl =
   Astro.site && Astro.site.length > 0 ? Astro.site : contactInfo.entity.domain;
 const normalizedBaseUrl = baseSiteUrl.endsWith('/')
@@ -142,14 +143,18 @@ const articleSchema = {
         }
 
         <!-- Mobile Table of Contents -->
-        <div class="news-sidebar_widget-wrapper cs-hide-on-desktop">
-          <TableOfContents
-            headings={headings}
-            levels={3}
-            hideOnMobile={false}
-            noWrapper={true}
-          />
-        </div>
+        {
+          hasTableOfContents && (
+            <div class="news-sidebar_widget-wrapper cs-hide-on-desktop">
+              <TableOfContents
+                headings={headings}
+                levels={3}
+                hideOnMobile={false}
+                noWrapper={true}
+              />
+            </div>
+          )
+        }
         <!--Markdown content-->
         <div id="news-content">
           <Content />
