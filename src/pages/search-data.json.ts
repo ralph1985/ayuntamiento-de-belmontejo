@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro';
 import { createHash } from 'node:crypto';
 import { getCollection } from 'astro:content';
 import { projects } from '@data/projects';
+import placeData from '@data/placesOfInterest.json';
 
 // Generate search index at build time so it can be served as a static asset.
 export const prerender = true;
@@ -52,6 +53,20 @@ export const GET: APIRoute = async () => {
       ].join(' '),
       tags: ['proyecto', project.eyebrow],
     })),
+    {
+      id: 'descubre-belmontejo',
+      type: 'lugar',
+      title: 'Descubre Belmontejo',
+      description:
+        'Lugares de interés, patrimonio, naturaleza y servicios para descubrir Belmontejo.',
+      author: 'Ayuntamiento de Belmontejo',
+      date: new Date(placeData.lastVerified).toISOString(),
+      url: '/descubre-belmontejo/',
+      content: placeData.places
+        .map(place => `${place.name} ${place.category} ${place.description}`)
+        .join(' '),
+      tags: ['lugar', 'patrimonio', 'naturaleza', 'turismo'],
+    },
   ];
 
   searchData.sort(

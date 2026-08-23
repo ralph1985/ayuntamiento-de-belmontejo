@@ -23,6 +23,7 @@ export default defineConfig({
         'https://ayuntamiento-de-belmontejo.vercel.app/noticias/',
         'https://ayuntamiento-de-belmontejo.vercel.app/bandos/',
         'https://ayuntamiento-de-belmontejo.vercel.app/proyectos/',
+        'https://ayuntamiento-de-belmontejo.vercel.app/descubre-belmontejo/',
       ],
       serialize(item) {
         // Configurar prioridades y frecuencias según el tipo de página

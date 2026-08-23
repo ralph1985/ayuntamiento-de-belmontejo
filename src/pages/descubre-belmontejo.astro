@@ -1,0 +1,257 @@
+---
+export const prerender = true;
+
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Landing from '@components/sections/Landing.astro';
+import CTA from '@components/sections/CTA.astro';
+import NavIcon from '@components/ui/NavIcon.astro';
+import { homePage } from '@data/homePage';
+import placeData from '@data/placesOfInterest.json';
+import landingImage from '@data/landingImage';
+
+const mapTitle = 'Mapa de lugares de interés de Belmontejo';
+const pageTitle = 'Descubre Belmontejo - Ayuntamiento de Belmontejo';
+const pageDescription =
+  'Lugares de interés, patrimonio, naturaleza y servicios para descubrir Belmontejo, en la provincia de Cuenca.';
+const mapsUrl = (place: (typeof placeData.places)[number]) =>
+  place.mapsUrl ??
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.mapsQuery ?? `${place.name}, Belmontejo, Cuenca`)}`;
+const placeSchema = placeData.places.map(place => ({
+  '@type': 'TouristAttraction',
+  name: place.name,
+  description: place.description,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Belmontejo',
+    addressRegion: 'Cuenca',
+    addressCountry: 'ES',
+  },
+  url: new URL(
+    place.detailHref ?? `/descubre-belmontejo/#${place.id}`,
+    'https://belmontejo.conquense.dev/'
+  ).href,
+}));
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  preloadedImage={landingImage}
+>
+  <Landing title="Descubre Belmontejo" image={landingImage}>
+    <p>
+      Patrimonio, naturaleza y lugares de la vida cotidiana para conocer el
+      municipio a tu ritmo.
+    </p>
+  </Landing>
+
+  <section class="discover-intro" aria-labelledby="discover-intro-title">
+    <div class="site-container site-container--reading">
+      <span class="cs-topper">Lugares de interés</span>
+      <h2 class="cs-title" id="discover-intro-title">
+        Un pueblo para recorrerlo despacio
+      </h2>
+      <p class="cs-text">
+        Consulta el mapa y elige un lugar. La información se revisa antes de
+        incorporarla y los negocios locales pueden cambiar sus horarios.
+      </p>
+    </div>
+  </section>
+
+  <section class="discover-map-section" aria-labelledby="discover-map-title">
+    <div class="site-container site-container--wide">
+      <div class="discover-map-section__heading">
+        <div>
+          <span class="cs-topper">Mapa</span>
+          <h2 id="discover-map-title">Lugares de interés</h2>
+        </div>
+        <a
+          class="discover-map-section__link"
+          href={placeData.mapLink}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Abrir en Google Maps <NavIcon name="arrow" size={17} />
+        </a>
+      </div>
+      <div class="discover-map-wrapper">
+        <iframe
+          class="discover-map"
+          src={placeData.mapEmbedSrc}
+          title={mapTitle}
+          width="100%"
+          height="450"
+          loading="lazy"
+          allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <p class="discover-map-note">
+        El mapa muestra la ubicación general de Belmontejo. Usa el listado
+        inferior para abrir cada lugar en Google Maps.
+      </p>
+    </div>
+  </section>
+
+  <section class="discover-places" aria-labelledby="places-title">
+    <div class="site-container site-container--wide">
+      <div class="discover-places__heading">
+        <div>
+          <span class="cs-topper">Explora</span>
+          <h2 id="places-title">Qué ver y dónde parar</h2>
+        </div>
+        <p
+          class="discover-places__summary"
+          data-places-summary
+          aria-live="polite"
+        >
+          {placeData.places.length} lugares
+        </p>
+      </div>
+
+      <form class="discover-filters" data-discover-filters role="search">
+        <label for="place-category">Filtrar por tipo</label>
+        <select id="place-category" name="categoria" data-place-category>
+          {
+            placeData.categories.map(category => (
+              <option value={category === 'Todos' ? '' : category}>
+                {category}
+              </option>
+            ))
+          }
+        </select>
+        <button type="button" class="discover-filters__clear" data-place-clear>
+          Mostrar todos
+        </button>
+      </form>
+
+      <div class="discover-places__grid" data-place-results>
+        {
+          placeData.places.map(place => (
+            <article
+              class="place-card"
+              id={place.id}
+              data-place-card
+              data-category={place.category}
+            >
+              {place.image && (
+                <img
+                  src={place.image}
+                  alt={place.imageAlt ?? ''}
+                  loading="lazy"
+                  width="640"
+                  height="360"
+                />
+              )}
+              <div class="place-card__body">
+                <p class="place-card__category">{place.category}</p>
+                <h3>{place.name}</h3>
+                <p>{place.description}</p>
+                <p class="place-card__address">{place.address}</p>
+                <div class="place-card__actions">
+                  <a
+                    href={mapsUrl(place)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Cómo llegar <NavIcon name="arrow" size={16} />
+                  </a>
+                  {place.detailHref && (
+                    <a href={place.detailHref}>Más información</a>
+                  )}
+                </div>
+                {place.sourceHref && place.sourceLabel && (
+                  <p class="place-card__source">
+                    Fuente:{' '}
+                    <a
+                      href={place.sourceHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {place.sourceLabel}
+                    </a>
+                  </p>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+      <p class="discover-empty" data-place-empty hidden>
+        No hay lugares en esta categoría.
+      </p>
+    </div>
+  </section>
+
+  <CTA {...homePage.cta} />
+</BaseLayout>
+
+<script>
+  const initializeDiscover = () => {
+    const root = document.querySelector('[data-discover-filters]');
+    if (!root || root.dataset.initialized) return;
+    root.dataset.initialized = 'true';
+
+    const category = root.querySelector('[data-place-category]');
+    const clear = root.querySelector('[data-place-clear]');
+    const cards = [...document.querySelectorAll('[data-place-card]')];
+    const summary = document.querySelector('[data-places-summary]');
+    const empty = document.querySelector('[data-place-empty]');
+    const params = new URLSearchParams(globalThis.location.search);
+    const initialCategory = params.get('categoria') ?? '';
+
+    if (
+      category &&
+      [...category.options].some(option => option.value === initialCategory)
+    ) {
+      category.value = initialCategory;
+    }
+
+    const render = (updateHistory = true) => {
+      const selectedCategory = category?.value ?? '';
+      const matchingCards = cards.filter(
+        card => !selectedCategory || card.dataset.category === selectedCategory
+      );
+      cards.forEach(card => {
+        card.hidden = !matchingCards.includes(card);
+      });
+      if (summary)
+        summary.textContent = `${matchingCards.length} ${matchingCards.length === 1 ? 'lugar' : 'lugares'}`;
+      if (empty) empty.hidden = matchingCards.length > 0;
+      if (updateHistory) {
+        const nextUrl = new URL(globalThis.location.href);
+        if (selectedCategory)
+          nextUrl.searchParams.set('categoria', selectedCategory);
+        else nextUrl.searchParams.delete('categoria');
+        globalThis.history.replaceState({}, '', nextUrl);
+      }
+    };
+
+    category?.addEventListener('change', () => render());
+    clear?.addEventListener('click', () => {
+      if (category) category.value = '';
+      render();
+    });
+    render(false);
+  };
+
+  document.addEventListener('astro:page-load', initializeDiscover);
+  initializeDiscover();
+</script>
+
+<script
+  type="application/ld+json"
+  is:inline
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'TouristDestination',
+    name: 'Belmontejo',
+    description: pageDescription,
+    url: new URL('/descubre-belmontejo/', 'https://belmontejo.conquense.dev/')
+      .href,
+    touristAttraction: placeSchema,
+  })}
+/>
+
+<style lang="less">
+  @import '../styles/pages/descubre-belmontejo.less';
+</style>

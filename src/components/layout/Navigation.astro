@@ -17,7 +17,9 @@ const isActiveLink = (url: string | undefined) =>
 const findEntry = (key: string) =>
   filteredEntries.find(entry => entry.key === key);
 const discoverEntries = filteredEntries.filter(entry =>
-  ['Sobre el pueblo', 'Necrópolis visigoda'].includes(entry.key)
+  ['Sobre el pueblo', 'Descubre Belmontejo', 'Necrópolis visigoda'].includes(
+    entry.key
+  )
 );
 const currentEntries = filteredEntries.filter(entry =>
   ['Noticias', 'Bandos'].includes(entry.key)
@@ -32,6 +34,7 @@ const iconForEntry: Record<
 > = {
   Inicio: 'home',
   'Sobre el pueblo': 'village',
+  'Descubre Belmontejo': 'heritage',
   'Necrópolis visigoda': 'heritage',
   Proyectos: 'projects',
   Noticias: 'news',

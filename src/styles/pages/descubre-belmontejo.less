@@ -1,0 +1,226 @@
+.discover-intro {
+  padding: var(--section-padding);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
+
+  .cs-title {
+    max-width: 38rem;
+    margin: 0.75rem auto 1rem;
+  }
+
+  .cs-text {
+    max-width: 42rem;
+    margin-inline: auto;
+  }
+}
+
+.discover-map-section,
+.discover-places {
+  padding: clamp(2.5rem, 6vw, 5rem) 0;
+}
+
+.discover-map-section {
+  background: var(--color-bg-subtle);
+}
+
+.discover-map-section__heading,
+.discover-places__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin-top: 0.5rem;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+  }
+}
+
+.discover-map-section__link,
+.place-card__actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+}
+
+.discover-map-wrapper {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+.discover-map {
+  display: block;
+  border: 0;
+}
+
+.discover-map-note {
+  margin-top: 0.75rem;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.discover-places__summary {
+  color: var(--color-text-muted);
+  font-size: 0.9375rem;
+}
+
+.discover-filters {
+  display: flex;
+  align-items: end;
+  gap: 0.75rem 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+
+  label {
+    display: grid;
+    gap: 0.35rem;
+    color: var(--color-text);
+    font-size: 0.8125rem;
+    font-weight: 700;
+  }
+
+  select {
+    min-width: 14rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 0.75rem;
+    color: var(--color-text);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font: inherit;
+  }
+}
+
+.discover-filters__clear {
+  min-height: 2.75rem;
+  padding: 0.625rem 0.875rem;
+  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--color-link);
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-weight: 700;
+}
+
+.discover-places__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.place-card {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+
+  &[hidden] {
+    display: none;
+  }
+
+  > img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+}
+
+.place-card__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 17rem;
+  padding: 1.25rem;
+
+  h3 {
+    margin: 0.4rem 0 0.6rem;
+    font-size: 1.35rem;
+    line-height: 1.15;
+  }
+
+  > p:not(.place-card__category):not(.place-card__address):not(
+      .place-card__source
+    ) {
+    color: var(--color-text-muted);
+  }
+}
+
+.place-card__category {
+  margin: 0;
+  color: var(--color-territory-strong);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.place-card__address {
+  margin-top: 0.75rem;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.place-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+}
+
+.place-card__source {
+  margin-top: 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+.discover-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 900px) {
+  .discover-places__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .discover-map-section__heading,
+  .discover-places__heading {
+    display: block;
+  }
+
+  .discover-map-section__link {
+    margin-top: 1rem;
+  }
+
+  .discover-filters {
+    align-items: stretch;
+    flex-direction: column;
+
+    select {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+
+  .discover-places__grid {
+    grid-template-columns: 1fr;
+  }
+}

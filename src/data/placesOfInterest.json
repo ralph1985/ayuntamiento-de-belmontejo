@@ -1,0 +1,129 @@
+{
+  "lastVerified": "2026-08-23",
+  "mapEmbedSrc": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3064.332427429821!2d-2.3477586732267373!3d39.82196387154136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd67fb1cf1bc9843%3A0x3ee48dbef9ea2994!2s16779%20Belmontejo%2C%20Cuenca!5e0!3m2!1ses!2ses!4v1761373475830!5m2!1ses!2ses",
+  "mapLink": "https://www.google.com/maps/search/?api=1&query=Belmontejo%2C+Cuenca",
+  "categories": [
+    "Todos",
+    "Patrimonio",
+    "Naturaleza",
+    "Servicios",
+    "Educación",
+    "Reciclaje"
+  ],
+  "places": [
+    {
+      "id": "iglesia-nuestra-senora-asuncion",
+      "name": "Iglesia de Nuestra Señora de la Asunción",
+      "category": "Patrimonio",
+      "description": "La iglesia forma parte del paisaje cotidiano y de la memoria histórica de Belmontejo.",
+      "address": "Casco urbano de Belmontejo",
+      "mapsQuery": "Iglesia de Nuestra Señora de la Asunción, Belmontejo, Cuenca",
+      "image": "/assets/images/belmontejo-patrimonio.webp",
+      "imageAlt": "Iglesia de Nuestra Señora de la Asunción y casas de Belmontejo",
+      "sourceLabel": "Turismo de Castilla-La Mancha",
+      "sourceHref": "https://www.turismocastillalamancha.es/es/destinos/encanto-rural/cuenca/belmontejo",
+      "mapIcon": "heritage"
+    },
+    {
+      "id": "ayuntamiento-plaza",
+      "name": "Ayuntamiento y plaza del pueblo",
+      "category": "Servicios",
+      "description": "El centro administrativo y uno de los puntos de referencia para conocer el casco urbano.",
+      "address": "C/ Pósito, 5, 16779 Belmontejo",
+      "mapsUrl": "https://maps.app.goo.gl/6uVfjtU9YSU8ubnAA",
+      "mapIcon": "civic"
+    },
+    {
+      "id": "fuente-de-la-lobera",
+      "name": "Fuente de La Lobera",
+      "category": "Naturaleza",
+      "description": "Una de las fuentes del entorno cercano que forma parte del paisaje y de la vida cotidiana del municipio.",
+      "address": "Entorno rural de Belmontejo",
+      "mapsQuery": "Fuente de La Lobera, Belmontejo, Cuenca",
+      "mapIcon": "nature"
+    },
+    {
+      "id": "fuente-de-abajo",
+      "name": "Fuente de Abajo",
+      "category": "Naturaleza",
+      "description": "Un lugar tradicional del municipio para acercarse al paisaje de Belmontejo.",
+      "address": "Belmontejo, Cuenca",
+      "mapsQuery": "Fuente de Abajo, Belmontejo, Cuenca",
+      "mapIcon": "nature"
+    },
+    {
+      "id": "necropolis-visigoda",
+      "name": "Necrópolis visigoda",
+      "category": "Patrimonio",
+      "description": "Yacimiento altomedieval con sepulturas excavadas en la roca arenisca, situado en el entorno del río Belvís.",
+      "address": "Entorno rural de Belmontejo",
+      "mapsQuery": "Necrópolis visigoda de Belmontejo, Cuenca",
+      "detailHref": "/patrimonio/necropolis-visigoda/",
+      "image": "/assets/images/necropolis-belmontejo.jpg",
+      "imageAlt": "Sepulturas excavadas en la roca de la necrópolis de Belmontejo",
+      "mapIcon": "heritage"
+    },
+    {
+      "id": "senda-molino-abajo",
+      "name": "Senda del Molino de Abajo",
+      "category": "Naturaleza",
+      "description": "Un camino del entorno local para recorrer con calma los campos y paisajes próximos al municipio.",
+      "address": "Entorno rural de Belmontejo",
+      "mapsQuery": "Senda del Molino de Abajo, Belmontejo, Cuenca",
+      "mapIcon": "nature"
+    },
+    {
+      "id": "bar-rosi",
+      "name": "Bar Rosi",
+      "category": "Servicios",
+      "description": "Bar local para hacer una parada durante la visita. Conviene confirmar horarios antes de desplazarse.",
+      "address": "C. de D. Francisco Argiles, 12, 16779 Belmontejo",
+      "mapsQuery": "Bar Rosi, C. de D. Francisco Argiles, 12, Belmontejo, Cuenca",
+      "sourceLabel": "Directorio local consultado",
+      "sourceHref": "https://es.cybo.com/ES/belmontejo/restaurantes/",
+      "mapIcon": "bar"
+    },
+    {
+      "id": "piscina-municipal",
+      "name": "Piscina municipal",
+      "category": "Servicios",
+      "description": "Instalación municipal para el ocio y el baño durante la temporada de apertura.",
+      "address": "Belmontejo, Cuenca",
+      "mapsQuery": "Piscina municipal, Belmontejo, Cuenca",
+      "sourceLabel": "Aviso municipal sobre la piscina",
+      "sourceHref": "https://www.bandomovil.com/belmontejo",
+      "mapIcon": "pool"
+    },
+    {
+      "id": "farmacia",
+      "name": "Farmacia de Belmontejo",
+      "category": "Servicios",
+      "description": "Farmacia local. Consulta los horarios vigentes antes de acudir, especialmente en festivos.",
+      "address": "C/ Las Peñas, 11, 16779 Belmontejo",
+      "mapsQuery": "Farmacia, C. Las Peñas, 11, Belmontejo, Cuenca",
+      "sourceLabel": "Directorio farmacéutico consultado",
+      "sourceHref": "https://www.farmacias.es/cuenca/belmontejo",
+      "mapIcon": "pharmacy"
+    },
+    {
+      "id": "colegio-clementino-escribano",
+      "name": "Colegio Público Clementino Escribano",
+      "category": "Educación",
+      "description": "Centro educativo del municipio. La denominación y la ubicación deben mantenerse revisadas si cambia la organización escolar.",
+      "address": "Belmontejo, Cuenca",
+      "mapsQuery": "Colegio Público Clementino Escribano, Belmontejo, Cuenca",
+      "sourceLabel": "Referencia administrativa consultada",
+      "sourceHref": "https://www.oarcuenca.es/export/sites/default/oagtr/resources/BOP/2014-04-07-firmado.pdf",
+      "mapIcon": "school"
+    },
+    {
+      "id": "punto-reciclaje",
+      "name": "Punto de reciclaje",
+      "category": "Reciclaje",
+      "description": "Punto de recogida de residuos y reciclaje del municipio. Consulta las indicaciones locales para saber qué residuos admite.",
+      "address": "Belmontejo, Cuenca",
+      "mapsQuery": "Punto limpio, Belmontejo, Cuenca",
+      "mapIcon": "recycling"
+    }
+  ]
+}
