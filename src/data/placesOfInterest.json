@@ -28,15 +28,15 @@
     },
     {
       "id": "ayuntamiento-plaza",
-      "name": "Ayuntamiento y plaza del pueblo",
+      "name": "Ayuntamiento de Belmontejo",
       "category": "Servicios",
-      "description": "El centro administrativo y uno de los puntos de referencia para conocer el casco urbano.",
+      "description": "La Casa Consistorial donde se atienden las gestiones municipales.",
       "address": "C/ Pósito, 5, 16779 Belmontejo",
       "mapsUrl": "https://maps.app.goo.gl/6uVfjtU9YSU8ubnAA",
       "mapIcon": "civic",
-      "latitude": 39.8210581,
-      "longitude": -2.3452782,
-      "coordinateSource": "https://www.openstreetmap.org/way/1500211305"
+      "latitude": 39.82196387154136,
+      "longitude": -2.3477586732267373,
+      "coordinateSource": "https://maps.app.goo.gl/6uVfjtU9YSU8ubnAA"
     },
     {
       "id": "fuente-de-la-lobera",
