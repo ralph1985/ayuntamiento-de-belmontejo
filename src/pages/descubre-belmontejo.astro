@@ -130,8 +130,8 @@ const mapLegend = [
         </p>
       </div>
       <p class="discover-map-note">
-        Mapa cartográfico de OpenStreetMap. Usa el listado inferior para abrir
-        cada lugar en Google Maps.
+        Mapa vectorial de OpenFreeMap sobre datos de OpenStreetMap. Usa el
+        listado inferior para abrir cada lugar en Google Maps.
       </p>
     </div>
   </section>
@@ -247,8 +247,7 @@ const mapLegend = [
 />
 
 <script>
-  import L from 'leaflet';
-  import 'leaflet/dist/leaflet.css';
+  import 'maplibre-gl/dist/maplibre-gl.css';
 
   type MapPlace = {
     id: string;
@@ -317,7 +316,7 @@ const mapLegend = [
     return wrapper;
   };
 
-  const initializeMap = () => {
+  const initializeMap = async () => {
     const container = document.querySelector<HTMLElement>(
       '[data-map-container]'
     );
@@ -332,76 +331,85 @@ const mapLegend = [
       return;
     }
 
-    const map = L.map(container, {
-      center: [39.8219639, -2.3477587],
+    let maplibregl;
+    try {
+      ({ default: maplibregl } = await import('maplibre-gl'));
+    } catch {
+      setMapStatus(
+        'No se pudo cargar el mapa. El listado sigue disponible.',
+        true
+      );
+      return;
+    }
+
+    const reduceMotion = globalThis.matchMedia?.(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    const map = new maplibregl.Map({
+      container,
+      style: 'https://tiles.openfreemap.org/styles/positron',
+      center: [-2.3477587, 39.8219639],
       zoom: 16,
-      scrollWheelZoom: false,
-      zoomControl: true,
+      attributionControl: true,
+      dragRotate: false,
+      touchPitch: false,
     });
+    map.addControl(
+      new maplibregl.NavigationControl({ showCompass: false }),
+      'top-right'
+    );
     const markerEntries = mapPlaces.map(place => {
-      const icon = L.divIcon({
-        className: 'place-map-icon-wrapper',
-        html: `<span class="place-map-icon place-map-icon--${place.mapIcon ?? 'default'}">${markerSvg(place.mapIcon ?? 'civic')}</span>`,
-        iconSize: [48, 56],
-        iconAnchor: [24, 53],
-        popupAnchor: [0, -53],
+      const markerElement = document.createElement('button');
+      markerElement.type = 'button';
+      markerElement.className = `place-map-icon place-map-icon--${place.mapIcon ?? 'default'}`;
+      markerElement.setAttribute('aria-label', `Ver ${place.name}`);
+      markerElement.innerHTML = markerSvg(place.mapIcon ?? 'civic');
+      const popup = new maplibregl.Popup({
+        offset: 32,
+        closeButton: true,
+        closeOnClick: true,
+      }).setDOMContent(createPopup(place));
+      const marker = new maplibregl.Marker({
+        element: markerElement,
+        anchor: 'bottom',
+      })
+        .setLngLat([place.longitude, place.latitude])
+        .setPopup(popup)
+        .addTo(map);
+      markerElement.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          marker.togglePopup();
+        }
       });
-      const marker = L.marker([place.latitude, place.longitude], {
-        icon,
-        title: place.name,
-        alt: place.name,
-        keyboard: true,
-      });
-      marker.bindPopup(createPopup(place));
-      marker.addTo(map);
       return { place, marker };
     });
 
-    let tileLayer = L.tileLayer(
-      'https://tile.opentopomap.org/{z}/{x}/{y}.png',
-      {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>, SRTM | Map style &copy; <a href="https://opentopomap.org/">OpenTopoMap</a> (CC-BY-SA)',
-        maxZoom: 17,
-      }
-    ).addTo(map);
-    let usedFallbackTiles = false;
-    tileLayer.on('tileerror', () => {
-      if (usedFallbackTiles) {
-        setMapStatus(
-          'No se pudieron cargar las teselas del mapa. El listado sigue disponible.',
-          true
-        );
-        return;
-      }
-      usedFallbackTiles = true;
-      tileLayer.remove();
-      const fallbackLayer = L.tileLayer(
-        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
-          maxZoom: 19,
-        }
+    map.on('error', () => {
+      setMapStatus(
+        'No se pudo cargar el mapa. El listado sigue disponible.',
+        true
       );
-      fallbackLayer.on('tileerror', () => {
-        setMapStatus(
-          'No se pudieron cargar las teselas del mapa. El listado sigue disponible.',
-          true
-        );
-      });
-      tileLayer = fallbackLayer.addTo(map);
-      setMapStatus('Usando el mapa base alternativo.');
     });
 
-    if (markerEntries.length > 1) {
-      map.fitBounds(
-        L.latLngBounds(
-          markerEntries.map(({ place }) => [place.latitude, place.longitude])
-        ),
-        { padding: [32, 32] }
-      );
-    }
+    const fitVisibleMarkers = (entries: typeof markerEntries) => {
+      if (entries.length > 1) {
+        const bounds = new maplibregl.LngLatBounds();
+        entries.forEach(({ place }) =>
+          bounds.extend([place.longitude, place.latitude])
+        );
+        map.fitBounds(bounds, { padding: 64, maxZoom: 17 });
+      } else if (entries.length === 1) {
+        const { place } = entries[0];
+        map.easeTo({
+          center: [place.longitude, place.latitude],
+          zoom: 17,
+          duration: reduceMotion ? 0 : 450,
+        });
+      }
+    };
+
+    fitVisibleMarkers(markerEntries);
 
     const filterMap = (category: string) => {
       const visibleMarkers = markerEntries.filter(
@@ -410,19 +418,9 @@ const mapLegend = [
       markerEntries.forEach(({ place, marker }) => {
         const shouldShow = !category || place.category === category;
         if (shouldShow) marker.addTo(map);
-        else map.removeLayer(marker);
+        else marker.remove();
       });
-      if (visibleMarkers.length > 1) {
-        map.fitBounds(
-          L.latLngBounds(
-            visibleMarkers.map(({ place }) => [place.latitude, place.longitude])
-          ),
-          { padding: [48, 48] }
-        );
-      } else if (visibleMarkers.length === 1) {
-        const { place } = visibleMarkers[0];
-        map.setView([place.latitude, place.longitude], 17);
-      }
+      fitVisibleMarkers(visibleMarkers);
       setMapStatus(
         visibleMarkers.length
           ? `${visibleMarkers.length} ${visibleMarkers.length === 1 ? 'ubicación verificada' : 'ubicaciones verificadas'} en el mapa.`
@@ -433,8 +431,13 @@ const mapLegend = [
     focusMapPlace = id => {
       const entry = markerEntries.find(({ place }) => place.id === id);
       if (!entry) return;
-      map.setView([entry.place.latitude, entry.place.longitude], 17);
-      entry.marker.openPopup();
+      entry.marker.addTo(map);
+      map.easeTo({
+        center: [entry.place.longitude, entry.place.latitude],
+        zoom: 17,
+        duration: reduceMotion ? 0 : 450,
+      });
+      entry.marker.togglePopup();
     };
 
     document
@@ -448,13 +451,13 @@ const mapLegend = [
     );
   };
 
-  document.addEventListener('click', event => {
+  document.addEventListener('click', async event => {
     const target = event.target as HTMLElement;
     const focusLink = target.closest<HTMLElement>('[data-map-focus]');
     const placeId = focusLink?.dataset.mapFocus;
     if (!placeId) return;
     event.preventDefault();
-    initializeMap();
+    await initializeMap();
     focusMapPlace?.(placeId);
     document.querySelector('[data-map-container]')?.scrollIntoView({
       behavior: globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')
