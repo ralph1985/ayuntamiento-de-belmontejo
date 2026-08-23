@@ -108,65 +108,6 @@
   }
 }
 
-.discover-map-legend {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  z-index: 500;
-  max-width: calc(100% - 2rem);
-  padding: 0.65rem 0.75rem;
-  color: var(--color-text);
-  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
-  backdrop-filter: blur(5px);
-
-  p {
-    margin: 0 0 0.4rem;
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.75rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    font-size: 0.75rem;
-  }
-
-  li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-  }
-}
-
-.discover-map-legend__swatch {
-  width: 0.65rem;
-  height: 0.65rem;
-  border-radius: 50%;
-  background: var(--color-action);
-
-  &.is-heritage {
-    background: var(--color-accent);
-  }
-
-  &.is-civic {
-    background: var(--color-link);
-  }
-
-  &.is-pool,
-  &.is-nature {
-    background: var(--color-territory);
-  }
-}
-
 .discover-map-status {
   position: absolute;
   right: 0.75rem;
@@ -229,7 +170,7 @@
   left: 50%;
   max-width: 16rem;
   padding: 0.35rem 0.55rem;
-  color: var(--color-text);
+  color: #101817;
   background: var(--color-surface);
   border: 2px solid var(--color-action);
   border-radius: var(--radius-sm);
@@ -240,6 +181,10 @@
   text-align: center;
   transform: translateX(-50%);
   white-space: normal;
+}
+
+[data-theme="dark"] .place-map-label {
+  color: var(--color-text-inverse);
 }
 
 .place-map-label--heritage {

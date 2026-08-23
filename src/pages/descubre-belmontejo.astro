@@ -48,12 +48,6 @@ const mapPlacesJson = mapPlaces.map(place => ({
   longitude: place.longitude,
   mapsUrl: mapsUrl(place),
 }));
-const mapLegend = [
-  { icon: 'heritage', label: 'Patrimonio' },
-  { icon: 'civic', label: 'Servicios' },
-  { icon: 'pool', label: 'Piscina' },
-  { icon: 'nature', label: 'Naturaleza' },
-];
 ---
 
 <BaseLayout
@@ -105,25 +99,6 @@ const mapLegend = [
           aria-label={mapTitle}
           data-map-container
         >
-        </div>
-        <div class="discover-map-legend" aria-label="Leyenda del mapa">
-          <p>Leyenda</p>
-          <ul>
-            {
-              mapLegend.map(item => (
-                <li>
-                  <span
-                    class:list={[
-                      'discover-map-legend__swatch',
-                      `is-${item.icon}`,
-                    ]}
-                    aria-hidden="true"
-                  />
-                  {item.label}
-                </li>
-              ))
-            }
-          </ul>
         </div>
         <p class="discover-map-status" data-map-status role="status">
           Cargando el mapa...
