@@ -129,10 +129,6 @@ const mapLegend = [
           Cargando el mapa...
         </p>
       </div>
-      <p class="discover-map-note">
-        Mapa vectorial de OpenFreeMap sobre datos de OpenStreetMap. Usa el
-        listado inferior para abrir cada lugar en Google Maps.
-      </p>
     </div>
   </section>
 
@@ -359,18 +355,25 @@ const mapLegend = [
       'top-right'
     );
     const markerEntries = mapPlaces.map(place => {
+      const markerWrapper = document.createElement('div');
+      markerWrapper.className = 'place-map-marker';
       const markerElement = document.createElement('button');
       markerElement.type = 'button';
       markerElement.className = `place-map-icon place-map-icon--${place.mapIcon ?? 'default'}`;
       markerElement.setAttribute('aria-label', `Ver ${place.name}`);
       markerElement.innerHTML = markerSvg(place.mapIcon ?? 'civic');
+      const markerLabel = document.createElement('span');
+      markerLabel.className = `place-map-label place-map-label--${place.mapIcon ?? 'default'}`;
+      markerLabel.textContent = place.name;
+      markerLabel.setAttribute('aria-hidden', 'true');
+      markerWrapper.append(markerElement, markerLabel);
       const popup = new maplibregl.Popup({
         offset: 32,
         closeButton: true,
         closeOnClick: true,
       }).setDOMContent(createPopup(place));
       const marker = new maplibregl.Marker({
-        element: markerElement,
+        element: markerWrapper,
         anchor: 'bottom',
       })
         .setLngLat([place.longitude, place.latitude])
@@ -423,8 +426,9 @@ const mapLegend = [
       fitVisibleMarkers(visibleMarkers);
       setMapStatus(
         visibleMarkers.length
-          ? `${visibleMarkers.length} ${visibleMarkers.length === 1 ? 'ubicación verificada' : 'ubicaciones verificadas'} en el mapa.`
-          : 'No hay ubicaciones verificadas en esta categoría. Consulta el listado.'
+          ? ''
+          : 'No hay ubicaciones verificadas en esta categoría. Consulta el listado.',
+        visibleMarkers.length === 0
       );
     };
 
@@ -445,10 +449,6 @@ const mapLegend = [
       ?.addEventListener('change', event => {
         filterMap((event.target as HTMLSelectElement).value);
       });
-
-    setMapStatus(
-      `${markerEntries.length} ubicaciones verificadas. Pulsa un marcador para consultar sus datos.`
-    );
   };
 
   document.addEventListener('click', async event => {

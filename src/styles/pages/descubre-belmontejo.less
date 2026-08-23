@@ -185,11 +185,16 @@
   &.is-error {
     color: var(--color-danger);
   }
+
+  &:empty {
+    display: none;
+  }
 }
 
-.place-map-icon-wrapper {
-  background: transparent;
-  border: 0;
+.place-map-marker {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
 }
 
 .place-map-icon {
@@ -218,6 +223,38 @@
   }
 }
 
+.place-map-label {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 0.45rem);
+  width: max-content;
+  max-width: 16rem;
+  padding: 0.35rem 0.55rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 2px solid var(--color-action);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.2;
+  transform: translateY(-50%);
+  white-space: normal;
+}
+
+.place-map-label--heritage {
+  border-color: var(--color-accent);
+}
+
+.place-map-label--pool,
+.place-map-label--nature {
+  border-color: var(--color-territory-strong);
+}
+
+.place-map-label--civic {
+  border-color: var(--color-link);
+}
+
 .place-map-icon--heritage {
   background: var(--color-accent);
 }
@@ -234,12 +271,6 @@
 
 .place-map-icon--recycling {
   background: var(--color-success);
-}
-
-.discover-map-note {
-  margin-top: 0.75rem;
-  color: var(--color-text-muted);
-  font-size: 0.875rem;
 }
 
 .discover-places__summary {
@@ -400,5 +431,11 @@
 
   .discover-places__grid {
     grid-template-columns: 1fr;
+  }
+
+  .place-map-label {
+    max-width: min(10rem, 42vw);
+    padding: 0.25rem 0.4rem;
+    font-size: 0.7rem;
   }
 }
