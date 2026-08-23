@@ -166,7 +166,10 @@
 }
 
 .place-map-label {
+  display: block;
+  width: max-content;
   max-width: 16rem;
+  box-sizing: border-box;
   padding: 0.35rem 0.55rem;
   color: #101817;
   background: var(--color-surface);
@@ -177,6 +180,7 @@
   font-weight: 800;
   line-height: 1.2;
   text-align: center;
+  overflow-wrap: anywhere;
   white-space: normal;
 }
 
