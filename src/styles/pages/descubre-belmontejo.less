@@ -46,6 +46,8 @@
 }
 
 .discover-map-wrapper {
+  position: relative;
+  min-height: 28rem;
   overflow: hidden;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
@@ -55,7 +57,71 @@
 
 .discover-map {
   display: block;
+  min-height: 28rem;
+  z-index: 0;
   border: 0;
+}
+
+.discover-map-status {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 500;
+  max-width: min(28rem, calc(100% - 1.5rem));
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-size: 0.8125rem;
+
+  &.is-error {
+    color: var(--color-danger);
+  }
+}
+
+.place-map-icon-wrapper {
+  background: transparent;
+  border: 0;
+}
+
+.place-map-icon {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  color: var(--color-on-action);
+  background: var(--color-action);
+  border: 3px solid var(--color-surface);
+  border-radius: 50% 50% 50% 0;
+  box-shadow: var(--shadow-md);
+  font-size: 0.875rem;
+  font-weight: 900;
+  transform: rotate(-45deg);
+
+  > span {
+    transform: rotate(45deg);
+  }
+}
+
+.place-map-icon--heritage {
+  background: var(--color-accent);
+}
+
+.place-map-icon--pool,
+.place-map-icon--nature {
+  background: var(--color-territory-surface);
+}
+
+.place-map-icon--pharmacy,
+.place-map-icon--civic {
+  background: var(--color-link);
+}
+
+.place-map-icon--recycling {
+  background: var(--color-success);
 }
 
 .discover-map-note {

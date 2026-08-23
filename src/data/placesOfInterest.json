@@ -1,6 +1,5 @@
 {
   "lastVerified": "2026-08-23",
-  "mapEmbedSrc": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3064.332427429821!2d-2.3477586732267373!3d39.82196387154136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd67fb1cf1bc9843%3A0x3ee48dbef9ea2994!2s16779%20Belmontejo%2C%20Cuenca!5e0!3m2!1ses!2ses!4v1761373475830!5m2!1ses!2ses",
   "mapLink": "https://www.google.com/maps/search/?api=1&query=Belmontejo%2C+Cuenca",
   "categories": [
     "Todos",
@@ -22,7 +21,11 @@
       "imageAlt": "Iglesia de Nuestra Señora de la Asunción y casas de Belmontejo",
       "sourceLabel": "Turismo de Castilla-La Mancha",
       "sourceHref": "https://www.turismocastillalamancha.es/es/destinos/encanto-rural/cuenca/belmontejo",
-      "mapIcon": "heritage"
+      "mapIcon": "heritage",
+      "markerLabel": "P",
+      "latitude": 39.8223706,
+      "longitude": -2.3464065,
+      "coordinateSource": "https://www.openstreetmap.org/way/369543545"
     },
     {
       "id": "ayuntamiento-plaza",
@@ -31,7 +34,11 @@
       "description": "El centro administrativo y uno de los puntos de referencia para conocer el casco urbano.",
       "address": "C/ Pósito, 5, 16779 Belmontejo",
       "mapsUrl": "https://maps.app.goo.gl/6uVfjtU9YSU8ubnAA",
-      "mapIcon": "civic"
+      "mapIcon": "civic",
+      "markerLabel": "A",
+      "latitude": 39.8210581,
+      "longitude": -2.3452782,
+      "coordinateSource": "https://www.openstreetmap.org/way/1500211305"
     },
     {
       "id": "fuente-de-la-lobera",
@@ -92,7 +99,11 @@
       "mapsQuery": "Piscina municipal, Belmontejo, Cuenca",
       "sourceLabel": "Aviso municipal sobre la piscina",
       "sourceHref": "https://www.bandomovil.com/belmontejo",
-      "mapIcon": "pool"
+      "mapIcon": "pool",
+      "markerLabel": "P",
+      "latitude": 39.8211,
+      "longitude": -2.3490266,
+      "coordinateSource": "https://www.openstreetmap.org/way/998233833"
     },
     {
       "id": "farmacia",

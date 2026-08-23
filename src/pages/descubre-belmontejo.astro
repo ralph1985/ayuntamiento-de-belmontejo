@@ -31,6 +31,24 @@ const placeSchema = placeData.places.map(place => ({
     'https://belmontejo.conquense.dev/'
   ).href,
 }));
+const mapPlaces = placeData.places.filter(
+  place =>
+    typeof place.latitude === 'number' &&
+    typeof place.longitude === 'number' &&
+    typeof place.markerLabel === 'string'
+);
+const mapPlacesJson = mapPlaces.map(place => ({
+  id: place.id,
+  name: place.name,
+  category: place.category,
+  description: place.description,
+  address: place.address,
+  mapIcon: place.mapIcon,
+  markerLabel: place.markerLabel,
+  latitude: place.latitude,
+  longitude: place.longitude,
+  mapsUrl: mapsUrl(place),
+}));
 ---
 
 <BaseLayout
@@ -75,19 +93,21 @@ const placeSchema = placeData.places.map(place => ({
         </a>
       </div>
       <div class="discover-map-wrapper">
-        <iframe
+        <div
+          id="discover-map"
           class="discover-map"
-          src={placeData.mapEmbedSrc}
-          title={mapTitle}
-          width="100%"
-          height="450"
-          loading="lazy"
-          allowfullscreen
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+          role="region"
+          aria-label={mapTitle}
+          data-map-container
+        >
+        </div>
+        <p class="discover-map-status" data-map-status role="status">
+          Cargando el mapa...
+        </p>
       </div>
       <p class="discover-map-note">
-        El mapa muestra la ubicación general de Belmontejo. Usa el listado
-        inferior para abrir cada lugar en Google Maps.
+        Mapa cartográfico de OpenStreetMap. Usa el listado inferior para abrir
+        cada lugar en Google Maps.
       </p>
     </div>
   </section>
@@ -185,7 +205,160 @@ const placeSchema = placeData.places.map(place => ({
   <CTA {...homePage.cta} />
 </BaseLayout>
 
+<script
+  id="places-map-data"
+  type="application/json"
+  is:inline
+  set:html={JSON.stringify(mapPlacesJson)}
+/>
+
 <script>
+  import L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
+
+  type MapPlace = {
+    id: string;
+    name: string;
+    category: string;
+    description: string;
+    address: string;
+    mapIcon?: string;
+    markerLabel: string;
+    latitude: number;
+    longitude: number;
+    mapsUrl: string;
+  };
+
+  const mapPlaces = JSON.parse(
+    document.getElementById('places-map-data')?.textContent ?? '[]'
+  ) as MapPlace[];
+
+  const setMapStatus = (message: string, isError = false) => {
+    const status = document.querySelector('[data-map-status]');
+    if (status) {
+      status.textContent = message;
+      status.classList.toggle('is-error', isError);
+    }
+  };
+
+  const createPopup = (place: MapPlace) => {
+    const wrapper = document.createElement('div');
+    const title = document.createElement('h3');
+    title.textContent = place.name;
+    const description = document.createElement('p');
+    description.textContent = place.description;
+    const address = document.createElement('p');
+    address.textContent = place.address;
+    const link = document.createElement('a');
+    link.href = place.mapsUrl;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = 'Cómo llegar';
+    wrapper.append(title, description, address, link);
+    return wrapper;
+  };
+
+  const initializeMap = () => {
+    const container = document.querySelector<HTMLElement>(
+      '[data-map-container]'
+    );
+    if (!container || container.dataset.initialized === 'true') return;
+    container.dataset.initialized = 'true';
+
+    if (!mapPlaces.length) {
+      setMapStatus(
+        'Todavía no hay ubicaciones verificadas para mostrar.',
+        true
+      );
+      return;
+    }
+
+    const map = L.map(container, {
+      center: [39.8219639, -2.3477587],
+      zoom: 16,
+      scrollWheelZoom: false,
+      zoomControl: true,
+    });
+    const markerEntries = mapPlaces.map(place => {
+      const icon = L.divIcon({
+        className: 'place-map-icon-wrapper',
+        html: `<span class="place-map-icon place-map-icon--${place.mapIcon ?? 'default'}" aria-hidden="true"><span>${place.markerLabel}</span></span>`,
+        iconSize: [36, 44],
+        iconAnchor: [18, 42],
+        popupAnchor: [0, -42],
+      });
+      const marker = L.marker([place.latitude, place.longitude], {
+        icon,
+        title: place.name,
+        alt: place.name,
+        keyboard: true,
+      });
+      marker.bindPopup(createPopup(place));
+      marker.addTo(map);
+      return { place, marker };
+    });
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+      maxZoom: 19,
+    })
+      .on('tileerror', () => {
+        setMapStatus(
+          'No se pudieron cargar las teselas del mapa. El listado sigue disponible.',
+          true
+        );
+      })
+      .addTo(map);
+
+    if (markerEntries.length > 1) {
+      map.fitBounds(
+        L.latLngBounds(
+          markerEntries.map(({ place }) => [place.latitude, place.longitude])
+        ),
+        { padding: [32, 32] }
+      );
+    }
+
+    const filterMap = (category: string) => {
+      markerEntries.forEach(({ place, marker }) => {
+        const shouldShow = !category || place.category === category;
+        if (shouldShow) marker.addTo(map);
+        else map.removeLayer(marker);
+      });
+    };
+
+    document
+      .querySelector('[data-place-category]')
+      ?.addEventListener('change', event => {
+        filterMap((event.target as HTMLSelectElement).value);
+      });
+
+    setMapStatus(
+      `${markerEntries.length} ubicaciones verificadas. Pulsa un marcador para consultar sus datos.`
+    );
+  };
+
+  const observeMap = () => {
+    const container = document.querySelector('[data-map-container]');
+    if (!container || container.dataset.observerInitialized) return;
+    container.dataset.observerInitialized = 'true';
+    if (!('IntersectionObserver' in globalThis)) {
+      initializeMap();
+      return;
+    }
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+          initializeMap();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '240px' }
+    );
+    observer.observe(container);
+  };
+
   const initializeDiscover = () => {
     const root = document.querySelector('[data-discover-filters]');
     if (!root || root.dataset.initialized) return;
@@ -235,7 +408,9 @@ const placeSchema = placeData.places.map(place => ({
   };
 
   document.addEventListener('astro:page-load', initializeDiscover);
+  document.addEventListener('astro:page-load', observeMap);
   initializeDiscover();
+  observeMap();
 </script>
 
 <script
