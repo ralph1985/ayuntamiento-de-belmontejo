@@ -134,7 +134,7 @@
 
 .place-map-marker {
   position: relative;
-  width: max-content;
+  width: min(16rem, 72vw);
   text-align: center;
 }
 
@@ -167,8 +167,7 @@
 
 .place-map-label {
   display: block;
-  width: max-content;
-  max-width: 16rem;
+  width: 100%;
   box-sizing: border-box;
   padding: 0.35rem 0.55rem;
   color: #101817;
@@ -380,8 +379,12 @@
   }
 
   .place-map-label {
-    max-width: min(10rem, 42vw);
+    width: 100%;
     padding: 0.25rem 0.4rem;
     font-size: 0.7rem;
+  }
+
+  .place-map-marker {
+    width: min(10rem, 42vw);
   }
 }
