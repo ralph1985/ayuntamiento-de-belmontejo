@@ -341,7 +341,9 @@ const mapPlacesJson = mapPlaces.map(place => ({
       markerLabel.className = `place-map-label place-map-label--${place.mapIcon ?? 'default'}`;
       markerLabel.textContent = place.name;
       markerLabel.setAttribute('aria-hidden', 'true');
-      markerWrapper.append(markerLabel, markerElement);
+      const markerBreak = document.createElement('br');
+      markerBreak.setAttribute('aria-hidden', 'true');
+      markerWrapper.append(markerLabel, markerBreak, markerElement);
       const popup = new maplibregl.Popup({
         offset: 32,
         closeButton: true,
