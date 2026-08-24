@@ -142,7 +142,11 @@
       "mapsQuery": "Colegio Público Clementino Escribano, Belmontejo, Cuenca",
       "sourceLabel": "Referencia administrativa consultada",
       "sourceHref": "https://www.oarcuenca.es/export/sites/default/oagtr/resources/BOP/2014-04-07-firmado.pdf",
-      "mapIcon": "school"
+      "mapIcon": "school",
+      "latitude": 39.8201758,
+      "longitude": -2.345281,
+      "mapsUrl": "https://maps.app.goo.gl/mz7KcKDzo9ujU3TY9?g_st=ic",
+      "coordinateSource": "https://maps.app.goo.gl/mz7KcKDzo9ujU3TY9?g_st=ic"
     },
     {
       "id": "punto-reciclaje",
