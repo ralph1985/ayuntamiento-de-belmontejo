@@ -218,7 +218,8 @@ const mapPlacesJson = mapPlaces.map(place => ({
 />
 
 <script>
-  import 'maplibre-gl/dist/maplibre-gl.css';
+  import * as L from 'leaflet';
+  import 'leaflet/dist/leaflet.css';
 
   type MapPlace = {
     id: string;
@@ -302,70 +303,65 @@ const mapPlacesJson = mapPlaces.map(place => ({
       return;
     }
 
-    let maplibregl;
-    try {
-      ({ default: maplibregl } = await import('maplibre-gl'));
-    } catch {
-      setMapStatus(
-        'No se pudo cargar el mapa. El listado sigue disponible.',
-        true
-      );
-      return;
-    }
-
     const reduceMotion = globalThis.matchMedia?.(
       '(prefers-reduced-motion: reduce)'
     ).matches;
-    const map = new maplibregl.Map({
-      container,
-      style: 'https://tiles.openfreemap.org/styles/positron',
-      center: [-2.3477587, 39.8219639],
-      zoom: 16,
-      attributionControl: true,
-      dragRotate: false,
-      touchPitch: false,
-    });
-    map.addControl(
-      new maplibregl.NavigationControl({ showCompass: false }),
-      'top-right'
-    );
+
+    const map = L.map(container, {
+      zoomControl: true,
+      scrollWheelZoom: false,
+      dragging: true,
+      doubleClickZoom: true,
+      keyboard: true,
+    }).setView([39.8219639, -2.3477587], 16);
+    const baseLayer = L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20,
+      }
+    ).addTo(map);
+
     const markerEntries = mapPlaces.map(place => {
-      const markerWrapper = document.createElement('div');
-      markerWrapper.className = 'place-map-marker';
-      const markerElement = document.createElement('button');
-      markerElement.type = 'button';
-      markerElement.className = `place-map-icon place-map-icon--${place.mapIcon ?? 'default'}`;
-      markerElement.setAttribute('aria-label', `Ver ${place.name}`);
-      markerElement.innerHTML = markerSvg(place.mapIcon ?? 'civic');
-      const markerLabel = document.createElement('span');
-      markerLabel.className = `place-map-label place-map-label--${place.mapIcon ?? 'default'}`;
-      markerLabel.textContent = place.name;
-      markerLabel.setAttribute('aria-hidden', 'true');
-      const markerBreak = document.createElement('br');
-      markerBreak.setAttribute('aria-hidden', 'true');
-      markerWrapper.append(markerLabel, markerBreak, markerElement);
-      const popup = new maplibregl.Popup({
-        offset: 32,
-        closeButton: true,
-        closeOnClick: true,
-      }).setDOMContent(createPopup(place));
-      const marker = new maplibregl.Marker({
-        element: markerWrapper,
-        anchor: 'bottom',
-      })
-        .setLngLat([place.longitude, place.latitude])
-        .setPopup(popup)
-        .addTo(map);
-      markerElement.addEventListener('keydown', event => {
+      const icon = L.divIcon({
+        className: `place-map-icon-wrap place-map-icon-wrap--${place.mapIcon ?? 'default'}`,
+        html: `<button type="button" class="place-map-icon place-map-icon--${place.mapIcon ?? 'default'}" aria-label="Ver ${place.name}">${markerSvg(place.mapIcon ?? 'civic')}</button>`,
+        iconSize: [48, 48],
+        iconAnchor: [24, 48],
+        popupAnchor: [0, -48],
+      });
+      const marker = L.marker([place.latitude, place.longitude], {
+        icon,
+        keyboard: false,
+        title: place.name,
+      }).addTo(map);
+      const markerButton = marker.getElement()?.querySelector('button');
+      markerButton?.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
           marker.togglePopup();
         }
       });
+      const label = document.createElement('span');
+      label.className = `place-map-tooltip place-map-tooltip--${place.mapIcon ?? 'default'}`;
+      label.textContent = place.name;
+      label.setAttribute('aria-hidden', 'true');
+      marker.bindTooltip(label, {
+        permanent: true,
+        direction: 'top',
+        offset: [0, -42],
+        opacity: 1,
+        className: `place-map-tooltip-container place-map-tooltip-container--${place.mapIcon ?? 'default'}`,
+      });
+      marker.bindPopup(
+        L.popup({ offset: [0, -42] }).setContent(createPopup(place))
+      );
       return { place, marker };
     });
 
-    map.on('error', () => {
+    baseLayer.on('tileerror', () => {
       setMapStatus(
         'No se pudo cargar el mapa. El listado sigue disponible.',
         true
@@ -374,22 +370,27 @@ const mapPlacesJson = mapPlaces.map(place => ({
 
     const fitVisibleMarkers = (entries: typeof markerEntries) => {
       if (entries.length > 1) {
-        const bounds = new maplibregl.LngLatBounds();
-        entries.forEach(({ place }) =>
-          bounds.extend([place.longitude, place.latitude])
+        const bounds = L.latLngBounds(
+          entries.map(
+            ({ place }) => [place.latitude, place.longitude] as L.LatLngTuple
+          )
         );
-        map.fitBounds(bounds, { padding: 64, maxZoom: 17 });
+        map.fitBounds(bounds, {
+          padding: [64, 64],
+          maxZoom: 17,
+          animate: !reduceMotion,
+        });
       } else if (entries.length === 1) {
         const { place } = entries[0];
-        map.easeTo({
-          center: [place.longitude, place.latitude],
-          zoom: 17,
-          duration: reduceMotion ? 0 : 450,
+        map.setView([place.latitude, place.longitude], 17, {
+          animate: !reduceMotion,
+          duration: 0.45,
         });
       }
     };
 
     fitVisibleMarkers(markerEntries);
+    setMapStatus('');
 
     const filterMap = (category: string) => {
       const visibleMarkers = markerEntries.filter(
@@ -398,7 +399,7 @@ const mapPlacesJson = mapPlaces.map(place => ({
       markerEntries.forEach(({ place, marker }) => {
         const shouldShow = !category || place.category === category;
         if (shouldShow) marker.addTo(map);
-        else marker.remove();
+        else map.removeLayer(marker);
       });
       fitVisibleMarkers(visibleMarkers);
       setMapStatus(
@@ -413,12 +414,11 @@ const mapPlacesJson = mapPlaces.map(place => ({
       const entry = markerEntries.find(({ place }) => place.id === id);
       if (!entry) return;
       entry.marker.addTo(map);
-      map.easeTo({
-        center: [entry.place.longitude, entry.place.latitude],
-        zoom: 17,
-        duration: reduceMotion ? 0 : 450,
+      map.setView([entry.place.latitude, entry.place.longitude], 17, {
+        animate: !reduceMotion,
+        duration: 0.45,
       });
-      entry.marker.togglePopup();
+      entry.marker.openPopup();
     };
 
     document

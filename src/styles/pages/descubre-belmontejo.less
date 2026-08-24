@@ -61,27 +61,39 @@
   z-index: 0;
   border: 0;
 
-  .maplibregl-ctrl-top-right {
+  :global(.leaflet-control-zoom) {
     margin: 1rem;
-  }
-
-  .maplibregl-ctrl-group {
+    overflow: hidden;
     border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
     box-shadow: var(--shadow-sm);
   }
 
-  .maplibregl-ctrl button {
+  :global(.leaflet-control-zoom a) {
+    width: 2.25rem;
+    height: 2.25rem;
     color: var(--color-text);
     background: var(--color-surface);
-    border-color: var(--color-border);
+    border: 0;
+    font-size: 1.35rem;
+    line-height: 2.1rem;
   }
 
-  .maplibregl-popup-content {
+  :global(.leaflet-control-zoom a + a) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  :global(.leaflet-popup-content-wrapper),
+  :global(.leaflet-popup-tip) {
+    color: var(--color-text);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  :global(.leaflet-popup-content) {
     min-width: min(15rem, 56vw);
     margin: 0;
     padding: 1rem;
-    color: var(--color-text);
-    background: var(--color-surface);
 
     h3 {
       margin: 0 0 0.5rem;
@@ -102,7 +114,7 @@
     }
   }
 
-  .maplibregl-popup-close-button {
+  :global(.leaflet-popup-close-button) {
     color: var(--color-text-muted);
     font-size: 1.25rem;
   }
@@ -132,13 +144,16 @@
   }
 }
 
-.place-map-marker {
-  position: relative;
-  width: min(16rem, 72vw);
-  text-align: center;
+:global(.place-map-icon-wrap) {
+  width: 3rem !important;
+  height: 3rem !important;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
 }
 
-.place-map-icon {
+:global(.place-map-icon) {
   display: grid;
   width: 3rem;
   height: 3rem;
@@ -165,56 +180,63 @@
   }
 }
 
-.place-map-label {
+:global(.leaflet-tooltip.place-map-tooltip-container) {
   display: block;
-  width: 100%;
+  width: min(16rem, 72vw);
   box-sizing: border-box;
-  padding: 0.35rem 0.55rem;
+  padding: 0;
   color: #101817;
   background: var(--color-surface);
   border: 2px solid var(--color-action);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+
+:global(.place-map-tooltip) {
+  display: block;
+  padding: 0.35rem 0.55rem;
+  color: #101817;
   font-size: 0.78rem;
   font-weight: 800;
   line-height: 1.2;
-  text-align: center;
   overflow-wrap: anywhere;
   white-space: normal;
 }
 
-[data-theme="dark"] .place-map-label {
+:global([data-theme="dark"]) :global(.place-map-tooltip-container),
+:global([data-theme="dark"]) :global(.place-map-tooltip) {
   color: var(--color-text-inverse);
 }
 
-.place-map-label--heritage {
+:global(.place-map-tooltip-container--heritage) {
   border-color: var(--color-accent);
 }
 
-.place-map-label--pool,
-.place-map-label--nature {
+:global(.place-map-tooltip-container--pool),
+:global(.place-map-tooltip-container--nature) {
   border-color: var(--color-territory-strong);
 }
 
-.place-map-label--civic {
+:global(.place-map-tooltip-container--civic) {
   border-color: var(--color-link);
 }
 
-.place-map-icon--heritage {
+:global(.place-map-icon--heritage) {
   background: var(--color-accent);
 }
 
-.place-map-icon--pool,
-.place-map-icon--nature {
+:global(.place-map-icon--pool),
+:global(.place-map-icon--nature) {
   background: var(--color-territory-surface);
 }
 
-.place-map-icon--pharmacy,
-.place-map-icon--civic {
+:global(.place-map-icon--pharmacy),
+:global(.place-map-icon--civic) {
   background: var(--color-link);
 }
 
-.place-map-icon--recycling {
+:global(.place-map-icon--recycling) {
   background: var(--color-success);
 }
 
@@ -378,13 +400,12 @@
     grid-template-columns: 1fr;
   }
 
-  .place-map-label {
-    width: 100%;
-    padding: 0.25rem 0.4rem;
-    font-size: 0.7rem;
+  :global(.leaflet-tooltip.place-map-tooltip-container) {
+    width: min(10rem, 42vw);
   }
 
-  .place-map-marker {
-    width: min(10rem, 42vw);
+  .place-map-tooltip {
+    padding: 0.25rem 0.4rem;
+    font-size: 0.7rem;
   }
 }
