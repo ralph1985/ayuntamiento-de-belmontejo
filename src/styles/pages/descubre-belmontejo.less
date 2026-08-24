@@ -83,6 +83,28 @@
     border-top: 1px solid var(--color-border);
   }
 
+  :global(.map-style-control) {
+    margin: 1rem;
+  }
+
+  :global(.map-style-toggle) {
+    min-height: 2.25rem;
+    padding: 0.45rem 0.7rem;
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  :global(.map-style-toggle:hover) {
+    background: var(--color-bg-subtle);
+  }
+
   :global(.leaflet-popup-content-wrapper),
   :global(.leaflet-popup-tip) {
     color: var(--color-text);

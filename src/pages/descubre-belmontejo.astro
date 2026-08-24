@@ -314,15 +314,75 @@ const mapPlacesJson = mapPlaces.map(place => ({
       doubleClickZoom: true,
       keyboard: true,
     }).setView([39.8219639, -2.3477587], 16);
-    const baseLayer = L.tileLayer(
-      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-      {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    const mapStyles = {
+      light: [
+        { name: 'Positron', path: 'light_all' },
+        { name: 'Voyager', path: 'rastertiles/voyager' },
+      ],
+      dark: [
+        { name: 'Dark Matter', path: 'dark_all' },
+        { name: 'Dark Matter sin etiquetas', path: 'dark_nolabels' },
+      ],
+    } as const;
+    let styleIndex = 0;
+    let baseLayer: L.TileLayer;
+    const getTheme = () =>
+      document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    const getStyleVariants = () => mapStyles[getTheme()];
+    const getTileUrl = (path: string) =>
+      `https://{s}.basemaps.cartocdn.com/${path}/{z}/{x}/{y}{r}.png`;
+    const attribution =
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+    const styleControl = L.control({ position: 'topright' });
+    const styleButton = L.DomUtil.create(
+      'button',
+      'map-style-toggle'
+    ) as HTMLButtonElement;
+    styleButton.type = 'button';
+    styleButton.addEventListener('click', event => {
+      L.DomEvent.stopPropagation(event);
+      styleIndex = (styleIndex + 1) % getStyleVariants().length;
+      applyBaseLayer();
+    });
+    styleControl.onAdd = () => {
+      const wrapper = L.DomUtil.create('div', 'map-style-control');
+      wrapper.append(styleButton);
+      L.DomEvent.disableClickPropagation(wrapper);
+      L.DomEvent.disableScrollPropagation(wrapper);
+      return wrapper;
+    };
+    styleControl.addTo(map);
+
+    const updateStyleButton = () => {
+      const variants = getStyleVariants();
+      styleIndex %= variants.length;
+      const current = variants[styleIndex];
+      const next = variants[(styleIndex + 1) % variants.length];
+      styleButton.textContent = current.name;
+      styleButton.setAttribute('aria-label', `Cambiar a la capa ${next.name}`);
+      styleButton.title = `Cambiar a la capa ${next.name}`;
+    };
+
+    const applyBaseLayer = () => {
+      const variants = getStyleVariants();
+      styleIndex %= variants.length;
+      baseLayer?.remove();
+      baseLayer = L.tileLayer(getTileUrl(variants[styleIndex].path), {
+        attribution,
         subdomains: 'abcd',
         maxZoom: 20,
-      }
-    ).addTo(map);
+      }).addTo(map);
+      baseLayer.on('tileerror', () => {
+        setMapStatus(
+          'No se pudo cargar el mapa. El listado sigue disponible.',
+          true
+        );
+      });
+      updateStyleButton();
+    };
+
+    applyBaseLayer();
+    document.addEventListener('municipal:theme-change', applyBaseLayer);
 
     const markerEntries = mapPlaces.map(place => {
       const icon = L.divIcon({
@@ -359,13 +419,6 @@ const mapPlacesJson = mapPlaces.map(place => ({
         L.popup({ offset: [0, -42] }).setContent(createPopup(place))
       );
       return { place, marker };
-    });
-
-    baseLayer.on('tileerror', () => {
-      setMapStatus(
-        'No se pudo cargar el mapa. El listado sigue disponible.',
-        true
-      );
     });
 
     const fitVisibleMarkers = (entries: typeof markerEntries) => {
