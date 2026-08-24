@@ -155,7 +155,11 @@
       "description": "Punto de recogida de residuos y reciclaje del municipio. Consulta las indicaciones locales para saber qué residuos admite.",
       "address": "Belmontejo, Cuenca",
       "mapsQuery": "Punto limpio, Belmontejo, Cuenca",
-      "mapIcon": "recycling"
+      "mapIcon": "recycling",
+      "latitude": 39.8314742,
+      "longitude": -2.3374952,
+      "mapsUrl": "https://maps.app.goo.gl/2taiUXccw3zZ6d8X6?g_st=ic",
+      "coordinateSource": "https://maps.app.goo.gl/2taiUXccw3zZ6d8X6?g_st=ic"
     }
   ]
 }
