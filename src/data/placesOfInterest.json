@@ -124,14 +124,15 @@
       "name": "Farmacia de Belmontejo",
       "category": "Servicios",
       "description": "Farmacia local. Consulta los horarios vigentes antes de acudir, especialmente en festivos.",
-      "address": "C/ Las Peñas, 11, 16779 Belmontejo",
-      "mapsQuery": "Farmacia, C. Las Peñas, 11, Belmontejo, Cuenca",
+      "address": "Cam. Vega, 7, 16779 Belmontejo",
+      "mapsQuery": "Farmacia Belmontejo, Cam. Vega, 7, Belmontejo, Cuenca",
+      "mapsUrl": "https://maps.app.goo.gl/VDkxPqtxA8Nnt3MP7?g_st=ic",
       "sourceLabel": "Directorio farmacéutico consultado",
       "sourceHref": "https://www.farmacias.es/cuenca/belmontejo",
       "mapIcon": "pharmacy",
-      "latitude": 39.8205,
-      "longitude": -2.3446,
-      "coordinateSource": "https://www.farmacias.es/cuenca/belmontejo/jose-carbonell-moreno-8642"
+      "latitude": 39.8206469,
+      "longitude": -2.3462139,
+      "coordinateSource": "https://maps.app.goo.gl/VDkxPqtxA8Nnt3MP7?g_st=ic"
     },
     {
       "id": "colegio-clementino-escribano",
