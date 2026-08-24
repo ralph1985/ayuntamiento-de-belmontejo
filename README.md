@@ -147,7 +147,7 @@ La hora se interpreta en la zona horaria del servidor. Para comprobar el proceso
 
 ## Automatización de Instagram
 
-La sincronización de Instagram abre el perfil público con Playwright, recoge los enlaces visibles de publicaciones y visita cada una para obtener sus metadatos públicos. No necesita token ni `user_id`. Configura opcionalmente `INSTAGRAM_PROFILE_URL`, `INSTAGRAM_SCRAPE_LIMIT` y `INSTAGRAM_NAVIGATION_TIMEOUT_MS`, además de las variables `INSTAGRAM_SMTP_*` e `INSTAGRAM_NOTIFY_*` para recibir el correo. El script deduplica por el identificador del permalink, pasa las publicaciones nuevas por Codex y deja bloqueadas las que no se pueden analizar con seguridad.
+La sincronización de Instagram abre el perfil público con Playwright, recoge los enlaces visibles de publicaciones y visita cada una para obtener sus metadatos públicos. No necesita token ni `user_id`. Configura opcionalmente `INSTAGRAM_PROFILE_URL`, `INSTAGRAM_SCRAPE_LIMIT` y `INSTAGRAM_NAVIGATION_TIMEOUT_MS`, además de las variables `INSTAGRAM_SMTP_*` e `INSTAGRAM_NOTIFY_*` para recibir el correo; si no existen, reutiliza las variables SMTP de bandos. El script deduplica por el identificador del permalink, pasa las publicaciones nuevas por Codex y deja bloqueadas las que no se pueden analizar con seguridad.
 
 El cron de producción comparte el horario de bandos: 02:00, 05:00, 08:00, 11:00, 14:00, 17:00, 20:00 y 23:00 en `Europe/Madrid`:
 

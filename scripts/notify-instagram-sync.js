@@ -59,14 +59,23 @@ export async function notifyInstagramSync(
   reportPath = process.env.INSTAGRAM_SYNC_REPORT ??
     '/tmp/ayuntamiento-belmontejo-instagram-result.json'
 ) {
-  const required = [
-    'INSTAGRAM_SMTP_HOST',
-    'INSTAGRAM_SMTP_USER',
-    'INSTAGRAM_SMTP_PASSWORD',
-    'INSTAGRAM_NOTIFY_FROM',
-    'INSTAGRAM_NOTIFY_TO',
-  ];
-  const missing = required.filter(name => !process.env[name]);
+  const smtp = {
+    host: process.env.INSTAGRAM_SMTP_HOST ?? process.env.BANDOS_SMTP_HOST,
+    port:
+      process.env.INSTAGRAM_SMTP_PORT ?? process.env.BANDOS_SMTP_PORT ?? '587',
+    secure:
+      process.env.INSTAGRAM_SMTP_SECURE ??
+      process.env.BANDOS_SMTP_SECURE ??
+      'false',
+    user: process.env.INSTAGRAM_SMTP_USER ?? process.env.BANDOS_SMTP_USER,
+    password:
+      process.env.INSTAGRAM_SMTP_PASSWORD ?? process.env.BANDOS_SMTP_PASSWORD,
+    from: process.env.INSTAGRAM_NOTIFY_FROM ?? process.env.BANDOS_NOTIFY_FROM,
+    to: process.env.INSTAGRAM_NOTIFY_TO ?? process.env.BANDOS_NOTIFY_TO,
+  };
+  const missing = Object.entries(smtp)
+    .filter(([, value]) => !value)
+    .map(([name]) => `INSTAGRAM_${name.toUpperCase()}`);
   if (missing.length > 0) {
     throw new Error(
       `Falta configuración de notificación de Instagram: ${missing.join(', ')}`
@@ -81,19 +90,19 @@ export async function notifyInstagramSync(
     ''
   );
   const transporter = nodemailer.createTransport({
-    host: process.env.INSTAGRAM_SMTP_HOST,
-    port: Number(process.env.INSTAGRAM_SMTP_PORT ?? '587'),
-    secure: process.env.INSTAGRAM_SMTP_SECURE === 'true',
+    host: smtp.host,
+    port: Number(smtp.port),
+    secure: smtp.secure === 'true',
     requireTLS: true,
     auth: {
-      user: process.env.INSTAGRAM_SMTP_USER,
-      pass: process.env.INSTAGRAM_SMTP_PASSWORD,
+      user: smtp.user,
+      pass: smtp.password,
     },
   });
 
   await transporter.sendMail({
-    from: process.env.INSTAGRAM_NOTIFY_FROM,
-    to: process.env.INSTAGRAM_NOTIFY_TO,
+    from: smtp.from,
+    to: smtp.to,
     subject: `Belmontejo: ${report.created + report.updated} publicaciones de Instagram sincronizadas`,
     text: buildNotificationText({ commit, report, siteUrl }),
     html: buildNotificationHtml({ commit, report, siteUrl }),
