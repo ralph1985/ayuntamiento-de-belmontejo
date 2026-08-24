@@ -30,6 +30,11 @@
     "children": []
   },
   {
+    "key": "Instagram",
+    "url": "/instagram/",
+    "children": []
+  },
+  {
     "key": "Guía práctica",
     "url": "/guia-practica/",
     "children": []
