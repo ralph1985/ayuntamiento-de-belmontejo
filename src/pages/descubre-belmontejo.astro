@@ -316,12 +316,46 @@ const mapPlacesJson = mapPlaces.map(place => ({
     }).setView([39.8219639, -2.3477587], 16);
     const mapStyles = {
       light: [
-        { name: 'Positron', path: 'light_all' },
-        { name: 'Voyager', path: 'rastertiles/voyager' },
+        {
+          name: 'Positron',
+          path: 'light_all',
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        },
+        {
+          name: 'Voyager',
+          path: 'rastertiles/voyager',
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        },
+        {
+          name: 'Satélite',
+          url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          maxZoom: 19,
+          attribution:
+            'Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+        },
       ],
       dark: [
-        { name: 'Dark Matter', path: 'dark_all' },
-        { name: 'Dark Matter sin etiquetas', path: 'dark_nolabels' },
+        {
+          name: 'Dark Matter',
+          path: 'dark_all',
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        },
+        {
+          name: 'Dark Matter sin etiquetas',
+          path: 'dark_nolabels',
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        },
+        {
+          name: 'Satélite',
+          url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+          maxZoom: 19,
+          attribution:
+            'Tiles &copy; Esri — Source: Esri, Maxar, Earthstar Geographics, and the GIS User Community',
+        },
       ],
     } as const;
     let styleIndex = 0;
@@ -329,10 +363,12 @@ const mapPlacesJson = mapPlaces.map(place => ({
     const getTheme = () =>
       document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
     const getStyleVariants = () => mapStyles[getTheme()];
-    const getTileUrl = (path: string) =>
-      `https://{s}.basemaps.cartocdn.com/${path}/{z}/{x}/{y}{r}.png`;
-    const attribution =
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+    const getTileUrl = (
+      style: (typeof mapStyles)[keyof typeof mapStyles][number]
+    ) =>
+      'url' in style
+        ? style.url
+        : `https://{s}.basemaps.cartocdn.com/${style.path}/{z}/{x}/{y}{r}.png`;
     const styleControl = L.control({ position: 'topright' });
     const styleButton = L.DomUtil.create(
       'button',
@@ -367,10 +403,11 @@ const mapPlacesJson = mapPlaces.map(place => ({
       const variants = getStyleVariants();
       styleIndex %= variants.length;
       baseLayer?.remove();
-      baseLayer = L.tileLayer(getTileUrl(variants[styleIndex].path), {
-        attribution,
+      const style = variants[styleIndex];
+      baseLayer = L.tileLayer(getTileUrl(style), {
+        attribution: style.attribution,
         subdomains: 'abcd',
-        maxZoom: 20,
+        maxZoom: style.maxZoom ?? 20,
       }).addTo(map);
       baseLayer.on('tileerror', () => {
         setMapStatus(
