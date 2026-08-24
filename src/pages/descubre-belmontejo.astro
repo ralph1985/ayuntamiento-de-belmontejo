@@ -258,6 +258,7 @@ const mapPlacesJson = mapPlaces.map(place => ({
         'M20 4C11 4 5 8 5 15c0 3 2 5 5 5 7 0 10-7 10-16Z',
         'M4 21c3-5 7-8 13-11',
       ],
+      health: ['M12 4v16M4 12h16', 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z'],
     };
     const selectedPaths = paths[icon] ?? paths.civic;
     return `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${selectedPaths.map(path => `<path d="${path}"></path>`).join('')}</svg>`;
@@ -421,7 +422,15 @@ const mapPlacesJson = mapPlaces.map(place => ({
     applyBaseLayer();
     document.addEventListener('municipal:theme-change', applyBaseLayer);
 
+    const coordinateOccurrences = new Map<string, number>();
     const markerEntries = mapPlaces.map(place => {
+      const coordinateKey = `${place.latitude},${place.longitude}`;
+      const occurrence = coordinateOccurrences.get(coordinateKey) ?? 0;
+      coordinateOccurrences.set(coordinateKey, occurrence + 1);
+      const displayCoordinates: L.LatLngTuple = [
+        place.latitude + (occurrence ? 0.00008 : 0),
+        place.longitude + (occurrence ? 0.00008 : 0),
+      ];
       const icon = L.divIcon({
         className: `place-map-icon-wrap place-map-icon-wrap--${place.mapIcon ?? 'default'}`,
         html: `<button type="button" class="place-map-icon place-map-icon--${place.mapIcon ?? 'default'}" aria-label="Ver ${place.name}">${markerSvg(place.mapIcon ?? 'civic')}</button>`,
@@ -429,7 +438,7 @@ const mapPlacesJson = mapPlaces.map(place => ({
         iconAnchor: [24, 48],
         popupAnchor: [0, -48],
       });
-      const marker = L.marker([place.latitude, place.longitude], {
+      const marker = L.marker(displayCoordinates, {
         icon,
         keyboard: false,
         title: place.name,

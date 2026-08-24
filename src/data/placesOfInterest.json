@@ -39,6 +39,20 @@
       "coordinateSource": "https://www.openstreetmap.org/way/1500211305"
     },
     {
+      "id": "consultorio-local",
+      "name": "Consultorio local",
+      "category": "Servicios",
+      "description": "Centro de atención primaria del municipio. Comparte el edificio de C/ Pósito con otros servicios públicos.",
+      "address": "C/ Pósito, s/n, 16779 Belmontejo",
+      "mapsUrl": "https://maps.google.com/?q=Consultorio+local+de+Belmontejo,+Calle+Pósito,+5",
+      "sourceLabel": "Servicio de Salud de Castilla-La Mancha",
+      "sourceHref": "https://sanidad.castillalamancha.es/ciudadanos/centros/belmontejo",
+      "mapIcon": "health",
+      "latitude": 39.8210581,
+      "longitude": -2.3452782,
+      "coordinateSource": "https://www.openstreetmap.org/way/1500211305"
+    },
+    {
       "id": "fuente-de-la-lobera",
       "name": "Fuente de La Lobera",
       "category": "Naturaleza",
