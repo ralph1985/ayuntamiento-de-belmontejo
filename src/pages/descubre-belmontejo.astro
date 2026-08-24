@@ -148,15 +148,6 @@ const mapPlacesJson = mapPlaces.map(place => ({
               data-place-card
               data-category={place.category}
             >
-              {place.image && (
-                <img
-                  src={place.image}
-                  alt={place.imageAlt ?? ''}
-                  loading="lazy"
-                  width="640"
-                  height="360"
-                />
-              )}
               <div class="place-card__body">
                 <p class="place-card__category">{place.category}</p>
                 <h3>{place.name}</h3>

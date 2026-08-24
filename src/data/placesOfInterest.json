@@ -17,8 +17,6 @@
       "description": "La iglesia forma parte del paisaje cotidiano y de la memoria histórica de Belmontejo.",
       "address": "Casco urbano de Belmontejo",
       "mapsQuery": "Iglesia de Nuestra Señora de la Asunción, Belmontejo, Cuenca",
-      "image": "/assets/images/belmontejo-patrimonio.webp",
-      "imageAlt": "Iglesia de Nuestra Señora de la Asunción y casas de Belmontejo",
       "sourceLabel": "Turismo de Castilla-La Mancha",
       "sourceHref": "https://www.turismocastillalamancha.es/es/destinos/encanto-rural/cuenca/belmontejo",
       "mapIcon": "heritage",
@@ -78,8 +76,6 @@
       "address": "Entorno rural de Belmontejo",
       "mapsQuery": "Necrópolis visigoda de Belmontejo, Cuenca",
       "detailHref": "/patrimonio/necropolis-visigoda/",
-      "image": "/assets/images/necropolis-belmontejo.jpg",
-      "imageAlt": "Sepulturas excavadas en la roca de la necrópolis de Belmontejo",
       "mapIcon": "heritage"
     },
     {
