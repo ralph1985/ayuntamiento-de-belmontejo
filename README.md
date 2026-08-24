@@ -149,11 +149,11 @@ La hora se interpreta en la zona horaria del servidor. Para comprobar el proceso
 
 La sincronización de Instagram abre el perfil público con Playwright, recoge los enlaces visibles de publicaciones y visita cada una para obtener sus metadatos públicos. No necesita token ni `user_id`. Configura opcionalmente `INSTAGRAM_PROFILE_URL`, `INSTAGRAM_SCRAPE_LIMIT` y `INSTAGRAM_NAVIGATION_TIMEOUT_MS`, además de las variables `INSTAGRAM_SMTP_*` e `INSTAGRAM_NOTIFY_*` para recibir el correo; si no existen, reutiliza las variables SMTP de bandos. El script deduplica por el identificador del permalink, pasa las publicaciones nuevas por Codex y deja bloqueadas las que no se pueden analizar con seguridad.
 
-El cron de producción comparte el horario de bandos: 02:00, 05:00, 08:00, 11:00, 14:00, 17:00, 20:00 y 23:00 en `Europe/Madrid`:
+El cron de producción se ejecuta 30 minutos después del de bandos: 02:30, 05:30, 08:30, 11:30, 14:30, 17:30, 20:30 y 23:30 en `Europe/Madrid`:
 
 ```cron
 CRON_TZ=Europe/Madrid
-0 2,5,8,11,14,17,20,23 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/sync-instagram-cron.sh >> /tmp/ayuntamiento-belmontejo-instagram.log 2>&1
+30 2,5,8,11,14,17,20,23 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/sync-instagram-cron.sh >> /tmp/ayuntamiento-belmontejo-instagram.log 2>&1
 ```
 
 Para probar el proceso sin hacer commit ni push, usa `INSTAGRAM_SYNC_DRY_RUN=1 scripts/sync-instagram-cron.sh`.
