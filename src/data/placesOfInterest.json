@@ -100,7 +100,10 @@
       "mapsQuery": "Bar Rosi, C. de D. Francisco Argiles, 12, Belmontejo, Cuenca",
       "sourceLabel": "Directorio local consultado",
       "sourceHref": "https://es.cybo.com/ES/belmontejo/restaurantes/",
-      "mapIcon": "bar"
+      "mapIcon": "bar",
+      "latitude": 39.8220664,
+      "longitude": -2.3446331,
+      "coordinateSource": "https://www.infopiniones.es/bares-y-cafeterias/bar-rosi/"
     },
     {
       "id": "piscina-municipal",
@@ -125,7 +128,10 @@
       "mapsQuery": "Farmacia, C. Las Peñas, 11, Belmontejo, Cuenca",
       "sourceLabel": "Directorio farmacéutico consultado",
       "sourceHref": "https://www.farmacias.es/cuenca/belmontejo",
-      "mapIcon": "pharmacy"
+      "mapIcon": "pharmacy",
+      "latitude": 39.8205,
+      "longitude": -2.3446,
+      "coordinateSource": "https://www.farmacias.es/cuenca/belmontejo/jose-carbonell-moreno-8642"
     },
     {
       "id": "colegio-clementino-escribano",
