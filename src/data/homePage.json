@@ -54,6 +54,13 @@
     "bandosButtonLabel": "Todos los bandos",
     "bandosButtonHref": "/bandos/"
   },
+  "instagram": {
+    "eyebrow": "Redes sociales",
+    "title": "Desde Instagram",
+    "description": "Actualidad, actividades y avisos compartidos por el Ayuntamiento de Belmontejo.",
+    "buttonLabel": "Ver todas las publicaciones",
+    "buttonHref": "/instagram/"
+  },
   "community": {
     "eyebrow": "Comunidad",
     "title": "Actualidad y redes",

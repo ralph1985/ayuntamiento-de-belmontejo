@@ -37,6 +37,11 @@ export interface HomeUpdatesContent extends HomeSectionHeading {
   bandosButtonHref: string;
 }
 
+export interface HomeInstagramContent extends HomeSectionHeading {
+  buttonLabel: string;
+  buttonHref: string;
+}
+
 export interface HomeCtaContent {
   title: string;
   description: string;
@@ -52,6 +57,7 @@ export interface HomePageContent {
   services: IconBulletItem[];
   villageStory: VillageStoryContent;
   updates: HomeUpdatesContent;
+  instagram: HomeInstagramContent;
   community: HomeSectionHeading;
   cta: HomeCtaContent;
 }

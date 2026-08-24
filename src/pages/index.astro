@@ -9,6 +9,7 @@ import HomeHero from '@components/sections/HomeHero.astro';
 import VillageStory from '@components/sections/VillageStory.astro';
 import HomeUpdates from '@components/sections/HomeUpdates.astro';
 import HomeCommunity from '@components/sections/HomeCommunity.astro';
+import InstagramFeed from '@components/sections/InstagramFeed.astro';
 import { homePage } from '@data/homePage';
 
 const homeHeroImage = {
@@ -40,6 +41,7 @@ const homeHeroImage = {
   <FAQ id="home" />
 
   <HomeUpdates {...homePage.updates} />
+  <InstagramFeed {...homePage.instagram} limit={3} />
   <HomeCommunity {...homePage.community} />
 
   <CTA {...homePage.cta} />

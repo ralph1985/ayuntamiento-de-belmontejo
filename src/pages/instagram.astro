@@ -1,0 +1,27 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import InstagramFeed from '@components/sections/InstagramFeed.astro';
+import Landing from '@components/sections/Landing.astro';
+import landingImage from '@data/landingImage';
+
+export const prerender = true;
+---
+
+<BaseLayout
+  title="Instagram - Ayuntamiento de Belmontejo"
+  description="Publicaciones del Ayuntamiento de Belmontejo en Instagram."
+  preloadedImage={landingImage}
+>
+  <Landing title="Instagram" image={landingImage}>
+    <p>Consulta las publicaciones del Ayuntamiento de Belmontejo.</p>
+  </Landing>
+
+  <InstagramFeed
+    eyebrow="Redes sociales"
+    title="Desde Instagram"
+    description="Actualidad, actividades y avisos compartidos por el Ayuntamiento de Belmontejo."
+    buttonLabel="Seguir en Instagram"
+    buttonHref="https://www.instagram.com/aytobelmontejo/"
+    allPosts={true}
+  />
+</BaseLayout>

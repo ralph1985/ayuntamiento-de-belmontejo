@@ -5,6 +5,7 @@ Este proyecto es el sitio web oficial del Ayuntamiento de Belmontejo, diseñado 
 ## Características
 
 - **Anuncios Oficiales (Bandos):** Muestra los bandos municipales, obtenidos automáticamente a través de un script.
+- **Instagram municipal:** Integra las publicaciones autorizadas de Instagram y las analiza con Codex antes de publicarlas.
 - **Noticias y Proyectos:** Secciones para mantener a los ciudadanos informados sobre las últimas noticias y proyectos del ayuntamiento.
 - **Información del Pueblo:** Detalles sobre la historia, lugares de interés y otra información relevante sobre Belmontejo.
 - **Contenido editorial:** Los textos y avisos se mantienen como archivos versionados del proyecto.
@@ -95,6 +96,7 @@ Si ya tenías el repositorio clonado antes de activar LFS, ejecuta igualmente `g
 | `pnpm run build`                  | Genera la versión optimizada en `dist/`.                                                                                 |
 | `pnpm run preview`                | Alias de `astro dev`. Para revisar la build estática ejecuta `pnpm run build && pnpm exec astro preview`.                |
 | `pnpm run fetch-bandos`           | Descarga el feed RSS municipal y crea/actualiza Markdown en `src/content/bandos/`, formateando con Prettier al terminar. |
+| `pnpm run fetch-instagram`        | Sincroniza publicaciones autorizadas de Instagram, las clasifica con Codex y actualiza `src/data/instagramPosts.json`.   |
 | `pnpm run lint`                   | Ejecuta ESLint con las reglas de Astro, TypeScript y accesibilidad.                                                      |
 | `pnpm run lint:fix`               | Igual que `lint` pero aplica autocorrecciones posibles.                                                                  |
 | `pnpm run format`                 | Verifica el formato con Prettier.                                                                                        |
@@ -142,6 +144,19 @@ PATH=/home/rafa/.nvm/versions/node/v22.23.1/bin:/usr/local/bin:/usr/bin:/bin
 ```
 
 La hora se interpreta en la zona horaria del servidor. Para comprobar el proceso sin publicar cambios, usa `SYNC_BANDOS_DRY_RUN=1 scripts/sync-bandos-cron.sh`.
+
+## Automatización de Instagram
+
+La sincronización de Instagram abre el perfil público con Playwright, recoge los enlaces visibles de publicaciones y visita cada una para obtener sus metadatos públicos. No necesita token ni `user_id`. Configura opcionalmente `INSTAGRAM_PROFILE_URL`, `INSTAGRAM_SCRAPE_LIMIT` y `INSTAGRAM_NAVIGATION_TIMEOUT_MS`, además de las variables `INSTAGRAM_SMTP_*` e `INSTAGRAM_NOTIFY_*` para recibir el correo. El script deduplica por el identificador del permalink, pasa las publicaciones nuevas por Codex y deja bloqueadas las que no se pueden analizar con seguridad.
+
+El cron de producción comparte el horario de bandos: 02:00, 05:00, 08:00, 11:00, 14:00, 17:00, 20:00 y 23:00 en `Europe/Madrid`:
+
+```cron
+CRON_TZ=Europe/Madrid
+0 2,5,8,11,14,17,20,23 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/sync-instagram-cron.sh >> /tmp/ayuntamiento-belmontejo-instagram.log 2>&1
+```
+
+Para probar el proceso sin hacer commit ni push, usa `INSTAGRAM_SYNC_DRY_RUN=1 scripts/sync-instagram-cron.sh`.
 
 ## Descubrimiento automático de noticias
 

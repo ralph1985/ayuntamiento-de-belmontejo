@@ -1,0 +1,113 @@
+---
+import Button from '@components/ui/Button.astro';
+import InstagramEmbed from '@components/content/InstagramEmbed.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import {
+  featuredInstagramPosts,
+  publishedInstagramPosts,
+} from '@data/instagramPosts';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  buttonLabel: string;
+  buttonHref: string;
+  limit?: number;
+  allPosts?: boolean;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  buttonLabel,
+  buttonHref,
+  limit,
+  allPosts = false,
+} = Astro.props as Props;
+const sourcePosts = allPosts
+  ? publishedInstagramPosts
+  : featuredInstagramPosts.length > 0
+    ? featuredInstagramPosts
+    : publishedInstagramPosts;
+const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
+---
+
+<section class="instagram-feed" aria-label={title}>
+  <div class="instagram-feed__inner site-container site-container--wide">
+    <SectionHeading eyebrow={eyebrow} title={title} description={description} />
+
+    {
+      posts.length > 0 ? (
+        <div class="instagram-feed__grid">
+          {posts.map(post => (
+            <InstagramEmbed post={post} />
+          ))}
+        </div>
+      ) : (
+        <p class="instagram-feed__empty">
+          Todavía no hay publicaciones disponibles.
+        </p>
+      )
+    }
+
+    <div class="instagram-feed__actions">
+      <Button href={buttonHref} variant="secondary">{buttonLabel}</Button>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const processInstagramEmbeds = () => {
+      if (window.instgrm?.Embeds?.process) {
+        window.instgrm.Embeds.process();
+      }
+    };
+
+    if (!document.querySelector('script[data-instagram-embed-script]')) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.instagram.com/embed.js';
+      script.dataset.instagramEmbedScript = 'true';
+      script.onload = processInstagramEmbeds;
+      document.head.appendChild(script);
+    }
+
+    processInstagramEmbeds();
+    document.addEventListener('astro:page-load', processInstagramEmbeds);
+  })();
+</script>
+
+<style lang="less">
+  .instagram-feed {
+    background: var(--color-bg);
+    padding-block: clamp(4rem, 9vw, 8rem);
+  }
+
+  .instagram-feed__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .instagram-feed__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .instagram-feed__empty {
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 60rem) {
+    .instagram-feed__grid {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 34rem;
+      margin-inline: auto;
+    }
+  }
+</style>
