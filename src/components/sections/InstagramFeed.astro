@@ -3,7 +3,6 @@ import Button from '@components/ui/Button.astro';
 import InstagramPostCard from '@components/content/InstagramPostCard.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import {
-  featuredInstagramPosts,
   publishedInstagramPosts,
   getInstagramPageUrl,
 } from '@data/instagramPosts';
@@ -39,15 +38,10 @@ const {
 const sourcePosts =
   pagePosts ??
   (variant === 'home'
-    ? [
-        ...featuredInstagramPosts,
-        ...publishedInstagramPosts.filter(post => !post.featureOnHome),
-      ]
+    ? publishedInstagramPosts
     : allPosts
       ? publishedInstagramPosts
-      : featuredInstagramPosts.length > 0
-        ? featuredInstagramPosts
-        : publishedInstagramPosts);
+      : publishedInstagramPosts);
 const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
 ---
 

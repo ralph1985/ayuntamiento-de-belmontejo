@@ -1,5 +1,6 @@
 import {
   getInstagramConfig,
+  downloadInstagramImage,
   normalizeInstagramMedia,
   parseInstagramPublishedAt,
 } from '../../scripts/fetch-instagram.js';
@@ -74,6 +75,33 @@ describe('Instagram API helpers', () => {
       )
     ).toBe('2026-08-24T00:00:00.000Z');
     expect(parseInstagramPublishedAt('Caption sin fecha')).toBeNull();
+  });
+
+  it('downloads allowed Instagram images as local webp assets', async () => {
+    const destinationDir = '/tmp/belmontejo-instagram-test-assets';
+    const image = Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=',
+      'base64'
+    );
+    const imagePath = await downloadInstagramImage(
+      'https://scontent-mad1-1.cdninstagram.com/image.jpg',
+      {
+        id: 'test-image',
+        destinationDir,
+        fetchImpl: async () => ({
+          ok: true,
+          headers: { get: () => 'image/png' },
+          arrayBuffer: async () => image,
+        }),
+      }
+    );
+
+    expect(imagePath).toBe('/assets/images/instagram/test-image.webp');
+    expect(
+      await import('node:fs/promises').then(fs =>
+        fs.stat(`${destinationDir}/test-image.webp`)
+      )
+    ).toBeTruthy();
   });
 });
 

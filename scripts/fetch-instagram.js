@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
+import sharp from 'sharp';
 import {
   classifyInstagramWithCodex,
   fallbackInstagramDecision,
@@ -14,6 +15,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.join(__dirname, '..');
 const dataPath = path.join(projectRoot, 'src', 'data', 'instagramPosts.json');
+const instagramImageDir = path.join(
+  projectRoot,
+  'public',
+  'assets',
+  'images',
+  'instagram'
+);
 const defaultReportPath = path.join(
   process.env.TMPDIR ?? '/tmp',
   'ayuntamiento-belmontejo-instagram-result.json'
@@ -82,6 +90,89 @@ export function parseInstagramPublishedAt(value) {
 
   const timestamp = Date.parse(`${match[1]} 00:00:00 UTC`);
   return Number.isNaN(timestamp) ? null : new Date(timestamp).toISOString();
+}
+
+function isAllowedInstagramImageUrl(value) {
+  if (typeof value !== 'string' || !value.startsWith('https://')) return false;
+
+  const hostname = new URL(value).hostname;
+  return (
+    hostname === 'cdninstagram.com' ||
+    hostname.endsWith('.cdninstagram.com') ||
+    hostname === 'fbcdn.net' ||
+    hostname.endsWith('.fbcdn.net')
+  );
+}
+
+export async function downloadInstagramImage(
+  url,
+  { id, destinationDir = instagramImageDir, fetchImpl = fetch } = {}
+) {
+  if (!id || !isAllowedInstagramImageUrl(url)) return null;
+
+  const response = await fetchImpl(url, {
+    headers: {
+      'user-agent': 'Ayuntamiento-de-Belmontejo-InstagramSync/1.0',
+      referer: 'https://www.instagram.com/',
+    },
+    redirect: 'follow',
+  });
+
+  if (!response.ok) throw new Error(`Imagen HTTP ${response.status}.`);
+
+  const contentType = response.headers.get('content-type') ?? '';
+  if (!contentType.startsWith('image/')) {
+    throw new Error('Instagram no devolvió una imagen válida.');
+  }
+
+  const buffer = Buffer.from(await response.arrayBuffer());
+  if (buffer.length > 10 * 1024 * 1024) {
+    throw new Error('La imagen supera el tamaño máximo permitido.');
+  }
+
+  const outputPath = path.join(destinationDir, `${id}.webp`);
+  const temporaryPath = `${outputPath}.tmp`;
+  fs.mkdirSync(destinationDir, { recursive: true });
+  fs.writeFileSync(
+    temporaryPath,
+    await sharp(buffer)
+      .resize({ width: 1200, withoutEnlargement: true })
+      .webp({ quality: 82 })
+      .toBuffer()
+  );
+  fs.renameSync(temporaryPath, outputPath);
+
+  return `/assets/images/instagram/${id}.webp`;
+}
+
+async function materializeInstagramImage(item, previous) {
+  if (!item.imageUrl) {
+    return {
+      ...item,
+      imageUrl: previous?.imageUrl?.startsWith('/assets/')
+        ? previous.imageUrl
+        : null,
+    };
+  }
+
+  try {
+    return {
+      ...item,
+      imageUrl:
+        (await downloadInstagramImage(item.imageUrl, { id: item.id })) ??
+        (previous?.imageUrl?.startsWith('/assets/') ? previous.imageUrl : null),
+    };
+  } catch (error) {
+    console.warn(
+      `Imagen de Instagram omitida para ${item.id}: ${error.message}`
+    );
+    return {
+      ...item,
+      imageUrl: previous?.imageUrl?.startsWith('/assets/')
+        ? previous.imageUrl
+        : null,
+    };
+  }
 }
 
 export async function fetchInstagramMedia({
@@ -244,13 +335,17 @@ export async function syncInstagram({
   const findPrevious = item =>
     previousById.get(item.id) ??
     previousPosts.find(post => post.permalink === item.permalink);
-  const pending = remoteItems.filter(item => {
+  const mediaItems = await Promise.all(
+    remoteItems.map(item => materializeInstagramImage(item, findPrevious(item)))
+  );
+  const pending = mediaItems.filter(item => {
     const previous = findPrevious(item);
     return (
       !previous ||
       previous.caption !== item.caption ||
       previous.publishedAt !== item.publishedAt ||
       previous.permalink !== item.permalink ||
+      previous.imageUrl !== item.imageUrl ||
       previous.analysisSource === 'fallback'
     );
   });
@@ -266,7 +361,7 @@ export async function syncInstagram({
     }
   }
 
-  const materialized = remoteItems.map(item => {
+  const materialized = mediaItems.map(item => {
     const previous = findPrevious(item);
     if (!pending.some(candidate => candidate.id === item.id) && previous) {
       return previous;
@@ -278,7 +373,7 @@ export async function syncInstagram({
       : buildFallbackPost(item);
   });
   const isRemotePost = post =>
-    remoteItems.some(
+    mediaItems.some(
       item => item.id === post.id || item.permalink === post.permalink
     );
   const retainedHistorical = previousPosts.filter(post => !isRemotePost(post));
@@ -298,7 +393,7 @@ export async function syncInstagram({
         Boolean(findPrevious(item)) &&
         pending.some(candidate => candidate.id === item.id)
     ).length,
-    unchanged: remoteItems.length - pending.length,
+    unchanged: mediaItems.length - pending.length,
     classifiedWithCodex: pending.length - classificationFallback,
     classificationFallback,
     retainedHistorical: retainedHistorical.length,
