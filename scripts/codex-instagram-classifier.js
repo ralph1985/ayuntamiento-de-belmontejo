@@ -31,7 +31,7 @@ export function buildInstagramCodexPrompt(items) {
     'Analiza cada publicación visible o compartida desde el perfil del Ayuntamiento de Belmontejo.',
     'No inventes datos, fechas, lugares ni actividades.',
     'Genera un título claro y un resumen breve basados solo en el contenido recibido.',
-    'Marca como relevante solo el contenido relacionado directamente con Belmontejo o su Ayuntamiento.',
+    'Marca como relevante el contenido relacionado directamente con Belmontejo, su Ayuntamiento, sus proyectos municipales o trabajos realizados para el municipio por empresas y entidades locales.',
     'Solo recomienda portada cuando sea una publicación municipal clara y útil.',
     'Devuelve exclusivamente JSON válido, sin markdown, con esta forma exacta:',
     '{"decisions":[{"mediaId":"...","title":"...","summary":"...","category":"general","isRelevant":true,"featureOnHome":false,"reason":"..."}]}',

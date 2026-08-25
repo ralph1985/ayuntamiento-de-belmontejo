@@ -61,6 +61,7 @@ describe('Instagram Codex classifier', () => {
     expect(prompt).toContain('mediaId');
     expect(prompt).toContain('JSON válido');
     expect(prompt).toContain('Consulta el horario');
+    expect(prompt).toContain('trabajos realizados para el municipio');
   });
 
   it('accepts valid JSON and rejects incomplete coverage', () => {
