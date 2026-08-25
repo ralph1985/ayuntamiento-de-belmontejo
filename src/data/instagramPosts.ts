@@ -6,6 +6,7 @@ export interface InstagramPost {
   caption: string;
   publishedAt: string | null;
   mediaType: string;
+  imageUrl?: string | null;
   title: string;
   summary: string;
   category: string;

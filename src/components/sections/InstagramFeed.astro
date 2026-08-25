@@ -1,6 +1,6 @@
 ---
 import Button from '@components/ui/Button.astro';
-import InstagramEmbed from '@components/content/InstagramEmbed.astro';
+import InstagramPostCard from '@components/content/InstagramPostCard.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import {
   featuredInstagramPosts,
@@ -20,6 +20,7 @@ interface Props {
   posts?: InstagramPost[];
   currentPage?: number;
   totalPages?: number;
+  variant?: 'archive' | 'home';
 }
 
 const {
@@ -33,26 +34,56 @@ const {
   posts: pagePosts,
   currentPage = 1,
   totalPages = 1,
+  variant = 'archive',
 } = Astro.props as Props;
 const sourcePosts =
   pagePosts ??
-  (allPosts
-    ? publishedInstagramPosts
-    : featuredInstagramPosts.length > 0
-      ? featuredInstagramPosts
-      : publishedInstagramPosts);
+  (variant === 'home'
+    ? [
+        ...featuredInstagramPosts,
+        ...publishedInstagramPosts.filter(post => !post.featureOnHome),
+      ]
+    : allPosts
+      ? publishedInstagramPosts
+      : featuredInstagramPosts.length > 0
+        ? featuredInstagramPosts
+        : publishedInstagramPosts);
 const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
 ---
 
-<section class="instagram-feed" aria-label={title}>
+<section
+  class:list={['instagram-feed', `instagram-feed--${variant}`]}
+  aria-label={title}
+>
   <div class="instagram-feed__inner site-container site-container--wide">
-    <SectionHeading eyebrow={eyebrow} title={title} description={description} />
+    <div class="instagram-feed__heading-row">
+      <SectionHeading
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+      />
+      {
+        variant === 'home' && (
+          <a
+            class="instagram-feed__profile-link"
+            href="https://www.instagram.com/aytobelmontejo/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Perfil oficial <span aria-hidden="true">↗</span>
+          </a>
+        )
+      }
+    </div>
 
     {
       posts.length > 0 ? (
         <div class="instagram-feed__grid">
-          {posts.map(post => (
-            <InstagramEmbed post={post} />
+          {posts.map((post, index) => (
+            <InstagramPostCard
+              post={post}
+              featured={variant === 'home' && index === 0}
+            />
           ))}
         </div>
       ) : (
@@ -88,28 +119,6 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
   </div>
 </section>
 
-<script is:inline>
-  (() => {
-    const processInstagramEmbeds = () => {
-      if (window.instgrm?.Embeds?.process) {
-        window.instgrm.Embeds.process();
-      }
-    };
-
-    if (!document.querySelector('script[data-instagram-embed-script]')) {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = 'https://www.instagram.com/embed.js';
-      script.dataset.instagramEmbedScript = 'true';
-      script.onload = processInstagramEmbeds;
-      document.head.appendChild(script);
-    }
-
-    processInstagramEmbeds();
-    document.addEventListener('astro:page-load', processInstagramEmbeds);
-  })();
-</script>
-
 <style lang="less">
   .instagram-feed {
     background: var(--color-bg);
@@ -121,6 +130,27 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.5rem;
     align-items: start;
+  }
+
+  .instagram-feed__heading-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .instagram-feed__profile-link {
+    flex: 0 0 auto;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+    color: var(--color-link);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    span {
+      display: inline-block;
+      margin-left: 0.2rem;
+    }
   }
 
   .instagram-feed__actions {
@@ -155,11 +185,36 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
     opacity: 0.55;
   }
 
+  .instagram-feed--home {
+    background: var(--color-bg-subtle);
+
+    .instagram-feed__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .instagram-feed__actions {
+      justify-content: flex-start;
+    }
+  }
+
   @media (max-width: 60rem) {
     .instagram-feed__grid {
       grid-template-columns: minmax(0, 1fr);
       max-width: 34rem;
       margin-inline: auto;
+    }
+
+    .instagram-feed__heading-row {
+      display: block;
+    }
+
+    .instagram-feed__profile-link {
+      display: inline-block;
+      margin: -1.5rem 0 2rem;
+    }
+
+    .instagram-feed--home .instagram-feed__grid {
+      grid-template-columns: minmax(0, 1fr);
     }
   }
 </style>

@@ -66,6 +66,11 @@ export function normalizeInstagramMedia(item) {
     publishedAt: typeof item.timestamp === 'string' ? item.timestamp : null,
     mediaType:
       typeof item.media_type === 'string' ? item.media_type : 'UNKNOWN',
+    imageUrl:
+      typeof item.image_url === 'string' &&
+      item.image_url.startsWith('https://')
+        ? item.image_url
+        : null,
   };
 }
 
@@ -141,6 +146,7 @@ export async function fetchInstagramMedia({
         page,
         'meta[property="article:published_time"]'
       );
+      const imageUrl = await readMetaContent(page, 'meta[property="og:image"]');
       const timestamp =
         metadataTimestamp ?? parseInstagramPublishedAt(description);
       const mediaType = permalink.includes('/reel/')
@@ -161,6 +167,7 @@ export async function fetchInstagramMedia({
           caption: description ?? '',
           timestamp,
           media_type: mediaType,
+          image_url: imageUrl,
         })
       );
     }

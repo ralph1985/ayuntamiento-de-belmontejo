@@ -56,9 +56,9 @@
   },
   "instagram": {
     "eyebrow": "Redes sociales",
-    "title": "Desde Instagram",
-    "description": "Actualidad, actividades y avisos compartidos por el Ayuntamiento de Belmontejo.",
-    "buttonLabel": "Ver todas las publicaciones",
+    "title": "La actualidad del pueblo, también en Instagram",
+    "description": "Avisos, actividades y proyectos del Ayuntamiento de Belmontejo, resumidos para consultarlos de un vistazo.",
+    "buttonLabel": "Ver toda la actualidad",
     "buttonHref": "/instagram/"
   },
   "community": {

@@ -39,6 +39,26 @@ describe('Instagram API helpers', () => {
       mediaType: 'IMAGE',
     });
 
+    expect(
+      normalizeInstagramMedia({
+        id: '456',
+        permalink: 'https://www.instagram.com/p/def/',
+        caption: 'Publicación con imagen',
+        image_url: 'https://scontent.example/image.jpg',
+        media_type: 'IMAGE',
+      })
+    ).toMatchObject({ imageUrl: 'https://scontent.example/image.jpg' });
+
+    expect(
+      normalizeInstagramMedia({
+        id: '789',
+        permalink: 'https://www.instagram.com/p/ghi/',
+        caption: 'Publicación sin imagen',
+        image_url: 'http://scontent.example/image.jpg',
+        media_type: 'IMAGE',
+      })
+    ).toMatchObject({ imageUrl: null });
+
     expect(() =>
       normalizeInstagramMedia({
         id: '123',
