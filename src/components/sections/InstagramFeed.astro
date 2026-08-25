@@ -5,7 +5,9 @@ import SectionHeading from '@components/ui/SectionHeading.astro';
 import {
   featuredInstagramPosts,
   publishedInstagramPosts,
+  getInstagramPageUrl,
 } from '@data/instagramPosts';
+import type { InstagramPost } from '@data/instagramPosts';
 
 interface Props {
   eyebrow: string;
@@ -15,6 +17,9 @@ interface Props {
   buttonHref: string;
   limit?: number;
   allPosts?: boolean;
+  posts?: InstagramPost[];
+  currentPage?: number;
+  totalPages?: number;
 }
 
 const {
@@ -25,12 +30,17 @@ const {
   buttonHref,
   limit,
   allPosts = false,
+  posts: pagePosts,
+  currentPage = 1,
+  totalPages = 1,
 } = Astro.props as Props;
-const sourcePosts = allPosts
-  ? publishedInstagramPosts
-  : featuredInstagramPosts.length > 0
-    ? featuredInstagramPosts
-    : publishedInstagramPosts;
+const sourcePosts =
+  pagePosts ??
+  (allPosts
+    ? publishedInstagramPosts
+    : featuredInstagramPosts.length > 0
+      ? featuredInstagramPosts
+      : publishedInstagramPosts);
 const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
 ---
 
@@ -55,6 +65,26 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
     <div class="instagram-feed__actions">
       <Button href={buttonHref} variant="secondary">{buttonLabel}</Button>
     </div>
+
+    {
+      totalPages > 1 && (
+        <nav class="instagram-pagination" aria-label="Paginación de Instagram">
+          {currentPage > 1 ? (
+            <a href={getInstagramPageUrl(currentPage - 1)}>Anterior</a>
+          ) : (
+            <span aria-disabled="true">Anterior</span>
+          )}
+          <span aria-current="page">
+            Página {currentPage} de {totalPages}
+          </span>
+          {currentPage < totalPages ? (
+            <a href={getInstagramPageUrl(currentPage + 1)}>Siguiente</a>
+          ) : (
+            <span aria-disabled="true">Siguiente</span>
+          )}
+        </nav>
+      )
+    }
   </div>
 </section>
 
@@ -101,6 +131,28 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
 
   .instagram-feed__empty {
     color: var(--color-text-muted);
+  }
+
+  .instagram-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+  }
+
+  .instagram-pagination a {
+    color: var(--color-link);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .instagram-pagination span[aria-disabled='true'] {
+    color: var(--color-text-muted);
+    opacity: 0.55;
   }
 
   @media (max-width: 60rem) {
