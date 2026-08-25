@@ -1,6 +1,7 @@
 ---
 import Button from '@components/ui/Button.astro';
 import InstagramPostCard from '@components/content/InstagramPostCard.astro';
+import NavIcon from '@components/ui/NavIcon.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import {
   publishedInstagramPosts,
@@ -64,7 +65,7 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
             target="_blank"
             rel="noopener noreferrer"
           >
-            Perfil oficial <span aria-hidden="true">↗</span>
+            Perfil oficial <NavIcon name="arrow" size={16} />
           </a>
         )
       }
@@ -141,9 +142,9 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
     text-decoration: underline;
     text-underline-offset: 0.2em;
 
-    span {
-      display: inline-block;
+    .nav-icon {
       margin-left: 0.2rem;
+      vertical-align: middle;
     }
   }
 
