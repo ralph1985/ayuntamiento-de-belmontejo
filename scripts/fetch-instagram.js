@@ -259,7 +259,6 @@ export async function syncInstagram({
     }
   }
 
-  const remoteById = new Map(remoteItems.map(item => [item.id, item]));
   const materialized = remoteItems.map(item => {
     const previous = findPrevious(item);
     if (!pending.some(candidate => candidate.id === item.id) && previous) {
@@ -271,13 +270,12 @@ export async function syncInstagram({
       ? materializePost(item, decision, previous)
       : buildFallbackPost(item);
   });
-  const retainedManual = previousPosts.filter(
-    post =>
-      post.analysisSource === 'manual' &&
-      !remoteById.has(post.id) &&
-      !remoteItems.some(item => item.permalink === post.permalink)
-  );
-  const posts = [...materialized, ...retainedManual].sort((a, b) => {
+  const isRemotePost = post =>
+    remoteItems.some(
+      item => item.id === post.id || item.permalink === post.permalink
+    );
+  const retainedHistorical = previousPosts.filter(post => !isRemotePost(post));
+  const posts = [...materialized, ...retainedHistorical].sort((a, b) => {
     const first = a.publishedAt ? Date.parse(a.publishedAt) : 0;
     const second = b.publishedAt ? Date.parse(b.publishedAt) : 0;
     return second - first;
@@ -296,6 +294,7 @@ export async function syncInstagram({
     unchanged: remoteItems.length - pending.length,
     classifiedWithCodex: pending.length - classificationFallback,
     classificationFallback,
+    retainedHistorical: retainedHistorical.length,
     changed,
     posts: materialized
       .filter(
