@@ -1,4 +1,5 @@
 ---
+import NavIcon from '@components/ui/NavIcon.astro';
 import type { InstagramPost } from '@data/instagramPosts';
 
 interface Props {
@@ -27,6 +28,9 @@ const formattedDate = post.publishedAt
     target="_blank"
     rel="noopener noreferrer"
     aria-label={`Ver en Instagram: ${post.title}`}
+    style={post.imageUrl
+      ? `--instagram-image: url("${post.imageUrl}")`
+      : undefined}
   >
     {
       post.imageUrl ? (
@@ -62,7 +66,7 @@ const formattedDate = post.publishedAt
       target="_blank"
       rel="noopener noreferrer"
     >
-      Leer en Instagram <span aria-hidden="true">↗</span>
+      Leer en Instagram <NavIcon name="arrow" size={16} />
     </a>
   </div>
 </article>
@@ -99,7 +103,22 @@ const formattedDate = post.publishedAt
         outline-offset: -3px;
       }
 
+      &:has(img)::before {
+        position: absolute;
+        inset: -1rem;
+        background-image: var(--instagram-image);
+        background-position: center;
+        background-size: cover;
+        content: '';
+        filter: blur(1rem);
+        opacity: 0.28;
+        transform: scale(1.08);
+      }
+
       img {
+        position: relative;
+        z-index: 1;
+        display: block;
         width: 100%;
         height: 100%;
         object-fit: contain;
@@ -210,14 +229,14 @@ const formattedDate = post.publishedAt
       text-decoration: underline;
       text-underline-offset: 0.2em;
 
-      span {
-        display: inline-block;
+      .nav-icon {
         margin-left: 0.2rem;
+        vertical-align: middle;
         transition: transform 0.2s ease;
       }
 
-      &:hover span,
-      &:focus-visible span {
+      &:hover .nav-icon,
+      &:focus-visible .nav-icon {
         transform: translate(2px, -2px);
       }
     }
@@ -229,7 +248,8 @@ const formattedDate = post.publishedAt
 
         .instagram-card__media {
           width: 52%;
-          aspect-ratio: auto;
+          display: flex;
+          align-items: center;
           min-height: 100%;
         }
 
@@ -248,7 +268,7 @@ const formattedDate = post.publishedAt
   @media (prefers-reduced-motion: reduce) {
     .instagram-card,
     .instagram-card__media img,
-    .instagram-card__link span {
+    .instagram-card__link .nav-icon {
       transition: none;
     }
   }
