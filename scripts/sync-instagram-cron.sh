@@ -40,7 +40,10 @@ fi
 /usr/bin/git merge --ff-only origin/main
 INSTAGRAM_SYNC_REPORT="$REPORT_FILE" "$PNPM_BIN" run fetch-instagram
 
-if /usr/bin/git diff --quiet -- src/data/instagramPosts.json; then
+if
+  /usr/bin/git diff --quiet -- src/data/instagramPosts.json &&
+  [[ -z "$(/usr/bin/git status --porcelain -- public/assets/images/instagram)" ]]
+then
   echo 'No new or updated Instagram publications to publish.'
   exit 0
 fi
@@ -53,7 +56,7 @@ if [[ "${INSTAGRAM_SYNC_DRY_RUN:-0}" == '1' ]]; then
   exit 0
 fi
 
-/usr/bin/git add -- src/data/instagramPosts.json
+/usr/bin/git add -- src/data/instagramPosts.json public/assets/images/instagram
 /usr/bin/git commit -m 'chore(instagram): sync municipal publications'
 commit_sha=$(/usr/bin/git rev-parse HEAD)
 /usr/bin/git push origin main
