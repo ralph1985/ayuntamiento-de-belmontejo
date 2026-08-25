@@ -69,6 +69,16 @@ export function normalizeInstagramMedia(item) {
   };
 }
 
+export function parseInstagramPublishedAt(value) {
+  if (typeof value !== 'string') return null;
+
+  const match = value.match(/\bel\s+([A-Za-z]+\s+\d{1,2},\s+\d{4})\b/i);
+  if (!match) return null;
+
+  const timestamp = Date.parse(`${match[1]} 00:00:00 UTC`);
+  return Number.isNaN(timestamp) ? null : new Date(timestamp).toISOString();
+}
+
 export async function fetchInstagramMedia({
   config = getInstagramConfig(),
   browserType = chromium,
@@ -127,10 +137,12 @@ export async function fetchInstagramMedia({
         page,
         'meta[property="og:description"]'
       );
-      const timestamp = await readMetaContent(
+      const metadataTimestamp = await readMetaContent(
         page,
         'meta[property="article:published_time"]'
       );
+      const timestamp =
+        metadataTimestamp ?? parseInstagramPublishedAt(description);
       const mediaType = permalink.includes('/reel/')
         ? 'REELS'
         : permalink.includes('/tv/')

@@ -1,6 +1,7 @@
 import {
   getInstagramConfig,
   normalizeInstagramMedia,
+  parseInstagramPublishedAt,
 } from '../../scripts/fetch-instagram.js';
 import {
   buildInstagramCodexPrompt,
@@ -44,6 +45,15 @@ describe('Instagram API helpers', () => {
         permalink: 'https://example.com/post/123',
       })
     ).toThrow('Permalink de Instagram no válido');
+  });
+
+  it('extracts the publication date from Instagram captions when metadata is absent', () => {
+    expect(
+      parseInstagramPublishedAt(
+        '56 likes - aytobelmontejo el August 24, 2026: "Texto".'
+      )
+    ).toBe('2026-08-24T00:00:00.000Z');
+    expect(parseInstagramPublishedAt('Caption sin fecha')).toBeNull();
   });
 });
 
