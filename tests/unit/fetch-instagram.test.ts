@@ -17,7 +17,7 @@ describe('Instagram API helpers', () => {
   it('uses the public profile and bounded scrape settings by default', () => {
     expect(getInstagramConfig({})).toEqual({
       profileUrl: 'https://www.instagram.com/aytobelmontejo/',
-      maxPosts: 12,
+      maxPosts: 24,
       navigationTimeoutMs: 45_000,
     });
   });

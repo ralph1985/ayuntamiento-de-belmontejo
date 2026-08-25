@@ -23,7 +23,7 @@ export function getInstagramConfig(env = process.env) {
   return {
     profileUrl:
       env.INSTAGRAM_PROFILE_URL ?? 'https://www.instagram.com/aytobelmontejo/',
-    maxPosts: Number(env.INSTAGRAM_SCRAPE_LIMIT ?? '12'),
+    maxPosts: Number(env.INSTAGRAM_SCRAPE_LIMIT ?? '24'),
     navigationTimeoutMs: Number(env.INSTAGRAM_NAVIGATION_TIMEOUT_MS ?? '45000'),
   };
 }
@@ -69,13 +69,6 @@ export function normalizeInstagramMedia(item) {
   };
 }
 
-function getInstagramUsername(profileUrl) {
-  const username = new URL(profileUrl).pathname.split('/').filter(Boolean)[0];
-  if (!username)
-    throw new Error(`Perfil de Instagram no válido: ${profileUrl}`);
-  return username.toLowerCase();
-}
-
 export async function fetchInstagramMedia({
   config = getInstagramConfig(),
   browserType = chromium,
@@ -84,25 +77,39 @@ export async function fetchInstagramMedia({
   const page = await browser.newPage({ locale: 'es-ES' });
 
   try {
-    const profileUsername = getInstagramUsername(config.profileUrl);
     await page.goto(config.profileUrl, {
       waitUntil: 'domcontentloaded',
       timeout: config.navigationTimeoutMs,
     });
     await page.waitForTimeout(2_000);
 
-    const links = await page
-      .locator('a[href*="/p/"], a[href*="/reel/"], a[href*="/tv/"]')
-      .evaluateAll(elements =>
+    const linkLocator = page.locator(
+      'a[href*="/p/"], a[href*="/reel/"], a[href*="/tv/"]'
+    );
+    const links = new Set();
+    let previousCount = 0;
+
+    for (
+      let attempt = 0;
+      attempt < 5 && links.size < config.maxPosts;
+      attempt++
+    ) {
+      const visibleLinks = await linkLocator.evaluateAll(elements =>
         elements
           .map(element => element.getAttribute('href') ?? '')
           .filter(Boolean)
       );
-    const uniqueLinks = [
-      ...new Set(
-        links.map(link => new URL(link, config.profileUrl).toString())
-      ),
-    ].slice(0, config.maxPosts);
+      visibleLinks.forEach(link =>
+        links.add(new URL(link, config.profileUrl).toString())
+      );
+
+      if (links.size === previousCount) break;
+      previousCount = links.size;
+      await page.mouse.wheel(0, 3_000);
+      await page.waitForTimeout(1_000);
+    }
+
+    const uniqueLinks = [...links].slice(0, config.maxPosts);
 
     if (uniqueLinks.length === 0) {
       throw new Error(
@@ -131,10 +138,7 @@ export async function fetchInstagramMedia({
           : 'IMAGE';
       const id = new URL(permalink).pathname.split('/').filter(Boolean).pop();
 
-      if (
-        !description ||
-        !description.toLowerCase().includes(`- ${profileUsername} el`)
-      ) {
+      if (!description) {
         continue;
       }
 
