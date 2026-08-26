@@ -1,8 +1,13 @@
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import {
   getInstagramConfig,
   downloadInstagramImage,
   normalizeInstagramMedia,
+  normalizeInstagramCaption,
   parseInstagramPublishedAt,
+  syncInstagram,
 } from '../../scripts/fetch-instagram.js';
 import {
   buildInstagramCodexPrompt,
@@ -77,6 +82,14 @@ describe('Instagram API helpers', () => {
     expect(parseInstagramPublishedAt('Caption sin fecha')).toBeNull();
   });
 
+  it('removes dynamic Instagram engagement metadata from captions', () => {
+    expect(
+      normalizeInstagramCaption(
+        '56 likes, 2 comments - aytobelmontejo el August 24, 2026: "Aviso municipal".'
+      )
+    ).toBe('"Aviso municipal".');
+  });
+
   it('downloads allowed Instagram images as local webp assets', async () => {
     const destinationDir = '/tmp/belmontejo-instagram-test-assets';
     const image = Buffer.from(
@@ -102,6 +115,70 @@ describe('Instagram API helpers', () => {
         fs.stat(`${destinationDir}/test-image.webp`)
       )
     ).toBeTruthy();
+  });
+});
+
+describe('Instagram synchronization', () => {
+  it('does not update or notify for changed engagement counters alone', async () => {
+    const temporaryDir = fs.mkdtempSync(
+      path.join(os.tmpdir(), 'belmontejo-instagram-sync-')
+    );
+    const filePath = path.join(temporaryDir, 'instagramPosts.json');
+    const reportPath = path.join(temporaryDir, 'report.json');
+    const previousCaption =
+      '56 likes, 2 comments - aytobelmontejo el August 24, 2026: "Aviso municipal".';
+    fs.writeFileSync(
+      filePath,
+      `${JSON.stringify([
+        {
+          id: '123',
+          permalink: 'https://www.instagram.com/p/abc/',
+          caption: previousCaption,
+          publishedAt: '2026-08-24T00:00:00.000Z',
+          mediaType: 'IMAGE',
+          imageUrl: null,
+          title: 'Aviso municipal',
+          summary: 'Información municipal.',
+          category: 'servicios',
+          isRelevant: true,
+          isPublished: true,
+          featureOnHome: false,
+          analysisSource: 'codex',
+          analysisReason: 'Información municipal.',
+        },
+      ])}\n`,
+      'utf8'
+    );
+
+    try {
+      const report = await syncInstagram({
+        filePath,
+        reportPath,
+        fetchMedia: async () => [
+          normalizeInstagramMedia({
+            id: '123',
+            permalink: 'https://www.instagram.com/p/abc/',
+            caption:
+              '59 likes, 2 comments - aytobelmontejo el August 24, 2026: "Aviso municipal".',
+            timestamp: '2026-08-24T00:00:00.000Z',
+            media_type: 'IMAGE',
+            image_url: null,
+          }),
+        ],
+        classify: async () => {
+          throw new Error(
+            'No debería reclasificar una publicación sin cambios'
+          );
+        },
+      });
+
+      expect(report).toMatchObject({ created: 0, updated: 0, changed: false });
+      expect(JSON.parse(fs.readFileSync(filePath, 'utf8'))[0].caption).toBe(
+        previousCaption
+      );
+    } finally {
+      fs.rmSync(temporaryDir, { recursive: true, force: true });
+    }
   });
 });
 

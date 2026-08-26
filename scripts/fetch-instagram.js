@@ -70,7 +70,7 @@ export function normalizeInstagramMedia(item) {
   return {
     id: item.id,
     permalink: normalizePermalink(item.permalink),
-    caption: typeof item.caption === 'string' ? item.caption.trim() : '',
+    caption: normalizeInstagramCaption(item.caption),
     publishedAt: typeof item.timestamp === 'string' ? item.timestamp : null,
     mediaType:
       typeof item.media_type === 'string' ? item.media_type : 'UNKNOWN',
@@ -80,6 +80,17 @@ export function normalizeInstagramMedia(item) {
         ? item.image_url
         : null,
   };
+}
+
+export function normalizeInstagramCaption(value) {
+  if (typeof value !== 'string') return '';
+
+  return value
+    .replace(
+      /^\s*[\d.,]+\s+likes?(?:,\s*[\d.,]+\s+comments?)?\s*-\s*.*?\s+\bel\s+[A-Za-z]+\s+\d{1,2},\s+\d{4}:\s*/i,
+      ''
+    )
+    .trim();
 }
 
 export function parseInstagramPublishedAt(value) {
@@ -342,7 +353,7 @@ export async function syncInstagram({
     const previous = findPrevious(item);
     return (
       !previous ||
-      previous.caption !== item.caption ||
+      normalizeInstagramCaption(previous.caption) !== item.caption ||
       previous.publishedAt !== item.publishedAt ||
       previous.permalink !== item.permalink ||
       previous.imageUrl !== item.imageUrl ||
