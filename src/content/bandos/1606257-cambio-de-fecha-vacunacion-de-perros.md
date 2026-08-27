@@ -6,7 +6,7 @@ date: 2026-07-28T10:55:50.000Z
 category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1606257'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1606257'
-isFeatured: true
+isFeatured: false
 isUsefulForGuide: true
 guideDecisionSource: codex
 ---
