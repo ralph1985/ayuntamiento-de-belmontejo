@@ -1,4 +1,16 @@
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import postsData from './instagramPosts.json';
+
+function loadInstagramPosts() {
+  const postsBase = process.env.INSTAGRAM_POSTS_BASE;
+
+  if (!postsBase) return postsData;
+
+  return JSON.parse(
+    readFileSync(path.resolve(postsBase, 'instagramPosts.json'), 'utf8')
+  );
+}
 
 export interface InstagramPost {
   id: string;
@@ -17,11 +29,13 @@ export interface InstagramPost {
   analysisReason?: string;
 }
 
-export const instagramPosts = (postsData as InstagramPost[]).sort((a, b) => {
-  const first = a.publishedAt ? Date.parse(a.publishedAt) : 0;
-  const second = b.publishedAt ? Date.parse(b.publishedAt) : 0;
-  return second - first;
-});
+export const instagramPosts = (loadInstagramPosts() as InstagramPost[]).sort(
+  (a, b) => {
+    const first = a.publishedAt ? Date.parse(a.publishedAt) : 0;
+    const second = b.publishedAt ? Date.parse(b.publishedAt) : 0;
+    return second - first;
+  }
+);
 
 export const publishedInstagramPosts = instagramPosts.filter(
   post => post.isPublished

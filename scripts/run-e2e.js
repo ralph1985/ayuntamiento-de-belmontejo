@@ -7,6 +7,7 @@ const defaultFixtures = [
   { envVar: 'BANDOS_CONTENT_BASE', path: 'tests/fixtures/bandos' },
   { envVar: 'NOTICIAS_CONTENT_BASE', path: 'tests/fixtures/noticias' },
   { envVar: 'FAQS_CONTENT_BASE', path: 'tests/fixtures/faqs' },
+  { envVar: 'INSTAGRAM_POSTS_BASE', path: 'tests/fixtures/instagram' },
 ];
 const env = {
   ...process.env,
