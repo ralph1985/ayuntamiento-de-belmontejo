@@ -3,6 +3,7 @@ import {
   buildDiscoveryPrompt,
   decideFeatured,
   isAllowedDomain,
+  minimumNewsDate,
   normalizeTitle,
   normalizeUrl,
   parseCodexOutput,
@@ -65,6 +66,51 @@ describe('news discovery helpers', () => {
       confidence: 'low',
       reviewReason: 'Comprobar la cifra.',
     });
+  });
+
+  it('accepts news published on or after the minimum date', () => {
+    const result = validateCandidates(
+      {
+        candidates: [
+          {
+            ...candidate,
+            date: minimumNewsDate,
+          },
+          {
+            ...candidate,
+            title: 'Noticia posterior nueva',
+            sourceUrl:
+              'https://www.vocesdecuenca.com/provincia/noticia-posterior/',
+            date: '2026-02-01',
+          },
+        ],
+      },
+      { allowedDomains }
+    );
+
+    expect(result.rejected).toHaveLength(0);
+    expect(result.candidates).toHaveLength(2);
+  });
+
+  it('rejects news published before the minimum date', () => {
+    const result = validateCandidates(
+      {
+        candidates: [
+          {
+            ...candidate,
+            date: '2025-12-31',
+          },
+        ],
+      },
+      { allowedDomains }
+    );
+
+    expect(result.candidates).toHaveLength(0);
+    expect(result.rejected).toMatchObject([
+      {
+        reason: `date debe ser igual o posterior a ${minimumNewsDate}.`,
+      },
+    ]);
   });
 
   it('only auto-features recent, direct, high-confidence recommendations', () => {
@@ -156,5 +202,8 @@ describe('news discovery helpers', () => {
     expect(prompt).toContain('Noticia previa');
     expect(prompt).toContain('vocesdecuenca.com');
     expect(prompt).toContain('Excluye bandos');
+    expect(prompt).toContain(
+      `publicadas desde el ${minimumNewsDate}, inclusive`
+    );
   });
 });
