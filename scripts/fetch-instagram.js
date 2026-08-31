@@ -308,7 +308,7 @@ function buildFallbackPost(item) {
   return {
     ...item,
     ...fallbackInstagramDecision,
-    isPublished: false,
+    isPublished: true,
     analysisSource: 'fallback',
     analysisReason: fallbackInstagramDecision.reason,
   };
@@ -321,7 +321,7 @@ function materializePost(item, decision, previous) {
     summary: decision.summary,
     category: decision.category,
     isRelevant: decision.isRelevant,
-    isPublished: decision.isRelevant,
+    isPublished: true,
     featureOnHome: decision.featureOnHome,
     analysisSource: 'codex',
     analysisReason: decision.reason,
@@ -357,6 +357,7 @@ export async function syncInstagram({
       previous.publishedAt !== item.publishedAt ||
       previous.permalink !== item.permalink ||
       previous.imageUrl !== item.imageUrl ||
+      previous.isPublished === false ||
       previous.analysisSource === 'fallback'
     );
   });

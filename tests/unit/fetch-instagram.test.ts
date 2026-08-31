@@ -180,6 +180,54 @@ describe('Instagram synchronization', () => {
       fs.rmSync(temporaryDir, { recursive: true, force: true });
     }
   });
+
+  it('publishes profile reposts even when editorial relevance is false', async () => {
+    const temporaryDir = fs.mkdtempSync(
+      path.join(os.tmpdir(), 'belmontejo-instagram-repost-')
+    );
+    const filePath = path.join(temporaryDir, 'instagramPosts.json');
+    const reportPath = path.join(temporaryDir, 'report.json');
+
+    try {
+      const report = await syncInstagram({
+        filePath,
+        reportPath,
+        fetchMedia: async () => [
+          normalizeInstagramMedia({
+            id: 'repost-123',
+            permalink:
+              'https://www.instagram.com/carpinteriabricocazurro/reel/repost-123/',
+            caption: 'Truco de pintura compartido por el perfil municipal.',
+            timestamp: '2026-08-30T00:00:00.000Z',
+            media_type: 'REELS',
+            image_url: null,
+          }),
+        ],
+        classify: async () =>
+          new Map([
+            [
+              'repost-123',
+              {
+                title: 'Truco de pintura',
+                summary: 'Consejo compartido desde Instagram.',
+                category: 'general',
+                isRelevant: false,
+                featureOnHome: false,
+                reason: 'El contenido original es de otra cuenta.',
+              },
+            ],
+          ]),
+      });
+
+      expect(report).toMatchObject({ created: 1, updated: 0, changed: true });
+      expect(JSON.parse(fs.readFileSync(filePath, 'utf8'))[0]).toMatchObject({
+        isRelevant: false,
+        isPublished: true,
+      });
+    } finally {
+      fs.rmSync(temporaryDir, { recursive: true, force: true });
+    }
+  });
 });
 
 describe('Instagram Codex classifier', () => {

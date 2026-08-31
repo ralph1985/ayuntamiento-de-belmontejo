@@ -10,7 +10,7 @@
     "summary": "Consejo para aplicar pintura o barniz en superficies verticales mediante varias capas finas.",
     "category": "pintura",
     "isRelevant": false,
-    "isPublished": false,
+    "isPublished": true,
     "featureOnHome": false,
     "analysisSource": "codex",
     "analysisReason": "Contenido general sobre técnicas de pintura, sin relación directa con Belmontejo ni con el Ayuntamiento."
@@ -26,7 +26,7 @@
     "summary": "Tutorial sobre técnicas de aplicación de barniz en zonas con molduras.",
     "category": "general",
     "isRelevant": false,
-    "isPublished": false,
+    "isPublished": true,
     "featureOnHome": false,
     "analysisSource": "codex",
     "analysisReason": "No trata sobre Belmontejo ni sobre actividad municipal."
@@ -90,7 +90,7 @@
     "summary": "Explicación sobre el uso de una clavadora para trabajos estructurales de madera.",
     "category": "carpintería",
     "isRelevant": false,
-    "isPublished": false,
+    "isPublished": true,
     "featureOnHome": false,
     "analysisSource": "codex",
     "analysisReason": "Contenido general de carpintería sin relación acreditada con Belmontejo."
@@ -106,7 +106,7 @@
     "summary": "Información sobre el uso del lasur para proteger la madera exterior frente a la intemperie y los rayos UV.",
     "category": "carpintería",
     "isRelevant": false,
-    "isPublished": false,
+    "isPublished": true,
     "featureOnHome": false,
     "analysisSource": "codex",
     "analysisReason": "Contenido general de acabados para madera sin relación acreditada con Belmontejo."
@@ -170,7 +170,7 @@
     "summary": "Ventajas de utilizar un equipo de barnizado para trabajar en zonas de difícil acceso.",
     "category": "carpintería",
     "isRelevant": false,
-    "isPublished": false,
+    "isPublished": true,
     "featureOnHome": false,
     "analysisSource": "codex",
     "analysisReason": "Contenido general de carpintería sin relación acreditada con Belmontejo."
