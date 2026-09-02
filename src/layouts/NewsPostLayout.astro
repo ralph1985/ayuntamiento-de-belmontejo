@@ -9,6 +9,7 @@ import TableOfContents from '@components/content/TableOfContents.astro';
 import CTA from '@components/sections/CTA.astro';
 import '@styles/markdown.less';
 import { homePage } from '@data/homePage';
+import { serializeJsonForHtml } from '@js/safe-json';
 
 const { post } = Astro.props;
 const {
@@ -84,7 +85,7 @@ const articleSchema = {
         <script
           type="application/ld+json"
           is:inline
-          set:html={JSON.stringify(articleSchema)}
+          set:html={serializeJsonForHtml(articleSchema)}
         />
         <!--Article Info-->
         <header class="news-header">

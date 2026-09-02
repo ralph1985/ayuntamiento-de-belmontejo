@@ -178,6 +178,29 @@ describe('news discovery helpers', () => {
     expect(result.rejected).toHaveLength(2);
   });
 
+  it('rejects raw HTML and dangerous URL schemes in generated Markdown', () => {
+    const result = validateCandidates(
+      {
+        candidates: [
+          {
+            ...candidate,
+            bodyMarkdown: '<img src=x onerror=alert(1)>',
+          },
+          {
+            ...candidate,
+            title: 'Otra noticia peligrosa',
+            sourceUrl: 'https://www.vocesdecuenca.com/provincia/otra',
+            bodyMarkdown: '[enlace](javascript:alert(1))',
+          },
+        ],
+      },
+      { allowedDomains }
+    );
+
+    expect(result.candidates).toHaveLength(0);
+    expect(result.rejected).toHaveLength(2);
+  });
+
   it('rejects an existing source URL or title', () => {
     const result = validateCandidates(
       { candidates: [candidate, { ...candidate, title: 'Otra noticia' }] },

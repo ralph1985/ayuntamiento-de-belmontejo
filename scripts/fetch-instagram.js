@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-/* global URL */
+/* global AbortSignal, URL */
 import 'dotenv/config';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -27,13 +27,48 @@ const defaultReportPath = path.join(
   'ayuntamiento-belmontejo-instagram-result.json'
 );
 
+function boundedInteger(value, fallback, { min, max }) {
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed)) return fallback;
+  return Math.min(Math.max(parsed, min), max);
+}
+
 export function getInstagramConfig(env = process.env) {
   return {
-    profileUrl:
-      env.INSTAGRAM_PROFILE_URL ?? 'https://www.instagram.com/aytobelmontejo/',
-    maxPosts: Number(env.INSTAGRAM_SCRAPE_LIMIT ?? '24'),
-    navigationTimeoutMs: Number(env.INSTAGRAM_NAVIGATION_TIMEOUT_MS ?? '45000'),
+    profileUrl: normalizeInstagramProfileUrl(
+      env.INSTAGRAM_PROFILE_URL ?? 'https://www.instagram.com/aytobelmontejo/'
+    ),
+    maxPosts: boundedInteger(env.INSTAGRAM_SCRAPE_LIMIT ?? '24', 24, {
+      min: 1,
+      max: 100,
+    }),
+    navigationTimeoutMs: boundedInteger(
+      env.INSTAGRAM_NAVIGATION_TIMEOUT_MS ?? '45000',
+      45_000,
+      { min: 5_000, max: 120_000 }
+    ),
   };
+}
+
+export function normalizeInstagramProfileUrl(value) {
+  try {
+    const url = new URL(value);
+    if (
+      url.protocol !== 'https:' ||
+      !['www.instagram.com', 'instagram.com'].includes(url.hostname) ||
+      !/^\/[A-Za-z0-9._]+\/?$/.test(url.pathname) ||
+      url.search ||
+      url.hash
+    ) {
+      throw new Error('La URL del perfil de Instagram no es válida.');
+    }
+
+    return `https://www.instagram.com${url.pathname.replace(/\/$/, '')}/`;
+  } catch {
+    throw new Error(
+      'INSTAGRAM_PROFILE_URL debe ser un perfil HTTPS de instagram.com.'
+    );
+  }
 }
 
 function normalizePermalink(value) {
@@ -62,6 +97,7 @@ export function normalizeInstagramMedia(item) {
   if (
     !item ||
     typeof item.id !== 'string' ||
+    !/^[A-Za-z0-9_-]{1,120}$/.test(item.id) ||
     typeof item.permalink !== 'string'
   ) {
     throw new Error('La API devolvió una publicación de Instagram incompleta.');
@@ -104,15 +140,46 @@ export function parseInstagramPublishedAt(value) {
 }
 
 function isAllowedInstagramImageUrl(value) {
-  if (typeof value !== 'string' || !value.startsWith('https://')) return false;
+  try {
+    const url = new URL(value);
+    return (
+      url.protocol === 'https:' &&
+      (url.hostname === 'cdninstagram.com' ||
+        url.hostname.endsWith('.cdninstagram.com') ||
+        url.hostname === 'fbcdn.net' ||
+        url.hostname.endsWith('.fbcdn.net'))
+    );
+  } catch {
+    return false;
+  }
+}
 
-  const hostname = new URL(value).hostname;
-  return (
-    hostname === 'cdninstagram.com' ||
-    hostname.endsWith('.cdninstagram.com') ||
-    hostname === 'fbcdn.net' ||
-    hostname.endsWith('.fbcdn.net')
-  );
+async function fetchInstagramImageResponse(url, fetchImpl) {
+  let currentUrl = url;
+
+  for (let redirect = 0; redirect <= 3; redirect += 1) {
+    if (!isAllowedInstagramImageUrl(currentUrl)) return null;
+
+    const response = await fetchImpl(currentUrl, {
+      headers: {
+        'user-agent': 'Ayuntamiento-de-Belmontejo-InstagramSync/1.0',
+        referer: 'https://www.instagram.com/',
+      },
+      redirect: 'manual',
+      signal: AbortSignal.timeout(30_000),
+    });
+
+    if (![301, 302, 303, 307, 308].includes(response.status)) {
+      return response;
+    }
+
+    const location = response.headers.get('location');
+    if (!location)
+      throw new Error('La redirección de imagen no tiene destino.');
+    currentUrl = new URL(location, currentUrl).toString();
+  }
+
+  throw new Error('La imagen de Instagram supera el máximo de redirecciones.');
 }
 
 export async function downloadInstagramImage(
@@ -121,19 +188,19 @@ export async function downloadInstagramImage(
 ) {
   if (!id || !isAllowedInstagramImageUrl(url)) return null;
 
-  const response = await fetchImpl(url, {
-    headers: {
-      'user-agent': 'Ayuntamiento-de-Belmontejo-InstagramSync/1.0',
-      referer: 'https://www.instagram.com/',
-    },
-    redirect: 'follow',
-  });
+  const response = await fetchInstagramImageResponse(url, fetchImpl);
+  if (!response) return null;
 
   if (!response.ok) throw new Error(`Imagen HTTP ${response.status}.`);
 
   const contentType = response.headers.get('content-type') ?? '';
   if (!contentType.startsWith('image/')) {
     throw new Error('Instagram no devolvió una imagen válida.');
+  }
+
+  const contentLength = Number(response.headers.get('content-length') ?? '0');
+  if (contentLength > 10 * 1024 * 1024) {
+    throw new Error('La imagen supera el tamaño máximo permitido.');
   }
 
   const buffer = Buffer.from(await response.arrayBuffer());
@@ -216,9 +283,13 @@ export async function fetchInstagramMedia({
           .map(element => element.getAttribute('href') ?? '')
           .filter(Boolean)
       );
-      visibleLinks.forEach(link =>
-        links.add(new URL(link, config.profileUrl).toString())
-      );
+      visibleLinks.forEach(link => {
+        try {
+          links.add(normalizePermalink(new URL(link, config.profileUrl)));
+        } catch {
+          // Ignore links that only look like Instagram media URLs.
+        }
+      });
 
       if (links.size === previousCount) break;
       previousCount = links.size;

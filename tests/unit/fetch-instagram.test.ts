@@ -4,6 +4,7 @@ import path from 'node:path';
 import {
   getInstagramConfig,
   downloadInstagramImage,
+  normalizeInstagramProfileUrl,
   normalizeInstagramMedia,
   normalizeInstagramCaption,
   parseInstagramPublishedAt,
@@ -73,6 +74,15 @@ describe('Instagram API helpers', () => {
     ).toThrow('Permalink de Instagram no válido');
   });
 
+  it('only accepts HTTPS Instagram profile URLs', () => {
+    expect(
+      normalizeInstagramProfileUrl('https://www.instagram.com/aytobelmontejo/')
+    ).toBe('https://www.instagram.com/aytobelmontejo/');
+    expect(() =>
+      normalizeInstagramProfileUrl('https://example.com/profile')
+    ).toThrow('INSTAGRAM_PROFILE_URL');
+  });
+
   it('extracts the publication date from Instagram captions when metadata is absent', () => {
     expect(
       parseInstagramPublishedAt(
@@ -115,6 +125,32 @@ describe('Instagram API helpers', () => {
         fs.stat(`${destinationDir}/test-image.webp`)
       )
     ).toBeTruthy();
+  });
+
+  it('does not follow an image redirect to an untrusted host', async () => {
+    const calls: string[] = [];
+    const imagePath = await downloadInstagramImage(
+      'https://scontent-mad1-1.cdninstagram.com/image.jpg',
+      {
+        id: 'redirect-test',
+        fetchImpl: async (url: string) => {
+          calls.push(url);
+          return {
+            status: 302,
+            ok: false,
+            headers: {
+              get: name =>
+                name === 'location' ? 'http://127.0.0.1/admin' : null,
+            },
+          };
+        },
+      }
+    );
+
+    expect(imagePath).toBeNull();
+    expect(calls).toEqual([
+      'https://scontent-mad1-1.cdninstagram.com/image.jpg',
+    ]);
   });
 });
 

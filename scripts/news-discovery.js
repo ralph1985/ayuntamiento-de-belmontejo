@@ -1,4 +1,4 @@
-/* global URL, setTimeout, clearTimeout */
+/* global AbortSignal, URL, setTimeout, clearTimeout */
 import 'dotenv/config';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs/promises';
@@ -69,9 +69,9 @@ export function normalizeUrl(value) {
 
 export function isAllowedDomain(value, allowedDomains = getAllowedDomains()) {
   try {
-    const hostname = new URL(value).hostname
-      .toLowerCase()
-      .replace(/^www\./, '');
+    const url = new URL(value);
+    if (url.protocol !== 'https:') return false;
+    const hostname = url.hostname.toLowerCase().replace(/^www\./, '');
     return allowedDomains.some(
       domain => hostname === domain || hostname.endsWith(`.${domain}`)
     );
@@ -184,7 +184,11 @@ export function validateCandidates(
         min: 20,
         max: 7000,
       });
-      if (/^---\s*$/m.test(bodyMarkdown) || /<script\b/i.test(bodyMarkdown)) {
+      if (
+        /^---\s*$/m.test(bodyMarkdown) ||
+        /<\/?[a-z][^>]*>/i.test(bodyMarkdown) ||
+        /(?:javascript|data|vbscript):/i.test(bodyMarkdown)
+      ) {
         throw new Error('bodyMarkdown contiene contenido no permitido.');
       }
 
@@ -226,7 +230,8 @@ export function validateCandidates(
         sourceUrl,
         date: parseDate(raw.date),
         imageUrl:
-          typeof raw.imageUrl === 'string' && /^https?:\/\//i.test(raw.imageUrl)
+          typeof raw.imageUrl === 'string' &&
+          isAllowedDomain(raw.imageUrl.trim(), allowedDomains)
             ? raw.imageUrl.trim()
             : undefined,
         imageAlt:
@@ -353,17 +358,41 @@ export function runCodexDiscovery({
 
 async function downloadImage(url, sourceUrl) {
   if (!url || !isAllowedDomain(url, getAllowedDomains())) return null;
-  const response = await fetch(url, {
-    headers: {
-      'user-agent': 'Ayuntamiento-de-Belmontejo-NewsBot/1.0',
-      referer: sourceUrl,
-    },
-    redirect: 'follow',
-  });
+  let currentUrl = url;
+  let response;
+
+  for (let redirect = 0; redirect <= 3; redirect += 1) {
+    if (!isAllowedDomain(currentUrl)) return null;
+    response = await fetch(currentUrl, {
+      headers: {
+        'user-agent': 'Ayuntamiento-de-Belmontejo-NewsBot/1.0',
+        referer: sourceUrl,
+      },
+      redirect: 'manual',
+      signal: AbortSignal.timeout(30_000),
+    });
+
+    if (![301, 302, 303, 307, 308].includes(response.status)) break;
+    const location = response.headers.get('location');
+    if (!location)
+      throw new Error('La redirección de imagen no tiene destino.');
+    currentUrl = new URL(location, currentUrl).toString();
+    if (redirect === 3) {
+      throw new Error('La imagen supera el máximo de redirecciones.');
+    }
+  }
+
+  if (!response) return null;
   if (!response.ok) throw new Error(`Imagen HTTP ${response.status}.`);
   const contentType = response.headers.get('content-type') ?? '';
+  const contentLength = Number(response.headers.get('content-length') ?? '0');
+  if (!contentType.startsWith('image/') || contentLength > maxImageBytes) {
+    throw new Error(
+      'La respuesta de imagen no es válida o supera el tamaño permitido.'
+    );
+  }
   const buffer = Buffer.from(await response.arrayBuffer());
-  if (!contentType.startsWith('image/') || buffer.length > maxImageBytes) {
+  if (buffer.length > maxImageBytes) {
     throw new Error(
       'La respuesta de imagen no es válida o supera el tamaño permitido.'
     );

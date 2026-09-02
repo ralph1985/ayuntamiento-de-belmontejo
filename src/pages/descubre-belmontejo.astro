@@ -6,6 +6,7 @@ import Landing from '@components/sections/Landing.astro';
 import CTA from '@components/sections/CTA.astro';
 import NavIcon from '@components/ui/NavIcon.astro';
 import { homePage } from '@data/homePage';
+import { serializeJsonForHtml } from '@js/safe-json';
 import placeData from '@data/placesOfInterest.json';
 import landingImage from '@data/landingImage';
 
@@ -205,7 +206,7 @@ const mapPlacesJson = mapPlaces.map(place => ({
   id="places-map-data"
   type="application/json"
   is:inline
-  set:html={JSON.stringify(mapPlacesJson)}
+  set:html={serializeJsonForHtml(mapPlacesJson)}
 />
 
 <script>
@@ -612,7 +613,7 @@ const mapPlacesJson = mapPlaces.map(place => ({
 <script
   type="application/ld+json"
   is:inline
-  set:html={JSON.stringify({
+  set:html={serializeJsonForHtml({
     '@context': 'https://schema.org',
     '@type': 'TouristDestination',
     name: 'Belmontejo',
