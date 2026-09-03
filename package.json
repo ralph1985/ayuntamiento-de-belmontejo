@@ -37,7 +37,7 @@
     "@project-manager/pm-weather": "https://raw.githubusercontent.com/ralph1985/project-manager/5cec3858ff6ed5b469591d48ba240471439b9d3f/artifacts/project-manager-pm-weather-0.2.0.tgz",
     "astro": "7.1.0",
     "autoprefixer": "10.4.22",
-    "dotenv": "17.2.3",
+    "dotenv": "17.4.2",
     "leaflet": "1.9.4",
     "less": "4.8.1",
     "nodemailer": "9.0.5",
