@@ -40,7 +40,7 @@
     "dotenv": "17.2.3",
     "leaflet": "1.9.4",
     "less": "4.8.1",
-    "nodemailer": "9.0.5",
+    "nodemailer": "9.1.1",
     "sharp": "0.35.4"
   },
   "devDependencies": {
