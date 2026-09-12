@@ -45,29 +45,67 @@ export const featuredInstagramPosts = publishedInstagramPosts.filter(
   post => post.featureOnHome
 );
 
-export const INSTAGRAM_PAGE_SIZE = 9;
-
-export interface InstagramPage {
+export interface InstagramMonthGroup {
+  key: string;
+  label: string;
   posts: InstagramPost[];
-  currentPage: number;
-  totalPages: number;
 }
 
-export function getInstagramPage(page = 1): InstagramPage {
-  const totalPages = Math.max(
-    1,
-    Math.ceil(publishedInstagramPosts.length / INSTAGRAM_PAGE_SIZE)
-  );
-  const currentPage = Math.min(Math.max(page, 1), totalPages);
-  const start = (currentPage - 1) * INSTAGRAM_PAGE_SIZE;
+function getInstagramMonthKey(publishedAt: string | null) {
+  if (!publishedAt) return null;
 
-  return {
-    posts: publishedInstagramPosts.slice(start, start + INSTAGRAM_PAGE_SIZE),
-    currentPage,
-    totalPages,
-  };
+  const date = new Date(publishedAt);
+  if (Number.isNaN(date.getTime())) return null;
+
+  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+  return `${date.getUTCFullYear()}-${month}`;
 }
 
-export function getInstagramPageUrl(page: number) {
-  return page === 1 ? '/instagram/' : `/instagram/page/${page}/`;
+function formatInstagramMonth(key: string) {
+  const date = new Date(`${key}-01T00:00:00Z`);
+  const label = new Intl.DateTimeFormat('es-ES', {
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+
+  return label.charAt(0).toUpperCase() + label.slice(1);
+}
+
+export function groupInstagramPostsByMonth(
+  posts: InstagramPost[]
+): InstagramMonthGroup[] {
+  const datedGroups = new Map<string, InstagramPost[]>();
+  const undatedPosts: InstagramPost[] = [];
+
+  for (const post of posts) {
+    const key = getInstagramMonthKey(post.publishedAt);
+
+    if (!key) {
+      undatedPosts.push(post);
+      continue;
+    }
+
+    const group = datedGroups.get(key) ?? [];
+    group.push(post);
+    datedGroups.set(key, group);
+  }
+
+  const groups = [...datedGroups.entries()]
+    .sort(([first], [second]) => second.localeCompare(first))
+    .map(([key, posts]) => ({
+      key,
+      label: formatInstagramMonth(key),
+      posts,
+    }));
+
+  if (undatedPosts.length > 0) {
+    groups.push({
+      key: 'sin-fecha',
+      label: 'Fecha no disponible',
+      posts: undatedPosts,
+    });
+  }
+
+  return groups;
 }

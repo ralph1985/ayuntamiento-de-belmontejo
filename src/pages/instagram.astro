@@ -3,10 +3,9 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import InstagramFeed from '@components/sections/InstagramFeed.astro';
 import Landing from '@components/sections/Landing.astro';
 import landingImage from '@data/landingImage';
-import { getInstagramPage } from '@data/instagramPosts';
+import { publishedInstagramPosts } from '@data/instagramPosts';
 
 export const prerender = true;
-const instagramPage = getInstagramPage();
 ---
 
 <BaseLayout
@@ -24,8 +23,6 @@ const instagramPage = getInstagramPage();
     description="Avisos, actividades y proyectos del Ayuntamiento de Belmontejo, resumidos para consultarlos de un vistazo."
     buttonLabel="Seguir en Instagram"
     buttonHref="https://www.instagram.com/aytobelmontejo/"
-    posts={instagramPage.posts}
-    currentPage={instagramPage.currentPage}
-    totalPages={instagramPage.totalPages}
+    posts={publishedInstagramPosts}
   />
 </BaseLayout>

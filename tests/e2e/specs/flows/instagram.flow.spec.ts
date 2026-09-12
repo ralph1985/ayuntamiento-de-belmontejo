@@ -12,11 +12,21 @@ test.describe('Actualidad de Instagram', () => {
         name: 'Actualidad municipal en Instagram',
       })
     ).toBeVisible();
-    await expect(page.locator('.instagram-card')).toHaveCount(9);
-    await expect(page.locator('[data-instgrm-permalink]')).toHaveCount(0);
+    await expect(page.locator('.instagram-card')).toHaveCount(10);
     await expect(
-      page.getByRole('link', { name: /siguiente/i })
-    ).toHaveAttribute('href', '/instagram/page/2/');
+      page.getByRole('navigation', { name: 'Navegar por meses' })
+    ).toBeVisible();
+    await expect(page.locator('.instagram-month')).toHaveCount(1);
+    await expect(page.locator('[data-instgrm-permalink]')).toHaveCount(0);
+    await expect(page.getByRole('link', { name: /siguiente/i })).toHaveCount(0);
+  });
+
+  test('redirige las rutas antiguas del archivo al índice mensual', async ({
+    page,
+  }) => {
+    await page.goto('/instagram/page/2/', { waitUntil: 'domcontentloaded' });
+
+    expect(new globalThis.URL(page.url()).pathname).toBe('/instagram/');
   });
 
   test('mantiene la selección editorial compacta en la home', async ({
@@ -42,7 +52,7 @@ test.describe('Actualidad de Instagram', () => {
       page.getByRole('link', { name: 'Seguir en Instagram' })
     ).toBeVisible();
     await expect(
-      page.getByRole('navigation', { name: /paginación/i })
+      page.getByRole('navigation', { name: 'Navegar por meses' })
     ).toBeVisible();
   });
 });

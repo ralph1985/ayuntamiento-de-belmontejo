@@ -4,8 +4,8 @@ import InstagramPostCard from '@components/content/InstagramPostCard.astro';
 import NavIcon from '@components/ui/NavIcon.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
 import {
+  groupInstagramPostsByMonth,
   publishedInstagramPosts,
-  getInstagramPageUrl,
 } from '@data/instagramPosts';
 import type { InstagramPost } from '@data/instagramPosts';
 
@@ -18,8 +18,6 @@ interface Props {
   limit?: number;
   allPosts?: boolean;
   posts?: InstagramPost[];
-  currentPage?: number;
-  totalPages?: number;
   variant?: 'archive' | 'home';
 }
 
@@ -32,8 +30,6 @@ const {
   limit,
   allPosts = false,
   posts: pagePosts,
-  currentPage = 1,
-  totalPages = 1,
   variant = 'archive',
 } = Astro.props as Props;
 const sourcePosts =
@@ -44,6 +40,8 @@ const sourcePosts =
       ? publishedInstagramPosts
       : publishedInstagramPosts);
 const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
+const monthGroups =
+  variant === 'archive' ? groupInstagramPostsByMonth(posts) : [];
 ---
 
 <section
@@ -73,14 +71,60 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
 
     {
       posts.length > 0 ? (
-        <div class="instagram-feed__grid">
-          {posts.map((post, index) => (
-            <InstagramPostCard
-              post={post}
-              featured={variant === 'home' && index === 0}
-            />
-          ))}
-        </div>
+        variant === 'archive' ? (
+          <>
+            <nav class="instagram-month-index" aria-label="Navegar por meses">
+              <span class="instagram-month-index__label">
+                Publicaciones por mes
+              </span>
+              <ul>
+                {monthGroups.map(month => (
+                  <li>
+                    <a href={`#instagram-month-${month.key}`}>
+                      {month.label}
+                      <span aria-label={`${month.posts.length} publicaciones`}>
+                        ({month.posts.length})
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div class="instagram-months">
+              {monthGroups.map(month => (
+                <section
+                  class="instagram-month"
+                  id={`instagram-month-${month.key}`}
+                  aria-labelledby={`instagram-month-title-${month.key}`}
+                >
+                  <div class="instagram-month__heading">
+                    <h3 id={`instagram-month-title-${month.key}`}>
+                      {month.label}
+                    </h3>
+                    <span aria-label={`${month.posts.length} publicaciones`}>
+                      {month.posts.length}
+                    </span>
+                  </div>
+                  <div class="instagram-feed__grid">
+                    {month.posts.map(post => (
+                      <InstagramPostCard post={post} />
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div class="instagram-feed__grid">
+            {posts.map((post, index) => (
+              <InstagramPostCard
+                post={post}
+                featured={variant === 'home' && index === 0}
+              />
+            ))}
+          </div>
+        )
       ) : (
         <p class="instagram-feed__empty">
           Todavía no hay publicaciones disponibles.
@@ -91,26 +135,6 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
     <div class="instagram-feed__actions">
       <Button href={buttonHref} variant="secondary">{buttonLabel}</Button>
     </div>
-
-    {
-      totalPages > 1 && (
-        <nav class="instagram-pagination" aria-label="Paginación de Instagram">
-          {currentPage > 1 ? (
-            <a href={getInstagramPageUrl(currentPage - 1)}>Anterior</a>
-          ) : (
-            <span aria-disabled="true">Anterior</span>
-          )}
-          <span aria-current="page">
-            Página {currentPage} de {totalPages}
-          </span>
-          {currentPage < totalPages ? (
-            <a href={getInstagramPageUrl(currentPage + 1)}>Siguiente</a>
-          ) : (
-            <span aria-disabled="true">Siguiente</span>
-          )}
-        </nav>
-      )
-    }
   </div>
 </section>
 
@@ -125,6 +149,72 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.5rem;
     align-items: start;
+  }
+
+  .instagram-month-index {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    margin: 0 0 clamp(3rem, 6vw, 5rem);
+    padding-block: 1rem;
+    border-block: 1px solid var(--color-border);
+  }
+
+  .instagram-month-index__label {
+    flex: 0 0 auto;
+    color: var(--color-text);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .instagram-month-index ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    list-style: none;
+  }
+
+  .instagram-month-index a {
+    color: var(--color-link);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+
+  .instagram-month-index a span {
+    margin-left: 0.25rem;
+    color: var(--color-text-muted);
+    font-size: 0.875em;
+    font-weight: 400;
+  }
+
+  .instagram-month {
+    scroll-margin-top: 6rem;
+  }
+
+  .instagram-month + .instagram-month {
+    margin-top: clamp(4rem, 8vw, 7rem);
+    padding-top: clamp(3rem, 6vw, 5rem);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .instagram-month__heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .instagram-month__heading h3 {
+    font-size: clamp(1.6rem, 3vw, 2.35rem);
+    line-height: 1.1;
+  }
+
+  .instagram-month__heading > span {
+    flex: 0 0 auto;
+    color: var(--color-territory-strong);
+    font-size: 0.875rem;
+    font-weight: 700;
   }
 
   .instagram-feed__heading-row {
@@ -158,28 +248,6 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
     color: var(--color-text-muted);
   }
 
-  .instagram-pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-    color: var(--color-text-muted);
-    font-size: 0.95rem;
-  }
-
-  .instagram-pagination a {
-    color: var(--color-link);
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-
-  .instagram-pagination span[aria-disabled='true'] {
-    color: var(--color-text-muted);
-    opacity: 0.55;
-  }
-
   .instagram-feed--home {
     background: var(--color-bg-subtle);
 
@@ -201,6 +269,15 @@ const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
 
     .instagram-feed__heading-row {
       display: block;
+    }
+
+    .instagram-month-index {
+      display: block;
+    }
+
+    .instagram-month-index__label {
+      display: block;
+      margin-bottom: 0.75rem;
     }
 
     .instagram-feed__profile-link {

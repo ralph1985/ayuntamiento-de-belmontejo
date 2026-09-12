@@ -1,44 +1,18 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
-import InstagramFeed from '@components/sections/InstagramFeed.astro';
-import Landing from '@components/sections/Landing.astro';
-import landingImage from '@data/landingImage';
-import { getInstagramPage } from '@data/instagramPosts';
+import { publishedInstagramPosts } from '@data/instagramPosts';
 
 export const prerender = true;
 
 export function getStaticPaths() {
-  const { totalPages } = getInstagramPage();
+  const totalPages = Math.max(1, Math.ceil(publishedInstagramPosts.length / 9));
 
   return Array.from({ length: Math.max(totalPages - 1, 0) }, (_, index) => {
     const page = index + 2;
     return {
       params: { page: String(page) },
-      props: getInstagramPage(page),
     };
   });
 }
 
-const { posts, currentPage, totalPages } = Astro.props;
+return Astro.redirect('/instagram/', 301);
 ---
-
-<BaseLayout
-  title={`Instagram - Página ${currentPage} - Ayuntamiento de Belmontejo`}
-  description={`Publicaciones de Instagram del Ayuntamiento de Belmontejo, página ${currentPage}.`}
-  preloadedImage={landingImage}
->
-  <Landing title="Instagram" image={landingImage}>
-    <p>Consulta las publicaciones del Ayuntamiento de Belmontejo.</p>
-  </Landing>
-
-  <InstagramFeed
-    eyebrow="Redes sociales"
-    title="Actualidad municipal en Instagram"
-    description="Avisos, actividades y proyectos del Ayuntamiento de Belmontejo, resumidos para consultarlos de un vistazo."
-    buttonLabel="Seguir en Instagram"
-    buttonHref="https://www.instagram.com/aytobelmontejo/"
-    posts={posts}
-    currentPage={currentPage}
-    totalPages={totalPages}
-  />
-</BaseLayout>
