@@ -13,6 +13,7 @@ overrides:
   '@humanfs/node': 0.16.8
   postcss-selector-parser: 7.1.3
   inquirer: 8.2.7
+  adm-zip: 0.6.1
   sharp: 0.35.4
   js-yaml: 4.3.2
   svgo: 4.1.0
@@ -1220,8 +1221,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  adm-zip@0.6.0:
-    resolution: {integrity: sha512-XleryMhbuksdKtofnWZ9Sk+4CUTbms4Mb/EU32SZwToAyZ5RgVos/ki8n+yr0LWHOGKuakbXTuuYNHLQjhddgg==}
+  adm-zip@0.6.1:
+    resolution: {integrity: sha512-Xwrja8nx9e5o2N1my4DsKCeKpdrnACyr1wtbPxBDgGzKzKyE9kRtBFA8mWldI+RVlD7CBZNWY/wQ2+ydwOR6kQ==}
     engines: {node: '>=14.0'}
 
   agent-base@6.0.2:
@@ -4901,7 +4902,7 @@ snapshots:
 
   acorn@8.15.0: {}
 
-  adm-zip@0.6.0: {}
+  adm-zip@0.6.1: {}
 
   agent-base@6.0.2:
     dependencies:
@@ -7243,7 +7244,7 @@ snapshots:
 
   sonarqube-scanner@5.0.0:
     dependencies:
-      adm-zip: 0.6.0
+      adm-zip: 0.6.1
       axios: 1.18.1
       commander: 15.0.0
       hpagent: 1.2.0
