@@ -96,7 +96,7 @@ describe('generateContent', () => {
   it('removes encoded HTML before it can become executable markup', () => {
     const markdown = generateContent({
       description:
-        '&lt;script&gt;alert(1)&lt;/script&gt;&lt;img src="javascript:alert(2)" onerror="alert(3)"&gt;Texto',
+        '&lt;script&gt;alert(1)&lt;/script&gt;&lt;script&gt;alert(4)&lt;/script&gt;&lt;img src="javascript:alert(2)" onerror="alert(3)"&gt;Texto',
     });
 
     expect(markdown).toBe('Texto');

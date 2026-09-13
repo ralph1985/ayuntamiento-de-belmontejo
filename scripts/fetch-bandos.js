@@ -248,7 +248,7 @@ export function readGuideDecision(markdown) {
 export function generateContent(item) {
   // Convert HTML description to markdown-friendly format
   let content = decodeHtmlEntities(item.description);
-  content = content.replace(
+  content = content.replaceAll(
     /<(script|style|iframe|object|embed|svg)\b[^>]*>[\s\S]*?<\/\1>/gi,
     ''
   );
