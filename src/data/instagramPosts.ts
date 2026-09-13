@@ -45,23 +45,73 @@ export const featuredInstagramPosts = publishedInstagramPosts.filter(
   post => post.featureOnHome
 );
 
+export const INSTAGRAM_TIME_ZONE = 'Europe/Madrid';
+
 export interface InstagramMonthGroup {
   key: string;
   label: string;
+  year: number;
+  month: number;
   posts: InstagramPost[];
 }
 
-function getInstagramMonthKey(publishedAt: string | null) {
-  if (!publishedAt) return null;
+export interface InstagramYearGroup {
+  year: number;
+  months: InstagramMonthGroup[];
+}
 
-  const date = new Date(publishedAt);
+export interface InstagramArchive {
+  currentMonthKey: string;
+  currentMonth: InstagramMonthGroup | null;
+  visibleMonth: InstagramMonthGroup | null;
+  historicalMonths: InstagramMonthGroup[];
+  years: InstagramYearGroup[];
+}
+
+function getDateMonthParts(value: Date, timeZone = INSTAGRAM_TIME_ZONE) {
+  const parts = new Intl.DateTimeFormat('en', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+  }).formatToParts(value);
+  const year = Number(parts.find(part => part.type === 'year')?.value);
+  const month = Number(parts.find(part => part.type === 'month')?.value);
+
+  if (!Number.isInteger(year) || !Number.isInteger(month)) return null;
+
+  return { year, month };
+}
+
+export function getInstagramMonthKey(
+  value: Date | string | null,
+  timeZone = INSTAGRAM_TIME_ZONE
+) {
+  if (!value) return null;
+
+  const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) return null;
 
-  const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-  return `${date.getUTCFullYear()}-${month}`;
+  const parts = getDateMonthParts(date, timeZone);
+  if (!parts) return null;
+
+  return `${parts.year}-${String(parts.month).padStart(2, '0')}`;
+}
+
+function getMonthPartsFromKey(key: string) {
+  const match = /^(\d{4})-(\d{2})$/.exec(key);
+  if (!match) return null;
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  if (month < 1 || month > 12) return null;
+
+  return { year, month };
 }
 
 function formatInstagramMonth(key: string) {
+  const parts = getMonthPartsFromKey(key);
+  if (!parts) return 'Fecha no disponible';
+
   const date = new Date(`${key}-01T00:00:00Z`);
   const label = new Intl.DateTimeFormat('es-ES', {
     month: 'long',
@@ -93,19 +143,74 @@ export function groupInstagramPostsByMonth(
 
   const groups = [...datedGroups.entries()]
     .sort(([first], [second]) => second.localeCompare(first))
-    .map(([key, posts]) => ({
-      key,
-      label: formatInstagramMonth(key),
-      posts,
-    }));
+    .map(([key, posts]) => {
+      const parts = getMonthPartsFromKey(key);
+
+      if (!parts) return null;
+
+      return {
+        key,
+        label: formatInstagramMonth(key),
+        year: parts.year,
+        month: parts.month,
+        posts,
+      };
+    })
+    .filter((group): group is InstagramMonthGroup => group !== null);
 
   if (undatedPosts.length > 0) {
     groups.push({
       key: 'sin-fecha',
       label: 'Fecha no disponible',
+      year: 0,
+      month: 0,
       posts: undatedPosts,
     });
   }
 
   return groups;
+}
+
+export function groupInstagramMonthsByYear(
+  months: InstagramMonthGroup[]
+): InstagramYearGroup[] {
+  const groups = new Map<number, InstagramMonthGroup[]>();
+
+  for (const month of months) {
+    const yearMonths = groups.get(month.year) ?? [];
+    yearMonths.push(month);
+    groups.set(month.year, yearMonths);
+  }
+
+  return [...groups.entries()]
+    .sort(([first], [second]) => second - first)
+    .map(([year, months]) => ({ year, months }));
+}
+
+export function getInstagramMonthPath(monthKey: string) {
+  const parts = getMonthPartsFromKey(monthKey);
+  if (!parts) return '/instagram/archivo/';
+
+  return `/instagram/archivo/${parts.year}/${String(parts.month).padStart(2, '0')}/`;
+}
+
+export function getInstagramArchive(
+  now = new Date(),
+  posts = publishedInstagramPosts
+): InstagramArchive {
+  const currentMonthKey = getInstagramMonthKey(now) ?? '';
+  const months = groupInstagramPostsByMonth(posts);
+  const currentMonth =
+    months.find(month => month.key === currentMonthKey) ?? null;
+  const historicalMonths = months.filter(
+    month => month.key !== currentMonthKey
+  );
+
+  return {
+    currentMonthKey,
+    currentMonth,
+    visibleMonth: currentMonth ?? historicalMonths[0] ?? null,
+    historicalMonths,
+    years: groupInstagramMonthsByYear(historicalMonths),
+  };
 }

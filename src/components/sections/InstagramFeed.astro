@@ -3,10 +3,7 @@ import Button from '@components/ui/Button.astro';
 import InstagramPostCard from '@components/content/InstagramPostCard.astro';
 import NavIcon from '@components/ui/NavIcon.astro';
 import SectionHeading from '@components/ui/SectionHeading.astro';
-import {
-  groupInstagramPostsByMonth,
-  publishedInstagramPosts,
-} from '@data/instagramPosts';
+import { publishedInstagramPosts } from '@data/instagramPosts';
 import type { InstagramPost } from '@data/instagramPosts';
 
 interface Props {
@@ -18,6 +15,11 @@ interface Props {
   limit?: number;
   allPosts?: boolean;
   posts?: InstagramPost[];
+  monthLabel?: string;
+  monthKey?: string;
+  isFallback?: boolean;
+  archiveHref?: string;
+  archiveLinkLabel?: string;
   variant?: 'archive' | 'home';
 }
 
@@ -30,6 +32,11 @@ const {
   limit,
   allPosts = false,
   posts: pagePosts,
+  monthLabel,
+  monthKey,
+  isFallback = false,
+  archiveHref,
+  archiveLinkLabel = 'Ver archivo',
   variant = 'archive',
 } = Astro.props as Props;
 const sourcePosts =
@@ -40,8 +47,6 @@ const sourcePosts =
       ? publishedInstagramPosts
       : publishedInstagramPosts);
 const posts = limit ? sourcePosts.slice(0, limit) : sourcePosts;
-const monthGroups =
-  variant === 'archive' ? groupInstagramPostsByMonth(posts) : [];
 ---
 
 <section
@@ -71,51 +76,24 @@ const monthGroups =
 
     {
       posts.length > 0 ? (
-        variant === 'archive' ? (
-          <>
-            <nav class="instagram-month-index" aria-label="Navegar por meses">
-              <span class="instagram-month-index__label">
-                Publicaciones por mes
+        <div
+          class="instagram-period"
+          id={monthKey ? `instagram-month-${monthKey}` : undefined}
+        >
+          {monthLabel && (
+            <div class="instagram-period__heading">
+              <h3>{monthLabel}</h3>
+              <span aria-label={`${posts.length} publicaciones`}>
+                {posts.length}
               </span>
-              <ul>
-                {monthGroups.map(month => (
-                  <li>
-                    <a href={`#instagram-month-${month.key}`}>
-                      {month.label}
-                      <span aria-label={`${month.posts.length} publicaciones`}>
-                        ({month.posts.length})
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            <div class="instagram-months">
-              {monthGroups.map(month => (
-                <section
-                  class="instagram-month"
-                  id={`instagram-month-${month.key}`}
-                  aria-labelledby={`instagram-month-title-${month.key}`}
-                >
-                  <div class="instagram-month__heading">
-                    <h3 id={`instagram-month-title-${month.key}`}>
-                      {month.label}
-                    </h3>
-                    <span aria-label={`${month.posts.length} publicaciones`}>
-                      {month.posts.length}
-                    </span>
-                  </div>
-                  <div class="instagram-feed__grid">
-                    {month.posts.map(post => (
-                      <InstagramPostCard post={post} />
-                    ))}
-                  </div>
-                </section>
-              ))}
             </div>
-          </>
-        ) : (
+          )}
+          {isFallback && (
+            <p class="instagram-feed__fallback">
+              Mostramos el último mes con publicaciones mientras llega la
+              actualidad de este mes.
+            </p>
+          )}
           <div class="instagram-feed__grid">
             {posts.map((post, index) => (
               <InstagramPostCard
@@ -124,16 +102,23 @@ const monthGroups =
               />
             ))}
           </div>
-        )
+        </div>
       ) : (
         <p class="instagram-feed__empty">
-          Todavía no hay publicaciones disponibles.
+          Todavía no hay publicaciones disponibles en Instagram.
         </p>
       )
     }
 
     <div class="instagram-feed__actions">
       <Button href={buttonHref} variant="secondary">{buttonLabel}</Button>
+      {
+        archiveHref && (
+          <a class="instagram-feed__archive-link" href={archiveHref}>
+            {archiveLinkLabel}
+          </a>
+        )
+      }
     </div>
   </div>
 </section>
@@ -151,53 +136,11 @@ const monthGroups =
     align-items: start;
   }
 
-  .instagram-month-index {
-    display: flex;
-    align-items: baseline;
-    gap: 1.25rem;
-    margin: 0 0 clamp(3rem, 6vw, 5rem);
-    padding-block: 1rem;
-    border-block: 1px solid var(--color-border);
-  }
-
-  .instagram-month-index__label {
-    flex: 0 0 auto;
-    color: var(--color-text);
-    font-size: 0.875rem;
-    font-weight: 700;
-  }
-
-  .instagram-month-index ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1.25rem;
-    list-style: none;
-  }
-
-  .instagram-month-index a {
-    color: var(--color-link);
-    font-weight: 700;
-    text-underline-offset: 0.2em;
-  }
-
-  .instagram-month-index a span {
-    margin-left: 0.25rem;
-    color: var(--color-text-muted);
-    font-size: 0.875em;
-    font-weight: 400;
-  }
-
-  .instagram-month {
+  .instagram-period {
     scroll-margin-top: 6rem;
   }
 
-  .instagram-month + .instagram-month {
-    margin-top: clamp(4rem, 8vw, 7rem);
-    padding-top: clamp(3rem, 6vw, 5rem);
-    border-top: 1px solid var(--color-border);
-  }
-
-  .instagram-month__heading {
+  .instagram-period__heading {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -205,12 +148,12 @@ const monthGroups =
     margin-bottom: 1.5rem;
   }
 
-  .instagram-month__heading h3 {
+  .instagram-period__heading h3 {
     font-size: clamp(1.6rem, 3vw, 2.35rem);
     line-height: 1.1;
   }
 
-  .instagram-month__heading > span {
+  .instagram-period__heading > span {
     flex: 0 0 auto;
     color: var(--color-territory-strong);
     font-size: 0.875rem;
@@ -240,8 +183,22 @@ const monthGroups =
 
   .instagram-feed__actions {
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
     justify-content: center;
     margin-top: 2rem;
+  }
+
+  .instagram-feed__archive-link {
+    color: var(--color-link);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+
+  .instagram-feed__fallback {
+    margin: -0.5rem 0 1.5rem;
+    color: var(--color-text-muted);
   }
 
   .instagram-feed__empty {
@@ -269,15 +226,6 @@ const monthGroups =
 
     .instagram-feed__heading-row {
       display: block;
-    }
-
-    .instagram-month-index {
-      display: block;
-    }
-
-    .instagram-month-index__label {
-      display: block;
-      margin-bottom: 0.75rem;
     }
 
     .instagram-feed__profile-link {

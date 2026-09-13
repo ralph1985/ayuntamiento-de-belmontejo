@@ -1,0 +1,128 @@
+---
+import type { InstagramYearGroup } from '@data/instagramPosts';
+import { getInstagramMonthPath } from '@data/instagramPosts';
+
+interface Props {
+  years: InstagramYearGroup[];
+}
+
+const { years } = Astro.props as Props;
+---
+
+<section
+  class="instagram-archive-index site-container site-container--article"
+  aria-labelledby="instagram-archive-title"
+>
+  <div class="instagram-archive-index__intro">
+    <h2 id="instagram-archive-title">Archivo de Instagram</h2>
+    <p>Consulta las publicaciones anteriores organizadas por año y mes.</p>
+  </div>
+
+  {
+    years.length > 0 ? (
+      <div class="instagram-archive-index__years">
+        {years.map(year => (
+          <section
+            class="instagram-archive-index__year"
+            aria-labelledby={`instagram-archive-year-${year.year}`}
+          >
+            <h3 id={`instagram-archive-year-${year.year}`}>{year.year}</h3>
+            <ul>
+              {year.months.map(month => (
+                <li>
+                  <a href={getInstagramMonthPath(month.key)}>
+                    <span>{month.label}</span>
+                    <span aria-label={`${month.posts.length} publicaciones`}>
+                      {month.posts.length}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    ) : (
+      <p class="instagram-archive-index__empty">
+        Todavía no hay publicaciones anteriores disponibles.
+      </p>
+    )
+  }
+</section>
+
+<style lang="less">
+  .instagram-archive-index {
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+
+  .instagram-archive-index__intro {
+    max-width: 42rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .instagram-archive-index__intro h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.08;
+  }
+
+  .instagram-archive-index__intro p {
+    margin-top: 0.9rem;
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .instagram-archive-index__years {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem 5rem;
+  }
+
+  .instagram-archive-index__year {
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .instagram-archive-index__year h3 {
+    font-size: clamp(1.7rem, 3vw, 2.25rem);
+    line-height: 1.1;
+  }
+
+  .instagram-archive-index__year ul {
+    margin-top: 1rem;
+    list-style: none;
+  }
+
+  .instagram-archive-index__year li + li {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .instagram-archive-index__year a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.85rem;
+    color: var(--color-link);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+
+  .instagram-archive-index__year a span:last-child {
+    flex: 0 0 auto;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 400;
+  }
+
+  .instagram-archive-index__empty {
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 60rem) {
+    .instagram-archive-index__years {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.5rem;
+    }
+  }
+</style>

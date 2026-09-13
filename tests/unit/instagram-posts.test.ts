@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
+  getInstagramArchive,
+  getInstagramMonthPath,
+  groupInstagramMonthsByYear,
   groupInstagramPostsByMonth,
   type InstagramPost,
 } from '../../src/data/instagramPosts';
@@ -58,5 +61,52 @@ describe('groupInstagramPostsByMonth', () => {
         expect.objectContaining({ id: 'invalid' }),
       ],
     });
+  });
+
+  it('keeps the current month on the main view and archives older months', () => {
+    const posts = [
+      makePost('current', '2026-09-12T00:00:00.000Z'),
+      makePost('older', '2026-08-31T00:00:00.000Z'),
+      makePost('oldest', '2023-08-23T00:00:00.000Z'),
+    ];
+    const archive = getInstagramArchive(
+      new Date('2026-09-13T10:00:00.000Z'),
+      posts
+    );
+
+    expect(archive.currentMonth?.key).toBe('2026-09');
+    expect(archive.visibleMonth?.posts.map(post => post.id)).toEqual([
+      'current',
+    ]);
+    expect(archive.historicalMonths.map(month => month.key)).toEqual([
+      '2026-08',
+      '2023-08',
+    ]);
+    expect(groupInstagramMonthsByYear(archive.historicalMonths)).toEqual([
+      {
+        year: 2026,
+        months: [expect.objectContaining({ key: '2026-08' })],
+      },
+      {
+        year: 2023,
+        months: [expect.objectContaining({ key: '2023-08' })],
+      },
+    ]);
+    expect(getInstagramMonthPath('2026-08')).toBe(
+      '/instagram/archivo/2026/08/'
+    );
+  });
+
+  it('falls back to the latest month when the current month is empty', () => {
+    const archive = getInstagramArchive(new Date('2026-09-13T10:00:00.000Z'), [
+      makePost('latest', '2026-08-31T00:00:00.000Z'),
+      makePost('older', '2023-08-23T00:00:00.000Z'),
+    ]);
+
+    expect(archive.currentMonth).toBeNull();
+    expect(archive.visibleMonth?.key).toBe('2026-08');
+    expect(archive.visibleMonth?.posts.map(post => post.id)).toEqual([
+      'latest',
+    ]);
   });
 });

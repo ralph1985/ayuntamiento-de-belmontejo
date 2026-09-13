@@ -3,9 +3,13 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import InstagramFeed from '@components/sections/InstagramFeed.astro';
 import Landing from '@components/sections/Landing.astro';
 import landingImage from '@data/landingImage';
-import { publishedInstagramPosts } from '@data/instagramPosts';
+import { getInstagramArchive } from '@data/instagramPosts';
 
 export const prerender = true;
+const instagramArchive = getInstagramArchive();
+const feedTitle = instagramArchive.currentMonth
+  ? 'Actualidad municipal en Instagram'
+  : 'Últimas publicaciones en Instagram';
 ---
 
 <BaseLayout
@@ -19,10 +23,16 @@ export const prerender = true;
 
   <InstagramFeed
     eyebrow="Redes sociales"
-    title="Actualidad municipal en Instagram"
+    title={feedTitle}
     description="Avisos, actividades y proyectos del Ayuntamiento de Belmontejo, resumidos para consultarlos de un vistazo."
     buttonLabel="Seguir en Instagram"
     buttonHref="https://www.instagram.com/aytobelmontejo/"
-    posts={publishedInstagramPosts}
+    posts={instagramArchive.visibleMonth?.posts ?? []}
+    monthKey={instagramArchive.visibleMonth?.key}
+    monthLabel={instagramArchive.visibleMonth?.label}
+    isFallback={!instagramArchive.currentMonth &&
+      !!instagramArchive.visibleMonth}
+    archiveHref="/instagram/archivo/"
+    archiveLinkLabel="Ver archivo"
   />
 </BaseLayout>

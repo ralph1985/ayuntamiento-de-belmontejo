@@ -1,0 +1,22 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import InstagramArchiveIndex from '@components/sections/InstagramArchiveIndex.astro';
+import Landing from '@components/sections/Landing.astro';
+import landingImage from '@data/landingImage';
+import { getInstagramArchive } from '@data/instagramPosts';
+
+export const prerender = true;
+const { years } = getInstagramArchive();
+---
+
+<BaseLayout
+  title="Archivo de Instagram - Ayuntamiento de Belmontejo"
+  description="Archivo de publicaciones del Ayuntamiento de Belmontejo en Instagram, organizado por años y meses."
+  preloadedImage={landingImage}
+>
+  <Landing title="Instagram" image={landingImage}>
+    <p>Consulta el histórico de publicaciones del Ayuntamiento.</p>
+  </Landing>
+
+  <InstagramArchiveIndex years={years} />
+</BaseLayout>

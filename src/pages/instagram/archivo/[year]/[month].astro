@@ -1,0 +1,51 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import InstagramFeed from '@components/sections/InstagramFeed.astro';
+import Landing from '@components/sections/Landing.astro';
+import landingImage from '@data/landingImage';
+import {
+  getInstagramArchive,
+  type InstagramMonthGroup,
+} from '@data/instagramPosts';
+
+export const prerender = true;
+
+export function getStaticPaths() {
+  const { historicalMonths } = getInstagramArchive();
+
+  return historicalMonths
+    .filter(month => month.year > 0)
+    .map(month => ({
+      params: {
+        year: String(month.year),
+        month: String(month.month).padStart(2, '0'),
+      },
+      props: { month },
+    }));
+}
+
+const { month } = Astro.props as { month: InstagramMonthGroup };
+---
+
+<BaseLayout
+  title={`Instagram - ${month.label} - Ayuntamiento de Belmontejo`}
+  description={`Publicaciones del Ayuntamiento de Belmontejo en Instagram durante ${month.label.toLowerCase()}.`}
+  preloadedImage={landingImage}
+>
+  <Landing title="Instagram" image={landingImage}>
+    <p>Archivo mensual de publicaciones del Ayuntamiento.</p>
+  </Landing>
+
+  <InstagramFeed
+    eyebrow="Archivo de Instagram"
+    title="Publicaciones municipales"
+    description={`Avisos, actividades y proyectos publicados en ${month.label.toLowerCase()}.`}
+    buttonLabel="Seguir en Instagram"
+    buttonHref="https://www.instagram.com/aytobelmontejo/"
+    posts={month.posts}
+    monthKey={month.key}
+    monthLabel={month.label}
+    archiveHref="/instagram/archivo/"
+    archiveLinkLabel="Ver todos los meses"
+  />
+</BaseLayout>
