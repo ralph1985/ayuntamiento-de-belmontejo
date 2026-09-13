@@ -8,6 +8,8 @@ import {
   generateFrontmatter,
   parseRSSItems,
   readGuideDecision,
+  sanitizeBandoImageUrl,
+  sanitizeExternalUrl,
 } from '../../scripts/fetch-bandos.js';
 import {
   buildCodexPrompt,
@@ -90,6 +92,26 @@ describe('generateContent', () => {
 
     expect(markdown).toBe('Hola Belmontejo\n\n**Aviso**\n\n![Foto](image.jpg)');
   });
+
+  it('removes encoded HTML before it can become executable markup', () => {
+    const markdown = generateContent({
+      description:
+        '&lt;script&gt;alert(1)&lt;/script&gt;&lt;img src="javascript:alert(2)" onerror="alert(3)"&gt;Texto',
+    });
+
+    expect(markdown).toBe('Texto');
+    expect(markdown).not.toMatch(/<\/?script|<img|javascript:/i);
+  });
+
+  it('keeps local and Bandomovil images but rejects unsafe image URLs', () => {
+    expect(sanitizeBandoImageUrl('image.jpg')).toBe('image.jpg');
+    expect(
+      sanitizeBandoImageUrl('https://www.bandomovil.com/userFiles/notice.jpg')
+    ).toBe('https://www.bandomovil.com/userFiles/notice.jpg');
+    expect(sanitizeBandoImageUrl('http://bandomovil.com/notice.jpg')).toBe('');
+    expect(sanitizeBandoImageUrl('https://evil.example/notice.jpg')).toBe('');
+    expect(sanitizeBandoImageUrl('javascript:alert(1)')).toBe('');
+  });
 });
 
 describe('generateFrontmatter', () => {
@@ -121,6 +143,23 @@ describe('generateFrontmatter', () => {
     expect(frontmatter).toContain('isFeatured: true');
     expect(frontmatter).toContain('isUsefulForGuide: false');
     expect(frontmatter).toContain('guideDecisionSource: fallback');
+  });
+
+  it('does not persist executable schemes as the original bando link', () => {
+    const frontmatter = generateFrontmatter({
+      title: 'Aviso',
+      description: 'Contenido',
+      category: 'Anuncios',
+      pubDate: 'Tue, 01 Oct 2024 10:00:00 GMT',
+      guid: 'https://example.com/?id=321',
+      link: 'javascript:alert(1)',
+    });
+
+    expect(frontmatter).toContain("link: ''");
+    expect(sanitizeExternalUrl('javascript:alert(1)')).toBe('');
+    expect(sanitizeExternalUrl('https://example.com/bando/321')).toBe(
+      'https://example.com/bando/321'
+    );
   });
 });
 

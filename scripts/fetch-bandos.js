@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-/* global AbortSignal */
+/* global AbortSignal, URL */
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFile } from 'node:child_process';
@@ -197,6 +197,8 @@ export function generateFrontmatter(
 ) {
   const date = new Date(item.pubDate);
   const isoDate = date.toISOString();
+  const safeLink = sanitizeExternalUrl(item.link);
+  const safeGuid = sanitizeExternalUrl(item.guid);
 
   // Clean description for frontmatter
   let description = cleanHTML(item.description);
@@ -219,8 +221,8 @@ description: '${escapeYaml(description)}'
 author: 'Ayuntamiento de Belmontejo'
 date: ${isoDate}
 category: '${escapeYaml(item.category)}'
-guid: '${escapeYaml(item.guid)}'
-link: '${escapeYaml(item.link)}'
+guid: '${escapeYaml(safeGuid)}'
+link: '${escapeYaml(safeLink)}'
 isFeatured: ${isFeatured}
 isUsefulForGuide: ${guideDecision.isUsefulForGuide}
 guideDecisionSource: ${guideDecision.guideDecisionSource}`;
@@ -245,7 +247,11 @@ export function readGuideDecision(markdown) {
 
 export function generateContent(item) {
   // Convert HTML description to markdown-friendly format
-  let content = item.description;
+  let content = decodeHtmlEntities(item.description);
+  content = content.replace(
+    /<(script|style|iframe|object|embed|svg)\b[^>]*>[\s\S]*?<\/\1>/gi,
+    ''
+  );
 
   // Basic HTML to markdown conversion
   content = content
@@ -269,15 +275,21 @@ export function generateContent(item) {
   const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
   content = content.replaceAll(imgRegex, (match, src) => {
     const altMatch = match.match(/alt=["']([^"']*)["']/i);
-    const alt = altMatch ? altMatch[1] : 'Imagen';
-    return `![${alt}](${src})`;
+    const alt = escapeMarkdownImageAlt(
+      altMatch ? decodeHtmlEntities(stripHtmlTags(altMatch[1])) : 'Imagen'
+    );
+    const safeImageUrl = sanitizeBandoImageUrl(src);
+    return safeImageUrl ? `![${alt || 'Imagen'}](${safeImageUrl})` : '';
   });
 
   // Remove remaining HTML tags
   content = stripHtmlTags(content);
 
-  // Decode HTML entities (e.g. &nbsp;)
-  content = decodeHtmlEntities(content);
+  // Prevent Markdown links/images from using executable URL schemes.
+  content = content.replace(
+    /(\]\(\s*)(?:javascript|data|vbscript):/gi,
+    '$1#blocked:'
+  );
 
   // Clean up whitespace more carefully
   content = content
@@ -295,6 +307,48 @@ export function generateContent(item) {
     .filter(paragraph => !/^[ \t]*$/.test(paragraph)); // Remove whitespace-only paragraphs
 
   return cleanParagraphs.join('\n\n');
+}
+
+export function sanitizeExternalUrl(value) {
+  if (!value) return '';
+
+  try {
+    const url = new URL(value.trim());
+    return url.protocol === 'https:' ? url.href : '';
+  } catch {
+    return '';
+  }
+}
+
+export function sanitizeBandoImageUrl(value) {
+  if (!value) return '';
+
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.startsWith('//')) return '';
+
+  if (!/^[a-z][a-z\d+.-]*:/i.test(trimmed)) {
+    return trimmed;
+  }
+
+  try {
+    const url = new URL(trimmed);
+    const hostname = url.hostname.toLowerCase().replace(/^www\./, '');
+    const isBandomovilHost =
+      hostname === 'bandomovil.com' || hostname.endsWith('.bandomovil.com');
+
+    return url.protocol === 'https:' && isBandomovilHost ? url.href : '';
+  } catch {
+    return '';
+  }
+}
+
+export function escapeMarkdownImageAlt(value) {
+  return value
+    .replaceAll('\\', '\\\\')
+    .replaceAll('[', '\\[')
+    .replaceAll(']', '\\]')
+    .replaceAll(/\s+/g, ' ')
+    .trim();
 }
 
 export function decodeHtmlEntities(text) {
