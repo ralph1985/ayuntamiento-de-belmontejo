@@ -9,13 +9,15 @@ const SELECTORS = {
   modalCaption: '[data-modal-caption]',
 };
 
-const updateModalContent = (modal, src, alt) => {
+const updateModalContent = (modal, sourceImage, alt) => {
   const modalImage = modal.querySelector(SELECTORS.modalImage);
   const modalCaption = modal.querySelector(SELECTORS.modalCaption);
 
-  if (modalImage) {
-    modalImage.src = src;
-    modalImage.alt = alt;
+  if (modalImage && sourceImage) {
+    const clonedImage = sourceImage.cloneNode(false);
+    clonedImage.setAttribute('data-modal-image', '');
+    clonedImage.setAttribute('alt', alt);
+    modalImage.replaceWith(clonedImage);
   }
 
   if (modalCaption) {
@@ -37,8 +39,8 @@ const clearModalContent = modal => {
   }
 };
 
-const openModal = (modal, src, alt) => {
-  updateModalContent(modal, src, alt);
+const openModal = (modal, sourceImage, alt) => {
+  updateModalContent(modal, sourceImage, alt);
   if (modalUtils?.open) {
     modalUtils.open(modal);
   } else {
@@ -67,10 +69,10 @@ const bindModal = gallery => {
   const triggers = gallery.querySelectorAll(SELECTORS.trigger);
   triggers.forEach(trigger => {
     const openFromTrigger = () => {
-      const src = trigger.getAttribute('data-image-src');
-      if (!src) return;
+      const sourceImage = trigger.querySelector('img');
+      if (!sourceImage) return;
       const alt = trigger.getAttribute('data-image-alt') ?? '';
-      openModal(modal, src, alt);
+      openModal(modal, sourceImage, alt);
     };
 
     trigger.addEventListener('click', event => {
