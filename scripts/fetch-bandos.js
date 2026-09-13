@@ -247,11 +247,7 @@ export function readGuideDecision(markdown) {
 
 export function generateContent(item) {
   // Convert HTML description to markdown-friendly format
-  let content = decodeHtmlEntities(item.description);
-  content = content.replaceAll(
-    /<(script|style|iframe|object|embed|svg)\b[^>]*>[\s\S]*?<\/\1>/gi,
-    ''
-  );
+  let content = stripDangerousHtmlBlocks(decodeHtmlEntities(item.description));
 
   // Basic HTML to markdown conversion
   content = content
@@ -307,6 +303,41 @@ export function generateContent(item) {
     .filter(paragraph => !/^[ \t]*$/.test(paragraph)); // Remove whitespace-only paragraphs
 
   return cleanParagraphs.join('\n\n');
+}
+
+export function stripDangerousHtmlBlocks(value) {
+  let result = value ?? '';
+  const dangerousTags = ['script', 'style', 'iframe', 'object', 'embed', 'svg'];
+
+  for (const tag of dangerousTags) {
+    const openingTag = `<${tag}`;
+    const closingTag = `</${tag}`;
+    let searchStart = 0;
+
+    while (searchStart < result.length) {
+      const lowerResult = result.toLowerCase();
+      const openingStart = lowerResult.indexOf(openingTag, searchStart);
+
+      if (openingStart === -1) break;
+
+      const closingStart = lowerResult.indexOf(closingTag, openingStart);
+      if (closingStart === -1) {
+        result = result.slice(0, openingStart);
+        break;
+      }
+
+      const closingEnd = result.indexOf('>', closingStart);
+      if (closingEnd === -1) {
+        result = result.slice(0, openingStart);
+        break;
+      }
+
+      result = result.slice(0, openingStart) + result.slice(closingEnd + 1);
+      searchStart = openingStart;
+    }
+  }
+
+  return result;
 }
 
 export function sanitizeExternalUrl(value) {
