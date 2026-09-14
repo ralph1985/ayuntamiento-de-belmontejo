@@ -29,7 +29,7 @@ Allow: /
 Disallow: /api/
 
 # Configuración del sitemap
-Sitemap: https://ayuntamiento-de-belmontejo.vercel.app/sitemap-index.xml
+Sitemap: https://belmontejo.conquense.dev/sitemap-index.xml
 
 # Información adicional del sitio
 # Sitio web oficial del Ayuntamiento de Belmontejo (Cuenca)
