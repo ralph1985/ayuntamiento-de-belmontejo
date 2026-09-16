@@ -62,6 +62,31 @@ export default [
     },
   },
 
+  {
+    files: [
+      'src/js/contact-form.helpers.ts',
+      'tests/unit/contact-form.helpers.test.ts',
+    ],
+    languageOptions: {
+      globals: {
+        FormData: 'readonly',
+        HTMLElement: 'readonly',
+        HTMLFormElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLTextAreaElement: 'readonly',
+      },
+    },
+  },
+
+  {
+    files: ['vitest.config.ts'],
+    languageOptions: {
+      globals: {
+        URL: 'readonly',
+      },
+    },
+  },
+
   // Configuración específica para archivos Astro
   ...astro.configs.recommended,
   {
