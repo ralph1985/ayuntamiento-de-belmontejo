@@ -147,16 +147,18 @@ La hora se interpreta en la zona horaria del servidor. Para comprobar el proceso
 
 ## Automatización de Instagram
 
-La sincronización de Instagram abre el perfil público con Playwright, recoge los enlaces visibles de publicaciones y visita cada una para obtener sus metadatos públicos. No necesita token ni `user_id`. Configura opcionalmente `INSTAGRAM_PROFILE_URL`, `INSTAGRAM_SCRAPE_LIMIT` y `INSTAGRAM_NAVIGATION_TIMEOUT_MS`, además de las variables `INSTAGRAM_SMTP_*` e `INSTAGRAM_NOTIFY_*` para recibir el correo; si no existen, reutiliza las variables SMTP de bandos. El script deduplica por el identificador del permalink, pasa las publicaciones nuevas por Codex y deja bloqueadas las que no se pueden analizar con seguridad.
+La sincronización de Instagram abre el perfil público con Playwright, recoge los enlaces visibles de publicaciones y visita cada una para obtener sus metadatos públicos. No necesita token ni `user_id` para leer Instagram. Configura opcionalmente `INSTAGRAM_PROFILE_URL`, `INSTAGRAM_SCRAPE_LIMIT` y `INSTAGRAM_NAVIGATION_TIMEOUT_MS`, además de las variables `INSTAGRAM_SMTP_*` e `INSTAGRAM_NOTIFY_*` para recibir el correo; si no existen, reutiliza las variables SMTP de bandos. El script deduplica por el identificador del permalink, pasa las publicaciones nuevas por Codex y deja publicadas las extraídas del perfil aunque no sean relevantes para portada.
 
-El sincronizador conserva las publicaciones históricas aunque Instagram solo muestre una ventana limitada de publicaciones recientes. El cron de producción se ejecuta 30 minutos después del de bandos: 02:30, 05:30, 08:30, 11:30, 14:30, 17:30, 20:30 y 23:30 en `Europe/Madrid`:
+El sincronizador conserva las publicaciones históricas aunque Instagram solo muestre una ventana limitada de publicaciones recientes. Cada ejecución usa un worktree temporal para no quedar bloqueada por cambios locales, crea una rama y abre un Pull Request contra `main`. Espera los checks obligatorios y fusiona el PR automáticamente cuando todos pasan; nunca hace push directo a `main`. El cron de producción se ejecuta 30 minutos después del de bandos: 02:30, 05:30, 08:30, 11:30, 14:30, 17:30, 20:30 y 23:30 en `Europe/Madrid`:
 
 ```cron
 CRON_TZ=Europe/Madrid
 30 2,5,8,11,14,17,20,23 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/sync-instagram-cron.sh >> /tmp/ayuntamiento-belmontejo-instagram.log 2>&1
 ```
 
-Para probar el proceso sin hacer commit ni push, usa `INSTAGRAM_SYNC_DRY_RUN=1 scripts/sync-instagram-cron.sh`.
+El cron necesita una sesión válida de GitHub CLI en el host. Renúevala fuera del sandbox con `gh auth refresh -h github.com` y verifica el resultado con `gh auth status`; el token no se guarda en el repositorio ni se imprime en logs. Ajusta opcionalmente `INSTAGRAM_PR_TIMEOUT_SECONDS` para el límite de espera de los checks.
+
+Para probar el proceso sin crear ramas, PRs ni enviar cambios, usa `INSTAGRAM_SYNC_DRY_RUN=1 scripts/sync-instagram-cron.sh`. El sistema envía un correo cuando fusiona publicaciones nuevas o cuando falla la extracción, validación, autenticación, PR, checks, merge o notificación. No envía correo cuando no hay cambios.
 
 ## Descubrimiento automático de noticias
 
