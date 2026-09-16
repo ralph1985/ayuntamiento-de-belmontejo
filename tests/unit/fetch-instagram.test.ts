@@ -19,6 +19,10 @@ import {
   buildNotificationText,
   escapeHtml,
 } from '../../scripts/notify-instagram-sync.js';
+import {
+  buildFailureNotificationHtml,
+  buildFailureNotificationText,
+} from '../../scripts/notify-instagram-failure.js';
 import { describe, expect, it } from 'vitest';
 
 describe('Instagram API helpers', () => {
@@ -342,5 +346,39 @@ describe('Instagram notification', () => {
       })
     ).toContain('href="https://www.instagram.com/p/abc/"');
     expect(escapeHtml('A & B < C')).toBe('A &amp; B &lt; C');
+  });
+});
+
+describe('Instagram failure notification', () => {
+  const failure = {
+    phase: 'espera de checks del Pull Request',
+    error: 'quality terminó con código 1: <detalle>',
+    branch: 'chore/instagram-sync-20260916-143000',
+    prUrl: 'https://github.com/example/repo/pull/12',
+    report: {
+      posts: [
+        {
+          title: 'Nueva actividad municipal',
+          permalink: 'https://www.instagram.com/p/abc/',
+        },
+      ],
+    },
+    siteUrl: 'https://example.com',
+  };
+
+  it('includes the failed phase, PR and detected posts in text', () => {
+    const text = buildFailureNotificationText(failure);
+
+    expect(text).toContain('espera de checks del Pull Request');
+    expect(text).toContain('https://github.com/example/repo/pull/12');
+    expect(text).toContain('Nueva actividad municipal');
+  });
+
+  it('escapes failure details and links in HTML', () => {
+    const html = buildFailureNotificationHtml(failure);
+
+    expect(html).toContain('quality terminó con código 1: &lt;detalle&gt;');
+    expect(html).toContain('href="https://github.com/example/repo/pull/12"');
+    expect(html).toContain('Nueva actividad municipal');
   });
 });
