@@ -27,6 +27,8 @@ End-to-end specs live under `tests/e2e`. The active suite covers functional flow
 
 The repo follows Conventional Commits (`feat:`, `fix:`, `test:`). Write present-tense summaries and scope prefixes when relevant (e.g., `feat(home): add hero banner`). Commit messages must be in English. For pull requests, include: purpose summary, linked Jira/GitHub issue, test evidence (`pnpm run lint`, `pnpm run test:e2e` output), and screenshots or snapshot diffs for UI work. Flag environment or CMS schema changes explicitly so reviewers can coordinate deployments.
 
+Never commit or push directly to `main`. Create or reuse a dedicated branch, push it, and open a Pull Request. Before committing, inspect the exact staged diff and keep unrelated local changes out of the commit. If branch protection, required checks, authentication, or another delivery step blocks the workflow, notify Rafa with the concrete blocker before changing the publication path. Merge only through the Pull Request after the required checks pass and report the PR, merge result, and final repository status.
+
 ## Security & Configuration Notes
 
 Store secrets in `.env` (see `README.md` for required keys). Do not commit `.env` or Playwright artifacts containing credentials.
