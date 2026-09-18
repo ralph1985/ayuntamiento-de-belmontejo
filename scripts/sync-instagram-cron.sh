@@ -88,14 +88,15 @@ WORKTREE_DIR="$(mktemp -d "$TEMP_ROOT/ayuntamiento-belmontejo-instagram.XXXXXX")
 rmdir "$WORKTREE_DIR"
 /usr/bin/git worktree add --detach "$WORKTREE_DIR" origin/main
 
-if [[ ! -d "$PROJECT_ROOT/node_modules/.pnpm" ]]; then
-  echo 'Las dependencias locales no están instaladas; se cancela la sincronización.' >&2
-  exit 1
-fi
-ln -s "$PROJECT_ROOT/node_modules" "$WORKTREE_DIR/node_modules"
 if [[ -f "$PROJECT_ROOT/.env" ]]; then
   ln -s "$PROJECT_ROOT/.env" "$WORKTREE_DIR/.env"
 fi
+
+PHASE='preparación de dependencias'
+(
+  cd "$WORKTREE_DIR"
+  "$PNPM_BIN" install --frozen-lockfile --prefer-offline
+)
 
 PHASE='extracción de Instagram'
 (
