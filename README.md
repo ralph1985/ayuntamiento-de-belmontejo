@@ -173,8 +173,10 @@ En el servidor autorizado, programa la ejecución diaria a las 13:00 de Madrid:
 ```cron
 PATH=/home/rafa/.nvm/versions/node/v22.23.1/bin:/usr/local/bin:/usr/bin:/bin
 CRON_TZ=Europe/Madrid
-0 13 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/discover-news-cron.sh >> /tmp/ayuntamiento-belmontejo-news.log 2>&1
+0 13 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/discover-news-cron.sh
 ```
+
+Cada ejecución escribe una línea JSON en `var/log/news-discovery/news-discovery-AAAA-MM-DD.jsonl`. El registro conserva 90 días y distingue ejecuciones correctas sin novedades (`no-news`), propuestas enviadas a una PR (`pr-created`), fallos (`failed`) y ejecuciones omitidas por otra ejecución activa (`skipped`). Los fallos envían un aviso usando la configuración SMTP de noticias o, como alternativa, la de bandos. Se puede cambiar la ubicación con `NEWS_LOG_DIR` y la retención con `NEWS_LOG_RETENTION_DAYS`.
 
 ## Calidad y estilo del código
 
