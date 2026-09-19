@@ -78,6 +78,41 @@ export function buildNewsNotificationHtml({
   return `<!doctype html><html lang="es"><body style="margin:0;padding:24px;background:#f4f1ea;color:#1f2933;font-family:Arial,sans-serif"><main style="max-width:620px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden"><header style="padding:28px 32px;background:#155e75;color:#fff"><p style="margin:0 0 8px;font-size:14px;letter-spacing:.08em;text-transform:uppercase">Ayuntamiento de Belmontejo</p><h1 style="margin:0;font-size:25px">Nuevas noticias para revisar</h1></header><section style="padding:28px 32px"><p>La búsqueda diaria ha encontrado ${created.length} propuesta${created.length === 1 ? '' : 's'}.</p><ul>${rows || '<li>No hay propuestas nuevas.</li>'}</ul>${extra ? `<h2 style="font-size:17px">Avisos</h2><ul>${extra}</ul>` : ''}<a href="${escapeHtml(prUrl)}" style="display:inline-block;padding:12px 18px;background:#155e75;border-radius:6px;color:#fff;font-weight:700;text-decoration:none">Revisar PR</a><p style="margin-top:20px;color:#52606d;font-size:13px">Rama: ${escapeHtml(branch)}</p></section></main></body></html>`;
 }
 
+export function buildNewsFailureNotificationText({
+  runId,
+  phase,
+  error,
+  durationMs,
+  prUrl = '',
+}) {
+  const outcome = prUrl
+    ? `La PR ya creada debe revisarse manualmente: ${prUrl}`
+    : 'No se ha creado una PR ni publicado ninguna noticia automáticamente.';
+  return [
+    'El worker de descubrimiento de noticias de Belmontejo ha fallado.',
+    '',
+    `Ejecución: ${runId}`,
+    `Fase: ${phase}`,
+    `Duración: ${durationMs} ms`,
+    `Error: ${error}`,
+    '',
+    outcome,
+  ].join('\n');
+}
+
+export function buildNewsFailureNotificationHtml({
+  runId,
+  phase,
+  error,
+  durationMs,
+  prUrl = '',
+}) {
+  const outcome = prUrl
+    ? `La PR ya creada debe revisarse manualmente: <a href="${escapeHtml(prUrl)}">${escapeHtml(prUrl)}</a>`
+    : 'No se ha creado una PR ni publicado ninguna noticia automáticamente.';
+  return `<!doctype html><html lang="es"><body style="margin:0;padding:24px;background:#f4f1ea;color:#1f2933;font-family:Arial,sans-serif"><main style="max-width:620px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden"><header style="padding:28px 32px;background:#9a3412;color:#fff"><p style="margin:0 0 8px;font-size:14px;letter-spacing:.08em;text-transform:uppercase">Ayuntamiento de Belmontejo</p><h1 style="margin:0;font-size:25px">Fallo en el worker de noticias</h1></header><section style="padding:28px 32px"><p>La ejecución automática no ha completado el descubrimiento.</p><dl><dt><strong>Ejecución</strong></dt><dd>${escapeHtml(runId)}</dd><dt><strong>Fase</strong></dt><dd>${escapeHtml(phase)}</dd><dt><strong>Duración</strong></dt><dd>${durationMs} ms</dd><dt><strong>Error</strong></dt><dd>${escapeHtml(error)}</dd></dl><p>${outcome}</p></section></main></body></html>`;
+}
+
 export async function notifyNewsDiscovery({
   prUrl,
   branch,
@@ -132,5 +167,51 @@ export async function notifyNewsDiscovery({
       rejected,
       warnings,
     }),
+  });
+}
+
+export async function notifyNewsFailure({
+  runId,
+  phase,
+  error,
+  durationMs,
+  prUrl = '',
+}) {
+  const host = process.env.NEWS_SMTP_HOST ?? process.env.BANDOS_SMTP_HOST;
+  const user = process.env.NEWS_SMTP_USER ?? process.env.BANDOS_SMTP_USER;
+  const password =
+    process.env.NEWS_SMTP_PASSWORD ?? process.env.BANDOS_SMTP_PASSWORD;
+  const from = process.env.NEWS_NOTIFY_FROM ?? process.env.BANDOS_NOTIFY_FROM;
+  const to = process.env.NEWS_NOTIFY_TO ?? process.env.BANDOS_NOTIFY_TO;
+  const missing = Object.entries({
+    NEWS_SMTP_HOST: host,
+    NEWS_SMTP_USER: user,
+    NEWS_SMTP_PASSWORD: password,
+    NEWS_NOTIFY_FROM: from,
+    NEWS_NOTIFY_TO: to,
+  })
+    .filter(([, value]) => !value)
+    .map(([name]) => name);
+  if (missing.length)
+    throw new Error(`Falta configuración SMTP: ${missing.join(', ')}`);
+
+  const transporter = nodemailer.createTransport({
+    host,
+    port: Number(
+      process.env.NEWS_SMTP_PORT ?? process.env.BANDOS_SMTP_PORT ?? '587'
+    ),
+    secure:
+      (process.env.NEWS_SMTP_SECURE ?? process.env.BANDOS_SMTP_SECURE) ===
+      'true',
+    requireTLS: true,
+    auth: { user, pass: password },
+  });
+  const payload = { runId, phase, error, durationMs, prUrl };
+  await transporter.sendMail({
+    from,
+    to,
+    subject: 'Belmontejo: fallo en el worker de noticias',
+    text: buildNewsFailureNotificationText(payload),
+    html: buildNewsFailureNotificationHtml(payload),
   });
 }

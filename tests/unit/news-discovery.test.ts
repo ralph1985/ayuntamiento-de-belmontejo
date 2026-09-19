@@ -9,6 +9,10 @@ import {
   parseCodexOutput,
   validateCandidates,
 } from '../../scripts/news-discovery.js';
+import {
+  buildNewsFailureNotificationHtml,
+  buildNewsFailureNotificationText,
+} from '../../scripts/notify-news-discovery.js';
 import { isCurrentlyFeatured } from '../../src/data/featuredContent';
 
 const allowedDomains = ['vocesdecuenca.com', 'eldigitaldecuenca.com'];
@@ -228,5 +232,29 @@ describe('news discovery helpers', () => {
     expect(prompt).toContain(
       `publicadas desde el ${minimumNewsDate}, inclusive`
     );
+  });
+
+  it('builds a failure notification without exposing operational secrets', () => {
+    const payload = {
+      runId: '2026-09-19T13:00:00.000Z-1234',
+      phase: 'discovery',
+      error: 'Codex terminó con código 1.',
+      durationMs: 4200,
+    };
+
+    expect(buildNewsFailureNotificationText(payload)).toContain(
+      'Fase: discovery'
+    );
+    expect(buildNewsFailureNotificationHtml(payload)).toContain(
+      'Fallo en el worker de noticias'
+    );
+    expect(buildNewsFailureNotificationText(payload)).not.toContain('PASSWORD');
+    expect(
+      buildNewsFailureNotificationText({
+        ...payload,
+        prUrl:
+          'https://github.com/ralph1985/ayuntamiento-de-belmontejo/pull/123',
+      })
+    ).toContain('La PR ya creada debe revisarse manualmente');
   });
 });
