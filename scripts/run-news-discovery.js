@@ -126,7 +126,7 @@ async function prepareRepository({ branch, dryRun }) {
     throw new Error('El repositorio no está en main.');
   if (!dryRun && status && checkedOut === 'main')
     throw new Error('El árbol de trabajo no está limpio.');
-  if (dryRun) return;
+  if (dryRun) return true;
 
   phase = 'synchronize-main';
   await git(['fetch', 'origin', 'main']);
