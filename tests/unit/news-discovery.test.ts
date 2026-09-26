@@ -13,6 +13,11 @@ import {
   buildNewsFailureNotificationHtml,
   buildNewsFailureNotificationText,
 } from '../../scripts/notify-news-discovery.js';
+import {
+  formatWorkerError,
+  isWorkerBranch,
+  shouldRecoverStaleWorkerBranch,
+} from '../../scripts/run-news-discovery.js';
 import { isCurrentlyFeatured } from '../../src/data/featuredContent';
 
 const allowedDomains = ['vocesdecuenca.com', 'eldigitaldecuenca.com'];
@@ -29,6 +34,32 @@ const candidate = {
 };
 
 describe('news discovery helpers', () => {
+  it('recognizes recoverable worker branches without touching unrelated branches', () => {
+    expect(isWorkerBranch('automation/news-discovery-2026-09-24')).toBe(true);
+    expect(isWorkerBranch('automation/news-discovery-not-a-date')).toBe(false);
+    expect(isWorkerBranch('fix/news-worker-cleanup')).toBe(false);
+    expect(
+      shouldRecoverStaleWorkerBranch('automation/news-discovery-2026-09-24', '')
+    ).toBe(true);
+    expect(
+      shouldRecoverStaleWorkerBranch(
+        'automation/news-discovery-2026-09-24',
+        ' M src/content/noticias/pendiente.md'
+      )
+    ).toBe(false);
+    expect(shouldRecoverStaleWorkerBranch('main', '')).toBe(false);
+  });
+
+  it('keeps the tail of long worker errors for actionable diagnostics', () => {
+    const error = `Codex banner ${'x'.repeat(600)}\nreal failure: network timeout`;
+
+    const formatted = formatWorkerError(new Error(error));
+
+    expect(formatted.length).toBeLessThanOrEqual(500);
+    expect(formatted).toContain('Codex banner');
+    expect(formatted).toContain('real failure: network timeout');
+  });
+
   it('normalizes URLs and titles for deduplication', () => {
     expect(
       normalizeUrl('https://www.vocesdecuenca.com/noticia/?utm_source=x#photo')

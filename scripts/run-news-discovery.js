@@ -2,6 +2,7 @@
 import 'dotenv/config';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+import { pathToFileURL } from 'node:url';
 import { discoverAndMaterialize, projectRoot } from './news-discovery.js';
 import {
   notifyNewsDiscovery,
@@ -17,6 +18,17 @@ const runId = `${new Date(startedAt).toISOString()}-${process.pid}`;
 let phase = 'initialization';
 let currentBranch = '';
 let createdPrUrl = '';
+let workerBranchCreated = false;
+
+const workerBranchPattern = /^automation\/news-discovery-\d{4}-\d{2}-\d{2}$/;
+
+export function isWorkerBranch(branch) {
+  return workerBranchPattern.test(branch);
+}
+
+export function shouldRecoverStaleWorkerBranch(branch, status) {
+  return isWorkerBranch(branch) && !status.trim();
+}
 
 function emit(event, fields = {}) {
   console.log(
@@ -33,10 +45,12 @@ function durationMs() {
   return Date.now() - startedAt;
 }
 
-function safeError(error) {
-  return String(error instanceof Error ? error.message : error)
-    .replace(/\s+/g, ' ')
-    .slice(0, 500);
+export function formatWorkerError(error) {
+  const message = String(
+    error instanceof Error ? error.message : error
+  ).replace(/\s+/g, ' ');
+  if (message.length <= 500) return message;
+  return `${message.slice(0, 178)} … ${message.slice(-319)}`;
 }
 
 async function getGithubToken() {
@@ -93,6 +107,60 @@ async function command(binary, args) {
 
 function getBranchName() {
   return `automation/news-discovery-${new Date().toISOString().slice(0, 10)}`;
+}
+
+async function prepareRepository({ branch, dryRun }) {
+  let checkedOut = await git(['branch', '--show-current']);
+  const status = await git(['status', '--porcelain']);
+
+  if (!dryRun && shouldRecoverStaleWorkerBranch(checkedOut, status)) {
+    emit('repository-recovery', {
+      status: 'switching-to-main',
+      branch: checkedOut,
+    });
+    await git(['switch', 'main']);
+    checkedOut = 'main';
+  }
+
+  if (!dryRun && checkedOut !== 'main')
+    throw new Error('El repositorio no está en main.');
+  if (!dryRun && status && checkedOut === 'main')
+    throw new Error('El árbol de trabajo no está limpio.');
+  if (dryRun) return;
+
+  phase = 'synchronize-main';
+  await git(['fetch', 'origin', 'main']);
+  await git(['merge', '--ff-only', 'origin/main']);
+  const localBranch = await git(['branch', '--list', branch]);
+  const remoteBranch = await execFileAsync(
+    'git',
+    ['ls-remote', '--heads', 'origin', branch],
+    { cwd: projectRoot }
+  );
+  if (localBranch || remoteBranch.stdout.trim()) {
+    emit('completed', {
+      status: 'skipped',
+      reason: 'duplicate-branch',
+      durationMs: durationMs(),
+      branch,
+    });
+    return false;
+  }
+  return true;
+}
+
+async function cleanupWorkerBranch() {
+  if (!workerBranchCreated || !currentBranch) return;
+  const checkedOut = await git(['branch', '--show-current']);
+  if (checkedOut !== currentBranch) return;
+
+  await git(['reset', '--hard']);
+  await git(['clean', '-fd']);
+  await git(['switch', 'main']);
+  await git(['branch', '-D', currentBranch]);
+  workerBranchCreated = false;
+  currentBranch = '';
+  emit('repository-recovery', { status: 'restored-main' });
 }
 
 function parseRepository(remote) {
@@ -160,7 +228,6 @@ async function createPullRequest({ branch, created, rejected, warnings }) {
 
 async function main() {
   const branch = getBranchName();
-  currentBranch = branch;
   const dryRun = process.env.NEWS_DRY_RUN === '1';
   emit('started', { status: 'running', dryRun });
 
@@ -168,32 +235,13 @@ async function main() {
   if (!dryRun) await assertRuntimeConfiguration();
 
   phase = 'repository-preflight';
-  if ((await git(['branch', '--show-current'])) !== 'main')
-    throw new Error('El repositorio no está en main.');
-  if (!dryRun && (await git(['status', '--porcelain'])))
-    throw new Error('El árbol de trabajo no está limpio.');
-  if (!dryRun) {
-    phase = 'synchronize-main';
-    await git(['fetch', 'origin', 'main']);
-    await git(['merge', '--ff-only', 'origin/main']);
-    const localBranch = await git(['branch', '--list', branch]);
-    const remoteBranch = await execFileAsync(
-      'git',
-      ['ls-remote', '--heads', 'origin', branch],
-      { cwd: projectRoot }
-    );
-    if (localBranch || remoteBranch.stdout.trim()) {
-      emit('completed', {
-        status: 'skipped',
-        reason: 'duplicate-branch',
-        durationMs: durationMs(),
-        branch,
-      });
-      return;
-    }
-  }
+  if (!(await prepareRepository({ branch, dryRun }))) return;
 
-  if (!dryRun) await git(['switch', '-c', branch]);
+  if (!dryRun) {
+    await git(['switch', '-c', branch]);
+    currentBranch = branch;
+    workerBranchCreated = true;
+  }
   phase = 'discovery';
   const result = await discoverAndMaterialize({
     materialize: !dryRun,
@@ -202,6 +250,8 @@ async function main() {
     if (!dryRun) {
       await git(['switch', 'main']);
       await git(['branch', '-D', branch]);
+      workerBranchCreated = false;
+      currentBranch = '';
     }
     emit('completed', {
       status: 'no-news',
@@ -272,36 +322,53 @@ async function main() {
     prUrl: pr.url,
   });
   await git(['switch', 'main']);
+  await git(['branch', '-D', branch]);
+  workerBranchCreated = false;
+  currentBranch = '';
 }
 
-try {
-  await main();
-} catch (error) {
-  const message = safeError(error);
-  emit('failed', {
-    status: 'failed',
-    durationMs: durationMs(),
-    phase,
-    error: message,
-    ...(currentBranch ? { branch: currentBranch } : {}),
-    ...(createdPrUrl ? { prUrl: createdPrUrl } : {}),
-  });
-  if (process.env.NEWS_DRY_RUN !== '1') {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
+  try {
+    await main();
+  } catch (error) {
+    const message = formatWorkerError(error);
+    const failedBranch = currentBranch;
     try {
-      await notifyNewsFailure({
-        runId,
-        phase,
-        error: message,
-        durationMs: durationMs(),
-        prUrl: createdPrUrl,
-      });
-      emit('failure-notification', { status: 'sent' });
-    } catch (notificationError) {
-      emit('failure-notification', {
+      await cleanupWorkerBranch();
+    } catch (cleanupError) {
+      emit('repository-recovery', {
         status: 'failed',
-        error: safeError(notificationError),
+        error: formatWorkerError(cleanupError),
       });
     }
+    emit('failed', {
+      status: 'failed',
+      durationMs: durationMs(),
+      phase,
+      error: message,
+      ...(failedBranch ? { branch: failedBranch } : {}),
+      ...(createdPrUrl ? { prUrl: createdPrUrl } : {}),
+    });
+    if (process.env.NEWS_DRY_RUN !== '1') {
+      try {
+        await notifyNewsFailure({
+          runId,
+          phase,
+          error: message,
+          durationMs: durationMs(),
+          prUrl: createdPrUrl,
+        });
+        emit('failure-notification', { status: 'sent' });
+      } catch (notificationError) {
+        emit('failure-notification', {
+          status: 'failed',
+          error: formatWorkerError(notificationError),
+        });
+      }
+    }
+    process.exitCode = 1;
   }
-  process.exitCode = 1;
 }
