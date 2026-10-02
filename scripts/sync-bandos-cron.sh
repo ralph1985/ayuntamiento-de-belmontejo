@@ -7,18 +7,24 @@ LOCK_FILE="${TMPDIR:-/tmp}/ayuntamiento-belmontejo-bandos.lock"
 PNPM_BIN="${PNPM_BIN:-$(command -v pnpm || true)}"
 NODE_BIN="${NODE_BIN:-$(command -v node || true)}"
 
-if [[ -z "$PNPM_BIN" || -z "$NODE_BIN" ]]; then
-  echo 'pnpm or Node.js is not available; refusing to install either automatically.' >&2
-  exit 1
-fi
-
 exec 9>"$LOCK_FILE"
 if ! /usr/bin/flock -n 9; then
   echo 'Another bando synchronization is already running; skipping this run.'
   exit 0
 fi
 
+if [[ -z "$NODE_BIN" ]]; then
+  echo 'Node.js is not available; refusing to align the repository automatically.' >&2
+  exit 1
+fi
+
 cd "$PROJECT_ROOT"
+"$NODE_BIN" scripts/ensure-main-synced.js
+
+if [[ -z "$PNPM_BIN" ]]; then
+  echo 'pnpm is not available; refusing to install dependencies automatically.' >&2
+  exit 1
+fi
 
 if [[ "$(/usr/bin/git branch --show-current)" != 'main' ]]; then
   echo 'The repository is not on main; refusing to synchronize.' >&2
@@ -35,8 +41,6 @@ if [[ ! -d node_modules/.pnpm ]]; then
   exit 1
 fi
 
-/usr/bin/git fetch origin main
-/usr/bin/git merge --ff-only origin/main
 "$PNPM_BIN" run fetch-bandos
 
 has_bando_changes() {

@@ -18,6 +18,7 @@ import {
   isWorkerBranch,
   shouldRecoverStaleWorkerBranch,
 } from '../../scripts/run-news-discovery.js';
+import { buildMainAlignmentCommands } from '../../scripts/ensure-main-synced.js';
 import { isCurrentlyFeatured } from '../../src/data/featuredContent';
 
 const allowedDomains = ['vocesdecuenca.com', 'eldigitaldecuenca.com'];
@@ -32,6 +33,52 @@ const candidate = {
   date: '2026-08-20',
   confidence: 'high',
 };
+
+describe('main alignment commands', () => {
+  it('switches to main, fetches origin, backs up divergence, then resets', () => {
+    expect(
+      buildMainAlignmentCommands({
+        branch: 'automation/news-discovery-2026-10-02',
+        status: '',
+        ahead: 1,
+        behind: 1,
+        backupBranch: 'backup/automation-main-divergence-20261002-1633',
+      })
+    ).toEqual([
+      ['switch', 'main'],
+      ['fetch', 'origin', 'main'],
+      ['branch', 'backup/automation-main-divergence-20261002-1633', 'main'],
+      ['reset', '--hard', 'origin/main'],
+    ]);
+  });
+
+  it('resets a clean branch that is only behind without creating a backup', () => {
+    expect(
+      buildMainAlignmentCommands({
+        branch: 'main',
+        status: '',
+        ahead: 0,
+        behind: 1,
+        backupBranch: 'backup/unused',
+      })
+    ).toEqual([
+      ['fetch', 'origin', 'main'],
+      ['reset', '--hard', 'origin/main'],
+    ]);
+  });
+
+  it('refuses to align a dirty worktree', () => {
+    expect(() =>
+      buildMainAlignmentCommands({
+        branch: 'feature/local',
+        status: ' M src/content/noticias/pendiente.md',
+        ahead: 1,
+        behind: 1,
+        backupBranch: 'backup/unused',
+      })
+    ).toThrow('árbol de trabajo no está limpio');
+  });
+});
 
 describe('news discovery helpers', () => {
   it('recognizes recoverable worker branches without touching unrelated branches', () => {

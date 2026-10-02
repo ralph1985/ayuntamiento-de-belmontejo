@@ -4,6 +4,7 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { pathToFileURL } from 'node:url';
 import { discoverAndMaterialize, projectRoot } from './news-discovery.js';
+import { ensureMainSynced } from './ensure-main-synced.js';
 import {
   notifyNewsDiscovery,
   notifyNewsFailure,
@@ -110,27 +111,18 @@ function getBranchName() {
 }
 
 async function prepareRepository({ branch, dryRun }) {
-  let checkedOut = await git(['branch', '--show-current']);
-  const status = await git(['status', '--porcelain']);
-
-  if (!dryRun && shouldRecoverStaleWorkerBranch(checkedOut, status)) {
-    emit('repository-recovery', {
-      status: 'switching-to-main',
-      branch: checkedOut,
-    });
-    await git(['switch', 'main']);
-    checkedOut = 'main';
-  }
-
-  if (!dryRun && checkedOut !== 'main')
-    throw new Error('El repositorio no está en main.');
-  if (!dryRun && status && checkedOut === 'main')
-    throw new Error('El árbol de trabajo no está limpio.');
   if (dryRun) return true;
 
+  phase = 'repository-preflight';
+  const alignment = ensureMainSynced({ cwd: projectRoot });
+  if (alignment.backupBranch) {
+    emit('repository-recovery', {
+      status: 'divergence-preserved-and-main-aligned',
+      backupBranch: alignment.backupBranch,
+    });
+  }
+
   phase = 'synchronize-main';
-  await git(['fetch', 'origin', 'main']);
-  await git(['merge', '--ff-only', 'origin/main']);
   const localBranch = await git(['branch', '--list', branch]);
   const remoteBranch = await execFileAsync(
     'git',
@@ -231,11 +223,11 @@ async function main() {
   const dryRun = process.env.NEWS_DRY_RUN === '1';
   emit('started', { status: 'running', dryRun });
 
-  phase = 'runtime-configuration';
-  if (!dryRun) await assertRuntimeConfiguration();
-
   phase = 'repository-preflight';
   if (!(await prepareRepository({ branch, dryRun }))) return;
+
+  phase = 'runtime-configuration';
+  if (!dryRun) await assertRuntimeConfiguration();
 
   if (!dryRun) {
     await git(['switch', '-c', branch]);
