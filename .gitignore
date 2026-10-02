@@ -1,3 +1,6 @@
+# local Hermes plans and metadata
+.hermes/
+
 # build output
 dist/
 # generated types

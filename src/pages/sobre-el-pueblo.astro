@@ -118,6 +118,33 @@ import landingImage from '@data/landingImage';
     </div>
   </section>
 
+  <!-- ============================================ -->
+  <!--                Memoria local                 -->
+  <!-- ============================================ -->
+
+  <section id="memoria-local" aria-labelledby="memoria-local-title">
+    <div class="site-container site-container--wide">
+      <div class="cs-content">
+        <span class="cs-topper">{aboutVillage.memoryVideoEyebrow}</span>
+        <h2 id="memoria-local-title" class="cs-title">
+          {aboutVillage.memoryVideoTitle}
+        </h2>
+        <p class="cs-text">{aboutVillage.memoryVideoDescription}</p>
+      </div>
+      <div class="cs-video-wrapper">
+        <iframe
+          src={aboutVillage.memoryVideoUrl}
+          width="400"
+          height="300"
+          loading="lazy"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          title={aboutVillage.memoryVideoTitleAttribute}></iframe>
+      </div>
+    </div>
+  </section>
+
   {aboutVillage.features.map(feature => <VillageFeature {...feature} />)}
 
   <!-- ============================================ -->
@@ -136,6 +163,7 @@ import landingImage from '@data/landingImage';
           src={aboutVillage.videoUrl}
           width="400"
           height="300"
+          loading="lazy"
           frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
           referrerpolicy="strict-origin-when-cross-origin"

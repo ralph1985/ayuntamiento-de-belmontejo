@@ -32,6 +32,11 @@ export interface AboutVillageContent {
   quote: string;
   quoteAuthor: string;
   quoteRole: string;
+  memoryVideoEyebrow: string;
+  memoryVideoTitle: string;
+  memoryVideoDescription: string;
+  memoryVideoUrl: string;
+  memoryVideoTitleAttribute: string;
   videoEyebrow: string;
   videoTitle: string;
   videoDescription: string;
