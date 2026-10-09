@@ -4,6 +4,7 @@ import {
   findOpenBandosPullRequest,
   hasReportedChecks,
   isAllowedBandoPath,
+  evaluateRequiredChecks,
 } from '../../scripts/bandos-sync-policy.js';
 
 describe('bandos sync publication policy', () => {
@@ -55,5 +56,25 @@ describe('bandos sync publication policy', () => {
     expect(hasReportedChecks([{ name: 'quality', state: 'IN_PROGRESS' }])).toBe(
       true
     );
+  });
+
+  it('evaluates required checks for the current PR head only', () => {
+    expect(
+      evaluateRequiredChecks(
+        ['quality'],
+        [{ name: 'quality', status: 'COMPLETED', conclusion: 'SUCCESS' }]
+      )
+    ).toEqual({ missing: [], pending: [], failed: [] });
+    expect(
+      evaluateRequiredChecks(
+        ['quality'],
+        [{ name: 'quality', status: 'IN_PROGRESS', conclusion: '' }]
+      )
+    ).toEqual({ missing: [], pending: ['quality'], failed: [] });
+    expect(evaluateRequiredChecks(['quality'], [])).toEqual({
+      missing: ['quality'],
+      pending: [],
+      failed: [],
+    });
   });
 });
