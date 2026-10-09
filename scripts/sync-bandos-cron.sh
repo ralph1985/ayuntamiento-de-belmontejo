@@ -87,7 +87,9 @@ open_pr="$(printf '%s' "$open_pr_json" | "$NODE_BIN" --input-type=module -e '
 
 if [[ -n "$open_pr" ]]; then
   IFS=$'\t' read -r PR_NUMBER PR_URL WORKTREE_BRANCH <<< "$open_pr"
-  echo "PR de bandos ya abierta; se reanudan sus checks: $PR_URL"
+  echo "PR de bandos ya abierta; se actualiza con la última main y se reanudan sus checks: $PR_URL"
+  PHASE='actualización de la rama de una PR existente'
+  "$GH_BIN" pr update-branch "$PR_NUMBER"
 else
   PHASE='preparación del worktree desde origin/main'
   /usr/bin/git fetch origin main
@@ -168,7 +170,38 @@ _Generada por scripts/sync-bandos-cron.sh._')"
   echo "Pull Request creada: $PR_URL"
 fi
 
+wait_for_reported_required_checks() {
+  local attempts=0
+  local max_attempts="${BANDOS_CHECK_DISCOVERY_ATTEMPTS:-30}"
+  local interval_seconds="${BANDOS_CHECK_DISCOVERY_INTERVAL_SECONDS:-10}"
+  local checks_json=''
+
+  while (( attempts < max_attempts )); do
+    if checks_json="$("$GH_BIN" pr checks "$PR_NUMBER" \
+      --required \
+      --json name,state,bucket 2>/dev/null)" &&
+      printf '%s' "$checks_json" | "$NODE_BIN" --input-type=module -e '
+        import fs from "node:fs";
+        import { hasReportedChecks } from "./scripts/bandos-sync-policy.js";
+        process.exit(hasReportedChecks(JSON.parse(fs.readFileSync(0, "utf8"))) ? 0 : 1);
+      '
+    then
+      return 0
+    fi
+
+    attempts=$((attempts + 1))
+    echo "Los checks obligatorios aún no aparecen; reintento $attempts/$max_attempts en ${interval_seconds}s."
+    sleep "$interval_seconds"
+  done
+
+  return 1
+}
+
 PHASE='espera de checks obligatorios de la Pull Request'
+if ! wait_for_reported_required_checks; then
+  echo 'GitHub no publicó los checks obligatorios dentro del tiempo de espera.' >&2
+  exit 1
+fi
 /usr/bin/timeout "${BANDOS_PR_TIMEOUT_SECONDS:-900}" \
   "$GH_BIN" pr checks "$PR_NUMBER" --required --watch
 
