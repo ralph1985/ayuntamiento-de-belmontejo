@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   buildBandosBranchName,
   findOpenBandosPullRequest,
+  hasReportedChecks,
   isAllowedBandoPath,
 } from '../../scripts/bandos-sync-policy.js';
 
@@ -47,5 +48,12 @@ describe('bandos sync publication policy', () => {
       false
     );
     expect(isAllowedBandoPath('src/content/bandos/../../.env')).toBe(false);
+  });
+
+  it('distinguishes the PR race before checks are reported', () => {
+    expect(hasReportedChecks([])).toBe(false);
+    expect(hasReportedChecks([{ name: 'quality', state: 'IN_PROGRESS' }])).toBe(
+      true
+    );
   });
 });

@@ -21,6 +21,10 @@ export function findOpenBandosPullRequest(pullRequests) {
   );
 }
 
+export function hasReportedChecks(checks) {
+  return Array.isArray(checks) && checks.length > 0;
+}
+
 export function isAllowedBandoPath(filePath) {
   return /^src\/content\/bandos\/[^/]+\.md$/.test(filePath);
 }
