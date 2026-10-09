@@ -136,14 +136,15 @@ El comando `pnpm run fetch-bandos` consume el RSS municipal (`https://www.bandom
 - Marca bandos recientes o con palabras clave como `isFeatured`.
 - Evita reescribir archivos sin cambios y formatea solo los bandos generados.
 
-La sincronización periódica se realiza mediante `scripts/sync-bandos-cron.sh`: antes de consultar el RSS, el script comprueba que el árbol esté limpio, se sitúa en `main`, actualiza `origin/main` y alinea la rama local. Si detecta commits locales, los conserva en una rama local de respaldo antes de restablecer `main`; nunca descarta esos commits silenciosamente. Después descarga el RSS, valida el contenido con unitarios y build y publica en `main` solo si hay cambios. Nunca instala dependencias ni continúa si el árbol de trabajo no está limpio. Tras un `push` correcto, envía un aviso SMTP con los archivos publicados a `BANDOS_NOTIFY_TO`. Configura `BANDOS_SMTP_HOST`, `BANDOS_SMTP_PORT`, `BANDOS_SMTP_SECURE`, `BANDOS_SMTP_USER`, `BANDOS_SMTP_PASSWORD`, `BANDOS_NOTIFY_FROM` y `BANDOS_NOTIFY_TO` en el archivo local `.env`; no se versionan credenciales. En el servidor autorizado, programa una ejecución diaria con cron, por ejemplo:
+La sincronización periódica se realiza mediante `scripts/sync-bandos-cron.sh`: bloquea ejecuciones concurrentes, alinea `main` con `origin/main`, trabaja en un worktree temporal y descarga el RSS municipal. Si hay cambios, ejecuta los tests y el build, crea una rama `chore/bandos-sync-*`, la publica y abre una Pull Request contra `main`. Espera los checks obligatorios verdes, fusiona la PR y vuelve a alinear `main` local con `origin/main`; nunca hace push directo a `main`. Si existe una PR de bandos abierta, reanuda sus checks en lugar de crear otra. No instala dependencias en el checkout principal ni continúa si el árbol no está limpio. Tras una fusión correcta, envía un aviso SMTP con los archivos publicados a `BANDOS_NOTIFY_TO`. Configura `BANDOS_SMTP_HOST`, `BANDOS_SMTP_PORT`, `BANDOS_SMTP_SECURE`, `BANDOS_SMTP_USER`, `BANDOS_SMTP_PASSWORD`, `BANDOS_NOTIFY_FROM` y `BANDOS_NOTIFY_TO` en el archivo local `.env`; no se versionan credenciales. En el servidor autorizado, programa una ejecución diaria o periódica con cron, por ejemplo:
 
 ```cron
 PATH=/home/rafa/.nvm/versions/node/v22.23.1/bin:/usr/local/bin:/usr/bin:/bin
-23 7 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/sync-bandos-cron.sh >> /tmp/ayuntamiento-belmontejo-bandos.log 2>&1
+CRON_TZ=Europe/Madrid
+0 2,5,8,11,14,17,20,23 * * * /home/rafa/dev/ayuntamiento-de-belmontejo/scripts/sync-bandos-cron.sh >> /tmp/ayuntamiento-belmontejo-bandos.log 2>&1
 ```
 
-La hora se interpreta en la zona horaria del servidor. Para comprobar el proceso sin publicar cambios, usa `SYNC_BANDOS_DRY_RUN=1 scripts/sync-bandos-cron.sh`.
+La hora se interpreta en la zona horaria indicada. Para comprobar el proceso sin crear ramas, PRs ni fusionar cambios, usa `SYNC_BANDOS_DRY_RUN=1 scripts/sync-bandos-cron.sh`.
 
 ## Automatización de Instagram
 
