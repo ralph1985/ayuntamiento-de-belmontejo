@@ -87,7 +87,9 @@ open_pr="$(printf '%s' "$open_pr_json" | "$NODE_BIN" --input-type=module -e '
 
 if [[ -n "$open_pr" ]]; then
   IFS=$'\t' read -r PR_NUMBER PR_URL WORKTREE_BRANCH <<< "$open_pr"
-  echo "PR de bandos ya abierta; se reanudan sus checks: $PR_URL"
+  echo "PR de bandos ya abierta; se actualiza con la última main y se reanudan sus checks: $PR_URL"
+  PHASE='actualización de la rama de una PR existente'
+  "$GH_BIN" pr update-branch "$PR_NUMBER"
 else
   PHASE='preparación del worktree desde origin/main'
   /usr/bin/git fetch origin main
