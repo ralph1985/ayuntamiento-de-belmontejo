@@ -41,7 +41,7 @@
     "leaflet": "1.9.4",
     "less": "4.8.1",
     "nodemailer": "10.0.10",
-    "sharp": "0.35.4"
+    "sharp": "0.35.5"
   },
   "devDependencies": {
     "@commitlint/cli": "20.2.0",
@@ -84,7 +84,9 @@
       "brace-expansion@2": "2.1.7",
       "brace-expansion@5": "5.0.12",
       "undici": "8.10.2",
-      "sharp": "0.35.4",
+      "sharp": "0.35.5",
+      "source-map-js": "1.2.2",
+      "smol-toml": "1.9.0",
       "js-yaml": "4.3.2",
       "svgo": "4.1.0",
       "tmp": "0.2.5"
