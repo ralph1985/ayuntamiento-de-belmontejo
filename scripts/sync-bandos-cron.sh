@@ -64,6 +64,7 @@ PHASE='autenticación de GitHub'
 "$GH_BIN" auth status >/dev/null
 GH_TOKEN="$("$GH_BIN" auth token)"
 export GH_TOKEN
+REPOSITORY="$("$GH_BIN" repo view --json nameWithOwner --jq '.nameWithOwner')"
 
 PHASE='detección de una PR de bandos pendiente'
 open_pr_json="$("$GH_BIN" pr list \
@@ -172,32 +173,53 @@ fi
 
 wait_for_required_checks() {
   local attempts=0
-  local max_attempts="${BANDOS_CHECK_DISCOVERY_ATTEMPTS:-30}"
+  local max_attempts="${BANDOS_CHECK_DISCOVERY_ATTEMPTS:-60}"
   local interval_seconds="${BANDOS_CHECK_DISCOVERY_INTERVAL_SECONDS:-10}"
+  local required_contexts=''
+  local head_sha=''
+  local check_runs=''
+  local evaluation=''
+
+  required_contexts="$("$GH_BIN" api \
+    "repos/$REPOSITORY/branches/main/protection/required_status_checks/contexts")"
 
   while (( attempts < max_attempts )); do
-    if /usr/bin/timeout "${BANDOS_PR_TIMEOUT_SECONDS:-900}" \
-      "$GH_BIN" pr checks "$PR_NUMBER" --required --watch
-    then
-      return 0
-    fi
+    head_sha="$("$GH_BIN" pr view "$PR_NUMBER" --json headRefOid --jq '.headRefOid')"
+    check_runs="$("$GH_BIN" api \
+      "repos/$REPOSITORY/commits/$head_sha/check-runs?per_page=100")"
+    evaluation="$(printf '{"required":%s,"checks":%s}' "$required_contexts" "$check_runs" | "$NODE_BIN" --input-type=module -e '
+      import fs from "node:fs";
+      import { evaluateRequiredChecks } from "./scripts/bandos-sync-policy.js";
 
-    if checks_json="$("$GH_BIN" pr checks "$PR_NUMBER" \
-      --required \
-      --json name,state,bucket 2>/dev/null)" &&
-      printf '%s' "$checks_json" | "$NODE_BIN" --input-type=module -e '
-        import fs from "node:fs";
-        const checks = JSON.parse(fs.readFileSync(0, "utf8"));
-        process.exit(checks.some(check => check.bucket === "fail") ? 0 : 1);
-      '
-    then
-      echo 'Un check obligatorio ha fallado; no se fusiona la PR.' >&2
-      return 1
-    fi
+      const payload = JSON.parse(fs.readFileSync(0, "utf8"));
+      const result = evaluateRequiredChecks(
+        payload.required,
+        payload.checks.check_runs
+      );
+      if (result.failed.length > 0) process.stdout.write("failed");
+      else if (result.missing.length > 0 || result.pending.length > 0)
+        process.stdout.write("waiting");
+      else process.stdout.write("ready");
+    ')"
 
-    attempts=$((attempts + 1))
-    echo "GitHub aún no ha registrado los checks obligatorios; reintento $attempts/$max_attempts en ${interval_seconds}s."
-    sleep "$interval_seconds"
+    case "$evaluation" in
+      ready)
+        return 0
+        ;;
+      failed)
+        echo "Un check obligatorio ha fallado para $head_sha; no se fusiona la PR." >&2
+        return 1
+        ;;
+      waiting)
+        attempts=$((attempts + 1))
+        echo "Esperando checks obligatorios para $head_sha: intento $attempts/$max_attempts; próximo intento en ${interval_seconds}s."
+        sleep "$interval_seconds"
+        ;;
+      *)
+        echo 'No se pudo interpretar el estado de los checks obligatorios.' >&2
+        return 1
+        ;;
+    esac
   done
 
   return 1

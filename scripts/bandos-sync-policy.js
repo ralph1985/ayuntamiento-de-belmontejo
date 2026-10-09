@@ -25,6 +25,27 @@ export function hasReportedChecks(checks) {
   return Array.isArray(checks) && checks.length > 0;
 }
 
+export function evaluateRequiredChecks(requiredContexts, checkRuns) {
+  const latestByName = new Map();
+  for (const checkRun of checkRuns ?? []) {
+    latestByName.set(checkRun.name, checkRun);
+  }
+
+  const result = { missing: [], pending: [], failed: [] };
+  for (const context of requiredContexts ?? []) {
+    const checkRun = latestByName.get(context);
+    if (!checkRun) {
+      result.missing.push(context);
+    } else if (checkRun.status !== 'COMPLETED') {
+      result.pending.push(context);
+    } else if (checkRun.conclusion !== 'SUCCESS') {
+      result.failed.push(context);
+    }
+  }
+
+  return result;
+}
+
 export function isAllowedBandoPath(filePath) {
   return /^src\/content\/bandos\/[^/]+\.md$/.test(filePath);
 }
