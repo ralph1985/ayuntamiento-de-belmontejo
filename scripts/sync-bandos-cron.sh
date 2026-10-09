@@ -170,27 +170,33 @@ _Generada por scripts/sync-bandos-cron.sh._')"
   echo "Pull Request creada: $PR_URL"
 fi
 
-wait_for_reported_required_checks() {
+wait_for_required_checks() {
   local attempts=0
   local max_attempts="${BANDOS_CHECK_DISCOVERY_ATTEMPTS:-30}"
   local interval_seconds="${BANDOS_CHECK_DISCOVERY_INTERVAL_SECONDS:-10}"
-  local checks_json=''
 
   while (( attempts < max_attempts )); do
+    if /usr/bin/timeout "${BANDOS_PR_TIMEOUT_SECONDS:-900}" \
+      "$GH_BIN" pr checks "$PR_NUMBER" --required --watch
+    then
+      return 0
+    fi
+
     if checks_json="$("$GH_BIN" pr checks "$PR_NUMBER" \
       --required \
       --json name,state,bucket 2>/dev/null)" &&
       printf '%s' "$checks_json" | "$NODE_BIN" --input-type=module -e '
         import fs from "node:fs";
-        import { hasReportedChecks } from "./scripts/bandos-sync-policy.js";
-        process.exit(hasReportedChecks(JSON.parse(fs.readFileSync(0, "utf8"))) ? 0 : 1);
+        const checks = JSON.parse(fs.readFileSync(0, "utf8"));
+        process.exit(checks.some(check => check.bucket === "fail") ? 0 : 1);
       '
     then
-      return 0
+      echo 'Un check obligatorio ha fallado; no se fusiona la PR.' >&2
+      return 1
     fi
 
     attempts=$((attempts + 1))
-    echo "Los checks obligatorios aún no aparecen; reintento $attempts/$max_attempts en ${interval_seconds}s."
+    echo "GitHub aún no ha registrado los checks obligatorios; reintento $attempts/$max_attempts en ${interval_seconds}s."
     sleep "$interval_seconds"
   done
 
@@ -198,12 +204,10 @@ wait_for_reported_required_checks() {
 }
 
 PHASE='espera de checks obligatorios de la Pull Request'
-if ! wait_for_reported_required_checks; then
-  echo 'GitHub no publicó los checks obligatorios dentro del tiempo de espera.' >&2
+if ! wait_for_required_checks; then
+  echo 'Los checks obligatorios no han terminado correctamente dentro del tiempo de espera.' >&2
   exit 1
 fi
-/usr/bin/timeout "${BANDOS_PR_TIMEOUT_SECONDS:-900}" \
-  "$GH_BIN" pr checks "$PR_NUMBER" --required --watch
 
 PHASE='fusión de la Pull Request'
 "$GH_BIN" pr merge "$PR_NUMBER" --merge --delete-branch
