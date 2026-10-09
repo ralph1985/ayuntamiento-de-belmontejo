@@ -71,6 +71,12 @@ describe('bandos sync publication policy', () => {
         [{ name: 'quality', status: 'IN_PROGRESS', conclusion: '' }]
       )
     ).toEqual({ missing: [], pending: ['quality'], failed: [] });
+    expect(
+      evaluateRequiredChecks(
+        ['quality'],
+        [{ name: 'quality', status: 'completed', conclusion: 'success' }]
+      )
+    ).toEqual({ missing: [], pending: [], failed: [] });
     expect(evaluateRequiredChecks(['quality'], [])).toEqual({
       missing: ['quality'],
       pending: [],

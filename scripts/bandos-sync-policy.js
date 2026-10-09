@@ -36,9 +36,9 @@ export function evaluateRequiredChecks(requiredContexts, checkRuns) {
     const checkRun = latestByName.get(context);
     if (!checkRun) {
       result.missing.push(context);
-    } else if (checkRun.status !== 'COMPLETED') {
+    } else if (checkRun.status?.toUpperCase() !== 'COMPLETED') {
       result.pending.push(context);
-    } else if (checkRun.conclusion !== 'SUCCESS') {
+    } else if (checkRun.conclusion?.toUpperCase() !== 'SUCCESS') {
       result.failed.push(context);
     }
   }
