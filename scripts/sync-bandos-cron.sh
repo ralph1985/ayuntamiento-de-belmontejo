@@ -112,7 +112,7 @@ else
 
   if
     /usr/bin/git -C "$WORKTREE_DIR" diff --quiet -- src/content/bandos &&
-    [[ -z "$(/usr/bin/git -C "$WORKTREE_DIR" status --porcelain -- src/content/bandos)" ]]
+    [[ -z "$(/usr/bin/git -C "$WORKTREE_DIR" status --porcelain --untracked-files=all -- src/content/bandos)" ]]
   then
     echo 'No hay bandos nuevos o actualizados.'
     exit 0
