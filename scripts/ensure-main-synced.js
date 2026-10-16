@@ -80,7 +80,10 @@ export function ensureMainSynced({
   now = new Date(),
 } = {}) {
   const branch = runGit(['branch', '--show-current'], cwd);
-  const status = runGit(['status', '--porcelain'], cwd);
+  const status = runGit(
+    ['status', '--porcelain', '--untracked-files=all'],
+    cwd
+  );
   const initialCommands = buildMainAlignmentCommands({
     branch,
     status,
@@ -99,7 +102,7 @@ export function ensureMainSynced({
   const backupBranch = divergence.ahead > 0 ? uniqueBackupBranch(cwd, now) : '';
   const alignmentCommands = buildMainAlignmentCommands({
     branch: 'main',
-    status: runGit(['status', '--porcelain'], cwd),
+    status: runGit(['status', '--porcelain', '--untracked-files=all'], cwd),
     ...divergence,
     backupBranch,
     fetched: true,
