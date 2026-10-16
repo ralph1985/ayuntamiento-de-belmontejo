@@ -244,7 +244,9 @@ echo "Pull Request fusionada: $MERGE_COMMIT"
 PHASE='realineación local de main tras la fusión'
 /usr/bin/git fetch origin main
 "$NODE_BIN" scripts/ensure-main-synced.js
-if [[ "$(/usr/bin/git rev-list --left-right --count main...origin/main)" != '0\t0' ]]; then
+main_divergence="$(/usr/bin/git rev-list --left-right --count main...origin/main)"
+read -r main_ahead main_behind <<< "$main_divergence"
+if [[ "$main_ahead" != '0' || "$main_behind" != '0' ]]; then
   echo 'main local no ha quedado alineada con origin/main.' >&2
   exit 1
 fi
