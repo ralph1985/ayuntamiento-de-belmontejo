@@ -6,7 +6,7 @@ date: 2026-10-28T15:44:35.000Z
 category: 'Info General'
 guid: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1670411'
 link: 'https://www.bandomovil.com/vercomunicado.php?cod_municipio=belmontejo&amp;id=1670411'
-isFeatured: true
+isFeatured: false
 isUsefulForGuide: false
 guideDecisionSource: codex
 ---
